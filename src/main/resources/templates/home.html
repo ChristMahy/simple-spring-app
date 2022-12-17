@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+>
+    <head>
+        <meta charset="UTF-8">
+        <title>Spring app demo.</title>
+        <link rel="stylesheet" th:href="@{/styles.css}"/>
+    </head>
+    <body>
+        <h1>Welcome to...</h1>
+        <img
+                style="width: 200px; height: auto;"
+                th:src="@{/images/home-logo.jpg}"
+        />
+
+        <a th:href="@{/design}">Design your taco</a>&nbsp;|&nbsp;
+        <a th:href="@{/without-controller}">Page without class controller</a>
+    </body>
+</html>

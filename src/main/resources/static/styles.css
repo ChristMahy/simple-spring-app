@@ -1,0 +1,20 @@
+html, body {
+    background: #1c1c1c;
+    color: lightgray;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.ingredient-group {
+    border: solid 2px lightgrey;
+    border-radius: 5px;
+    margin: 10px 5px;
+    padding: 5px 3px;
+}
+
+.ingredient-group label {
+    cursor: pointer;
+}
