@@ -1,6 +1,7 @@
 package cmahy.springapp.controller;
 
 import cmahy.springapp.domain.TacoOrder;
+import cmahy.springapp.repository.OrderRepository;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,12 @@ import org.springframework.web.bind.support.SessionStatus;
 @RequestMapping("/orders")
 @SessionAttributes("tacoOrder")
 public class OrderController {
+
+    private final OrderRepository orderRepository;
+
+    public OrderController(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
+    }
 
     @GetMapping("/current")
     public String orderForm() {
@@ -30,6 +37,9 @@ public class OrderController {
         }
 
         log.info("Order submitted: {}", tacoOrder);
+
+        orderRepository.save(tacoOrder);
+
         sessionStatus.setComplete();
 
         return "redirect:/";
