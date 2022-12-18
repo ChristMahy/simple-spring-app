@@ -4,12 +4,17 @@ import jakarta.validation.constraints.*;
 import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
 import java.util.Date;
 import java.util.List;
 
 @Data
+@Table
 public class Taco {
+
+    @Id
     private Long id;
 
     private Date createdAt = new Date();
