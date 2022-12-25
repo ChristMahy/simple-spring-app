@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface JdbcOrderRepository extends OrderRepository, CrudRepository<TacoOrder, Long> {
+public interface JpaOrderRepository extends OrderRepository, CrudRepository<TacoOrder, Long> {
 }
