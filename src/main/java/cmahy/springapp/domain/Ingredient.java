@@ -5,12 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.domain.Persistable;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Data
 @Table
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
 public class Ingredient implements Persistable<String> {
 
@@ -19,9 +19,24 @@ public class Ingredient implements Persistable<String> {
     private String name;
     private Type type;
 
+    @Transient
+    private boolean isNew;
+
+    public Ingredient(String id, String name, Type type) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+    }
+
     @Override
     public boolean isNew() {
-        return id == null;
+        return isNew;
+    }
+
+    public Ingredient markAsNew() {
+        isNew = true;
+
+        return this;
     }
 
     public enum Type {
