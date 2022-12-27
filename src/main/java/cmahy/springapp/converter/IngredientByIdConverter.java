@@ -1,12 +1,13 @@
 package cmahy.springapp.converter;
 
 import cmahy.springapp.domain.Ingredient;
+import cmahy.springapp.domain.IngredientUDT;
 import cmahy.springapp.repository.IngredientRepository;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class IngredientByIdConverter implements Converter<String, Ingredient> {
+public class IngredientByIdConverter implements Converter<String, IngredientUDT> {
 
     private final IngredientRepository ingredientRepository;
 
@@ -15,7 +16,10 @@ public class IngredientByIdConverter implements Converter<String, Ingredient> {
     }
 
     @Override
-    public Ingredient convert(String id) {
-        return ingredientRepository.findById(id).orElse(null);
+    public IngredientUDT convert(String id) {
+        return ingredientRepository
+            .findById(id)
+            .map(Ingredient::toUDT)
+            .orElse(null);
     }
 }
