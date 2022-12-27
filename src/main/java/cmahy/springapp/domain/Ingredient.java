@@ -1,22 +1,26 @@
 package cmahy.springapp.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.cassandra.core.mapping.PrimaryKey;
+import org.springframework.data.cassandra.core.mapping.Table;
 
 @Data
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
+@Table("ingredients")
 public class Ingredient {
 
-    @Id
+    @PrimaryKey
     private String id;
     private String name;
     private Type type;
+
+    public IngredientUDT toUDT() {
+        return new IngredientUDT(getName(), getType());
+    }
 
     public enum Type {
         WRAP,
