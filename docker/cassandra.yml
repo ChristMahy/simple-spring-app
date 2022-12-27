@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  cassandra:
+    container_name: cassandra
+    image: cassandra:latest
+    ports:
+      - "9042:9042"
+    networks:
+      backend:
+        aliases:
+          - "cassandra"
+
+networks:
+  backend:
+    name: "cassandra-net"
+    driver: bridge
