@@ -5,6 +5,7 @@ import cmahy.springapp.domain.Ingredient.Type;
 import cmahy.springapp.domain.Taco;
 import cmahy.springapp.domain.TacoOrder;
 import cmahy.springapp.repository.IngredientRepository;
+import cmahy.springapp.repository.TacoRepository;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -23,9 +24,11 @@ import java.util.stream.Collectors;
 public class DesignTacoController {
 
     private final IngredientRepository ingredientRepository;
+    private final TacoRepository tacoRepository;
 
-    public DesignTacoController(IngredientRepository ingredientRepository) {
+    public DesignTacoController(IngredientRepository ingredientRepository, TacoRepository tacoRepository) {
         this.ingredientRepository = ingredientRepository;
+        this.tacoRepository = tacoRepository;
     }
 
     @ModelAttribute
@@ -75,6 +78,8 @@ public class DesignTacoController {
         tacoOrder.addTaco(taco);
 
         log.info("Processing taco: {}", taco);
+
+        tacoRepository.save(taco);
 
         return "redirect:/orders/current";
     }
