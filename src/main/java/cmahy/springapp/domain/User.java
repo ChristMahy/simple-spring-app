@@ -1,31 +1,24 @@
 package cmahy.springapp.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
+@Table(name = "user_app")
 @Data
-@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
-@RequiredArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
+@AllArgsConstructor
 public class User {
-    public static final long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    public final String username;
-    public final String password;
-    public final String fullName;
-    public final String street;
-    public final String city;
-    public final String state;
-    public final String zip;
-    public final String phoneNumber;
+    private String username;
+    private String password;
+    private String fullName;
+    private String street;
+    private String city;
+    private String state;
+    private String zip;
+    private String phoneNumber;
 }
