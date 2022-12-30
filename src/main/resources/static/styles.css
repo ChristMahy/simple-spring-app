@@ -18,3 +18,12 @@ html, body {
 .ingredient-group label {
     cursor: pointer;
 }
+
+.container {
+    display: grid;
+    grid-template-columns: auto;
+}
+
+.container .row {
+    padding: 10px 30px;
+}
