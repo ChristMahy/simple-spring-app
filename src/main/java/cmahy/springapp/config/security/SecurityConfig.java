@@ -1,4 +1,4 @@
-package cmahy.springapp.config;
+package cmahy.springapp.config.security;
 
 import cmahy.springapp.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
+import java.util.List;
 
 @Configuration
 public class SecurityConfig {
@@ -27,22 +29,14 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity
-            .authorizeHttpRequests()
-            .requestMatchers(
-                "/design", "/design/**",
-                "/orders", "/orders/**"
-            ).hasRole("USER")
-            .requestMatchers("/", "/**").permitAll()
-            .and()
-            .formLogin()
-            .loginPage("/login")
-            .and()
-            .headers()
-            .frameOptions().sameOrigin()
-            .and()
-            .csrf().disable()
-            .build();
+    public SecurityFilterChain securityFilterChain(
+        HttpSecurity httpSecurity,
+        List<HttpSecurityConfig> configs
+    ) throws Exception {
+        for (HttpSecurityConfig config : configs) {
+            httpSecurity = config.execute(httpSecurity);
+        }
+
+        return httpSecurity.build();
     }
 }

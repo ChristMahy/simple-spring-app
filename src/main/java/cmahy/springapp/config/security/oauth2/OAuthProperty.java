@@ -1,12 +1,12 @@
-package cmahy.springapp.config.security;
+package cmahy.springapp.config.security.oauth2;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import static cmahy.springapp.config.security.OAuth2ConfigConstant.PROPERTY_PREFIX;
+import static cmahy.springapp.config.security.SecurityConfigConstant.OAUTH2_PROPERTY_PREFIX;
 
 @Component
-@ConfigurationProperties(prefix = PROPERTY_PREFIX)
+@ConfigurationProperties(prefix = OAUTH2_PROPERTY_PREFIX)
 public class OAuthProperty {
     private boolean enable;
 

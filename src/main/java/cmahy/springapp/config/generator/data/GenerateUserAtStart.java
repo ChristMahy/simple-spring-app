@@ -1,4 +1,4 @@
-package cmahy.springapp.config;
+package cmahy.springapp.config.generator.data;
 
 import cmahy.springapp.domain.User;
 import cmahy.springapp.repository.UserRepository;

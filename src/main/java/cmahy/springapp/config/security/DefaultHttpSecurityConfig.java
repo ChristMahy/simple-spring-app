@@ -1,0 +1,26 @@
+package cmahy.springapp.config.security;
+
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.stereotype.Component;
+
+@Component
+public class DefaultHttpSecurityConfig implements HttpSecurityConfig {
+    @Override
+    public HttpSecurity execute(HttpSecurity httpSecurity) throws Exception {
+        return httpSecurity
+            .authorizeHttpRequests()
+            .requestMatchers(
+                "/design", "/design/**",
+                "/orders", "/orders/**"
+            ).hasRole("USER")
+            .requestMatchers("/", "/**").permitAll()
+            .and()
+            .formLogin()
+            .loginPage("/login")
+            .and()
+            .headers()
+            .frameOptions().sameOrigin()
+            .and()
+            .csrf().disable();
+    }
+}

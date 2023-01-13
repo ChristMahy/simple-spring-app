@@ -1,4 +1,4 @@
-package cmahy.springapp.config;
+package cmahy.springapp.config.generator.data;
 
 import cmahy.springapp.domain.Ingredient;
 import cmahy.springapp.repository.IngredientRepository;

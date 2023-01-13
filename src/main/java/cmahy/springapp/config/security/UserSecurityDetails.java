@@ -1,4 +1,4 @@
-package cmahy.springapp.config;
+package cmahy.springapp.config.security;
 
 import cmahy.springapp.domain.User;
 import org.springframework.security.core.GrantedAuthority;
