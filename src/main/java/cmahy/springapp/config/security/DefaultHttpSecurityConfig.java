@@ -21,6 +21,9 @@ public class DefaultHttpSecurityConfig implements HttpSecurityConfig {
             .headers()
             .frameOptions().sameOrigin()
             .and()
+            .logout()
+            .logoutSuccessUrl("/")
+            .and()
             .csrf().disable();
     }
 }

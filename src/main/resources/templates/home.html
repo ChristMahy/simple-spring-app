@@ -16,6 +16,9 @@
         />
 
         <a th:href="@{/design}">Design your taco</a>&nbsp;|&nbsp;
-        <a th:href="@{/without-controller}">Page without class controller</a>
+        <a th:href="@{/without-controller}">Page without class controller</a>&nbsp;|&nbsp;
+        <form method="POST" th:action="@{/logout}">
+            <input type="submit" value="Logout"/>
+        </form>
     </body>
 </html>
