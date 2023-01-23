@@ -23,7 +23,6 @@ public class DefaultHttpSecurityConfig implements HttpSecurityConfig {
             .and()
             .logout()
             .logoutSuccessUrl("/")
-            .and()
-            .csrf().disable();
+            .and();
     }
 }
