@@ -24,6 +24,7 @@ public class OAuth2HttpSecurityConfig implements HttpSecurityConfig {
 
         return httpSecurity
             .oauth2Login()
+            .loginPage("/oauth2/authorization/google")
             .and();
     }
 
