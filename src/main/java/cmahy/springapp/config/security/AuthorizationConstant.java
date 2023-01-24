@@ -1,5 +1,5 @@
 package cmahy.springapp.config.security;
 
 public interface AuthorizationConstant {
-    String USER = "USER";
+    String ROLE_USER = "USER";
 }

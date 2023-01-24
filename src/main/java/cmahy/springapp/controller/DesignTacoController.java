@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static cmahy.springapp.config.security.AuthorizationConstant.USER;
+import static cmahy.springapp.config.security.AuthorizationConstant.ROLE_USER;
 
 @Slf4j
 @Controller
@@ -62,13 +62,13 @@ public class DesignTacoController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('" + USER + "')")
+    @PreAuthorize("hasAnyRole('" + ROLE_USER + "')")
     public String showDesignForm() {
         return "design";
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('" + USER + "')")
+    @PreAuthorize("hasAnyRole('" + ROLE_USER + "')")
     public String processTaco(
         @Valid Taco taco,
         Errors errors,
