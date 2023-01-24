@@ -7,6 +7,7 @@ import cmahy.springapp.domain.TacoOrder;
 import cmahy.springapp.repository.IngredientRepository;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -16,10 +17,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static cmahy.springapp.config.security.AuthorizationConstant.USER;
+
 @Slf4j
 @Controller
 @RequestMapping("/design")
 @SessionAttributes("tacoOrder")
+@PreAuthorize("isAuthenticated()")
 public class DesignTacoController {
 
     private final IngredientRepository ingredientRepository;
@@ -58,11 +62,13 @@ public class DesignTacoController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('" + USER + "')")
     public String showDesignForm() {
         return "design";
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('" + USER + "')")
     public String processTaco(
         @Valid Taco taco,
         Errors errors,

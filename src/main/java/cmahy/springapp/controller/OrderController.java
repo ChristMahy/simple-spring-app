@@ -4,15 +4,19 @@ import cmahy.springapp.domain.TacoOrder;
 import cmahy.springapp.repository.OrderRepository;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
+import static cmahy.springapp.config.security.AuthorizationConstant.USER;
+
 @Slf4j
 @Controller
 @RequestMapping("/orders")
 @SessionAttributes("tacoOrder")
+@PreAuthorize("isAuthenticated()")
 public class OrderController {
 
     private final OrderRepository orderRepository;
@@ -22,11 +26,13 @@ public class OrderController {
     }
 
     @GetMapping("/current")
+    @PreAuthorize("hasAnyRole('" + USER + "')")
     public String orderForm() {
         return "order-form";
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('" + USER + "')")
     public String processOrder(
         @Valid TacoOrder tacoOrder,
         Errors errors,

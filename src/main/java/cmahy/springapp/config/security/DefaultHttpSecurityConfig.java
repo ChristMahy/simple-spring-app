@@ -8,13 +8,6 @@ public class DefaultHttpSecurityConfig implements HttpSecurityConfig {
     @Override
     public HttpSecurity execute(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-            .authorizeHttpRequests()
-            .requestMatchers(
-                "/design", "/design/**",
-                "/orders", "/orders/**"
-            ).hasRole("USER")
-            .requestMatchers("/", "/**").permitAll()
-            .and()
             .formLogin()
             .loginPage("/login")
             .and()
