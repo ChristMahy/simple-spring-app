@@ -36,7 +36,7 @@ public class SecurityConfig {
         List<HttpSecurityConfig> configs
     ) throws Exception {
         for (HttpSecurityConfig config : configs) {
-            httpSecurity = config.execute(httpSecurity);
+            httpSecurity = config.configure(httpSecurity);
         }
 
         return httpSecurity.build();
