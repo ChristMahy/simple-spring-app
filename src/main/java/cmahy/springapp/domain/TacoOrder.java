@@ -25,6 +25,9 @@ public class TacoOrder implements Serializable {
 
     private Date placedAt = new Date();
 
+    @ManyToOne
+    private User user;
+
     @NotBlank(message = "Delivery name is required")
     private String deliveryName;
 
@@ -63,6 +66,7 @@ public class TacoOrder implements Serializable {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
+            .append("user", user)
             .append("deliveryName", deliveryName)
             .append("deliveryStreet", deliveryStreet)
             .append("deliveryCity", deliveryCity)
