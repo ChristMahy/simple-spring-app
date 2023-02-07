@@ -14,6 +14,7 @@ public class User {
     private Long id;
 
     private String username;
+    @ToString.Exclude
     private String password;
     private String fullName;
     private String street;
