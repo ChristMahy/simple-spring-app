@@ -1,17 +1,19 @@
 package cmahy.springapp.controller;
 
+import cmahy.springapp.config.security.UserSecurityDetails;
 import cmahy.springapp.domain.TacoOrder;
 import cmahy.springapp.repository.OrderRepository;
-import cmahy.springapp.repository.UserRepository;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-
-import java.security.Principal;
 
 import static cmahy.springapp.config.security.AuthorizationConstant.ROLE_USER;
 
@@ -23,11 +25,9 @@ import static cmahy.springapp.config.security.AuthorizationConstant.ROLE_USER;
 public class OrderController {
 
     private final OrderRepository orderRepository;
-    private final UserRepository userRepository;
 
-    public OrderController(OrderRepository orderRepository, UserRepository userRepository) {
+    public OrderController(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
-        this.userRepository = userRepository;
     }
 
     @GetMapping("/current")
@@ -42,16 +42,15 @@ public class OrderController {
         @Valid TacoOrder tacoOrder,
         Errors errors,
         SessionStatus sessionStatus,
-        Principal principal
+        @AuthenticationPrincipal UserSecurityDetails userSecurityDetails
     ) {
         if (errors.hasErrors()) {
             return "order-form";
         }
 
-        log.info("Order submitted: {}", tacoOrder);
+        tacoOrder.setUser(userSecurityDetails.user());
 
-        userRepository.findByUsername(principal.getName())
-                .ifPresent(tacoOrder::setUser);
+        log.info("Order submitted: {}", tacoOrder);
 
         orderRepository.save(tacoOrder);
 
