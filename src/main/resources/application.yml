@@ -1,7 +1,4 @@
 spring:
-  profiles:
-    active:
-      - default-logback
   datasource:
     generate-unique-name: false
     name: taco-cloud
