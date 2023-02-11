@@ -2,3 +2,7 @@ spring:
   datasource:
     generate-unique-name: false
     name: taco-cloud
+
+taco:
+  orders:
+    page-size: 15

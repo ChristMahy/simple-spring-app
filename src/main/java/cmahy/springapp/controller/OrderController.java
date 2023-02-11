@@ -5,9 +5,12 @@ import cmahy.springapp.domain.TacoOrder;
 import cmahy.springapp.repository.OrderRepository;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,9 +28,14 @@ import static cmahy.springapp.config.security.AuthorizationConstant.ROLE_USER;
 public class OrderController {
 
     private final OrderRepository orderRepository;
+    private final int pageSize;
 
-    public OrderController(OrderRepository orderRepository) {
+    public OrderController(
+        OrderRepository orderRepository,
+        @Value("${taco.orders.page-size:20}") int pageSize
+    ) {
         this.orderRepository = orderRepository;
+        this.pageSize = pageSize;
     }
 
     @GetMapping("/current")
@@ -57,5 +65,21 @@ public class OrderController {
         sessionStatus.setComplete();
 
         return "redirect:/";
+    }
+
+    @GetMapping
+    public String ordersForUser(
+        @AuthenticationPrincipal UserSecurityDetails userSecurityDetails,
+        Model model
+    ) {
+        model.addAttribute(
+            "orders",
+            orderRepository.findByUserOrderByPlacedAtDesc(
+                userSecurityDetails.user(),
+                PageRequest.of(0, pageSize)
+            )
+        );
+
+        return "order-list";
     }
 }
