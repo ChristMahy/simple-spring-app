@@ -2,6 +2,7 @@ package cmahy.springapp.controller;
 
 import cmahy.springapp.config.security.UserSecurityDetails;
 import cmahy.springapp.domain.TacoOrder;
+import cmahy.springapp.properties.TacoOrderProperties;
 import cmahy.springapp.repository.OrderRepository;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -28,14 +29,14 @@ import static cmahy.springapp.config.security.AuthorizationConstant.ROLE_USER;
 public class OrderController {
 
     private final OrderRepository orderRepository;
-    private final int pageSize;
+    private final TacoOrderProperties tacoOrderProperties;
 
     public OrderController(
         OrderRepository orderRepository,
-        @Value("${taco.orders.page-size:20}") int pageSize
+        TacoOrderProperties tacoOrderProperties
     ) {
         this.orderRepository = orderRepository;
-        this.pageSize = pageSize;
+        this.tacoOrderProperties = tacoOrderProperties;
     }
 
     @GetMapping("/current")
@@ -76,7 +77,7 @@ public class OrderController {
             "orders",
             orderRepository.findByUserOrderByPlacedAtDesc(
                 userSecurityDetails.user(),
-                PageRequest.of(0, pageSize)
+                PageRequest.of(0, tacoOrderProperties.getPageSize())
             )
         );
 
