@@ -2,11 +2,10 @@ package cmahy.springapp.controller;
 
 import cmahy.springapp.config.security.UserSecurityDetails;
 import cmahy.springapp.domain.TacoOrder;
-import cmahy.springapp.properties.TacoOrderProperties;
+import cmahy.springapp.properties.OrderProperties;
 import cmahy.springapp.repository.OrderRepository;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,11 +28,11 @@ import static cmahy.springapp.config.security.AuthorizationConstant.ROLE_USER;
 public class OrderController {
 
     private final OrderRepository orderRepository;
-    private final TacoOrderProperties tacoOrderProperties;
+    private final OrderProperties tacoOrderProperties;
 
     public OrderController(
         OrderRepository orderRepository,
-        TacoOrderProperties tacoOrderProperties
+        OrderProperties tacoOrderProperties
     ) {
         this.orderRepository = orderRepository;
         this.tacoOrderProperties = tacoOrderProperties;
