@@ -5,8 +5,11 @@ import cmahy.springapp.repository.TacoRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.http.MediaType.TEXT_XML_VALUE;
@@ -30,6 +33,13 @@ public class TacoController {
         );
 
         return tacoRepository.findAll(pageable).getContent();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Taco> tacoById(@PathVariable("id") Long id) {
+        return tacoRepository.findById(id)
+            .map(ResponseEntity::ok)
+            .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
