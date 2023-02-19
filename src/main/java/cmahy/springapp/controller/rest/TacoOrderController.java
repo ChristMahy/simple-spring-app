@@ -2,6 +2,7 @@ package cmahy.springapp.controller.rest;
 
 import cmahy.springapp.domain.TacoOrder;
 import cmahy.springapp.repository.OrderRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -71,5 +72,13 @@ public class TacoOrderController {
         }
 
         return orderRepository.save(initialOrder);
+    }
+
+    @DeleteMapping("/{orderId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteOrder(@PathVariable("orderId") Long orderId) {
+        orderRepository.findById(orderId).ifPresent(initialOrder ->
+                orderRepository.deleteById(initialOrder.getId())
+        );
     }
 }
