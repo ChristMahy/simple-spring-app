@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping(value = "/ingredient", produces = APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/ingredient", produces = APPLICATION_JSON_VALUE)
 public class IngredientController {
 
     private final IngredientRepository ingredientRepository;
