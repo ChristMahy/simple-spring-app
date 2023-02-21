@@ -32,4 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 
-src/main/resources/mykeys.jks
+resource-server/src/main/resources/mykeys.jks
