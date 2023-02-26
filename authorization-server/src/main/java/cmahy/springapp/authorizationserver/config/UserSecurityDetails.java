@@ -16,7 +16,7 @@ public class UserSecurityDetails implements UserDetails {
         this.user = user;
 
         this.authorities = this.user.getRoles().stream()
-            .map(SimpleGrantedAuthority::new)
+            .map(role -> new SimpleGrantedAuthority(role.getName()))
             .collect(Collectors.toSet());
     }
 
@@ -27,7 +27,7 @@ public class UserSecurityDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return new String(user.getPassword());
     }
 
     @Override
