@@ -1,12 +1,14 @@
 package cmahy.springapp.resourceserver.config.security;
 
-public interface SecurityConfigConstant {
-    String PROPERTY_PREFIX = "spring-app.security";
+public final class SecurityConfigConstant {
+    private SecurityConfigConstant() {}
 
-    String DEFAULT_NAME_VALUE = "default";
+    static final String PROPERTY_PREFIX = "spring-app.security";
 
-    String OAUTH2_NAME = "o-auth-2";
-    String OAUTH2_NAME_VALUE = "true";
+    static final String DEFAULT_NAME_VALUE = "default";
 
-    String OAUTH2_PROPERTY_PREFIX = PROPERTY_PREFIX + ".oauth2";
+    static final String OAUTH2_NAME = "o-auth-2";
+    static final String OAUTH2_NAME_VALUE = "true";
+
+    static final String OAUTH2_PROPERTY_PREFIX = PROPERTY_PREFIX + ".oauth2";
 }
