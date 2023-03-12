@@ -9,5 +9,6 @@ public class SimpleWebPage implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/error");
+        registry.addViewController("/test");
     }
 }

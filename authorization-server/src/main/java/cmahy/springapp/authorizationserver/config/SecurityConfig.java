@@ -16,23 +16,6 @@ import static org.springframework.boot.autoconfigure.security.servlet.PathReques
 @EnableWebSecurity
 public class SecurityConfig {
     @Bean
-    public SecurityFilterChain defaultSecurityFilterChain(
-        HttpSecurity httpSecurity
-    ) throws Exception {
-        return httpSecurity
-            .authorizeHttpRequests(authorizationRequest ->
-                authorizationRequest.anyRequest().authenticated()
-            )
-            .csrf().ignoringRequestMatchers(toH2Console())
-            .and()
-            .headers()
-            .frameOptions().sameOrigin()
-            .and()
-            .formLogin()
-            .and().build();
-    }
-
-    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
@@ -40,5 +23,19 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsService(GetUserCredentialsService credentialsService) {
         return credentialsService::execute;
+    }
+
+    @Bean
+    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        return httpSecurity
+            .authorizeHttpRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
+            .csrf().ignoringRequestMatchers(toH2Console())
+            .and()
+            .headers()
+            .frameOptions().sameOrigin()
+            .and()
+            .formLogin()
+            .and()
+            .build();
     }
 }

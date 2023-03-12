@@ -39,8 +39,7 @@ public class GenerateUserAtStart {
                 "test",
                 passwordEncoder.encode("test").getBytes(UTF_8),
                 new HashSet<>()
-            )
-                .addRole(admin);
+            ).addRole(admin);
 
             userRepository.save(user);
         };
