@@ -3,6 +3,7 @@ package cmahy.springapp.resourceserver.controller.rest;
 import cmahy.springapp.resourceserver.domain.TacoOrder;
 import cmahy.springapp.resourceserver.repository.OrderRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -13,6 +14,7 @@ import static org.springframework.http.MediaType.TEXT_XML_VALUE;
     path = "/api/taco-order",
     produces = { APPLICATION_JSON_VALUE, TEXT_XML_VALUE }
 )
+@PreAuthorize("isAuthenticated()")
 public class TacoOrderController {
     private final OrderRepository orderRepository;
 
