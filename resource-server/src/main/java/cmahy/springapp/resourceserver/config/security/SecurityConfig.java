@@ -31,6 +31,7 @@ public class SecurityConfig {
     }
 
     @Bean
+    @Order(Ordered.HIGHEST_PRECEDENCE)
     public SecurityFilterChain securityFilterChain(
         HttpSecurity httpSecurity,
         List<HttpSecurityConfig> configs
