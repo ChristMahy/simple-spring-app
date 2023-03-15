@@ -2,17 +2,7 @@ spring:
   datasource:
     generate-unique-name: false
     name: taco-cloud
-  mvc:
-    throw-exception-if-no-handler-found: true
-  web:
-    resources:
-      add-mappings: false
 
 taco:
   orders:
     page-size: 15
-
-server:
-  servlet:
-    encoding:
-      force: true
