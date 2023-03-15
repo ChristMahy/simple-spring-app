@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -63,8 +64,10 @@ public class SecurityConfig {
 
     @Bean
     public ObjectMapper objectMapper() {
-        return new ObjectMapper().registerModules(
+        return Jackson2ObjectMapperBuilder.json()
+            .modules(
                 new ProblemModule(),
-                new ConstraintViolationProblemModule());
+                new ConstraintViolationProblemModule()
+            ).build();
     }
 }
