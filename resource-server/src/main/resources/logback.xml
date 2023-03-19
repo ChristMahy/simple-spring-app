@@ -1,4 +1,6 @@
 <configuration>
+    <logger name="cmahy.springapp.resourceserver" level="DEBUG" />
+
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>

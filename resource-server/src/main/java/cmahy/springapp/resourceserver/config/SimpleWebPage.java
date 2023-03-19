@@ -9,7 +9,6 @@ public class SimpleWebPage implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/without-controller").setViewName("no-controller");
-        registry.addViewController("/login");
         registry.addViewController("/error");
     }
 }

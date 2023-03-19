@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: taco-server
   datasource:
     generate-unique-name: false
     name: taco-cloud

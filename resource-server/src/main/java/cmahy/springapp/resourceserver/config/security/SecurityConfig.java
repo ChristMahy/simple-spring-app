@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import static org.slf4j.LoggerFactory.getLogger;
+import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
 @Configuration
 @EnableMethodSecurity
@@ -38,10 +39,38 @@ public class SecurityConfig {
     }
 
     @Bean
-    @Order(Ordered.HIGHEST_PRECEDENCE)
+    @Order
     public SecurityFilterChain securityFilterChain(
         HttpSecurity httpSecurity
     ) throws Exception {
+        LOG.info("Setup normal login configuration");
+
+        httpSecurity
+            .csrf().ignoringRequestMatchers(toH2Console());
+
+        httpSecurity
+            .headers()
+            .frameOptions().sameOrigin();
+
+        LOG.info("Setup logout configuration");
+
+        httpSecurity
+            .logout(customizer -> customizer
+                .logoutSuccessUrl("/")
+            );
+
+        httpSecurity
+            .formLogin(customizer -> customizer
+                .loginPage("/login")
+                .defaultSuccessUrl("/login/form-success", true)
+            );
+
+        httpSecurity
+            .oauth2Login(customizer -> customizer
+                .loginPage("/oauth2/authorization/google")
+                .defaultSuccessUrl("/login/oauth2-success", true)
+            );
+
         LOG.info("Setup default security configuration");
 
         return httpSecurity.build();

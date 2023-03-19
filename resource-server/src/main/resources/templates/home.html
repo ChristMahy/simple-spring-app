@@ -9,7 +9,7 @@
         <link rel="stylesheet" th:href="@{/styles.css}"/>
     </head>
     <body>
-        <h1>Welcome to...</h1>
+        <span th:text="${'Welcome to... ' + name}"></span>
         <img
                 style="width: 200px; height: auto;"
                 th:src="@{/images/home-logo.jpg}"
@@ -17,6 +17,7 @@
 
         <a th:href="@{/design}">Design your taco</a>&nbsp;|&nbsp;
         <a th:href="@{/without-controller}">Page without class controller</a>&nbsp;|&nbsp;
+        <a th:href="@{/login}">Login</a>&nbsp;|&nbsp;
         <form method="POST" th:action="@{/logout}">
             <input type="submit" value="Logout"/>
         </form>

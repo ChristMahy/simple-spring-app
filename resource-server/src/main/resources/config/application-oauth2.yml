@@ -1,0 +1,27 @@
+spring-app:
+  security:
+    o-auth-2: true
+
+spring:
+  security:
+    oauth2:
+      client:
+#        provider:
+#          tacocloud:
+#            issuer-uri: http://authserver:9000
+        registration:
+#          taco-admin-client:
+#            provider: tacocloud
+#            client-id: taco-admin-client
+#            client-name: taco-admin-client-oidc
+#            client-secret: secret
+#            authorization-grant-type: authorization_code
+#            redirect-uri: "http://127.0.0.1:8080/login/oauth2/code/{registrationId}/"
+#            scope: ingredient.write, ingredient.delete, openid
+          google:
+            client-id: 631235605387-gptq556ui3mee77f1th6u0ej2jb04t7m.apps.googleusercontent.com
+            client-secret: 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
+            scope: email, profile
+#      resourceserver:
+#        jwt:
+#          jwk-set-uri: http://localhost:9000/oauth2/jwks
