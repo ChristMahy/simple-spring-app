@@ -4,6 +4,8 @@ import cmahy.springapp.resourceserver.domain.User;
 import lombok.Data;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Set;
+
 @Data
 public class RegistrationForm {
     private String username;
@@ -25,7 +27,8 @@ public class RegistrationForm {
             city,
             state,
             zip,
-            phone
+            phone,
+            Set.of()
         );
     }
 }

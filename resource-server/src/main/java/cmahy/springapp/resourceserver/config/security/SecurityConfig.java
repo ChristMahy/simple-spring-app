@@ -1,6 +1,7 @@
 package cmahy.springapp.resourceserver.config.security;
 
 import cmahy.springapp.resourceserver.repository.UserRepository;
+import cmahy.springapp.resourceserver.service.GetUserCredentialsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.springframework.context.annotation.Bean;
@@ -30,12 +31,9 @@ public class SecurityConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService(UserRepository userRepository) {
-        return username -> userRepository.findByUsername(username)
-            .map(UserSecurityDetails::new)
-            .orElseThrow(() -> new UsernameNotFoundException(
-                "User '" + username + "' not found"
-            ));
+    public UserDetailsService userDetailsService(GetUserCredentialsService userCredentialService
+    ) {
+        return userCredentialService::execute;
     }
 
     @Bean

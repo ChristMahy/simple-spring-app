@@ -55,7 +55,7 @@ public class OrderController {
             return "order-form";
         }
 
-        tacoOrder.setUser(userSecurityDetails.user());
+        tacoOrder.setUser(userSecurityDetails.getUser());
 
         log.info("Order submitted: {}", tacoOrder);
 
@@ -74,7 +74,7 @@ public class OrderController {
         model.addAttribute(
             "orders",
             orderRepository.findByUserOrderByPlacedAtDesc(
-                userSecurityDetails.user(),
+                userSecurityDetails.getUser(),
                 PageRequest.of(0, tacoOrderProperties.getPageSize())
             )
         );

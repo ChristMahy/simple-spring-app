@@ -3,6 +3,8 @@ package cmahy.springapp.resourceserver.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Collection;
+
 @Entity
 @Table(name = "user_app")
 @Data
@@ -22,4 +24,23 @@ public class User {
     private String state;
     private String zip;
     private String phoneNumber;
+
+    @ToString.Exclude
+    @ManyToMany
+    @JoinTable(
+        name = "user_app_role",
+        joinColumns = {
+            @JoinColumn(name = "user_app_id")
+        },
+        inverseJoinColumns = {
+            @JoinColumn(name = "role_id")
+        },
+        uniqueConstraints = {
+            @UniqueConstraint(
+                name = "u_user_app_role",
+                columnNames = {"user_app_id", "role_id"}
+            )
+        }
+    )
+    private Collection<Role> roles;
 }

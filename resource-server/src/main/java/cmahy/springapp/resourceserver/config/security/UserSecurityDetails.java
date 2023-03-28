@@ -6,13 +6,26 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.stream.Collectors;
 
-public record UserSecurityDetails(User user) implements UserDetails {
+public final class UserSecurityDetails implements UserDetails {
+    private final User user;
+    private final Collection<? extends GrantedAuthority> authorities;
+
+    public UserSecurityDetails(User user) {
+        this.user = user;
+        this.authorities = user.getRoles().stream()
+            .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName()))
+            .collect(Collectors.toList());
+    }
+
+    public User getUser() {
+        return user;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return authorities;
     }
 
     @Override
