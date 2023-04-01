@@ -4,7 +4,6 @@ import cmahy.springapp.resourceserver.security.oauth2.api.Google;
 import cmahy.springapp.resourceserver.security.oauth2.model.GoogleUser;
 import cmahy.springapp.resourceserver.security.oauth2.model.OAuth2UserInfo;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,11 +17,12 @@ public final class OAuth2UserFactory {
             var profile = google.getProfileDetails();
 
             System.out.println(profile);
+
             Map<String, Object> attributes = new HashMap<>();
-            attributes.put("id", profile.getId());
+            attributes.put("id", profile.getSub());
             attributes.put("name", profile.getName());
-            attributes.put("first_name", profile.getFirst_name());
-            attributes.put("last_name", profile.getLast_name());
+            attributes.put("firstName", profile.getGiven_name());
+            attributes.put("lastName", profile.getFamily_name());
             attributes.put("email", profile.getEmail());
 
             return new GoogleUser(attributes);

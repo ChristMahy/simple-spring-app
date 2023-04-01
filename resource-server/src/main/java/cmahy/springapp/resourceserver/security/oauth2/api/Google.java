@@ -12,7 +12,7 @@ public class Google extends ApiBinding {
     }
 
     public GoogleProfile getProfileDetails() {
-        System.out.println("Fetching facebook profile details");
+        System.out.println("Fetching google profile details");
         return restTemplate.getForObject(GOOGLE_GRAPH_BASE_URL, GoogleProfile.class);
     }
 }

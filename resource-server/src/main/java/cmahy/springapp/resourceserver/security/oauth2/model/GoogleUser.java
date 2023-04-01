@@ -17,13 +17,13 @@ public class GoogleUser extends OAuth2UserInfo {
 
     @Override
     public String getFirstName() {
-        return (String)attributes.get("first_name");
+        return (String)attributes.get("firstName");
     }
 
 
     @Override
     public String getLastName() {
-        return (String)attributes.get("last_name");
+        return (String)attributes.get("lastName");
     }
 
     @Override

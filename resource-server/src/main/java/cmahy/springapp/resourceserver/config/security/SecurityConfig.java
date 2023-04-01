@@ -1,18 +1,14 @@
 package cmahy.springapp.resourceserver.config.security;
 
-import cmahy.springapp.resourceserver.repository.UserRepository;
-import cmahy.springapp.resourceserver.service.GetUserCredentialsService;
+import cmahy.springapp.resourceserver.service.security.OAuth2ServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -25,15 +21,15 @@ import static org.springframework.boot.autoconfigure.security.servlet.PathReques
 public class SecurityConfig {
     private static final Logger LOG = getLogger(SecurityConfig.class);
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    private final OAuth2ServiceImpl oAuth2Service;
+
+    public SecurityConfig(OAuth2ServiceImpl oAuth2Service) {
+        this.oAuth2Service = oAuth2Service;
     }
 
     @Bean
-    public UserDetailsService userDetailsService(GetUserCredentialsService userCredentialService
-    ) {
-        return userCredentialService::execute;
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
@@ -60,13 +56,13 @@ public class SecurityConfig {
         httpSecurity
             .formLogin(customizer -> customizer
                 .loginPage("/login")
-                .defaultSuccessUrl("/login/form-success", true)
             );
 
         httpSecurity
             .oauth2Login(customizer -> customizer
-                .loginPage("/oauth2/authorization/google")
-                .defaultSuccessUrl("/login/oauth2-success", true)
+                .loginPage("/login")
+                .userInfoEndpoint()
+                .userService(oAuth2Service)
             );
 
         LOG.info("Setup default security configuration");

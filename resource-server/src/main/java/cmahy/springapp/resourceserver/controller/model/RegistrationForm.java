@@ -1,9 +1,12 @@
 package cmahy.springapp.resourceserver.controller.model;
 
+import cmahy.springapp.resourceserver.domain.Role;
 import cmahy.springapp.resourceserver.domain.User;
+import cmahy.springapp.resourceserver.security.common.AuthProvider;
 import lombok.Data;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -28,7 +31,12 @@ public class RegistrationForm {
             state,
             zip,
             phone,
-            Set.of()
+            AuthProvider.LOCAL,
+            false,
+            false,
+            true,
+            false,
+            List.of()
         );
     }
 }

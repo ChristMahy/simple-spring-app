@@ -6,9 +6,9 @@ import lombok.ToString;
 @Data
 @ToString
 public class GoogleProfile {
-    private String id;
+    private String sub;
     private String name;
     private String email;
-    private String first_name;
-    private String last_name;
+    private String given_name;
+    private String family_name;
 }

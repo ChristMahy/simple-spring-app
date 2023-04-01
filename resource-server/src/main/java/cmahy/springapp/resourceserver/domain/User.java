@@ -1,5 +1,6 @@
 package cmahy.springapp.resourceserver.domain;
 
+import cmahy.springapp.resourceserver.security.common.AuthProvider;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,9 +25,20 @@ public class User {
     private String state;
     private String zip;
     private String phoneNumber;
+    @Enumerated(EnumType.STRING)
+    private AuthProvider authProvider;
+
+    @Column(columnDefinition = "smallint default 0")
+    private Boolean isExpired;
+    @Column(columnDefinition = "smallint default 0")
+    private Boolean isLocked;
+    @Column(columnDefinition = "smallint default 1")
+    private Boolean isEnabled;
+    @Column(columnDefinition = "smallint default 0")
+    private Boolean isCredentialsExpired = false;
 
     @ToString.Exclude
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "user_app_role",
         joinColumns = {
