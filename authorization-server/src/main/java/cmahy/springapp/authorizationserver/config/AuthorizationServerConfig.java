@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
@@ -16,9 +17,11 @@ import org.springframework.security.oauth2.server.authorization.client.InMemoryR
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
+import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 
 import java.util.UUID;
 
@@ -32,6 +35,19 @@ public class AuthorizationServerConfig {
     @Order(Ordered.HIGHEST_PRECEDENCE)
     public SecurityFilterChain authorizationSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(httpSecurity);
+
+        httpSecurity.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
+            .oidc(withDefaults());
+
+        httpSecurity
+            // Redirect to the login page when not authenticated from the
+            // authorization endpoint
+            .exceptionHandling((exceptions) -> exceptions
+                .authenticationEntryPoint(
+                    new LoginUrlAuthenticationEntryPoint("/login"))
+            )
+            // Accept access tokens for User Info and/or Client Registration
+            .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
 
         return httpSecurity
             .formLogin(withDefaults())
@@ -49,12 +65,9 @@ public class AuthorizationServerConfig {
             .clientAuthenticationMethod(CLIENT_SECRET_BASIC)
             .authorizationGrantType(AUTHORIZATION_CODE)
             .authorizationGrantType(REFRESH_TOKEN)
-//            .authorizationGrantType(CLIENT_CREDENTIALS)
-            .redirectUri("http://127.0.0.1:9090/login/oauth2/code/taco-admin-client-oidc")
-//            .redirectUri("http://127.0.0.1:8080/authorized")
-//            .postLogoutRedirectUri("http://127.0.0.1:8080/index")
+            .redirectUri("http://clientserver:9090/login/oauth2/code/taco-admin-client-oidc")
             .scope(OidcScopes.OPENID)
-//            .scope(OidcScopes.PROFILE)
+            .scope("ingredient.read")
             .scope("ingredient.write")
             .scope("ingredient.delete")
             .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
