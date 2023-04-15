@@ -19,6 +19,7 @@
 
     <modules>
         <module>resource-server</module>
+        <module>client-server</module>
         <module>authorization-server</module>
     </modules>
 
