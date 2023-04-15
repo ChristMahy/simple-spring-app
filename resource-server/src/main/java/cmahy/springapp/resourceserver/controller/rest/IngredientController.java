@@ -22,12 +22,13 @@ public class IngredientController {
     }
 
     @GetMapping
+    @PreAuthorize("isAuthenticated() && hasAuthority('SCOPE_" + READ + "')")
     public Iterable<Ingredient> getAll() {
         return ingredientRepository.findAll();
     }
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('SCOPE_" + WRITE + "')")
+    @PreAuthorize("isAuthenticated() && hasAuthority('SCOPE_" + WRITE + "')")
     @ResponseStatus(HttpStatus.CREATED)
     public Ingredient create(@RequestBody Ingredient ingredient) {
         return null;
@@ -35,7 +36,7 @@ public class IngredientController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('SCOPE_" + DELETE + "')")
+    @PreAuthorize("isAuthenticated() && hasAuthority('SCOPE_" + DELETE + "')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("id") String id) {
         ingredientRepository.deleteById(id);

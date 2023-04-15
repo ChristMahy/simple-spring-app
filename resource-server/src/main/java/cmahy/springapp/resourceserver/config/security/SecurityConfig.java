@@ -9,6 +9,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -64,6 +65,9 @@ public class SecurityConfig {
                 .userInfoEndpoint()
                 .userService(oAuth2Service)
             );
+
+        httpSecurity
+            .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
 
         LOG.info("Setup default security configuration");
 

@@ -22,7 +22,7 @@ public class IngredientScheduler {
         LOG.info("Run ingredient template");
 
         try {
-            Iterable forObject = restTemplate.getForObject("http://localhost:8080/ingredient", Iterable.class);
+            Iterable forObject = restTemplate.getForObject("http://resourceserver:8080/ingredient", Iterable.class);
 
             if (forObject != null) {
                 forObject.forEach(ingredient -> LOG.info("Ingredient: {}", ingredient));

@@ -6,6 +6,7 @@ public final class EndpointAuthorityConstant {
     public static final class Ingredient {
         private Ingredient() {}
 
+        public static final String READ = "ingredient.read";
         public static final String WRITE = "ingredient.write";
         public static final String DELETE = "ingredient.delete";
     }
