@@ -21,6 +21,8 @@
         <module>resource-server</module>
         <module>client-server</module>
         <module>authorization-server</module>
+
+        <module>broker</module>
     </modules>
 
     <dependencyManagement>
