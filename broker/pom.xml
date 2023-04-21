@@ -5,19 +5,19 @@
 
     <parent>
         <groupId>cmahy</groupId>
-        <artifactId>broker</artifactId>
+        <artifactId>spring-app</artifactId>
         <version>DEV-SNAPSHOT</version>
     </parent>
 
-    <artifactId>jms</artifactId>
+    <artifactId>broker</artifactId>
     <version>DEV-SNAPSHOT</version>
-    <name>jms</name>
-    <description>JMS Broker</description>
+    <name>Brokers</name>
+    <description>Brokers</description>
 
     <packaging>pom</packaging>
 
     <modules>
-        <module>jms-client</module>
-        <module>jms-resource</module>
+        <module>jms</module>
+        <module>rabbitmq</module>
     </modules>
 </project>

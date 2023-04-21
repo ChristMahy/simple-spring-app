@@ -4,14 +4,14 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>cmahy</groupId>
-        <artifactId>jms</artifactId>
+        <artifactId>rabbitmq</artifactId>
         <version>DEV-SNAPSHOT</version>
     </parent>
 
-    <artifactId>jms-resource</artifactId>
+    <artifactId>rabbitmq-resource</artifactId>
     <version>DEV-SNAPSHOT</version>
-    <name>jms-resource</name>
-    <description>JMS (Java Message Service) resource</description>
+    <name>rabbitmq-resource</name>
+    <description>RabbitMQ resource</description>
 
     <dependencies>
         <dependency>

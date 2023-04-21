@@ -9,15 +9,15 @@
         <version>DEV-SNAPSHOT</version>
     </parent>
 
-    <artifactId>jms</artifactId>
+    <artifactId>rabbitmq</artifactId>
     <version>DEV-SNAPSHOT</version>
-    <name>jms</name>
-    <description>JMS Broker</description>
+    <name>rabbitmq</name>
+    <description>RabbitMQ Broker</description>
 
     <packaging>pom</packaging>
 
     <modules>
-        <module>jms-client</module>
-        <module>jms-resource</module>
+        <module>rabbitmq-client</module>
+        <module>rabbitmq-resource</module>
     </modules>
 </project>

@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>cmahy</groupId>
-        <artifactId>broker</artifactId>
+        <artifactId>jms</artifactId>
         <version>DEV-SNAPSHOT</version>
     </parent>
 

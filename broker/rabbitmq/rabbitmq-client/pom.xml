@@ -4,14 +4,14 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>cmahy</groupId>
-        <artifactId>jms</artifactId>
+        <artifactId>rabbitmq</artifactId>
         <version>DEV-SNAPSHOT</version>
     </parent>
 
-    <artifactId>jms-resource</artifactId>
+    <artifactId>rabbitmq-client</artifactId>
     <version>DEV-SNAPSHOT</version>
-    <name>jms-resource</name>
-    <description>JMS (Java Message Service) resource</description>
+    <name>rabbitmq-client</name>
+    <description>RabbitMQ client</description>
 
     <dependencies>
         <dependency>
@@ -76,7 +76,6 @@
             <artifactId>jackson-databind</artifactId>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jdk8 -->
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jdk8</artifactId>
