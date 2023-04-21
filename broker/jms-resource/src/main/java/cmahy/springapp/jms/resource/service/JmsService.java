@@ -17,7 +17,13 @@ public class JmsService {
 
     public void sendMessage(Message message) {
         jms.convertAndSend(
-            JmsQueue.TACOCLOUD_MESSAGE, message
+            JmsQueue.TACOCLOUD_MESSAGE,
+            message,
+            (m) -> {
+                m.setStringProperty("X_METADATA_HEADER", "More datas");
+
+                return m;
+            }
         );
     }
 }
