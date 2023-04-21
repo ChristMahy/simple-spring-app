@@ -4,3 +4,9 @@ server:
 spring:
   application:
     name: jms-resource
+  artemis:
+    user: admin
+    password: admin
+  jms:
+    template:
+      default-destination: tacocloud
