@@ -1,7 +1,7 @@
 package cmahy.springapp.jms.resource.service;
 
 import cmahy.springapp.jms.resource.JmsQueue;
-import cmahy.springapp.jms.resource.dto.Message;
+import cmahy.springapp.jms.resource.domain.Message;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package cmahy.springapp.jms.resource.dto;
+package cmahy.springapp.jms.resource.domain;
 
 import java.time.LocalDateTime;
 

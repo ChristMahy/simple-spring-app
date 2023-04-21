@@ -2,7 +2,7 @@ package cmahy.springapp.jms.resource.controller;
 
 import cmahy.springapp.jms.resource.controller.vo.input.MessageInputVO;
 import cmahy.springapp.jms.resource.controller.vo.output.MessageOutputVO;
-import cmahy.springapp.jms.resource.dto.Message;
+import cmahy.springapp.jms.resource.domain.Message;
 import cmahy.springapp.jms.resource.service.JmsService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

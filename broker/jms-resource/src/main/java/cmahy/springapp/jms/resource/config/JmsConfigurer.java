@@ -1,6 +1,6 @@
 package cmahy.springapp.jms.resource.config;
 
-import cmahy.springapp.jms.resource.dto.Message;
+import cmahy.springapp.jms.resource.domain.Message;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
