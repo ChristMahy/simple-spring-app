@@ -1,17 +1,26 @@
 package cmahy.springapp.jms.client.controller;
 
-import cmahy.springapp.jms.client.controller.vo.output.Message;
+import cmahy.springapp.jms.client.controller.vo.output.MessageOutputVO;
+import cmahy.springapp.jms.client.service.MessageService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(path = "/client", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ClientController {
 
+    private final MessageService messageService;
+
+    public ClientController(MessageService messageService) {
+        this.messageService = messageService;
+    }
+
     @GetMapping
-    public Message getMessage() {
-        return new Message("Test it");
+    public List<MessageOutputVO> getMessages() {
+        return messageService.getMessages();
     }
 }
