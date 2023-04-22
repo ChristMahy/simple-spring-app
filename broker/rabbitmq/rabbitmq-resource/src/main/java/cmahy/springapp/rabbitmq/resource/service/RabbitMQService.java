@@ -17,7 +17,14 @@ public class RabbitMQService {
     public void sendMessage(Message message) {
         rabbit.convertAndSend(
             RabbitMQQueue.TACOCLOUD_MESSAGE,
-            message
+            message,
+            (m) -> {
+                final var props = m.getMessageProperties();
+
+                props.setHeader("X_METADATA_HEADER", "More datas");
+
+                return m;
+            }
         );
     }
 }
