@@ -4,3 +4,8 @@ server:
 spring:
   application:
     name: rabbitmq-client
+
+application:
+  rabbitmq:
+    consumer:
+      type: "listener"
