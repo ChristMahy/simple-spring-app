@@ -4,3 +4,7 @@ server:
 spring:
   application:
     name: rabbitmq-resource
+  rabbitmq:
+    template:
+      exchange: tacocloud.message
+      routing-key: broadcast
