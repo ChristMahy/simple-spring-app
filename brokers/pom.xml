@@ -9,7 +9,7 @@
         <version>DEV-SNAPSHOT</version>
     </parent>
 
-    <artifactId>broker</artifactId>
+    <artifactId>brokers</artifactId>
     <version>DEV-SNAPSHOT</version>
     <name>Brokers</name>
     <description>Brokers</description>

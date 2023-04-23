@@ -22,7 +22,7 @@
         <module>client-server</module>
         <module>authorization-server</module>
 
-        <module>broker</module>
+        <module>brokers</module>
     </modules>
 
     <dependencyManagement>
