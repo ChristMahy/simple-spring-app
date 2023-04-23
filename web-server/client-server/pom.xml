@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>cmahy</groupId>
-        <artifactId>spring-app</artifactId>
+        <artifactId>web-server</artifactId>
         <version>DEV-SNAPSHOT</version>
     </parent>
 

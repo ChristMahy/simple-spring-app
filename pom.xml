@@ -19,7 +19,6 @@
 
     <modules>
         <module>resource-server</module>
-        <module>client-server</module>
         <module>web-server</module>
 
         <module>brokers</module>
