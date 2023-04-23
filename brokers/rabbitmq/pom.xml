@@ -17,8 +17,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>rabbitmq-client</module>
-        <module>rabbitmq-resource</module>
+        <module>rabbitmq-consumer</module>
+        <module>rabbitmq-publisher</module>
     </modules>
 
     <dependencies>
