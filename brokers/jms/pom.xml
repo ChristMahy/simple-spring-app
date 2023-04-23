@@ -17,8 +17,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>jms-client</module>
-        <module>jms-resource</module>
+        <module>jms-consumer</module>
+        <module>jms-publisher</module>
     </modules>
 
     <dependencies>

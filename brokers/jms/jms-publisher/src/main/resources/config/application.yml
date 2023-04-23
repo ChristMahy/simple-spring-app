@@ -1,0 +1,12 @@
+server:
+  port: 8091
+
+spring:
+  application:
+    name: jms-publisher
+  artemis:
+    user: admin
+    password: admin
+  jms:
+    template:
+      default-destination: tacocloud
