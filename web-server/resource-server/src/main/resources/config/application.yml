@@ -7,4 +7,6 @@ spring:
 
 taco:
   orders:
+    sub-sample:
+      test-it: 'exact-match'
     page-size: 15

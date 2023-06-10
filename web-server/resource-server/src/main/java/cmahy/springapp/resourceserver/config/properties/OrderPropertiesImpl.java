@@ -1,6 +1,8 @@
 package cmahy.springapp.resourceserver.config.properties;
 
+import cmahy.springapp.resourceserver.config.properties.nested.NestedPropertiesSample;
 import cmahy.springapp.resourceserver.properties.OrderProperties;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.Data;
@@ -16,4 +18,7 @@ public class OrderPropertiesImpl implements OrderProperties {
     @Min(value = 5, message = "Must be between 5 and 25")
     @Max(value = 25, message = "Must be between 5 and 25")
     private int pageSize = 20;
+
+    @Valid
+    private NestedPropertiesSample subSample = new NestedPropertiesSample();
 }
