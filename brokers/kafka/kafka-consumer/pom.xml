@@ -2,24 +2,22 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>cmahy</groupId>
-        <artifactId>spring-app</artifactId>
+        <artifactId>kafka</artifactId>
         <version>DEV-SNAPSHOT</version>
     </parent>
 
-    <artifactId>brokers</artifactId>
+    <artifactId>kafka-consumer</artifactId>
     <version>DEV-SNAPSHOT</version>
-    <name>Brokers</name>
-    <description>Brokers</description>
+    <name>kafka-consumer</name>
+    <description>Kafka client</description>
 
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>jms</module>
-        <module>rabbitmq</module>
-        <module>kafka</module>
-        <module>rest-resources</module>
-    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>cmahy</groupId>
+            <artifactId>consumer</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+    </dependencies>
 </project>
