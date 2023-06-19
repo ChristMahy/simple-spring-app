@@ -1,8 +1,8 @@
 package cmahy.springapp.jms.consumer.service;
 
+import cmahy.springapp.restresource.consumer.domain.Message;
+import cmahy.springapp.restresource.consumer.repository.MessageRepository;
 import cmahy.springapp.jms.consumer.JmsQueue;
-import cmahy.springapp.jms.consumer.domain.Message;
-import cmahy.springapp.jms.consumer.repository.MessageRepository;
 import org.slf4j.Logger;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,9 @@ public class JmsListenerService {
 
     private final MessageRepository messageRepository;
 
-    public JmsListenerService(MessageRepository messageRepository) {
+    public JmsListenerService(
+            MessageRepository messageRepository
+    ) {
         this.messageRepository = messageRepository;
     }
 

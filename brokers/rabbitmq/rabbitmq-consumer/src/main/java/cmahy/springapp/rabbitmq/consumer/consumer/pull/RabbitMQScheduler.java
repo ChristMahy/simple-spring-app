@@ -1,7 +1,7 @@
 package cmahy.springapp.rabbitmq.consumer.consumer.pull;
 
 import cmahy.springapp.rabbitmq.consumer.RabbitMQQueue;
-import cmahy.springapp.rabbitmq.consumer.domain.Message;
+import cmahy.springapp.restresource.consumer.domain.Message;
 import cmahy.springapp.rabbitmq.consumer.service.RabbitMQService;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

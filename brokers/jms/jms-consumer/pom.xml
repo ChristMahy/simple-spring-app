@@ -12,4 +12,12 @@
     <version>DEV-SNAPSHOT</version>
     <name>jms-consumer</name>
     <description>JMS (Java Message Service) client</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>cmahy</groupId>
+            <artifactId>consumer</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+    </dependencies>
 </project>

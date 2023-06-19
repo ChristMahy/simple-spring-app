@@ -2,22 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>cmahy</groupId>
-        <artifactId>rabbitmq</artifactId>
+        <artifactId>rest-resources</artifactId>
         <version>DEV-SNAPSHOT</version>
     </parent>
 
-    <artifactId>rabbitmq-consumer</artifactId>
+    <artifactId>consumer</artifactId>
     <version>DEV-SNAPSHOT</version>
-    <name>rabbitmq-consumer</name>
-    <description>RabbitMQ client</description>
-
-    <dependencies>
-        <dependency>
-            <groupId>cmahy</groupId>
-            <artifactId>consumer</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-    </dependencies>
+    <name>Consumer</name>
+    <description>Consumer REST resources</description>
 </project>

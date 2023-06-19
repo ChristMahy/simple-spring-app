@@ -12,4 +12,12 @@
     <version>DEV-SNAPSHOT</version>
     <name>jms-publisher</name>
     <description>JMS (Java Message Service) resource</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>cmahy</groupId>
+            <artifactId>publisher</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+    </dependencies>
 </project>

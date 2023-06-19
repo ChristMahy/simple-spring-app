@@ -1,6 +1,6 @@
 package cmahy.springapp.jms.publisher.config;
 
-import cmahy.springapp.jms.publisher.domain.Message;
+import cmahy.springapp.restresource.publisher.domain.Message;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

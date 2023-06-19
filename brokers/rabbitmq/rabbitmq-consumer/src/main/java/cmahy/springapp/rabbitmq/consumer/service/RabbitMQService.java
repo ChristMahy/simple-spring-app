@@ -1,7 +1,7 @@
 package cmahy.springapp.rabbitmq.consumer.service;
 
-import cmahy.springapp.rabbitmq.consumer.domain.Message;
-import cmahy.springapp.rabbitmq.consumer.repository.MessageRepository;
+import cmahy.springapp.restresource.consumer.domain.Message;
+import cmahy.springapp.restresource.consumer.repository.MessageRepository;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 

@@ -1,12 +1,13 @@
 package cmahy.springapp.rabbitmq.publisher.service;
 
 import cmahy.springapp.rabbitmq.publisher.RabbitMQQueue;
-import cmahy.springapp.rabbitmq.publisher.domain.Message;
+import cmahy.springapp.restresource.publisher.domain.Message;
+import cmahy.springapp.restresource.publisher.service.SenderMessage;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RabbitMQService {
+public class RabbitMQService implements SenderMessage {
 
     private final RabbitTemplate rabbit;
 
