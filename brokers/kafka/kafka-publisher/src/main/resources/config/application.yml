@@ -4,3 +4,6 @@ server:
 spring:
   application:
     name: kafka-publisher
+  kafka:
+    bootstrap-servers:
+      - localhost:9092
