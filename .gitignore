@@ -33,3 +33,5 @@ build/
 .vscode/
 
 mykeys.jks
+
+.DS_Store
