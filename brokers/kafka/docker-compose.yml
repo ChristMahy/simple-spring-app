@@ -1,18 +1,24 @@
 version: '2.1'
 services:
   kafka:
-    image: ubuntu/kafka:edge
+    image: ubuntu/kafka:latest
+    container_name: kafka
+    hostname: ${KAFKA_HOSTNAME:-kafka}
     ports:
       - "9092:9092"
+      - "9094:9094"
     environment:
-      - "ZOOKEEPER_HOST=zookeeper"
-      - "ZOOKEEPER_PORT=2181"
-      - "KAFKA_BROKER_ID=1"
-      - "KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:9092"
-      - "KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT"
-      - "KAFKA_INTER_BROKER_LISTENER_NAME=PLAINTEXT"
-      - "KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1"
-      - "TZ=UTC"
+      ZOOKEEPER_HOST: zookeeper
+      ZOOKEEPER_PORT: 2181
+      KAFKA_HOSTNAME: docker.for.mac.localhost
+#      KAFKA_CREATE_TOPICS: tacocloud:1:1
+      KAFKA_BROKER_ID: 1
+      KAFKA_ADVERTISED_HOST_NAME: docker.for.mac.localhost
+      KAFKA_LISTENERS: INSIDE://docker.for.mac.localhost:9092,OUTSIDE://localhost:9094
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://${KAFKA_HOSTNAME:-kafka}:9092,OUTSIDE://localhost:9094
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      TZ: UTC
     depends_on:
       - zookeeper
     networks:
@@ -20,12 +26,15 @@ services:
         aliases:
           - "kafka"
   zookeeper:
-    image: ubuntu/zookeeper:edge
+    image: ubuntu/zookeeper:latest
+    container_name: zookeeper
+    hostname: zookeeper
     ports:
       - "2181:2181"
     environment:
-      - "TZ=UTC"
-      - "ZOOKEEPER_TICK_TIME=2000"
+      TZ: UTC
+      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_CLIENT_PORT: 2181
     networks:
       backend:
         aliases:
