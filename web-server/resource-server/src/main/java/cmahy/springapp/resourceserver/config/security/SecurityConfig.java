@@ -7,13 +7,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import static cmahy.springapp.resourceserver.controller.rest.ApiUrlConstant.IntegrationUrl.BASIC_INTEGRATION_URL;
 import static org.slf4j.LoggerFactory.getLogger;
 import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
@@ -40,12 +43,19 @@ public class SecurityConfig {
     ) throws Exception {
         LOG.info("Setup normal login configuration");
 
-        httpSecurity
-            .csrf().ignoringRequestMatchers(toH2Console());
+        httpSecurity.authorizeHttpRequests(requestRegistry -> {
+            requestRegistry.requestMatchers(BASIC_INTEGRATION_URL, BASIC_INTEGRATION_URL + "/**").permitAll();
+        });
 
         httpSecurity
-            .headers()
-            .frameOptions().sameOrigin();
+            .csrf((csrf) ->
+                csrf.ignoringRequestMatchers(toH2Console())
+            );
+
+        httpSecurity
+            .headers(headersConfigurer -> headersConfigurer.frameOptions(
+                HeadersConfigurer.FrameOptionsConfig::sameOrigin
+            ));
 
         LOG.info("Setup logout configuration");
 
@@ -62,12 +72,15 @@ public class SecurityConfig {
         httpSecurity
             .oauth2Login(customizer -> customizer
                 .loginPage("/login")
-                .userInfoEndpoint()
-                .userService(oAuth2Service)
+                .userInfoEndpoint(userInfoEndpointConfig ->
+                    userInfoEndpointConfig.userService(oAuth2Service)
+                )
             );
 
         httpSecurity
-            .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
+            .oauth2ResourceServer(httpSecurityOAuth2ResourceServerConfigurer ->
+                httpSecurityOAuth2ResourceServerConfigurer.jwt(Customizer.withDefaults())
+            );
 
         LOG.info("Setup default security configuration");
 
