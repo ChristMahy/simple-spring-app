@@ -10,4 +10,10 @@ public final class ApiUrlConstant {
 
         public static final String BASIC_INGREDIENT_URL = BASIC_URL + "/ingredient";
     }
+
+    public static final class IntegrationUrl {
+        private IntegrationUrl() {}
+
+        public static final String BASIC_INTEGRATION_URL = BASIC_URL + "/integration";
+    }
 }
