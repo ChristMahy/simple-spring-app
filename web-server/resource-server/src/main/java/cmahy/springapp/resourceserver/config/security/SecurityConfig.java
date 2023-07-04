@@ -6,19 +6,23 @@ import org.slf4j.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
+import org.springframework.security.config.annotation.web.configurers.*;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import static cmahy.springapp.resourceserver.controller.rest.ApiUrlConstant.IntegrationUrl.BASIC_INTEGRATION_URL;
 import static org.slf4j.LoggerFactory.getLogger;
 import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
+import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toStaticResources;
 
 @Configuration
 @EnableMethodSecurity
@@ -37,40 +41,34 @@ public class SecurityConfig {
     }
 
     @Bean
-    @Order
     public SecurityFilterChain securityFilterChain(
         HttpSecurity httpSecurity
     ) throws Exception {
+
         LOG.info("Setup normal login configuration");
 
-        httpSecurity.authorizeHttpRequests(requestRegistry -> {
-            requestRegistry.requestMatchers(BASIC_INTEGRATION_URL, BASIC_INTEGRATION_URL + "/**").permitAll();
-        });
+        httpSecurity
+            .csrf(AbstractHttpConfigurer::disable);
+
+        httpSecurity.sessionManagement(sessionConfigurer ->
+            sessionConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        );
 
         httpSecurity
-            .csrf((csrf) ->
-                csrf.ignoringRequestMatchers(toH2Console())
-            );
-
-        httpSecurity
-            .headers(headersConfigurer -> headersConfigurer.frameOptions(
+            .headers(configurer -> configurer.frameOptions(
                 HeadersConfigurer.FrameOptionsConfig::sameOrigin
             ));
 
         LOG.info("Setup logout configuration");
 
         httpSecurity
-            .logout(customizer -> customizer
-                .logoutSuccessUrl("/")
-            );
+            .logout(configurer -> configurer.logoutSuccessUrl("/"));
 
         httpSecurity
-            .formLogin(customizer -> customizer
-                .loginPage("/login")
-            );
+            .formLogin(configurer -> configurer.loginPage("/login"));
 
         httpSecurity
-            .oauth2Login(customizer -> customizer
+            .oauth2Login(configurer -> configurer
                 .loginPage("/login")
                 .userInfoEndpoint(userInfoEndpointConfig ->
                     userInfoEndpointConfig.userService(oAuth2Service)
@@ -78,8 +76,8 @@ public class SecurityConfig {
             );
 
         httpSecurity
-            .oauth2ResourceServer(httpSecurityOAuth2ResourceServerConfigurer ->
-                httpSecurityOAuth2ResourceServerConfigurer.jwt(Customizer.withDefaults())
+            .oauth2ResourceServer(configurer ->
+                configurer.jwt(Customizer.withDefaults())
             );
 
         LOG.info("Setup default security configuration");

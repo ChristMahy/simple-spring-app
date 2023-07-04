@@ -15,7 +15,7 @@ import java.io.IOException;
 public class FileWriterIntegrationConfigurer {
 
     @Bean
-    public IntegrationFlow fileWriterFlow(@Value("spring.application.name") String appName) {
+    public IntegrationFlow fileWriterFlow(@Value("${spring.application.name:test-app-spring}") String appName) {
         return (flow) -> {
             try {
                 flow

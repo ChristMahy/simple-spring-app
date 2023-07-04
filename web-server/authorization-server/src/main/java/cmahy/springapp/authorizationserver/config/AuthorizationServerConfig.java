@@ -47,7 +47,9 @@ public class AuthorizationServerConfig {
                     new LoginUrlAuthenticationEntryPoint("/login"))
             )
             // Accept access tokens for User Info and/or Client Registration
-            .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
+            .oauth2ResourceServer(oAuth2ResourceServerConfigurer ->
+                oAuth2ResourceServerConfigurer.jwt(withDefaults())
+            );
 
         return httpSecurity
             .formLogin(withDefaults())
