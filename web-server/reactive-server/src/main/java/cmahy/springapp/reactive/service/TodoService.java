@@ -12,6 +12,10 @@ public class TodoService {
     private final Set<Todo> todos = new HashSet<>();
 
     public Todo save(Todo todo) {
+        Long lastId = this.todos.stream().max(Comparator.comparingLong(Todo::getId)).map(Todo::getId).orElse(0L);
+
+        todo.setId(lastId + 1);
+
         this.todos.add(todo);
 
         return todo;
