@@ -3,8 +3,8 @@ package cmahy.springapp.reactive.service;
 import cmahy.springapp.reactive.domain.Todo;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class TodoService {
@@ -19,5 +19,13 @@ public class TodoService {
 
     public Set<Todo> all() {
         return this.todos;
+    }
+
+    public Optional<Todo> byId(Long id) {
+        Set<Todo> todosFiltered = todos.stream()
+            .filter(todo -> Objects.equals(id, todo.getId()))
+            .collect(Collectors.toSet());
+
+        return todosFiltered.size() == 1 ? todosFiltered.stream().findFirst() : Optional.empty();
     }
 }
