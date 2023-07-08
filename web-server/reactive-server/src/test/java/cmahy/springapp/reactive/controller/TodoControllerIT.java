@@ -1,5 +1,6 @@
 package cmahy.springapp.reactive.controller;
 
+import cmahy.springapp.reactive.domain.Todo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +32,8 @@ class TodoControllerIT {
             testClient.get().uri("/todo?limit=100")
                 .exchange()
                 .expectStatus().isOk()
-                .expectBody()
-                .jsonPath("$").isArray()
-                .jsonPath("$").isNotEmpty();
+                .expectBodyList(Todo.class)
+                .hasSize(100);
         });
     }
 }
