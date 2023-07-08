@@ -6,6 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
 
 @RestController
 @RequestMapping(path = "/ingredient")
@@ -19,7 +20,7 @@ public class IngredientController {
 
     @GetMapping
     @PreAuthorize("isAuthenticated() && hasAnyAuthority('SCOPE_ingredient.read')")
-    public Iterable<Ingredient> ingredients() {
+    public Flux<Ingredient> ingredients() {
         return ingredientService.getAll();
     }
 

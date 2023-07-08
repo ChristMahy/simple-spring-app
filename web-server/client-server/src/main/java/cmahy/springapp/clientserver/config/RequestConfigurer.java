@@ -1,62 +1,96 @@
 package cmahy.springapp.clientserver.config;
 
+import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.client.ClientHttpRequestInterceptor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.security.oauth2.client.registration.ReactiveClientRegistrationRepository;
+import org.springframework.security.oauth2.client.web.reactive.function.client.ServerOAuth2AuthorizedClientExchangeFilterFunction;
+import org.springframework.security.oauth2.client.web.server.ServerOAuth2AuthorizedClientRepository;
+import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
+
+import static org.slf4j.LoggerFactory.getLogger;
 
 @Configuration
 public class RequestConfigurer {
+
+    private final static Logger LOG = getLogger(RequestConfigurer.class);
+
     @Bean
-    public RestTemplate oauth2RestTemplate(
-        OAuth2AuthorizedClientService clientService
+    public WebClient oauth2WebClient(
+        @Value("${app.resource-server.base-url}") String resourceBaseUrl,
+        ReactiveClientRegistrationRepository clientRegistration,
+        ServerOAuth2AuthorizedClientRepository authorizedClient
     ) {
-        RestTemplate restTemplate = new RestTemplate();
+        ServerOAuth2AuthorizedClientExchangeFilterFunction oauth2 = new ServerOAuth2AuthorizedClientExchangeFilterFunction(
+            clientRegistration,
+            authorizedClient
+        );
 
-        restTemplate = applyBearerTokenInterceptor(restTemplate, clientService);
+        oauth2.setDefaultOAuth2AuthorizedClient(true);
 
-        return restTemplate;
+        return WebClient.builder()
+            .baseUrl(resourceBaseUrl)
+            .filter(oauth2)
+            .filter(logRequest())
+            .filter(logResponse())
+            .build();
     }
 
-    private RestTemplate applyBearerTokenInterceptor(
-        RestTemplate restTemplate,
-        OAuth2AuthorizedClientService clientService
-    ) {
-        ClientHttpRequestInterceptor interceptor = (request, body, execution) -> {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    private ExchangeFilterFunction logRequest() {
+        return ExchangeFilterFunction.ofRequestProcessor(clientRequest -> {
+            if (LOG.isDebugEnabled()) {
+                StringBuilder sb = new StringBuilder("Request: \n");
 
-            final String accessToken;
+                sb.append("Method=<" + clientRequest.method() + ">, URL=<" + clientRequest.url() + ">\n");
 
-            if (authentication.getClass().isAssignableFrom(OAuth2AuthenticationToken.class)) {
-                OAuth2AuthenticationToken oAuthToken = (OAuth2AuthenticationToken) authentication;
+                clientRequest
+                    .headers()
+                    .forEach((name, values) -> {
+                        values.forEach(value -> {
+                            sb
+                                .append("Header ")
+                                .append("<" + name + ">")
+                                .append(" has ")
+                                .append("<" + values + ">")
+                                .append('\n');
+                        });
+                    });
 
-                String clientRegistrationId = oAuthToken.getAuthorizedClientRegistrationId();
-
-                if (clientRegistrationId.equals("taco-admin-client-oidc")) {
-                    OAuth2AuthorizedClient client = clientService.loadAuthorizedClient(
-                        clientRegistrationId, oAuthToken.getName()
-                    );
-
-                    accessToken = client.getAccessToken().getTokenValue();
-                } else {
-                    accessToken = null;
-                }
-            } else {
-                accessToken = null;
+                LOG.debug(sb.toString());
             }
 
-            request.getHeaders().add("Authorization", "Bearer " + accessToken);
+            return Mono.just(clientRequest);
+        });
+    }
 
-            return execution.execute(request, body);
-        };
+    private ExchangeFilterFunction logResponse() {
+        return ExchangeFilterFunction.ofResponseProcessor(clientResponse -> {
+            if (LOG.isDebugEnabled()) {
+                StringBuilder sb = new StringBuilder("Response: \n");
 
-        restTemplate.getInterceptors().add(interceptor);
+                sb.append("Status=<" + clientResponse.statusCode() + ">\n");
 
-        return restTemplate;
+                clientResponse
+                    .headers()
+                    .asHttpHeaders()
+                    .forEach((name, values) -> {
+                        values.forEach(value -> {
+                            sb
+                                .append("Header ")
+                                .append("<" + name + ">")
+                                .append(" has ")
+                                .append("<" + values + ">")
+                                .append('\n');
+                        });
+                    });
+
+                LOG.debug(sb.toString());
+            }
+
+            return Mono.just(clientResponse);
+        });
     }
 }

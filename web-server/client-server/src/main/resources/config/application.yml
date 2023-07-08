@@ -17,3 +17,7 @@ spring:
             authorization-grant-type: authorization_code
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             scope: openid,ingredient.read,ingredient.write,ingredient.delete
+
+app:
+  resource-server:
+    base-url: http://resourceserver:8080
