@@ -1,4 +1,4 @@
-package cmahy.springapp.resourceserver.reactor;
+package cmahy.springapp.reactor;
 
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;

@@ -20,6 +20,7 @@
         <module>resource-server</module>
         <module>client-server</module>
         <module>authorization-server</module>
+        <module>reactive-server</module>
     </modules>
 
 </project>

@@ -1,4 +1,4 @@
-package cmahy.springapp.resourceserver.reactor;
+package cmahy.springapp.reactor;
 
 import lombok.Data;
 import org.junit.jupiter.api.Test;
