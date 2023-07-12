@@ -26,20 +26,20 @@ public class TodoController {
         @RequestParam Optional<Long> offset,
         @RequestParam Optional<Long> limit
     ) {
-        return Flux.fromIterable(todoService.all())
-            .sort(Comparator.comparing(Todo::getId))
+        return todoService.all()
+            .sort(Comparator.comparing(Todo::id))
             .skip(offset.orElse(0L))
             .take(limit.orElse(10L));
     }
 
     @GetMapping(path = "/{id}")
     public Mono<Todo> byId(@PathVariable Long id) {
-        return Mono.justOrEmpty(todoService.byId(id));
+        return todoService.byId(id);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<Todo> create(@RequestBody Mono<Todo> todo) {
-        return todo.map(todoService::save);
+        return todo.flatMap(todoService::save);
     }
 }

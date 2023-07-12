@@ -2,29 +2,35 @@ package cmahy.springapp.reactive.config;
 
 import cmahy.springapp.reactive.domain.Todo;
 import cmahy.springapp.reactive.service.TodoService;
+import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import reactor.core.publisher.Flux;
+import reactor.core.scheduler.Schedulers;
+
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 @Configuration
-public class ApplicationConfigurer {
+public class ApplicationConfigurer implements ApplicationRunner {
 
-    @Bean
-    public ApplicationRunner populateSomeTodos(TodoService todoService) {
-        return args -> {
-            Todo todo;
+    private final TodoService todoService;
 
-            long cpt = 0L;
+    public ApplicationConfigurer(TodoService todoService) {
+        this.todoService = todoService;
+    }
 
-            while (cpt++ < 1000) {
-                todo = new Todo();
-
-                todo.setId(cpt);
-                todo.setTitle("First App with reactive " + cpt);
-                todo.setDescription("Implement my first spring app as reactive " + cpt);
-
-                todoService.save(todo);
-            }
-        };
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        Flux.fromStream(
+            IntStream.rangeClosed(3001, 4000).mapToObj(cpt -> new Todo(
+                null,
+                "First App with reactive " + cpt,
+                "Implement my first spring app as reactive " + cpt
+            ))
+        )
+            .flatMap(todoService::save)
+            .subscribeOn(Schedulers.parallel())
+            .subscribe();
     }
 }

@@ -1,13 +1,13 @@
 package cmahy.springapp.reactive.domain;
 
-import lombok.Data;
+import org.springframework.data.annotation.Id;
 
-@Data
-public class Todo {
-
-    private Long id;
-
-    private String title;
-
-    private String description;
+public record Todo(
+    @Id Long id,
+    String title,
+    String description
+) {
+    public Todo(String title, String description) {
+        this(null, title, description);
+    }
 }

@@ -34,10 +34,10 @@ class TodoControllerIT {
     @Test
     void create() {
         assertDoesNotThrow(() -> {
-            final Todo todo = new Todo();
-
-            todo.setTitle("New title...");
-            todo.setDescription("New description...");
+            final Todo todo = new Todo(
+                "New title...",
+                "New description..."
+            );
 
             Mono<Todo> unsavedTodo = Mono.just(todo);
 
@@ -51,9 +51,9 @@ class TodoControllerIT {
 
             assertThat(actualResult.getResponseBody()).isNotNull();
 
-            assertThat(actualResult.getResponseBody().getId()).isNotNull();
-            assertThat(actualResult.getResponseBody().getDescription()).isEqualTo(todo.getDescription());
-            assertThat(actualResult.getResponseBody().getTitle()).isEqualTo(todo.getTitle());
+            assertThat(actualResult.getResponseBody().id()).isNotNull();
+            assertThat(actualResult.getResponseBody().description()).isEqualTo(todo.description());
+            assertThat(actualResult.getResponseBody().title()).isEqualTo(todo.title());
         });
     }
 }

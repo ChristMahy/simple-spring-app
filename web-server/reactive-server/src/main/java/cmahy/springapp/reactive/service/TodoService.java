@@ -1,35 +1,41 @@
 package cmahy.springapp.reactive.service;
 
 import cmahy.springapp.reactive.domain.Todo;
+import cmahy.springapp.reactive.repository.TodoRepository;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static org.slf4j.LoggerFactory.getLogger;
+
 @Service
 public class TodoService {
 
-    private final Set<Todo> todos = new HashSet<>();
+    private static final Logger LOG = getLogger(TodoService.class);
 
-    public Todo save(Todo todo) {
-        Long lastId = this.todos.stream().max(Comparator.comparingLong(Todo::getId)).map(Todo::getId).orElse(0L);
+    private final TodoRepository todoRepository;
 
-        todo.setId(lastId + 1);
-
-        this.todos.add(todo);
-
-        return todo;
+    public TodoService(TodoRepository todoRepository) {
+        this.todoRepository = todoRepository;
     }
 
-    public Set<Todo> all() {
-        return this.todos;
+    public Mono<Todo> save(Todo todo) {
+        return todoRepository.save(todo);
     }
 
-    public Optional<Todo> byId(Long id) {
-        Set<Todo> todosFiltered = todos.stream()
-            .filter(todo -> Objects.equals(id, todo.getId()))
-            .collect(Collectors.toSet());
+    public Flux<Todo> all() {
+        return this.todoRepository
+            .findAll()
+            .doOnNext(todo -> {
+                LOG.debug("Todo: <{}>", todo);
+            });
+    }
 
-        return todosFiltered.size() == 1 ? todosFiltered.stream().findFirst() : Optional.empty();
+    public Mono<Todo> byId(Long id) {
+        return todoRepository.findById(id);
     }
 }
