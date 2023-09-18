@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+        xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>brokers</artifactId>
+    <version>DEV-SNAPSHOT</version>
+
+    <parent>
+        <groupId>cmahy</groupId>
+        <artifactId>bom</artifactId>
+        <version>DEV-SNAPSHOT</version>
+    </parent>
+
+    <name>spring-brokers</name>
+    <description>Spring Brokers sample project</description>
+
+    <packaging>pom</packaging>
+
+    <properties>
+        <cmahy.version>DEV-SNAPSHOT</cmahy.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>cmahy</groupId>
+                <artifactId>common</artifactId>
+                <version>${cmahy.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <modules>
+        <module>consumer</module>
+        <module>publisher</module>
+    </modules>
+</project>
