@@ -6,7 +6,7 @@
 >
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>rabbitmq</artifactId>
+    <artifactId>publisher-rabbitmq</artifactId>
     <version>DEV-SNAPSHOT</version>
 
     <packaging>pom</packaging>

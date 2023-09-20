@@ -18,6 +18,8 @@
     </parent>
 
     <modules>
+        <module>api</module>
+        <module>core</module>
         <module>jms</module>
         <module>kafka</module>
         <module>rabbitmq</module>
