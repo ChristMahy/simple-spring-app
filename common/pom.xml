@@ -6,19 +6,30 @@
 >
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>cmahy</groupId>
     <artifactId>common</artifactId>
     <version>DEV-SNAPSHOT</version>
-
-    <parent>
-        <groupId>cmahy</groupId>
-        <artifactId>bom</artifactId>
-        <version>DEV-SNAPSHOT</version>
-    </parent>
 
     <name>spring-common</name>
     <description>Spring common project</description>
 
     <packaging>jar</packaging>
+
+    <properties>
+        <jackson.version>2.15.2</jackson.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.fasterxml.jackson</groupId>
+                <artifactId>jackson-bom</artifactId>
+                <version>${jackson.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>

@@ -7,9 +7,11 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
-public class JsonMapperFactory {
+public final class JsonMapperFactory {
 
-    public ObjectMapper create() {
+    private JsonMapperFactory() {}
+
+    public static ObjectMapper create() {
         ObjectMapper objectMapper = new ObjectMapper();
 
         objectMapper.registerModules(new Jdk8Module(), new JavaTimeModule());
