@@ -1,4 +1,4 @@
-package cmahy.brokers.consumer.vo.id;
+package cmahy.brokers.consumer.api.vo.id;
 
 import cmahy.common.entity.EntityId;
 
