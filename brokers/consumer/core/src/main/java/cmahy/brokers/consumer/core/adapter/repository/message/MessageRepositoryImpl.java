@@ -11,7 +11,7 @@ import java.util.Set;
 @Named
 public class MessageRepositoryImpl implements MessageRepository {
 
-    final Set<Message> messages = new HashSet<>() {{
+    private final Set<Message> messages = new HashSet<>() {{
         add(new Message(1L, LocalDateTime.now(), "Message 1"));
         add(new Message(2L, LocalDateTime.now(), "Message 2"));
         add(new Message(3L, LocalDateTime.now(), "Message 3"));
