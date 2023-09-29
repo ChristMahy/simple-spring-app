@@ -25,6 +25,7 @@
         <jakarta.inject.version>2.0.1</jakarta.inject.version>
 
         <maven-compiler.version>3.11.0</maven-compiler.version>
+        <apache.commons.lang.version>3.13.0</apache.commons.lang.version>
     </properties>
 
     <dependencyManagement>
@@ -35,6 +36,12 @@
                 <version>${spring-boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${apache.commons.lang.version}</version>
             </dependency>
 
             <dependency>
