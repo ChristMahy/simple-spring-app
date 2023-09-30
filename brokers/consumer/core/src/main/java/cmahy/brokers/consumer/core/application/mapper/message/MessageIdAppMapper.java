@@ -10,4 +10,12 @@ public interface MessageIdAppMapper {
     default MessageAppId toAppId(Long id) {
         return new MessageAppId(id);
     }
+
+    default Long toEntityId(MessageAppId id) {
+        if (id != null) {
+            return id.value();
+        }
+
+        return null;
+    }
 }

@@ -9,4 +9,6 @@ public interface MessageRepository {
     Set<Message> allMessages();
 
     Message save(Message message);
+
+    void delete(Message message);
 }

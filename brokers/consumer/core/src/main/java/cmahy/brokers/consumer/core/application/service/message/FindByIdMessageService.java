@@ -3,9 +3,8 @@ package cmahy.brokers.consumer.core.application.service.message;
 import cmahy.brokers.consumer.core.application.repository.message.MessageRepository;
 import cmahy.brokers.consumer.core.application.vo.id.MessageAppId;
 import cmahy.brokers.consumer.core.domain.Message;
-import cmahy.brokers.consumer.core.exception.MessageMoreThanOneFoundMessageException;
+import cmahy.brokers.consumer.core.exception.MoreThanOneFoundMessageException;
 import jakarta.inject.Named;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -31,7 +30,7 @@ public class FindByIdMessageService {
             .collect(Collectors.toSet());
 
         if (found.size() > 1) {
-            throw new MessageMoreThanOneFoundMessageException();
+            throw new MoreThanOneFoundMessageException();
         }
 
         return found.stream().findFirst();

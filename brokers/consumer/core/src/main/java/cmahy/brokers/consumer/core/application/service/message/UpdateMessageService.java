@@ -6,7 +6,18 @@ import jakarta.inject.Named;
 
 @Named
 public class UpdateMessageService {
+
+    private final CreateMessageService create;
+    private final DeleteMessageService delete;
+
+    public UpdateMessageService(CreateMessageService create, DeleteMessageService delete) {
+        this.create = create;
+        this.delete = delete;
+    }
+
     public Message execute(MessageInputAppVo input) {
-        throw new IllegalStateException("Not yet implemented !");
+        delete.execute(input);
+
+        return create.execute(input);
     }
 }
