@@ -1,0 +1,18 @@
+version: '2.1'
+services:
+  activeMQ-artemis:
+    image: artemis-ubuntu
+    ports:
+      - "61616:61616"
+      - "8161:8161"
+    environment:
+      - ARTEMIS_USER=ADMIN
+      - ARTEMIS_PASSWORD=ADMIN
+    networks:
+      backend:
+        aliases:
+          - "artemis"
+
+networks:
+  backend:
+    driver: bridge
