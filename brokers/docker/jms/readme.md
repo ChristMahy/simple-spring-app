@@ -19,6 +19,7 @@ mvn clean package
 ## Etape 4: Préparer pour compiler l'image docker
 
 Créer un répertoire "docker" dans ce dernier: [repertoire du projet]/artemis-distribution/target/apache-artemis-2.9.0-bin/apache-artemis-2.9.0
+
 Soit executer le script prepare-docker.sh avec les paramètres qu'il faut, si vous y arrivez.
 
 Soit, du projet artemis-docker, copier les fichiers Dockerfile-centos,Dockerfile-ubuntu,docker-run.sh dans le projet artemis-distribution.
@@ -26,7 +27,9 @@ Soit, du projet artemis-docker, copier les fichiers Dockerfile-centos,Dockerfile
 cd [repertoire du projet]/artemis-docker
 
 cp Dockerfile-centos ../artemis-distribution/target/apache-artemis-2.9.0-bin/apache-artemis-2.9.0/docker/
+
 cp Dockerfile-ubuntu ../artemis-distribution/target/apache-artemis-2.9.0-bin/apache-artemis-2.9.0/docker/
+
 cp docker-run.sh ../artemis-distribution/target/apache-artemis-2.9.0-bin/apache-artemis-2.9.0/docker/
 
 ## Etape 5: Compiler l'image docker
