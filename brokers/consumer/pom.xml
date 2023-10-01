@@ -6,16 +6,11 @@
 >
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>cmahy</groupId>
     <artifactId>consumer</artifactId>
     <version>DEV-SNAPSHOT</version>
 
     <packaging>pom</packaging>
-
-    <parent>
-        <groupId>cmahy</groupId>
-        <artifactId>brokers</artifactId>
-        <version>DEV-SNAPSHOT</version>
-    </parent>
 
     <modules>
         <module>api</module>

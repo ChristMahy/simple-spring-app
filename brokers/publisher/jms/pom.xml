@@ -13,7 +13,12 @@
 
     <parent>
         <groupId>cmahy</groupId>
-        <artifactId>publisher</artifactId>
+        <artifactId>bom</artifactId>
         <version>DEV-SNAPSHOT</version>
+        <relativePath/>
     </parent>
+
+    <properties>
+        <cmahy.common.version>DEV-SNAPSHOT</cmahy.common.version>
+    </properties>
 </project>

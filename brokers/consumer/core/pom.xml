@@ -13,20 +13,56 @@
 
     <parent>
         <groupId>cmahy</groupId>
-        <artifactId>consumer</artifactId>
+        <artifactId>bom</artifactId>
         <version>DEV-SNAPSHOT</version>
+        <relativePath/>
     </parent>
+
+    <properties>
+        <cmahy.common.version>DEV-SNAPSHOT</cmahy.common.version>
+        <cmahy.consumer.version>DEV-SNAPSHOT</cmahy.consumer.version>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+
+            <dependencies>
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-actuator</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
+            <id>jms</id>
+
+            <dependencies>
+                <dependency>
+                    <groupId>cmahy</groupId>
+                    <artifactId>consumer-jms</artifactId>
+                    <version>${cmahy.consumer.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 
     <dependencies>
         <dependency>
             <groupId>cmahy</groupId>
             <artifactId>common</artifactId>
+            <version>${cmahy.common.version}</version>
         </dependency>
 
         <dependency>
             <groupId>cmahy</groupId>
             <artifactId>consumer-api</artifactId>
-            <version>${project.parent.version}</version>
+            <version>${cmahy.consumer.version}</version>
         </dependency>
 
         <dependency>
@@ -49,22 +85,6 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
     </dependencies>
-
-    <profiles>
-        <profile>
-            <id>dev</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-
-            <dependencies>
-                <dependency>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-actuator</artifactId>
-                </dependency>
-            </dependencies>
-        </profile>
-    </profiles>
 
     <build>
         <plugins>

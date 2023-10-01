@@ -13,9 +13,14 @@
 
     <parent>
         <groupId>cmahy</groupId>
-        <artifactId>consumer</artifactId>
+        <artifactId>bom</artifactId>
         <version>DEV-SNAPSHOT</version>
+        <relativePath/>
     </parent>
+
+    <properties>
+        <cmahy.common.version>DEV-SNAPSHOT</cmahy.common.version>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -26,6 +31,7 @@
         <dependency>
             <groupId>cmahy</groupId>
             <artifactId>common</artifactId>
+            <version>${cmahy.common.version}</version>
         </dependency>
     </dependencies>
 

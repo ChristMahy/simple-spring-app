@@ -13,14 +13,21 @@
 
     <parent>
         <groupId>cmahy</groupId>
-        <artifactId>publisher</artifactId>
+        <artifactId>bom</artifactId>
         <version>DEV-SNAPSHOT</version>
+        <relativePath/>
     </parent>
+
+    <properties>
+        <cmahy.common.version>DEV-SNAPSHOT</cmahy.common.version>
+        <cmahy.publisher.api.version>DEV-SNAPSHOT</cmahy.publisher.api.version>
+    </properties>
 
     <dependencies>
         <dependency>
             <groupId>cmahy</groupId>
             <artifactId>common</artifactId>
+            <version>${cmahy.common.version}</version>
         </dependency>
 
         <dependency>
@@ -41,7 +48,7 @@
         <dependency>
             <groupId>cmahy</groupId>
             <artifactId>publisher-api</artifactId>
-            <version>${project.parent.version}</version>
+            <version>${cmahy.publisher.api.version}</version>
         </dependency>
     </dependencies>
 
