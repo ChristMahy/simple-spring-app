@@ -15,16 +15,12 @@ import java.util.Optional;
 public class SaveMessageCommand {
 
     private final SaveMessageService save;
-    private final MessageAppMapper mapper;
 
-    public SaveMessageCommand(SaveMessageService save, MessageAppMapper mapper) {
+    public SaveMessageCommand(SaveMessageService save) {
         this.save = save;
-        this.mapper = mapper;
     }
 
     public MessageOutputAppVo execute(MessageInputAppVo input, Optional<MessageAppId> id) {
-        return mapper.entityToOutput(
-            save.execute(input, id)
-        );
+        return save.execute(input, id);
     }
 }

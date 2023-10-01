@@ -1,38 +1,33 @@
 package cmahy.brokers.consumer.core.application.service.message;
 
+import cmahy.brokers.consumer.core.application.mapper.message.MessageAppMapper;
 import cmahy.brokers.consumer.core.application.repository.message.MessageRepository;
 import cmahy.brokers.consumer.core.application.vo.id.MessageAppId;
-import cmahy.brokers.consumer.core.domain.Message;
-import cmahy.brokers.consumer.core.exception.MoreThanOneFoundMessageException;
+import cmahy.brokers.consumer.core.application.vo.output.MessageOutputAppVo;
 import jakarta.inject.Named;
 
-import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Named
 public class FindByIdMessageService {
 
     private final MessageRepository repository;
+    private final MessageAppMapper mapper;
 
-    public FindByIdMessageService(MessageRepository repository) {
+    public FindByIdMessageService(
+        MessageRepository repository,
+        MessageAppMapper mapper
+    ) {
         this.repository = repository;
+        this.mapper = mapper;
     }
 
-    public Optional<Message> execute(Optional<MessageAppId> id) {
+    public Optional<MessageOutputAppVo> execute(Optional<MessageAppId> id) {
         if (id.isEmpty()) {
             return Optional.empty();
         }
 
-        Set<Message> found = repository.allMessages().stream()
-            .filter(m -> Objects.equals(m.id(), id.get().value()))
-            .collect(Collectors.toSet());
-
-        if (found.size() > 1) {
-            throw new MoreThanOneFoundMessageException();
-        }
-
-        return found.stream().findFirst();
+        return repository.findById(id.get().value())
+            .map(mapper::entityToOutput);
     }
 }

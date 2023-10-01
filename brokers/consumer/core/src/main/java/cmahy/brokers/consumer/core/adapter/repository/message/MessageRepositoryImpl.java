@@ -1,16 +1,20 @@
 package cmahy.brokers.consumer.core.adapter.repository.message;
 
 import cmahy.brokers.consumer.core.application.repository.message.MessageRepository;
+import cmahy.brokers.consumer.core.application.vo.id.MessageAppId;
 import cmahy.brokers.consumer.core.domain.Message;
 import cmahy.brokers.consumer.core.exception.ExpectedZeroMessageException;
 import cmahy.brokers.consumer.core.exception.MoreThanOneFoundMessageException;
+import cmahy.brokers.consumer.core.exception.message.IdShouldNotBeNullMessageException;
 import jakarta.inject.Named;
 import org.apache.commons.lang3.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Named
 public class MessageRepositoryImpl implements MessageRepository {
@@ -25,6 +29,19 @@ public class MessageRepositoryImpl implements MessageRepository {
     @Override
     public Set<Message> allMessages() {
         return this.messages;
+    }
+
+    @Override
+    public Optional<Message> findById(Long id) {
+        Set<Message> found = allMessages().stream()
+            .filter(m -> Objects.equals(m.id(), id))
+            .collect(Collectors.toSet());
+
+        if (found.size() > 1) {
+            throw new MoreThanOneFoundMessageException();
+        }
+
+        return found.stream().findFirst();
     }
 
     @Override
@@ -47,9 +64,13 @@ public class MessageRepositoryImpl implements MessageRepository {
     }
 
     @Override
-    public void delete(Message message) {
+    public void deleteById(Long id) {
+        if (id == null) {
+            throw new IdShouldNotBeNullMessageException();
+        }
+
         messages.stream()
-            .filter(m -> Objects.equals(m.id(), message.id()))
+            .filter(m -> Objects.equals(m.id(), id))
             .forEach(messages::remove);
     }
 }

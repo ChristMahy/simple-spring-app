@@ -3,6 +3,7 @@ package cmahy.brokers.consumer.core.application.service.message;
 import cmahy.brokers.consumer.core.application.mapper.message.MessageAppMapper;
 import cmahy.brokers.consumer.core.application.repository.message.MessageRepository;
 import cmahy.brokers.consumer.core.application.vo.input.MessageInputAppVo;
+import cmahy.brokers.consumer.core.application.vo.output.MessageOutputAppVo;
 import cmahy.brokers.consumer.core.domain.Message;
 import jakarta.inject.Named;
 
@@ -20,9 +21,11 @@ public class CreateMessageService {
         this.mapper = mapper;
     }
 
-    public Message execute(MessageInputAppVo input) {
-        return repository.save(
-            mapper.inputToEntity(input)
+    public MessageOutputAppVo execute(MessageInputAppVo input) {
+        return mapper.entityToOutput(
+            repository.save(
+                mapper.inputToEntity(input)
+            )
         );
     }
 }

@@ -2,6 +2,7 @@ package cmahy.brokers.consumer.core.application.service.message;
 
 import cmahy.brokers.consumer.core.application.vo.id.MessageAppId;
 import cmahy.brokers.consumer.core.application.vo.input.MessageInputAppVo;
+import cmahy.brokers.consumer.core.application.vo.output.MessageOutputAppVo;
 import cmahy.brokers.consumer.core.domain.Message;
 import jakarta.inject.Named;
 
@@ -24,11 +25,11 @@ public class SaveMessageService {
         this.update = update;
     }
 
-    public Message execute(MessageInputAppVo input, Optional<MessageAppId> id) {
-        Optional<Message> message = findById.execute(id);
+    public MessageOutputAppVo execute(MessageInputAppVo input, Optional<MessageAppId> id) {
+        Optional<MessageOutputAppVo> message = findById.execute(id);
 
         if (message.isPresent()) {
-            return update.execute(input);
+            return update.execute(input, id.get());
         } else {
             return create.execute(input);
         }
