@@ -1,4 +1,4 @@
 package cmahy.brokers.publisher.core.application.vo.input;
 
-public record MessageInputAppVo() {
+public record MessageInputAppVo(String message) {
 }

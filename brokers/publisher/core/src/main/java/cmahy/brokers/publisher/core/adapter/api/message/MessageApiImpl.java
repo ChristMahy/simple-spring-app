@@ -5,6 +5,8 @@ import cmahy.brokers.publisher.api.vo.id.MessageApiId;
 import cmahy.brokers.publisher.api.vo.input.MessageInputApiVo;
 import cmahy.brokers.publisher.api.vo.output.MessageOutputApiVo;
 import cmahy.brokers.publisher.core.adapter.mapper.message.MessageAdapterMapper;
+import cmahy.brokers.publisher.core.adapter.mapper.message.MessageInputAdapterMapper;
+import cmahy.brokers.publisher.core.application.command.message.CreateMessageCommand;
 import cmahy.brokers.publisher.core.application.query.message.GetAllMessageQuery;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,10 +17,19 @@ public class MessageApiImpl implements MessageApi {
 
     private final GetAllMessageQuery query;
     private final MessageAdapterMapper mapper;
+    private final MessageInputAdapterMapper inputMapper;
+    private final CreateMessageCommand createCommand;
 
-    public MessageApiImpl(GetAllMessageQuery query, MessageAdapterMapper mapper) {
+    public MessageApiImpl(
+        GetAllMessageQuery query,
+        MessageAdapterMapper mapper,
+        MessageInputAdapterMapper inputMapper,
+        CreateMessageCommand createCommand
+    ) {
         this.query = query;
         this.mapper = mapper;
+        this.inputMapper = inputMapper;
+        this.createCommand = createCommand;
     }
 
     @Override
@@ -30,7 +41,11 @@ public class MessageApiImpl implements MessageApi {
 
     @Override
     public MessageOutputApiVo create(MessageInputApiVo input) {
-        throw new IllegalStateException("Not yet implemented !");
+        return mapper.toApiVo(
+            createCommand.execute(
+                inputMapper.toAppVo(input)
+            )
+        );
     }
 
     @Override
