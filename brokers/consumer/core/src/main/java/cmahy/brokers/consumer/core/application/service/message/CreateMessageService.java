@@ -4,7 +4,6 @@ import cmahy.brokers.consumer.core.application.mapper.message.MessageAppMapper;
 import cmahy.brokers.consumer.core.application.repository.message.MessageRepository;
 import cmahy.brokers.consumer.core.application.vo.input.MessageInputAppVo;
 import cmahy.brokers.consumer.core.application.vo.output.MessageOutputAppVo;
-import cmahy.brokers.consumer.core.domain.Message;
 import jakarta.inject.Named;
 
 @Named
