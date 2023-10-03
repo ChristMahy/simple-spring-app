@@ -25,7 +25,7 @@ public class GetAllMessageQuery {
     }
 
     public Set<MessageOutputAppVo> execute() {
-        return repository.allMessage().stream()
+        return repository.allMessages().stream()
             .map(mapper::entityToOutput)
             .collect(Collectors.toSet());
     }
