@@ -1,6 +1,8 @@
 package cmahy.brokers.publisher.core.adapter.api.message;
 
 import cmahy.brokers.publisher.api.message.MessageApi;
+import cmahy.brokers.publisher.api.vo.id.MessageApiId;
+import cmahy.brokers.publisher.api.vo.input.MessageInputApiVo;
 import cmahy.brokers.publisher.api.vo.output.MessageOutputApiVo;
 import cmahy.brokers.publisher.core.adapter.mapper.message.MessageAdapterMapper;
 import cmahy.brokers.publisher.core.application.query.message.GetAllMessageQuery;
@@ -24,5 +26,20 @@ public class MessageApiImpl implements MessageApi {
         return query.execute().stream()
             .map(mapper::toApiVo)
             .collect(Collectors.toSet());
+    }
+
+    @Override
+    public MessageOutputApiVo create(MessageInputApiVo input) {
+        throw new IllegalStateException("Not yet implemented !");
+    }
+
+    @Override
+    public MessageOutputApiVo update(MessageInputApiVo input, MessageApiId id) {
+        throw new IllegalStateException("Not yet implemented !");
+    }
+
+    @Override
+    public void delete(MessageApiId id) {
+        throw new IllegalStateException("Not yet implemented !");
     }
 }
