@@ -20,7 +20,7 @@
 
     <properties>
         <cmahy.common.version>DEV-SNAPSHOT</cmahy.common.version>
-        <cmahy.publisher.api.version>DEV-SNAPSHOT</cmahy.publisher.api.version>
+        <cmahy.publisher.version>DEV-SNAPSHOT</cmahy.publisher.version>
     </properties>
 
     <dependencies>
@@ -33,7 +33,7 @@
         <dependency>
             <groupId>cmahy</groupId>
             <artifactId>publisher-api</artifactId>
-            <version>${cmahy.publisher.api.version}</version>
+            <version>${cmahy.publisher.version}</version>
         </dependency>
 
         <dependency>
@@ -68,6 +68,18 @@
                 <dependency>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-actuator</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
+            <id>jms</id>
+
+            <dependencies>
+                <dependency>
+                    <groupId>cmahy</groupId>
+                    <artifactId>publisher-jms</artifactId>
+                    <version>${cmahy.publisher.version}</version>
                 </dependency>
             </dependencies>
         </profile>
