@@ -2,6 +2,7 @@ package cmahy.brokers.publisher.core.application.service.message;
 
 import cmahy.brokers.publisher.core.application.mapper.message.MessageAppMapper;
 import cmahy.brokers.publisher.core.application.repository.message.MessageRepository;
+import cmahy.brokers.publisher.core.application.service.message.event.BroadcastMessageModification;
 import cmahy.brokers.publisher.core.application.vo.id.MessageAppId;
 import cmahy.brokers.publisher.core.application.vo.input.MessageInputAppVo;
 import cmahy.brokers.publisher.core.application.vo.output.MessageOutputAppVo;
@@ -16,13 +17,15 @@ public class UpdateMessageService {
 
     private final MessageRepository repository;
     private final MessageAppMapper mapper;
+    private final BroadcastMessageModification broadcastModification;
 
     public UpdateMessageService(
         MessageRepository repository,
-        MessageAppMapper mapper
-    ) {
+        MessageAppMapper mapper,
+        BroadcastMessageModification broadcastModification) {
         this.repository = repository;
         this.mapper = mapper;
+        this.broadcastModification = broadcastModification;
     }
 
     public MessageOutputAppVo execute(MessageInputAppVo input, MessageAppId id) {
@@ -39,6 +42,10 @@ public class UpdateMessageService {
 
         Message saved = repository.save(toSave);
 
-        return mapper.entityToOutput(saved);
+        MessageOutputAppVo output = mapper.entityToOutput(saved);
+
+        broadcastModification.execute(output);
+
+        return output;
     }
 }
