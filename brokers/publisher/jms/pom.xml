@@ -9,7 +9,7 @@
     <artifactId>publisher-jms</artifactId>
     <version>DEV-SNAPSHOT</version>
 
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <parent>
         <groupId>cmahy</groupId>
@@ -20,5 +20,24 @@
 
     <properties>
         <cmahy.common.version>DEV-SNAPSHOT</cmahy.common.version>
+        <publisher.api.version>DEV-SNAPSHOT</publisher.api.version>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>cmahy</groupId>
+            <artifactId>publisher-api</artifactId>
+            <version>${publisher.api.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jms</artifactId>
+        </dependency>
+    </dependencies>
 </project>
