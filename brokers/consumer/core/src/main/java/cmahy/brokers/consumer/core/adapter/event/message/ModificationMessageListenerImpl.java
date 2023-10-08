@@ -6,11 +6,15 @@ import cmahy.brokers.consumer.core.application.vo.id.MessageAppId;
 import cmahy.brokers.consumer.event.message.ModificationMessageListener;
 import cmahy.brokers.consumer.event.vo.input.MessageInputEventVo;
 import jakarta.inject.Named;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 
 @Named
 public class ModificationMessageListenerImpl implements ModificationMessageListener {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ModificationMessageListenerImpl.class);
 
     private final SaveMessageCommand command;
     private final MessageInputAdapterMapper mapper;
@@ -22,6 +26,8 @@ public class ModificationMessageListenerImpl implements ModificationMessageListe
 
     @Override
     public void execute(MessageInputEventVo input) {
+        LOG.debug("Message received: <{}>", input);
+
         command.execute(
             mapper.toAppVo(input),
             Optional.of(new MessageAppId(input.id().value()))
