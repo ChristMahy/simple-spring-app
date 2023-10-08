@@ -5,9 +5,13 @@ import cmahy.brokers.publisher.core.application.service.message.event.BroadcastM
 import cmahy.brokers.publisher.core.application.vo.output.MessageOutputAppVo;
 import cmahy.brokers.publisher.event.message.ModificationMessageEvent;
 import jakarta.inject.Named;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Named
 public class BroadcastMessageModificationImpl implements BroadcastMessageModification {
+
+    private static final Logger LOG = LoggerFactory.getLogger(BroadcastMessageModificationImpl.class);
 
     private final ModificationMessageEvent event;
     private final MessageAdapterMapper mapper;
@@ -22,6 +26,8 @@ public class BroadcastMessageModificationImpl implements BroadcastMessageModific
 
     @Override
     public void execute(MessageOutputAppVo output) {
+        LOG.debug("Message broadcasted <{}>", output.message());
+
         event.execute(mapper.toEventVo(output));
     }
 }
