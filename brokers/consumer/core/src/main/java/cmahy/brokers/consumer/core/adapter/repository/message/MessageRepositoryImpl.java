@@ -19,12 +19,7 @@ import java.util.stream.Collectors;
 @Named
 public class MessageRepositoryImpl implements MessageRepository {
 
-    private final Set<Message> messages = new HashSet<>() {{
-        add(new Message(1L, LocalDateTime.now(), "Message 1"));
-        add(new Message(2L, LocalDateTime.now(), "Message 2"));
-        add(new Message(3L, LocalDateTime.now(), "Message 3"));
-        add(new Message(4L, LocalDateTime.now(), "Message 4"));
-    }};
+    private final Set<Message> messages = new HashSet<>();
 
     @Override
     public Set<Message> allMessages() {
