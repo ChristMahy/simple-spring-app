@@ -18,7 +18,7 @@ public class MessageModificationJmsListener {
         this.listener = listener;
     }
 
-    @JmsListener(destination = JmsQueue.MESSAGE_QUEUE_NAME)
+    @JmsListener(destination = JmsQueue.MESSAGE_QUEUE_NAME + ".modify")
     public void receiveMessage(MessageInputEventVo message) {
         listener.execute(message);
     }

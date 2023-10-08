@@ -15,7 +15,7 @@ public class MessageDeletionJmsListener {
         this.listener = listener;
     }
 
-    @JmsListener(destination = JmsQueue.MESSAGE_QUEUE_NAME)
+    @JmsListener(destination = JmsQueue.MESSAGE_QUEUE_NAME + ".delete")
     public void receiveMessage(MessageEventId message) {
         listener.execute(message);
     }
