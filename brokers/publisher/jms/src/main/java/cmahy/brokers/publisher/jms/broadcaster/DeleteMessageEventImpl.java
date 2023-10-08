@@ -18,7 +18,7 @@ public class DeleteMessageEventImpl implements DeleteMessageEvent {
     @Override
     public void execute(MessageEventId id) {
         jms.convertAndSend(
-            JmsQueue.MESSAGE_QUEUE_NAME,
+            JmsQueue.MESSAGE_QUEUE_NAME + ".delete",
             id,
             (m) -> {
                 m.setStringProperty("X_METADATA_HEADER", "More datas");

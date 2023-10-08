@@ -18,7 +18,7 @@ public class ModificationMessageEventImpl implements ModificationMessageEvent {
     @Override
     public void execute(MessageOutputEventVo output) {
         jms.convertAndSend(
-            JmsQueue.MESSAGE_QUEUE_NAME,
+            JmsQueue.MESSAGE_QUEUE_NAME + ".modify",
             output,
             (m) -> {
                 m.setStringProperty("X_METADATA_HEADER", "More datas");
