@@ -34,8 +34,8 @@ public class MessageRepositoryImpl implements MessageRepository {
         }
 
         Message messageToSave = new Message(
-            messages.stream().map(Message::id).max(Long::compare).orElse(1L),
-            message.createdAt(),
+            messages.stream().map(Message::id).max(Long::compare).orElse(1L) + 1,
+            LocalDateTime.now(),
             message.message()
         );
 
