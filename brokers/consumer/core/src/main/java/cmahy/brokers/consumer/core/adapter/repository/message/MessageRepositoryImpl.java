@@ -1,11 +1,8 @@
 package cmahy.brokers.consumer.core.adapter.repository.message;
 
 import cmahy.brokers.consumer.core.application.repository.message.MessageRepository;
-import cmahy.brokers.consumer.core.application.vo.id.MessageAppId;
 import cmahy.brokers.consumer.core.domain.Message;
-import cmahy.brokers.consumer.core.exception.ExpectedZeroMessageException;
-import cmahy.brokers.consumer.core.exception.MoreThanOneFoundMessageException;
-import cmahy.brokers.consumer.core.exception.message.IdShouldNotBeNullMessageException;
+import cmahy.brokers.consumer.core.exception.message.*;
 import jakarta.inject.Named;
 import org.apache.commons.lang3.StringUtils;
 
@@ -33,7 +30,7 @@ public class MessageRepositoryImpl implements MessageRepository {
             .collect(Collectors.toSet());
 
         if (found.size() > 1) {
-            throw new MoreThanOneFoundMessageException();
+            throw new TooMuchElementFoundMessageException();
         }
 
         return found.stream().findFirst();
@@ -41,15 +38,26 @@ public class MessageRepositoryImpl implements MessageRepository {
 
     @Override
     public Message save(Message message) {
-        long count = messages.stream().filter(m -> StringUtils.equalsIgnoreCase(m.message(), message.message())).count();
+        Long id = message.id();
+
+        if (id == null) {
+            id = messages.stream().map(Message::id).max(Long::compare).orElse(0L) + 1;
+        }
+
+        long count = messages.stream()
+            .filter(m ->
+                StringUtils.equalsIgnoreCase(m.message(), message.message()) &&
+                    !Objects.equals(m.id(), message.id())
+            )
+            .count();
 
         if (count > 0) {
-            throw new ExpectedZeroMessageException();
+            throw new DuplicateMessageException();
         }
 
         Message messageToSave = new Message(
-            messages.stream().map(Message::id).max(Long::compare).orElse(1L) + 1,
-            LocalDateTime.now(),
+            id,
+            message.createdAt() != null ? message.createdAt() : LocalDateTime.now(),
             message.message()
         );
 
