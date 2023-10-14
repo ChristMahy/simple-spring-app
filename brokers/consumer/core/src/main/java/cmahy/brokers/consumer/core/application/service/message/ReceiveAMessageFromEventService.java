@@ -32,7 +32,7 @@ public class ReceiveAMessageFromEventService {
         LOG.info("Message received <{}>", input);
 
         Message message = repository
-            .findByMessage(input.message())
+            .findById(input.id().value())
             .map(m -> {
                 LOG.info("Update message");
 
