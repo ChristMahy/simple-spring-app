@@ -1,0 +1,7 @@
+spring:
+  artemis:
+    user: admin
+    password: admin
+  jms:
+    template:
+      default-destination: message.queue
