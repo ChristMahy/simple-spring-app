@@ -6,17 +6,21 @@ import cmahy.brokers.publisher.event.message.DeleteMessageEvent;
 import cmahy.brokers.publisher.event.vo.id.MessageEventId;
 import jakarta.inject.Named;
 
+import java.util.List;
+
 @Named
 public class BroadcastMessageDeletionImpl implements BroadcastMessageDeletion {
 
-    private final DeleteMessageEvent event;
+    private final List<DeleteMessageEvent> broadcasters;
 
-    public BroadcastMessageDeletionImpl(DeleteMessageEvent event) {
-        this.event = event;
+    public BroadcastMessageDeletionImpl(
+        List<DeleteMessageEvent> broadcasters
+    ) {
+        this.broadcasters = broadcasters;
     }
 
     @Override
     public void execute(MessageAppId id) {
-        event.execute(new MessageEventId(id.value()));
+        broadcasters.forEach(e -> e.execute(new MessageEventId(id.value())));
     }
 }

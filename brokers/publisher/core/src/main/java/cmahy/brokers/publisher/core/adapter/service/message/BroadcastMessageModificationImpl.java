@@ -8,19 +8,21 @@ import jakarta.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 @Named
 public class BroadcastMessageModificationImpl implements BroadcastMessageModification {
 
     private static final Logger LOG = LoggerFactory.getLogger(BroadcastMessageModificationImpl.class);
 
-    private final ModificationMessageEvent event;
+    private final List<ModificationMessageEvent> broadcasters;
     private final MessageAdapterMapper mapper;
 
     public BroadcastMessageModificationImpl(
-        ModificationMessageEvent event,
+        List<ModificationMessageEvent> broadcasters,
         MessageAdapterMapper mapper
     ) {
-        this.event = event;
+        this.broadcasters = broadcasters;
         this.mapper = mapper;
     }
 
@@ -28,6 +30,6 @@ public class BroadcastMessageModificationImpl implements BroadcastMessageModific
     public void execute(MessageOutputAppVo output) {
         LOG.debug("Message broadcasted <{}>", output.message());
 
-        event.execute(mapper.toEventVo(output));
+        broadcasters.forEach(e -> e.execute(mapper.toEventVo(output)));
     }
 }
