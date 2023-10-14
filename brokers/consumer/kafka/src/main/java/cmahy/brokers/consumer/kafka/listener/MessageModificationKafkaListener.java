@@ -39,9 +39,13 @@ public class MessageModificationKafkaListener {
         );
 
         try {
-            listener.execute(
-                jsonMapper.readValue(message, MessageInputEventVo.class)
-            );
+            final MessageInputEventVo input = jsonMapper.readValue(message, MessageInputEventVo.class);
+
+            listener.execute(new MessageInputEventVo(
+                null,
+                "From kafka: " + input.message(),
+                input.createdAt()
+            ));
         } catch (IOException e) {
             LOG.error(e.getMessage(), e);
         }
