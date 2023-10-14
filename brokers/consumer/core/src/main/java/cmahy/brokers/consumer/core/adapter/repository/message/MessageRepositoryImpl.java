@@ -7,20 +7,18 @@ import jakarta.inject.Named;
 import org.apache.commons.lang3.StringUtils;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Named
 public class MessageRepositoryImpl implements MessageRepository {
 
-    private final Set<Message> messages = new HashSet<>();
+    private final ConcurrentHashMap<Long, Message> messages = new ConcurrentHashMap<>();
 
     @Override
     public Set<Message> allMessages() {
-        return this.messages;
+        return new HashSet<>(this.messages.values());
     }
 
     @Override
@@ -37,14 +35,28 @@ public class MessageRepositoryImpl implements MessageRepository {
     }
 
     @Override
+    public Optional<Message> findByMessage(String content) {
+        Set<Message> found = allMessages().stream()
+            .filter(m -> StringUtils.equalsIgnoreCase(m.message(), content))
+            .collect(Collectors.toSet());
+
+        if (found.size() > 1) {
+            throw new TooMuchElementFoundMessageException();
+        }
+
+        return found.stream().findFirst();
+    }
+
+    @Override
     public Message save(Message message) {
         Long id = message.id();
 
         if (id == null) {
-            id = messages.stream().map(Message::id).max(Long::compare).orElse(0L) + 1;
+            id = messages.keySet().stream().max(Long::compare).orElse(0L) + 1;
         }
 
-        long count = messages.stream()
+        long count = messages.values()
+            .stream()
             .filter(m ->
                 StringUtils.equalsIgnoreCase(m.message(), message.message()) &&
                     !Objects.equals(m.id(), message.id())
@@ -58,22 +70,19 @@ public class MessageRepositoryImpl implements MessageRepository {
         Message messageToSave = new Message(
             id,
             message.createdAt() != null ? message.createdAt() : LocalDateTime.now(),
-            message.message()
+            message.message(),
+            message.modificationCounter()
         );
 
-        messages.add(messageToSave);
+        messages.put(messageToSave.id(), messageToSave);
 
         return messageToSave;
     }
 
     @Override
     public void deleteById(Long id) {
-        if (id == null) {
-            throw new IdShouldNotBeNullMessageException();
+        if (id != null) {
+            messages.remove(id);
         }
-
-        messages.stream()
-            .filter(m -> Objects.equals(m.id(), id))
-            .forEach(messages::remove);
     }
 }

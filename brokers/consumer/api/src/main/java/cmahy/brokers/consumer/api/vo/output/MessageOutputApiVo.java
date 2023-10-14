@@ -9,5 +9,6 @@ public record MessageOutputApiVo(
     @JsonUnwrapped
     MessageApiId id,
     LocalDateTime createdAt,
-    String message
+    String message,
+    Integer modificationCounter
 ) { }

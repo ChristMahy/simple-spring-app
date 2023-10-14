@@ -7,5 +7,6 @@ import java.time.LocalDateTime;
 public record MessageOutputAppVo(
     MessageAppId id,
     LocalDateTime createdAt,
-    String message
+    String message,
+    Integer modificationCounter
 ) { }

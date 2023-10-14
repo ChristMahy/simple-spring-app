@@ -23,10 +23,6 @@ public class MessageModificationJmsListener {
     public void receiveMessage(MessageInputEventVo message) {
         LOG.debug("Event received, message modification <{}>", message);
 
-        listener.execute(new MessageInputEventVo(
-            null,
-            "From jms: " + message.message(),
-            message.createdAt()
-        ));
+        listener.execute(message);
     }
 }

@@ -12,6 +12,8 @@ public interface MessageRepository {
 
     Optional<Message> findById(Long id);
 
+    Optional<Message> findByMessage(String content);
+
     Message save(Message message);
 
     void deleteById(Long id);
