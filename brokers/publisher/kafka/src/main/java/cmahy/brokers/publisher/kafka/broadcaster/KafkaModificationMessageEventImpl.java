@@ -13,14 +13,14 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
-public class ModificationMessageEventImpl implements ModificationMessageEvent {
+public class KafkaModificationMessageEventImpl implements ModificationMessageEvent {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ModificationMessageEventImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(KafkaModificationMessageEventImpl.class);
 
     private final KafkaTemplate<String, byte[]> kafkaTemplate;
     private final ObjectMapper jsonMapper;
 
-    public ModificationMessageEventImpl(KafkaTemplate<String, byte[]> kafkaTemplate, ObjectMapper jsonMapper) {
+    public KafkaModificationMessageEventImpl(KafkaTemplate<String, byte[]> kafkaTemplate, ObjectMapper jsonMapper) {
         this.kafkaTemplate = kafkaTemplate;
         this.jsonMapper = jsonMapper;
     }

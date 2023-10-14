@@ -9,13 +9,13 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ModificationMessageEventImpl implements ModificationMessageEvent {
+public class JmsModificationMessageEventImpl implements ModificationMessageEvent {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ModificationMessageEventImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(JmsModificationMessageEventImpl.class);
 
     private final JmsTemplate jms;
 
-    public ModificationMessageEventImpl(JmsTemplate jms) {
+    public JmsModificationMessageEventImpl(JmsTemplate jms) {
         this.jms = jms;
     }
 

@@ -9,13 +9,13 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DeleteMessageEventImpl implements DeleteMessageEvent {
+public class JmsDeleteMessageEventImpl implements DeleteMessageEvent {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DeleteMessageEventImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(JmsDeleteMessageEventImpl.class);
 
     private final JmsTemplate jms;
 
-    public DeleteMessageEventImpl(JmsTemplate jms) {
+    public JmsDeleteMessageEventImpl(JmsTemplate jms) {
         this.jms = jms;
     }
 
