@@ -17,7 +17,7 @@ public interface MessageApi {
     MessageOutputApiVo create(@RequestBody MessageInputApiVo input);
 
     @PutMapping(path = "/{id}")
-    MessageOutputApiVo update(@RequestBody MessageInputApiVo input, @PathVariable MessageApiId id);
+    MessageOutputApiVo update(@RequestBody MessageInputApiVo input, @PathVariable Long id);
 
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

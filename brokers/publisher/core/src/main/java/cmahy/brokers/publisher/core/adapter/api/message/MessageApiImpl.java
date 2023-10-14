@@ -58,10 +58,10 @@ public class MessageApiImpl implements MessageApi {
     }
 
     @Override
-    public MessageOutputApiVo update(MessageInputApiVo input, MessageApiId id) {
+    public MessageOutputApiVo update(MessageInputApiVo input, Long id) {
         return mapper.toApiVo(
             updateCommand.execute(
-                inputMapper.toAppVo(input), new MessageAppId(id.value())
+                inputMapper.toAppVo(input), new MessageAppId(id)
             )
         );
     }
