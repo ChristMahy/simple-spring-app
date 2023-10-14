@@ -38,18 +38,6 @@
                 </dependency>
             </dependencies>
         </profile>
-
-        <profile>
-            <id>jms</id>
-
-            <dependencies>
-                <dependency>
-                    <groupId>cmahy</groupId>
-                    <artifactId>consumer-jms</artifactId>
-                    <version>${cmahy.consumer.version}</version>
-                </dependency>
-            </dependencies>
-        </profile>
     </profiles>
 
     <dependencies>
@@ -63,6 +51,20 @@
             <groupId>cmahy</groupId>
             <artifactId>consumer-api</artifactId>
             <version>${cmahy.consumer.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy</groupId>
+            <artifactId>consumer-jms</artifactId>
+            <version>${cmahy.consumer.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy</groupId>
+            <artifactId>consumer-kafka</artifactId>
+            <version>${cmahy.consumer.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
