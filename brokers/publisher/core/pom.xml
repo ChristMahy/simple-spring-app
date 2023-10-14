@@ -37,6 +37,20 @@
         </dependency>
 
         <dependency>
+            <groupId>cmahy</groupId>
+            <artifactId>publisher-jms</artifactId>
+            <version>${cmahy.publisher.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy</groupId>
+            <artifactId>publisher-kafka</artifactId>
+            <version>${cmahy.publisher.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
             <groupId>jakarta.inject</groupId>
             <artifactId>jakarta.inject-api</artifactId>
         </dependency>
@@ -68,18 +82,6 @@
                 <dependency>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-actuator</artifactId>
-                </dependency>
-            </dependencies>
-        </profile>
-
-        <profile>
-            <id>jms</id>
-
-            <dependencies>
-                <dependency>
-                    <groupId>cmahy</groupId>
-                    <artifactId>publisher-jms</artifactId>
-                    <version>${cmahy.publisher.version}</version>
                 </dependency>
             </dependencies>
         </profile>
