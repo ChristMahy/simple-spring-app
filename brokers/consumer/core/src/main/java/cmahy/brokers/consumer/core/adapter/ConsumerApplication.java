@@ -2,9 +2,7 @@ package cmahy.brokers.consumer.core.adapter;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jms.JmsAutoConfiguration;
 import org.springframework.boot.autoconfigure.jms.artemis.ArtemisAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication(scanBasePackages = { "cmahy.brokers.consumer.core" }, exclude = { ArtemisAutoConfiguration.class })
 public class ConsumerApplication {
