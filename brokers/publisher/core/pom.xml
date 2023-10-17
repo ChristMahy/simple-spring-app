@@ -51,6 +51,13 @@
         </dependency>
 
         <dependency>
+            <groupId>cmahy</groupId>
+            <artifactId>publisher-rabbitmq</artifactId>
+            <version>${cmahy.publisher.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
             <groupId>jakarta.inject</groupId>
             <artifactId>jakarta.inject-api</artifactId>
         </dependency>
