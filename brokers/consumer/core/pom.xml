@@ -68,6 +68,13 @@
         </dependency>
 
         <dependency>
+            <groupId>cmahy</groupId>
+            <artifactId>consumer-rabbitmq</artifactId>
+            <version>${cmahy.consumer.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
             <groupId>jakarta.inject</groupId>
             <artifactId>jakarta.inject-api</artifactId>
         </dependency>

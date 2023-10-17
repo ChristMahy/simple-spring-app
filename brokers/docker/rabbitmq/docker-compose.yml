@@ -1,0 +1,13 @@
+services:
+  rabbitmq:
+    image: rabbitmq:latest
+    ports:
+      - "5672:5672"
+    networks:
+      backend:
+        aliases:
+          - "rabbitmq"
+
+networks:
+  backend:
+    driver: bridge

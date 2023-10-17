@@ -1,0 +1,4 @@
+application:
+  rabbitmq:
+    consumer:
+      type: push
