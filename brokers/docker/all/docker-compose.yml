@@ -1,0 +1,21 @@
+services:
+  activeMQ-artemis:
+    extends:
+      file: ../jms/docker-compose.yml
+      service: activeMQ-artemis
+  kafka:
+    extends:
+      file: ../kafka/docker-compose.yml
+      service: kafka
+  zookeeper:
+    extends:
+      file: ../kafka/docker-compose.yml
+      service: zookeeper
+  rabbitmq:
+    extends:
+      file: ../rabbitmq/docker-compose.yml
+      service: rabbitmq
+
+networks:
+  backend:
+    driver: bridge
