@@ -13,6 +13,7 @@
         <groupId>cmahy</groupId>
         <artifactId>bom</artifactId>
         <version>DEV-SNAPSHOT</version>
+        <relativePath/>
     </parent>
 
     <name>spring-webapp</name>
