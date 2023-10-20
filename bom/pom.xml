@@ -224,8 +224,8 @@
                         <parallel>suitesAndMethods</parallel>
                         <threadCount>10</threadCount>
                         <excludes>
-                            <exclude>**/*IntegrationTest.kt</exclude>
-                            <exclude>**/*AcceptanceTest.kt</exclude>
+                            <exclude>**/*IntegrationTest.java</exclude>
+                            <exclude>**/*AcceptanceTest.java</exclude>
                         </excludes>
                     </configuration>
                 </plugin>
@@ -239,8 +239,8 @@
                         <parallel>suites</parallel>
                         <threadCount>5</threadCount>
                         <includes>
-                            <include>**/*IntegrationTest.kt</include>
-                            <include>**/*AcceptanceTest.kt</include>
+                            <include>**/*IntegrationTest.java</include>
+                            <include>**/*AcceptanceTest.java</include>
                         </includes>
                         <excludes>
                             <exclude>**/archunit/**</exclude>
