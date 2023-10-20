@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record MessageOutputApiVo(
-    @JsonUnwrapped
     MessageApiId id,
     LocalDateTime createdAt,
     String message,
