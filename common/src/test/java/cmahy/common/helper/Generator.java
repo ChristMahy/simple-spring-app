@@ -30,8 +30,17 @@ public final class Generator {
         return randomInt(null, null);
     }
 
+    public static int randomIntEqualOrAboveZero() {
+        return randomInt(0, Integer.MAX_VALUE);
+    }
+
     public static int randomInt(Integer min, Integer max) {
         return new Random().nextInt(min == null ? Integer.MIN_VALUE : min, max == null || max == Integer.MAX_VALUE ? Integer.MAX_VALUE : (max + 1));
+    }
+
+
+    public static Long randomLongEqualOrAboveZero() {
+        return randomLong(0L, Long.MAX_VALUE);
     }
 
     public static Long randomLong() {
