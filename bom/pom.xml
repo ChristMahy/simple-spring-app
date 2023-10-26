@@ -218,7 +218,7 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire-plugin.version}</version>
                     <configuration>
-                        <argLine>-Xmx1024m -XX:MaxMetaspaceSize=256m</argLine>
+                        <argLine>-Xmx1024m -XX:MaxMetaspaceSize=256m -XX:+EnableDynamicAgentLoading</argLine>
                         <forkCount>1.5C</forkCount>
                         <reuseForks>true</reuseForks>
                         <parallel>suitesAndMethods</parallel>
