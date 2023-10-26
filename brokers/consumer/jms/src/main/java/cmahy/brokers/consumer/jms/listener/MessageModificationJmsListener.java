@@ -21,8 +21,12 @@ public class MessageModificationJmsListener {
 
     @JmsListener(destination = JmsQueue.MESSAGE_QUEUE_NAME + ".modify")
     public void receiveMessage(MessageInputEventVo message) {
-        LOG.debug("Event received, message modification <{}>", message);
+        try {
+            LOG.info("Event received, message modification <{}>", message);
 
-        listener.execute(message);
+            listener.execute(message);
+        } catch (Exception any) {
+            LOG.error(any.getMessage(), any);
+        }
     }
 }
