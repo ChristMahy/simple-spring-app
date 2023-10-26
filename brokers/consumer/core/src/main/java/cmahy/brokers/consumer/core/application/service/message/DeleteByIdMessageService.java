@@ -1,6 +1,5 @@
 package cmahy.brokers.consumer.core.application.service.message;
 
-import cmahy.brokers.consumer.core.application.mapper.message.MessageAppMapper;
 import cmahy.brokers.consumer.core.application.repository.message.MessageRepository;
 import cmahy.brokers.consumer.core.application.vo.id.MessageAppId;
 import cmahy.brokers.consumer.core.exception.message.IdShouldNotBeNullMessageException;

@@ -2,15 +2,26 @@ package cmahy.brokers.consumer.core.adapter.mapper.message;
 
 import cmahy.brokers.consumer.core.application.vo.input.MessageInputEventAppVo;
 import cmahy.brokers.consumer.event.vo.input.MessageInputEventVo;
-import org.mapstruct.InjectionStrategy;
-import org.mapstruct.Mapper;
+import jakarta.inject.Named;
 
-@Mapper(
-    componentModel = "spring",
-    injectionStrategy = InjectionStrategy.CONSTRUCTOR,
-    uses = { MessageIdAdapterMapper.class }
-)
-public interface MessageInputAdapterMapper {
+@Named
+public class MessageInputAdapterMapper {
 
-    MessageInputEventAppVo toAppVo(MessageInputEventVo input);
+    private final MessageIdAdapterMapper idMapper;
+
+    public MessageInputAdapterMapper(MessageIdAdapterMapper idMapper) {
+        this.idMapper = idMapper;
+    }
+
+    public MessageInputEventAppVo toAppVo(MessageInputEventVo input) {
+        if (input == null) {
+            return null;
+        }
+
+        return new MessageInputEventAppVo(
+            idMapper.toAppId(input.id()),
+            input.message(),
+            input.createdAt()
+        );
+    }
 }

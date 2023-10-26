@@ -1,0 +1,31 @@
+package cmahy.brokers.consumer.core.application.command.message;
+
+import cmahy.brokers.consumer.core.application.service.message.DeleteByIdMessageService;
+import cmahy.brokers.consumer.core.application.vo.id.MessageAppId;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
+class DeleteMessageCommandTest {
+
+    @Mock
+    private DeleteByIdMessageService delete;
+
+    @InjectMocks
+    private DeleteMessageCommand command;
+
+    @Test
+    void execute() {
+        final MessageAppId id = mock(MessageAppId.class);
+
+        command.execute(id);
+
+        verify(delete).execute(id);
+        verifyNoMoreInteractions(delete);
+    }
+}

@@ -1,6 +1,5 @@
 package cmahy.brokers.consumer.core.application.service.message;
 
-import cmahy.brokers.consumer.api.UriConstant;
 import cmahy.brokers.consumer.core.application.mapper.message.MessageAppMapper;
 import cmahy.brokers.consumer.core.application.repository.message.MessageRepository;
 import cmahy.brokers.consumer.core.application.vo.input.MessageInputEventAppVo;
@@ -9,8 +8,6 @@ import cmahy.brokers.consumer.core.domain.Message;
 import jakarta.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Optional;
 
 @Named
 public class ReceiveAMessageFromEventService {
@@ -38,6 +35,7 @@ public class ReceiveAMessageFromEventService {
 
                 repository.deleteById(m.id());
 
+                // TODO: Maybe mapper to process an update, message to message
                 return new Message(
                     m.id(),
                     input.createdAt(),
@@ -45,7 +43,7 @@ public class ReceiveAMessageFromEventService {
                     m.modificationCounter() != null ? m.modificationCounter() + 1 : 2
                 );
             })
-            .orElse(mapper.inputToEntity(input));
+            .orElseGet(() -> mapper.inputToEntity(input));
 
         return mapper.entityToOutput(
             repository.save(message)

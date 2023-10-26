@@ -2,7 +2,7 @@ package cmahy.brokers.consumer.core.adapter.api.message;
 
 import cmahy.brokers.consumer.api.message.MessageApi;
 import cmahy.brokers.consumer.api.vo.output.MessageOutputApiVo;
-import cmahy.brokers.consumer.core.adapter.mapper.message.MessageAdapterMapper;
+import cmahy.brokers.consumer.core.adapter.mapper.message.MessageOutputAdapterMapper;
 import cmahy.brokers.consumer.core.application.query.message.GetAllMessageQuery;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,20 +13,20 @@ import java.util.stream.Collectors;
 public class MessageApiImpl implements MessageApi {
 
     private final GetAllMessageQuery getAllMessageQuery;
-    private final MessageAdapterMapper messageAdapterMapper;
+    private final MessageOutputAdapterMapper messageOutputAdapterMapper;
 
     public MessageApiImpl(
         GetAllMessageQuery getAllMessageQuery,
-        MessageAdapterMapper messageAdapterMapper
+        MessageOutputAdapterMapper messageOutputAdapterMapper
     ) {
         this.getAllMessageQuery = getAllMessageQuery;
-        this.messageAdapterMapper = messageAdapterMapper;
+        this.messageOutputAdapterMapper = messageOutputAdapterMapper;
     }
 
     @Override
     public Set<MessageOutputApiVo> allMessages() {
         return this.getAllMessageQuery.execute().stream()
-            .map(messageAdapterMapper::toApiVo)
+            .map(messageOutputAdapterMapper::toApiVo)
             .collect(Collectors.toSet());
     }
 }

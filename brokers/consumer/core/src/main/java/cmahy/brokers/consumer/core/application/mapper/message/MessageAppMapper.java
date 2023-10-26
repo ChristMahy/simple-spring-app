@@ -3,19 +3,40 @@ package cmahy.brokers.consumer.core.application.mapper.message;
 import cmahy.brokers.consumer.core.application.vo.input.MessageInputEventAppVo;
 import cmahy.brokers.consumer.core.application.vo.output.MessageOutputAppVo;
 import cmahy.brokers.consumer.core.domain.Message;
-import org.mapstruct.InjectionStrategy;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import jakarta.inject.Named;
 
-@Mapper(
-    componentModel = "spring",
-    injectionStrategy = InjectionStrategy.CONSTRUCTOR,
-    uses = { MessageIdAppMapper.class }
-)
-public interface MessageAppMapper {
+@Named
+public class MessageAppMapper {
 
-    MessageOutputAppVo entityToOutput(Message message);
+    private final MessageIdAppMapper idMapper;
 
-    @Mapping(target = "id", ignore = true)
-    Message inputToEntity(MessageInputEventAppVo message);
+    public MessageAppMapper(MessageIdAppMapper idMapper) {
+        this.idMapper = idMapper;
+    }
+
+    public MessageOutputAppVo entityToOutput(Message message) {
+        if (message == null) {
+            return null;
+        }
+
+        return new MessageOutputAppVo(
+            idMapper.toAppId(message.id()),
+            message.createdAt(),
+            message.message(),
+            message.modificationCounter()
+        );
+    }
+
+    public Message inputToEntity(MessageInputEventAppVo message) {
+        if (message == null) {
+            return null;
+        }
+
+        return new Message(
+            idMapper.toId(message.id()),
+            message.createdAt(),
+            message.message(),
+            null
+        );
+    }
 }
