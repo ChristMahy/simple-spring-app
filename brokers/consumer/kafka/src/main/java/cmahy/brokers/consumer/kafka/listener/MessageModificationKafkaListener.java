@@ -39,11 +39,11 @@ public class MessageModificationKafkaListener {
         );
 
         try {
-            final MessageInputEventVo input = jsonMapper.readValue(message, MessageInputEventVo.class);
-
-            listener.execute(input);
-        } catch (Exception e) {
-            LOG.error(e.getMessage(), e);
+            listener.execute(
+                jsonMapper.readValue(message, MessageInputEventVo.class)
+            );
+        } catch (Exception any) {
+            LOG.error(any.getMessage(), any);
         }
     }
 }

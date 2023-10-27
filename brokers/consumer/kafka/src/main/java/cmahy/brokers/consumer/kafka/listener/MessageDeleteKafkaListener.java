@@ -43,8 +43,8 @@ public class MessageDeleteKafkaListener {
             listener.execute(
                 jsonMapper.readValue(message, MessageEventId.class)
             );
-        } catch (IOException e) {
-            LOG.error(e.getMessage(), e);
+        } catch (Exception any) {
+            LOG.error(any.getMessage(), any);
         }
     }
 }
