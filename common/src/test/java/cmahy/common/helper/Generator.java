@@ -60,4 +60,12 @@ public final class Generator {
 
         return values[randomInt(0, values.length - 1)];
     }
+
+    public static byte[] randomBytes(int length) {
+        final byte[] bytes = new byte[length];
+
+        RANDOM.nextBytes(bytes);
+
+        return bytes;
+    }
 }
