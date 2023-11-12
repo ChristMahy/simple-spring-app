@@ -19,6 +19,7 @@
     </parent>
 
     <properties>
+        <common.version>DEV-SNAPSHOT</common.version>
         <consumer.api.version>DEV-SNAPSHOT</consumer.api.version>
     </properties>
 
@@ -47,6 +48,26 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy</groupId>
+            <artifactId>common</artifactId>
+            <version>${common.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
