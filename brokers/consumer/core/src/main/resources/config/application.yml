@@ -4,3 +4,6 @@ server:
 spring:
   application:
     name: consumer-app
+  mvc:
+    async:
+      request-timeout: 10m

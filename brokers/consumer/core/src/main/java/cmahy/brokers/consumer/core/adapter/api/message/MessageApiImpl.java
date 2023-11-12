@@ -4,9 +4,9 @@ import cmahy.brokers.consumer.api.message.MessageApi;
 import cmahy.brokers.consumer.api.vo.output.MessageOutputApiVo;
 import cmahy.brokers.consumer.core.adapter.mapper.message.MessageOutputAdapterMapper;
 import cmahy.brokers.consumer.core.application.query.message.GetAllMessageQuery;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -24,9 +24,11 @@ public class MessageApiImpl implements MessageApi {
     }
 
     @Override
-    public Set<MessageOutputApiVo> allMessages() {
-        return this.getAllMessageQuery.execute().stream()
-            .map(messageOutputAdapterMapper::toApiVo)
-            .collect(Collectors.toSet());
+    public ResponseEntity<Iterable<MessageOutputApiVo>> allMessages() {
+        return ResponseEntity.ok(
+            this.getAllMessageQuery.execute().stream()
+                .map(messageOutputAdapterMapper::toApiVo)
+                .collect(Collectors.toSet())
+        );
     }
 }
