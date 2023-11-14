@@ -3,11 +3,15 @@ package cmahy.brokers.consumer.rabbitmq.push.listener;
 import cmahy.brokers.consumer.event.message.ModificationMessageListener;
 import cmahy.brokers.consumer.event.vo.input.MessageInputEventVo;
 import cmahy.brokers.consumer.rabbitmq.config.RabbitMQQueue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MessageModificationRabbitMQPushListener {
+
+    private static final Logger LOG = LoggerFactory.getLogger(MessageModificationRabbitMQPushListener.class);
 
     private final ModificationMessageListener listener;
 
@@ -17,6 +21,10 @@ public class MessageModificationRabbitMQPushListener {
 
     @RabbitListener(queues = { RabbitMQQueue.MESSAGE_QUEUE_NAME + ".modify" })
     public void execute(MessageInputEventVo input) {
-        listener.execute(input);
+        try {
+            listener.execute(input);
+        } catch (Exception any) {
+            LOG.error(any.getMessage(), any);
+        }
     }
 }
