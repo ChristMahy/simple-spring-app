@@ -1,0 +1,49 @@
+openapi: 3.0.3
+info:
+  title: Resource URLs
+  description: Resource URLs
+  version: 1.0.0
+
+servers:
+  - url: '/api/{version}'
+    variables:
+      version:
+        default: v1
+        enum:
+          - v1
+
+paths:
+  /single-file/readme:
+    get:
+      description: Generate a readme file
+      parameters:
+        - $ref: '#/components/parameters/onFailure'
+      responses:
+        200:
+          $ref: '#/components/responses/200octetStream'
+  /zip:
+    get:
+      description: Generate a large zip
+      parameters:
+        - $ref: '#/components/parameters/onFailure'
+      responses:
+        200:
+          $ref: '#/components/responses/200octetStream'
+
+components:
+  parameters:
+    onFailure:
+      description: Task should failed or not, make a failure while process generation
+      name: on-failure
+      in: query
+      schema:
+        type: boolean
+      required: false
+  responses:
+    200octetStream:
+      description: Response as binary
+      content:
+        application/octet-stream:
+          schema:
+            type: string
+            format: binary
