@@ -6,14 +6,23 @@
 >
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>impl</artifactId>
+    <artifactId>webapp.resource.impl</artifactId>
     <version>DEV-SNAPSHOT</version>
 
     <packaging>jar</packaging>
 
     <parent>
         <groupId>cmahy</groupId>
-        <artifactId>resource</artifactId>
+        <artifactId>webapp.resource</artifactId>
         <version>DEV-SNAPSHOT</version>
+        <relativePath/>
     </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>cmahy</groupId>
+            <artifactId>webapp.resource.api</artifactId>
+            <version>DEV-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>
