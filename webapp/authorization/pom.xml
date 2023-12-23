@@ -6,14 +6,9 @@
 >
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>cmahy.webapp</groupId>
     <artifactId>authorization</artifactId>
     <version>DEV-SNAPSHOT</version>
 
     <packaging>pom</packaging>
-
-    <parent>
-        <groupId>cmahy</groupId>
-        <artifactId>webapp</artifactId>
-        <version>DEV-SNAPSHOT</version>
-    </parent>
 </project>

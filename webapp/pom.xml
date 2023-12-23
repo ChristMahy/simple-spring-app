@@ -6,34 +6,14 @@
 >
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>cmahy</groupId>
     <artifactId>webapp</artifactId>
     <version>DEV-SNAPSHOT</version>
-
-    <parent>
-        <groupId>cmahy</groupId>
-        <artifactId>bom</artifactId>
-        <version>DEV-SNAPSHOT</version>
-        <relativePath/>
-    </parent>
 
     <name>spring-webapp</name>
     <description>Spring Webapp sample project</description>
 
     <packaging>pom</packaging>
-
-    <properties>
-        <cmahy.version>DEV-SNAPSHOT</cmahy.version>
-    </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>cmahy</groupId>
-                <artifactId>common</artifactId>
-                <version>${cmahy.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <modules>
         <module>resource</module>
