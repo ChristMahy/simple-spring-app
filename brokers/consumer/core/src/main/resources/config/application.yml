@@ -4,3 +4,10 @@ server:
 spring:
   application:
     name: consumer-app
+  task:
+    execution:
+      thread-name-prefix: cmahy-broker-consumer-
+      pool:
+        core-size: 2
+        max-size: 20
+        queue-capacity: 10000

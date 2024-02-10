@@ -18,7 +18,6 @@ public class GlobalErrorHandler {
 
     @ExceptionHandler
     public ResponseEntity<Void> ioHandler(IOException ioException, WebRequest request) {
-        LOG.info("Passe ici...");
         print(ioException);
 
         return ResponseEntity

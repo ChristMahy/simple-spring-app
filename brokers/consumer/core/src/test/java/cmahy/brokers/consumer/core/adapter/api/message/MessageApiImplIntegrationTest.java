@@ -67,7 +67,7 @@ class MessageApiImplIntegrationTest {
     void allMessages() {
         assertDoesNotThrow(() -> {
             mockMvc.perform(
-                get(UriConstant.BASE + UriConstant.Message.BASE)
+                get(UriConstant.Message.BASE)
             )
                 .andDo(print())
                 .andExpect(status().is(HttpStatus.OK.value()))
