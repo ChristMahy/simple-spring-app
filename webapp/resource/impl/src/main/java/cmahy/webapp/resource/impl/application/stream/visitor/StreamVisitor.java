@@ -1,8 +1,8 @@
 package cmahy.webapp.resource.impl.application.stream.visitor;
 
-public interface StreamVisitor<P, B, R> {
+public interface StreamVisitor<PREPARE, BODY, RESPONSE> {
 
-    default void prepare(P prepare) {}
+    default void prepare(PREPARE prepare) {}
 
-    R build(B body);
+    RESPONSE build(BODY body);
 }

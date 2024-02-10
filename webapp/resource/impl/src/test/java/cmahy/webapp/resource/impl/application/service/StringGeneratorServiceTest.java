@@ -1,4 +1,4 @@
-package cmahy.webapp.resource.impl.adapter.service.generator;
+package cmahy.webapp.resource.impl.application.service;
 
 import cmahy.common.helper.Generator;
 import org.junit.jupiter.api.Test;
@@ -8,20 +8,20 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Random;
-import java.util.regex.Pattern;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
 
 @ExtendWith(MockitoExtension.class)
-class StringGeneratorServiceImplTest {
+class StringGeneratorServiceTest {
 
     @Mock
     private Random randomizer;
 
     @InjectMocks
-    private StringGeneratorServiceImpl stringGenerator;
+    private StringGeneratorService stringGenerator;
 
     @Test
     void executeFixedLengthTo50() {

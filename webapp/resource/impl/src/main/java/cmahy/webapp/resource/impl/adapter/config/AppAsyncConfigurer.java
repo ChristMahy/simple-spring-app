@@ -43,14 +43,10 @@ public class AppAsyncConfigurer implements AsyncConfigurer {
         LOG.debug("Creating Task Executor");
 
         return taskExecutorBuilder
-//            .corePoolSize(taskExecutionProperties.getPool().getCoreSize())
-//            .maxPoolSize(taskExecutionProperties.getPool().getMaxSize())
-//            .queueCapacity(taskExecutionProperties.getPool().getQueueCapacity())
-//            .threadNamePrefix(taskExecutionProperties.getThreadNamePrefix())
-            .corePoolSize(2)
-            .maxPoolSize(20)
-            .queueCapacity(10000)
-            .threadNamePrefix("cmahy-broker-consumer-")
+            .corePoolSize(taskExecutionProperties.getPool().getCoreSize())
+            .maxPoolSize(taskExecutionProperties.getPool().getMaxSize())
+            .queueCapacity(taskExecutionProperties.getPool().getQueueCapacity())
+            .threadNamePrefix(taskExecutionProperties.getThreadNamePrefix())
             .build();
     }
 

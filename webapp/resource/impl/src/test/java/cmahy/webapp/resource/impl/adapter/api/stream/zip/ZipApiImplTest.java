@@ -1,32 +1,28 @@
-package cmahy.webapp.resource.impl.adapter.api.stream.file;
+package cmahy.webapp.resource.impl.adapter.api.stream.zip;
 
 import cmahy.webapp.resource.impl.adapter.api.stream.factory.GeneratorOptionsFactory;
 import cmahy.webapp.resource.impl.adapter.api.stream.visitor.StreamVisitorFactory;
 import cmahy.webapp.resource.impl.adapter.api.stream.visitor.StreamVisitorImpl;
-import cmahy.webapp.resource.impl.application.stream.query.singlefile.GenerateReadmeWithRandomContentQuery;
-import cmahy.webapp.resource.impl.application.stream.visitor.StreamVisitor;
+import cmahy.webapp.resource.impl.application.stream.query.zip.GenerateZipWithRandomContentQuery;
 import cmahy.webapp.resource.impl.application.stream.vo.option.GeneratorQueryOption;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class SingleFileApiImplTest {
+class ZipApiImplTest {
 
     @Mock
-    private GenerateReadmeWithRandomContentQuery query;
+    private GenerateZipWithRandomContentQuery query;
 
     @Mock
     private GeneratorOptionsFactory optionsFactory;
@@ -35,25 +31,25 @@ class SingleFileApiImplTest {
     private StreamVisitorFactory streamVisitorFactory;
 
     @InjectMocks
-    private SingleFileApiImpl singleFileApi;
+    private ZipApiImpl zipApiImpl;
 
     @Test
-    void readme() {
+    void makeAZip() {
         assertDoesNotThrow(() -> {
             var streamVisitor = mock(StreamVisitorImpl.class);
             var options = mock(GeneratorQueryOption.class);
             var response = mock(ResponseEntity.class);
 
-            when(optionsFactory.singleFile(Boolean.FALSE)).thenReturn(options);
+            when(optionsFactory.zip(Boolean.FALSE)).thenReturn(options);
             when(streamVisitorFactory.create()).thenReturn(streamVisitor);
 
             when(query.execute(streamVisitor, options)).thenReturn(response);
 
-            var actual = singleFileApi.readme(Optional.of(Boolean.FALSE));
+            var actual = zipApiImpl.makeAZip(Optional.of(Boolean.FALSE));
 
             assertThat(actual).isEqualTo(response);
 
-            verify(optionsFactory).singleFile(Boolean.FALSE);
+            verify(optionsFactory).zip(Boolean.FALSE);
             verify(query).execute(streamVisitor, options);
 
             verifyNoMoreInteractions(optionsFactory);
@@ -62,22 +58,22 @@ class SingleFileApiImplTest {
     }
 
     @Test
-    void readme_onFailureEmpty_thenShouldReplaceWithDefaultValue() {
+    void makeAZip_onFailureEmpty_thenShouldReplaceWithDefaultValue() {
         assertDoesNotThrow(() -> {
             var streamVisitor = mock(StreamVisitorImpl.class);
             var options = mock(GeneratorQueryOption.class);
             var response = mock(ResponseEntity.class);
 
-            when(optionsFactory.singleFile(Boolean.FALSE)).thenReturn(options);
+            when(optionsFactory.zip(Boolean.FALSE)).thenReturn(options);
             when(streamVisitorFactory.create()).thenReturn(streamVisitor);
 
             when(query.execute(streamVisitor, options)).thenReturn(response);
 
-            var actual = singleFileApi.readme(Optional.empty());
+            var actual = zipApiImpl.makeAZip(Optional.empty());
 
             assertThat(actual).isEqualTo(response);
 
-            verify(optionsFactory).singleFile(Boolean.FALSE);
+            verify(optionsFactory).zip(Boolean.FALSE);
             verify(query).execute(streamVisitor, options);
 
             verifyNoMoreInteractions(optionsFactory);
@@ -86,22 +82,22 @@ class SingleFileApiImplTest {
     }
 
     @Test
-    void readme_onFailureIsTrue_thenShouldTransmitToQuery() {
+    void makeAZip_onFailureIsTrue_thenShouldTransmitToQuery() {
         assertDoesNotThrow(() -> {
             var streamVisitor = mock(StreamVisitorImpl.class);
             var options = mock(GeneratorQueryOption.class);
             var response = mock(ResponseEntity.class);
 
-            when(optionsFactory.singleFile(Boolean.TRUE)).thenReturn(options);
+            when(optionsFactory.zip(Boolean.TRUE)).thenReturn(options);
             when(streamVisitorFactory.create()).thenReturn(streamVisitor);
 
             when(query.execute(streamVisitor, options)).thenReturn(response);
 
-            var actual = singleFileApi.readme(Optional.of(Boolean.TRUE));
+            var actual = zipApiImpl.makeAZip(Optional.of(Boolean.TRUE));
 
             assertThat(actual).isEqualTo(response);
 
-            verify(optionsFactory).singleFile(Boolean.TRUE);
+            verify(optionsFactory).zip(Boolean.TRUE);
             verify(query).execute(streamVisitor, options);
 
             verifyNoMoreInteractions(optionsFactory);

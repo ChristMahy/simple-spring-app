@@ -1,7 +1,8 @@
 package cmahy.webapp.resource.impl.adapter.api.stream.file;
 
 import cmahy.webapp.resource.api.stream.file.SingleFileApi;
-import cmahy.webapp.resource.impl.adapter.api.stream.visitor.StreamVisitorImpl;
+import cmahy.webapp.resource.impl.adapter.api.stream.factory.GeneratorOptionsFactory;
+import cmahy.webapp.resource.impl.adapter.api.stream.visitor.StreamVisitorFactory;
 import cmahy.webapp.resource.impl.application.stream.query.singlefile.GenerateReadmeWithRandomContentQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +20,17 @@ public class SingleFileApiImpl implements SingleFileApi {
     private static final Logger LOG = LoggerFactory.getLogger(SingleFileApiImpl.class);
 
     private final GenerateReadmeWithRandomContentQuery query;
+    private final GeneratorOptionsFactory optionsFactory;
+    private final StreamVisitorFactory streamVisitorFactory;
 
-    public SingleFileApiImpl(GenerateReadmeWithRandomContentQuery query) {
+    public SingleFileApiImpl(
+        GenerateReadmeWithRandomContentQuery query,
+        GeneratorOptionsFactory optionsFactory,
+        StreamVisitorFactory streamVisitorFactory
+    ) {
         this.query = query;
+        this.optionsFactory = optionsFactory;
+        this.streamVisitorFactory = streamVisitorFactory;
     }
 
     @Override
@@ -29,12 +38,15 @@ public class SingleFileApiImpl implements SingleFileApi {
 
         LOG.info("Build http response");
 
-        var responseVisitor = new StreamVisitorImpl();
+        var responseVisitor = streamVisitorFactory.create();
 
         responseVisitor.contentType(MediaType.TEXT_MARKDOWN_VALUE);
 
         LOG.info("Return http response");
 
-        return query.execute(responseVisitor, onFailure.orElse(Boolean.FALSE));
+        return query.execute(
+            responseVisitor,
+            this.optionsFactory.singleFile(onFailure.orElse(Boolean.FALSE))
+        );
     }
 }
