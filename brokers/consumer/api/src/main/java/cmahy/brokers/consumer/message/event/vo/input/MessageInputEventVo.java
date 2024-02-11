@@ -1,0 +1,11 @@
+package cmahy.brokers.consumer.message.event.vo.input;
+
+import cmahy.brokers.consumer.message.event.vo.id.MessageEventId;
+
+import java.time.LocalDateTime;
+
+public record MessageInputEventVo(
+    MessageEventId id,
+    String message,
+    LocalDateTime createdAt
+) { }

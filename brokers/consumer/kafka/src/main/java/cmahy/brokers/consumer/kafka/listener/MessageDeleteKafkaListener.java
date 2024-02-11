@@ -1,16 +1,14 @@
 package cmahy.brokers.consumer.kafka.listener;
 
 
-import cmahy.brokers.consumer.event.message.DeletionMessageListener;
-import cmahy.brokers.consumer.event.vo.id.MessageEventId;
+import cmahy.brokers.consumer.message.event.DeletionMessageListener;
+import cmahy.brokers.consumer.message.event.vo.id.MessageEventId;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
-
-import java.io.IOException;
 
 @Service
 public class MessageDeleteKafkaListener {

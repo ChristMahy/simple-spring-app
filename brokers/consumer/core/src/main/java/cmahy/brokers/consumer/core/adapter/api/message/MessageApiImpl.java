@@ -1,9 +1,9 @@
 package cmahy.brokers.consumer.core.adapter.api.message;
 
-import cmahy.brokers.consumer.api.message.MessageApi;
-import cmahy.brokers.consumer.api.vo.output.MessageOutputApiVo;
-import cmahy.brokers.consumer.core.adapter.mapper.message.MessageOutputAdapterMapper;
-import cmahy.brokers.consumer.core.application.query.message.GetAllMessageQuery;
+import cmahy.brokers.consumer.message.api.MessageApi;
+import cmahy.brokers.consumer.message.api.vo.output.MessageOutputApiVo;
+import cmahy.brokers.consumer.core.adapter.message.mapper.MessageOutputAdapterMapper;
+import cmahy.brokers.consumer.core.application.message.query.GetAllMessageQuery;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 

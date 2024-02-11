@@ -1,9 +1,9 @@
 package cmahy.brokers.consumer.core.adapter.api.message;
 
-import cmahy.brokers.consumer.api.vo.output.MessageOutputApiVo;
-import cmahy.brokers.consumer.core.adapter.mapper.message.MessageOutputAdapterMapper;
-import cmahy.brokers.consumer.core.application.query.message.GetAllMessageQuery;
-import cmahy.brokers.consumer.core.application.vo.output.MessageOutputAppVo;
+import cmahy.brokers.consumer.message.api.vo.output.MessageOutputApiVo;
+import cmahy.brokers.consumer.core.adapter.message.mapper.MessageOutputAdapterMapper;
+import cmahy.brokers.consumer.core.application.message.query.GetAllMessageQuery;
+import cmahy.brokers.consumer.core.application.message.vo.output.MessageOutputAppVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

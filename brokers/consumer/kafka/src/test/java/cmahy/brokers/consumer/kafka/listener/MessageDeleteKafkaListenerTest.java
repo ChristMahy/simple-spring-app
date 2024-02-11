@@ -1,7 +1,7 @@
 package cmahy.brokers.consumer.kafka.listener;
 
-import cmahy.brokers.consumer.event.message.DeletionMessageListener;
-import cmahy.brokers.consumer.event.vo.id.MessageEventId;
+import cmahy.brokers.consumer.message.event.DeletionMessageListener;
+import cmahy.brokers.consumer.message.event.vo.id.MessageEventId;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.junit.jupiter.api.Test;

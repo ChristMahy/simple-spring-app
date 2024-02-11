@@ -1,7 +1,7 @@
 package cmahy.brokers.consumer.rabbitmq.push.listener;
 
-import cmahy.brokers.consumer.event.message.ModificationMessageListener;
-import cmahy.brokers.consumer.event.vo.input.MessageInputEventVo;
+import cmahy.brokers.consumer.message.event.ModificationMessageListener;
+import cmahy.brokers.consumer.message.event.vo.input.MessageInputEventVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

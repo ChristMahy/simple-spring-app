@@ -1,7 +1,7 @@
 package cmahy.brokers.consumer.rabbitmq.push.listener;
 
-import cmahy.brokers.consumer.event.message.ModificationMessageListener;
-import cmahy.brokers.consumer.event.vo.input.MessageInputEventVo;
+import cmahy.brokers.consumer.message.event.ModificationMessageListener;
+import cmahy.brokers.consumer.message.event.vo.input.MessageInputEventVo;
 import cmahy.brokers.consumer.rabbitmq.config.RabbitMQQueue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

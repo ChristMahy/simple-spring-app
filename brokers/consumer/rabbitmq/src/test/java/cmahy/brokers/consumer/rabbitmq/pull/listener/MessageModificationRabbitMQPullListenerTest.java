@@ -1,8 +1,7 @@
 package cmahy.brokers.consumer.rabbitmq.pull.listener;
 
-import cmahy.brokers.consumer.event.message.ModificationMessageListener;
-import cmahy.brokers.consumer.event.vo.id.MessageEventId;
-import cmahy.brokers.consumer.event.vo.input.MessageInputEventVo;
+import cmahy.brokers.consumer.message.event.ModificationMessageListener;
+import cmahy.brokers.consumer.message.event.vo.input.MessageInputEventVo;
 import cmahy.brokers.consumer.rabbitmq.config.RabbitMQQueue;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

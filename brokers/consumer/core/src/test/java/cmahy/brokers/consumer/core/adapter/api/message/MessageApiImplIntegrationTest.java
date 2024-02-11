@@ -1,9 +1,9 @@
 package cmahy.brokers.consumer.core.adapter.api.message;
 
-import cmahy.brokers.consumer.api.UriConstant;
-import cmahy.brokers.consumer.api.vo.output.MessageOutputApiVo;
-import cmahy.brokers.consumer.core.application.repository.message.MessageRepository;
-import cmahy.brokers.consumer.core.domain.Message;
+import cmahy.brokers.consumer.message.api.MessageUriConstant;
+import cmahy.brokers.consumer.message.api.vo.output.MessageOutputApiVo;
+import cmahy.brokers.consumer.core.application.message.repository.MessageRepository;
+import cmahy.brokers.consumer.core.domain.message.Message;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.inject.Inject;
@@ -67,7 +67,7 @@ class MessageApiImplIntegrationTest {
     void allMessages() {
         assertDoesNotThrow(() -> {
             mockMvc.perform(
-                get(UriConstant.Message.BASE)
+                get(MessageUriConstant.Message.BASE)
             )
                 .andDo(print())
                 .andExpect(status().is(HttpStatus.OK.value()))
