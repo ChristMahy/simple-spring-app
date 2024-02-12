@@ -8,11 +8,17 @@
     <meta charset="UTF-8">
     <title>Spring app demo.</title>
     <link rel="stylesheet" th:href="@{/styles.css}"/>
+    <link rel="stylesheet" th:href="@{/no-controller.css}"/>
 </head>
 <body>
-    <div class="main-content">
-        <h1><a th:href="@{/taco}">Taco's shop</a></h1>
-        <h1><a th:href="@{/without-controller}">Page without controller declaration</a></h1>
+<div class="main-content">
+    <h1>This is a page without class controller</h1>
+
+    <img alt="No image..." th:src="@{/images/home-logo.jpg}"/>
+
+    <div class="page-links">
+        <a th:href="@{/}">Home page</a>
     </div>
+</div>
 </body>
 </html>

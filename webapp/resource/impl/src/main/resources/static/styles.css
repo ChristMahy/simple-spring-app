@@ -27,5 +27,13 @@ html, body {
 
     padding-top: 25px;
 
-    overflow: hidden;
+    overflow: auto;
+}
+
+.main-content > .page-links {
+    display: flex;
+
+    flex-direction: row;
+
+    gap: 15px;
 }

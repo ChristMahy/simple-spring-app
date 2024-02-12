@@ -1,0 +1,24 @@
+.error-content {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 20px;
+}
+
+.error-content .error-content-row {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+
+    padding: 5px 10px;
+
+    border-bottom: 1px solid;
+    border-radius: 10px;
+}
+
+.error-content .error-content-row > div:nth-child(1) {
+    border-bottom: 1px dashed;
+}

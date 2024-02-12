@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html
+    lang="en"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Spring app demo.</title>
+    <link rel="stylesheet" th:href="@{/styles.css}"/>
+    <link rel="stylesheet" th:href="@{/error.css}"/>
+</head>
+<body>
+<div class="main-content">
+    <h1>Thymeleaf Error Page</h1>
+
+    <div class="error-content">
+        <div>
+            It appears either something went wrong or the page doesn't exist anymore.....
+        </div>
+
+        <div class="error-content-row">
+            <div>
+                <span>Date</span>
+            </div>
+            <div>
+                <span th:text="${timestamp}"></span>
+            </div>
+        </div>
+
+        <div class="error-content-row">
+            <div>
+                <span>Path</span>
+            </div>
+            <div>
+                <span th:text="${path}"></span>
+            </div>
+        </div>
+
+        <div class="error-content-row">
+            <div>
+                <span>Error</span>
+            </div>
+            <div>
+                <span th:text="${error}"></span>
+            </div>
+        </div>
+
+        <div class="error-content-row">
+            <div>
+                <span>Status</span>
+            </div>
+            <div>
+                <span th:text="${status}"></span>
+            </div>
+        </div>
+
+        <div class="error-content-row">
+            <div>
+                <span>Message</span>
+            </div>
+            <div>
+                <span th:text="${message}"></span>
+            </div>
+        </div>
+
+        <div class="error-content-row">
+            <div>
+                <span>Exception</span>
+            </div>
+            <div>
+                <span th:text="${exception}"></span>
+            </div>
+        </div>
+
+        <div class="error-content-row">
+            <div>
+                <span>Trace</span>
+            </div>
+            <div>
+                <span th:text="${trace}"></span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
