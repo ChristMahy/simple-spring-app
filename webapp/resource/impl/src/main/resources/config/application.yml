@@ -1,4 +1,9 @@
 spring:
+  application:
+    name: webapp-resource
+  datasource:
+    generate-unique-name: false
+    name: webapp-resource-cloud
   task:
     execution:
       thread-name-prefix: cmahy-broker-consumer-
