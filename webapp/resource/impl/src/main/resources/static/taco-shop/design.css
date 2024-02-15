@@ -1,0 +1,49 @@
+.ingredients-selection {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 15px;
+
+    padding: 15px;
+}
+
+.ingredients-selection > .ingredient-group {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+
+    padding: 7px 15px;
+
+    border: 1px solid;
+    border-radius: 5px;
+}
+
+.ingredients-selection > .ingredient-group > h3 {
+    border-bottom: 1px dashed;
+}
+
+.ingredients-selection > .ingredient-group label {
+    cursor: pointer;
+}
+
+.taco-name {
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 15px;
+}
+
+.taco-name > input[type=text] {
+    width: 100%;
+}
+
+.taco-name > label {
+    cursor: pointer;
+}
