@@ -1,6 +1,6 @@
-package cmahy.webapp.resource.impl.application.taco.shop.mapper;
+package cmahy.webapp.resource.impl.application.taco.shop.mapper.output;
 
-import cmahy.webapp.resource.impl.application.taco.shop.vo.id.IngredientIdVo;
+import cmahy.webapp.resource.impl.domain.taco.id.IngredientId;
 import cmahy.webapp.resource.impl.application.taco.shop.vo.output.IngredientOutputAppVo;
 import cmahy.webapp.resource.impl.domain.taco.Ingredient;
 import jakarta.inject.Named;
@@ -14,7 +14,7 @@ public class IngredientOutputMapper {
         }
 
         return new IngredientOutputAppVo(
-            new IngredientIdVo(ingredient.getId()),
+            new IngredientId(ingredient.getId()),
             ingredient.getName(),
             ingredient.getType().name()
         );

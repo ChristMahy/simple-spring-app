@@ -1,7 +1,13 @@
 package cmahy.webapp.resource.impl.domain.taco;
 
+import cmahy.webapp.resource.impl.application.taco.shop.exception.IngredientTypeNotFoundException;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 public class Ingredient {
@@ -48,6 +54,18 @@ public class Ingredient {
         PROTEIN,
         VEGGIES,
         CHEESE,
-        SAUCE
+        SAUCE;
+
+        static Type fromString(String value) {
+            Set<Type> types = Arrays.stream(Type.values())
+                .filter(t -> StringUtils.equalsIgnoreCase(t.name(), value))
+                .collect(Collectors.toSet());
+
+            if (types.size() != 1) {
+                throw new IngredientTypeNotFoundException(value);
+            }
+
+            return types.stream().findFirst().get();
+        }
     }
 }
