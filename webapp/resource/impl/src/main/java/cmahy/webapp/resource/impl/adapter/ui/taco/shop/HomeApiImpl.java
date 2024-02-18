@@ -12,6 +12,6 @@ public class HomeApiImpl implements HomeApi {
 
     @Override
     public String home() {
-        return "home";
+        return "taco-shop/home";
     }
 }
