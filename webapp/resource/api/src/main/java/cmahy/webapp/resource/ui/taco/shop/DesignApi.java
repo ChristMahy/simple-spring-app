@@ -2,6 +2,7 @@ package cmahy.webapp.resource.ui.taco.shop;
 
 import cmahy.webapp.resource.ui.taco.TacoUriConstant;
 import cmahy.webapp.resource.ui.taco.vo.input.TacoInputApiVo;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -11,12 +12,21 @@ import org.springframework.web.bind.annotation.*;
 public interface DesignApi {
 
     @GetMapping
-    String designForm(Model model);
+    String designForm(Model model, HttpSession session);
 
-    @PostMapping
+    @PostMapping(params = "action=add")
+    String addDesignTaco(
+        Model model,
+        @Valid TacoInputApiVo taco,
+        Errors errors,
+        HttpSession session
+    );
+
+    @PostMapping(params = "action=create")
     String saveDesignTaco(
         Model model,
         @Valid TacoInputApiVo taco,
-        Errors errors
+        Errors errors,
+        HttpSession session
     );
 }

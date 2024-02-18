@@ -15,6 +15,11 @@
     <h1>Taco's shop</h1>
     <h2>Design your taco !</h2>
 
+    <h4
+        th:if="${!#ctx.session.isEmpty() && #ctx.session.containsKey('tacoOrder')}"
+        th:text="'Tacos size: ' + ${tacosSize} + ' (' + ${tacosName} + ')'"
+    ></h4>
+
     <form
         method="post"
         th:object="${taco}"
@@ -91,7 +96,12 @@
 
             <input id="taco-name" type="text" th:field="*{name}"/>
 
-            <input type="submit" value="Submit Your Taco"/>
+            <ul th:if="${#fields.hasErrors('*')}">
+                <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+            </ul>
+
+            <button type="submit" value="add" name="action">Add Taco</button>
+            <button type="submit" value="create" name="action">Submit Your Taco(s)</button>
         </div>
     </form>
 

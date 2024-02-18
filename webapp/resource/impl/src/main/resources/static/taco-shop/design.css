@@ -5,7 +5,13 @@
 
     gap: 15px;
 
-    padding: 15px;
+    overflow: auto;
+
+    padding: 0 15px;
+    margin: 15px 0;
+
+    min-width: 400px;
+    max-height: 600px;
 }
 
 .ingredients-selection > .ingredient-group {
