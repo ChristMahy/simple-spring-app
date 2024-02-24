@@ -15,10 +15,12 @@
     <h1>Taco's shop</h1>
     <h2>Design your taco !</h2>
 
-    <h4
-        th:if="${!#ctx.session.isEmpty() && #ctx.session.containsKey('tacoOrder')}"
-        th:text="'Tacos size: ' + ${tacosSize} + ' (' + ${tacosName} + ')'"
-    ></h4>
+    <ul th:if="${tacos.size()} gt 0">
+        <li
+            th:each="t : ${tacos}"
+            th:text="${t.name}"
+        ></li>
+    </ul>
 
     <form
         method="post"
@@ -91,17 +93,31 @@
             </div>
         </div>
 
+        <div
+            class="validationError"
+            th:if="${#fields.hasErrors('ingredientIds')}"
+            th:errors="*{ingredientIds}"
+        >This field has an error</div>
+
         <div class="taco-name">
             <label for="taco-name">Name your taco creation:</label>
 
             <input id="taco-name" type="text" th:field="*{name}"/>
 
+            <div
+                class="validationError"
+                th:if="${#fields.hasErrors('name')}"
+                th:errors="*{name}"
+            >This field has an error</div>
+
             <ul th:if="${#fields.hasErrors('*')}">
                 <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
             </ul>
 
-            <button type="submit" value="add" name="action">Add Taco</button>
-            <button type="submit" value="create" name="action">Submit Your Taco(s)</button>
+            <div class="form-actions">
+                <button type="submit" value="add" name="action">Add Taco</button>
+                <button type="submit" value="create" name="action">Submit Your Taco(s)</button>
+            </div>
         </div>
     </form>
 

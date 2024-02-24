@@ -4,10 +4,6 @@ import jakarta.validation.constraints.*;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Stream;
-
 public record ClientOrderInputApiVo(
     @NotBlank(message = "Delivery name is required")
     String deliveryName,
@@ -28,23 +24,8 @@ public record ClientOrderInputApiVo(
     )
     String ccExpiration,
     @Digits(integer = 3, fraction = 0, message = "Invalid CVV")
-    String ccCVV,
-    List<TacoInputApiVo> tacos
+    String ccCVV
 ) {
-
-    public ClientOrderInputApiVo addATaco(TacoInputApiVo taco) {
-        return new ClientOrderInputApiVo(
-            this.deliveryName(),
-            this.deliveryStreet(),
-            this.deliveryCity(),
-            this.deliveryState(),
-            this.deliveryZip(),
-            this.ccNumber(),
-            this.ccExpiration(),
-            this.ccCVV(),
-            Stream.concat(this.tacos().stream(), Stream.of(taco)).toList()
-        );
-    }
 
     @Override
     public String toString() {
@@ -57,11 +38,10 @@ public record ClientOrderInputApiVo(
             .append("ccNumber", ccNumber())
             .append("ccExpiration", ccExpiration())
             .append("ccCVV", ccCVV())
-            .append("tacos", tacos() == null ? Collections.emptyList() : tacos().stream().map(TacoInputApiVo::name).toList())
             .build();
     }
 
     public static ClientOrderInputApiVo createEmpty() {
-        return new ClientOrderInputApiVo("", "", "", "", "", "", "", "", Collections.emptyList());
+        return new ClientOrderInputApiVo("", "", "", "", "", "", "", "");
     }
 }

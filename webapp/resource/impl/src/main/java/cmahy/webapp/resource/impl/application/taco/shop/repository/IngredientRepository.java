@@ -7,4 +7,6 @@ import java.util.Set;
 public interface IngredientRepository {
 
     Set<Ingredient> findByType(Ingredient.Type type);
+
+    Set<Ingredient> findAllByIdIn(Set<String> ids);
 }

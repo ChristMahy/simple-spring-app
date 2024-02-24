@@ -17,7 +17,7 @@ public class Ingredient {
     private String name;
     private Type type;
 
-    protected Ingredient() {}
+    public Ingredient() {}
 
     public Ingredient(String id, String name, Type type) {
         this.id = id;

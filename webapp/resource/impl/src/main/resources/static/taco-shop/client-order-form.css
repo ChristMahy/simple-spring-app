@@ -1,0 +1,44 @@
+.form-fields-block {
+    display: flex;
+
+    flex-direction: column;
+
+    row-gap: 15px;
+}
+.form-field-block {
+    display: grid;
+
+    grid-template-areas: "label input" "errors errors";
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto;
+
+    column-gap: 7px;
+
+    align-items: center;
+}
+
+.form-field-block > label {
+    grid-area: label;
+}
+
+.form-field-block > input {
+    grid-area: input;
+}
+
+.form-field-block > span {
+    grid-area: errors;
+
+    padding: 15px 0;
+}
+
+.form-actions {
+    display: flex;
+
+    flex-direction: row;
+
+    justify-content: center;
+
+    gap: 15px;
+
+    padding: 15px 0;
+}
