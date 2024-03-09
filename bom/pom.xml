@@ -132,7 +132,6 @@
                         <target>${maven.compiler.source}</target>
                         <compilerVersion>${java.version}</compilerVersion>
                         <encoding>${project.build.sourceEncoding}</encoding>
-                        <optimize>true</optimize>
                         <showDeprecation>true</showDeprecation>
                         <parameters>true</parameters>
                         <annotationProcessorPaths>
