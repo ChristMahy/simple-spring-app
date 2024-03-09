@@ -13,7 +13,7 @@ public class ClientOrder {
     @GeneratedValue
     private Long id;
 
-    private Date placedAt = new Date();
+    private Date placedAt;
 
     @NotBlank(message = "Delivery name is required")
     private String deliveryName;
@@ -136,6 +136,13 @@ public class ClientOrder {
 
     public void addTaco(Taco taco) {
         this.tacos.add(taco);
+    }
+
+    @PrePersist
+    public void prePersist() {
+        if (Objects.isNull(placedAt)) {
+            this.placedAt = new Date();
+        }
     }
 
     @Override

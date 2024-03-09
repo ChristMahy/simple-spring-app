@@ -31,20 +31,20 @@ public class ZipRandomContentWriterTasksFactory {
 
         return IntStream.rangeClosed(1, elementsSizeOrDefault)
             .mapToObj(index -> {
-                LOG.info("Add entry <{}>", index);
+                LOG.debug("Add entry <{}>", index);
 
                 return (ZipSingleEntryTaskExecutor) (zipStream) -> {
-                    LOG.info("Generate entry <{}>", index);
+                    LOG.debug("Generate entry <{}>", index);
 
                     final String aString = stringGeneratorService.execute(
                         options.stringSizeOrDefaultAboveZero(5 * 1024 * 1024)
                     );
 
-                    LOG.info("Write entry <{}>", index);
+                    LOG.debug("Write entry <{}>", index);
 
                     zipStream.appendToEntryContent(("Test readme with some text <" + index + ">, " + aString).getBytes());
 
-                    LOG.info("Close entry <{}>", index);
+                    LOG.debug("Close entry <{}>", index);
 
                     if (Boolean.TRUE.equals(options.onFailure()) && index >= failAtPosition) {
                         throw new FailAtPositionException("Zip exception run");

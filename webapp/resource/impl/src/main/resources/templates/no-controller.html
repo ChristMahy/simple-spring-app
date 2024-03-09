@@ -3,22 +3,18 @@
     lang="en"
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{partial/base-template.html}"
 >
 <head>
-    <meta charset="UTF-8">
-    <title>Spring app demo.</title>
-    <link rel="stylesheet" th:href="@{/styles.css}"/>
+    <title>No controller</title>
     <link rel="stylesheet" th:href="@{/no-controller.css}"/>
 </head>
 <body>
-<div class="main-content">
-    <h1>This is a page without class controller</h1>
+    <th:block layout:fragment="content">
+        <h1>This is a page without class controller</h1>
 
-    <img alt="No image..." th:src="@{/images/home-logo.jpg}"/>
-
-    <div class="page-links">
-        <a th:href="@{/}">Home page</a>
-    </div>
-</div>
+        <img alt="No image..." th:src="@{/images/home-logo.jpg}"/>
+    </th:block>
 </body>
 </html>

@@ -6,9 +6,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ResourceApplicationTest {
+class ResourceApplicationIntegrationTest {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ResourceApplicationTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ResourceApplicationIntegrationTest.class);
 
     @Test
     void contextLoad() {

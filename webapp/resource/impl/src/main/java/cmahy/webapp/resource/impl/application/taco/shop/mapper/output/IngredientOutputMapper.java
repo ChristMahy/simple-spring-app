@@ -3,14 +3,17 @@ package cmahy.webapp.resource.impl.application.taco.shop.mapper.output;
 import cmahy.webapp.resource.impl.domain.taco.id.IngredientId;
 import cmahy.webapp.resource.impl.application.taco.shop.vo.output.IngredientOutputAppVo;
 import cmahy.webapp.resource.impl.domain.taco.Ingredient;
+import cmahy.webapp.resource.impl.exception.NullException;
 import jakarta.inject.Named;
+
+import java.util.Objects;
 
 @Named
 public class IngredientOutputMapper {
 
     public IngredientOutputAppVo map(Ingredient ingredient) {
-        if (ingredient == null) {
-            return null;
+        if (Objects.isNull(ingredient)) {
+            throw new NullException(Ingredient.class);
         }
 
         return new IngredientOutputAppVo(

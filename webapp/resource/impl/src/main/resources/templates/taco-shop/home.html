@@ -3,23 +3,18 @@
     lang="en"
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{partial/base-template.html}"
 >
 <head>
-    <meta charset="UTF-8">
-    <title>Spring app demo.</title>
-    <link rel="stylesheet" th:href="@{/styles.css}"/>
+    <title>Home</title>
     <link rel="stylesheet" th:href="@{/taco-shop/home.css}"/>
 </head>
 <body>
-    <div class="main-content">
+    <th:block layout:fragment="content">
         <h1>Taco's shop</h1>
 
-        <img th:src="@{/images/home-logo.jpg}" />
-
-        <div class="page-links">
-            <a th:href="@{/}">Home page</a>
-            <a th:href="@{/taco/design}">Design a taco</a>
-        </div>
-    </div>
+        <img alt="No image" th:src="@{/images/home-logo.jpg}" />
+    </th:block>
 </body>
 </html>

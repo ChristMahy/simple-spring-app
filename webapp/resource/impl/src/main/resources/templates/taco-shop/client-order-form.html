@@ -3,15 +3,15 @@
     lang="en"
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{partial/base-template.html}"
 >
 <head>
-    <meta charset="UTF-8">
-    <title>Spring app demo.</title>
-    <link rel="stylesheet" th:href="@{/styles.css}"/>
+    <title>Shopping cart</title>
     <link rel="stylesheet" th:href="@{/taco-shop/client-order-form.css}"/>
 </head>
 <body>
-    <div class="main-content">
+    <th:block layout:fragment="content">
         <h1>Order your taco creations !</h1>
 
         <a th:href="@{/taco/design}" id="another">
@@ -127,11 +127,6 @@
                 </button>
             </div>
         </form>
-
-        <div class="page-links">
-            <a th:href="@{/}">Home page</a>
-            <a th:href="@{/taco/design}">Design a taco</a>
-        </div>
-    </div>
+    </th:block>
 </body>
 </html>

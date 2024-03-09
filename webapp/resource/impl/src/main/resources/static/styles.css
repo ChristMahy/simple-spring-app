@@ -8,6 +8,9 @@ html, body {
 
     height: 100%;
     width: 100%;
+
+    background-color: var(--main-color-bg);
+    color: var(--main-color-text);
 }
 
 .main-content {

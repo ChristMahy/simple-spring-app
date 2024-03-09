@@ -1,6 +1,7 @@
 package cmahy.webapp.resource.impl.adapter.taco.shop.mapper.input;
 
 import cmahy.webapp.resource.impl.application.taco.shop.vo.input.TacoInputAppVo;
+import cmahy.webapp.resource.impl.exception.NullException;
 import cmahy.webapp.resource.ui.taco.vo.input.TacoInputApiVo;
 import jakarta.inject.Named;
 
@@ -18,7 +19,7 @@ public class TacoInputApiToAppMapper {
 
     public TacoInputAppVo map(TacoInputApiVo input) {
         if (Objects.isNull(input)) {
-            return null;
+            throw new NullException(TacoInputApiVo.class);
         }
 
         return new TacoInputAppVo(

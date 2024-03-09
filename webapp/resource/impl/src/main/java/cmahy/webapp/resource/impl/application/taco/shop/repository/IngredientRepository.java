@@ -2,11 +2,12 @@ package cmahy.webapp.resource.impl.application.taco.shop.repository;
 
 import cmahy.webapp.resource.impl.domain.taco.Ingredient;
 
+import java.util.Optional;
 import java.util.Set;
 
 public interface IngredientRepository {
 
-    Set<Ingredient> findByType(Ingredient.Type type);
+    Optional<Ingredient> findById(String id);
 
-    Set<Ingredient> findAllByIdIn(Set<String> ids);
+    Set<Ingredient> findByType(Ingredient.Type type);
 }

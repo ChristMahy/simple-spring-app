@@ -8,10 +8,9 @@ import cmahy.webapp.resource.impl.application.taco.shop.service.ReceiveAndCreate
 import cmahy.webapp.resource.impl.application.taco.shop.vo.input.ClientOrderInputAppVo;
 import cmahy.webapp.resource.impl.application.taco.shop.vo.output.ClientOrderOutputAppVo;
 import cmahy.webapp.resource.impl.domain.taco.id.IngredientId;
+import cmahy.webapp.resource.impl.exception.taco.IngredientNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.stream.Collectors;
 
 @Service
 public class ReceiveAndCreateClientOrderImpl implements ReceiveAndCreateClientOrder {
@@ -47,7 +46,15 @@ public class ReceiveAndCreateClientOrderImpl implements ReceiveAndCreateClientOr
         clientOrder.setTacos(input.tacos().stream().map(tacoInput -> {
             var taco = tacoInputMapper.map(tacoInput);
 
-            taco.setIngredients(ingredientRepository.findAllByIdIn(tacoInput.ingredientIds().stream().map(IngredientId::value).collect(Collectors.toSet())).stream().toList());
+            taco.setIngredients(
+                tacoInput.ingredientIds().stream()
+                    .map(ingredientId -> ingredientRepository
+                        .findById(ingredientId.value())
+                        .orElseThrow(() -> new IngredientNotFoundException(new IngredientId(ingredientId.value())))
+                    )
+                    .distinct()
+                    .toList()
+            );
 
             return tacoRepository.save(taco);
         }).toList());

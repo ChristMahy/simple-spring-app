@@ -55,17 +55,5 @@ public class Ingredient {
         VEGGIES,
         CHEESE,
         SAUCE;
-
-        static Type fromString(String value) {
-            Set<Type> types = Arrays.stream(Type.values())
-                .filter(t -> StringUtils.equalsIgnoreCase(t.name(), value))
-                .collect(Collectors.toSet());
-
-            if (types.size() != 1) {
-                throw new IngredientTypeNotFoundException(value);
-            }
-
-            return types.stream().findFirst().get();
-        }
     }
 }

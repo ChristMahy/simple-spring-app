@@ -3,16 +3,17 @@
     lang="en"
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{partial/base-template.html}"
 >
 <head>
-    <meta charset="UTF-8">
-    <title>Spring app demo.</title>
-    <link rel="stylesheet" th:href="@{/styles.css}"/>
+    <title>Index</title>
 </head>
 <body>
-    <div class="main-content">
+    <th:block layout:fragment="content">
         <h1><a th:href="@{/taco}">Taco's shop</a></h1>
         <h1><a th:href="@{/without-controller}">Page without controller declaration</a></h1>
-    </div>
+        <h1><a th:href="@{/toggle-theme}">Toggle theme</a></h1>
+    </th:block>
 </body>
 </html>

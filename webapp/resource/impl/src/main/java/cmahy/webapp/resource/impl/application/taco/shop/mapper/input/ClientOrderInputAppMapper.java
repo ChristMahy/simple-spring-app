@@ -2,6 +2,7 @@ package cmahy.webapp.resource.impl.application.taco.shop.mapper.input;
 
 import cmahy.webapp.resource.impl.application.taco.shop.vo.input.ClientOrderInputAppVo;
 import cmahy.webapp.resource.impl.domain.taco.ClientOrder;
+import cmahy.webapp.resource.impl.exception.NullException;
 import jakarta.inject.Named;
 
 import java.util.Objects;
@@ -11,7 +12,7 @@ public class ClientOrderInputAppMapper {
 
     public ClientOrder map(ClientOrderInputAppVo input) {
         if (Objects.isNull(input)) {
-            return null;
+            throw new NullException(ClientOrderInputAppVo.class);
         }
 
         var clientOrder = new ClientOrder();
