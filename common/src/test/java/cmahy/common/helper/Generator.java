@@ -55,7 +55,7 @@ public final class Generator {
         return RANDOM.nextBoolean();
     }
 
-    public static <T extends Enum<T>> Enum<T> randomEnum(Class<T> enumClass) {
+    public static <T extends Enum<T>> T randomEnum(Class<T> enumClass) {
         final var values = enumClass.getEnumConstants();
 
         return values[randomInt(0, values.length - 1)];
