@@ -72,7 +72,7 @@ public class ClientOrderApiImpl implements ClientOrderApi {
 
         sessionStatus.setComplete();
 
-        return "redirect:/taco";
+        return "redirect:" + TacoUriConstant.BASE_URL;
     }
 
     @Override
