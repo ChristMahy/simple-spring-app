@@ -12,6 +12,8 @@ public class HomeApiImpl implements HomeApi {
 
     @Override
     public String home() {
+        LOG.debug("Go to home page");
+
         return "taco-shop/home";
     }
 }
