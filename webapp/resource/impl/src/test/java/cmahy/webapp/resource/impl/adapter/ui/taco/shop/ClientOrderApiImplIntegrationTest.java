@@ -16,9 +16,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.*;
 
 import java.util.*;
+import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -70,15 +71,16 @@ class ClientOrderApiImplIntegrationTest {
                 .andExpect(view().name("taco-shop/client-order-form"))
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                 .andExpect(result -> {
+                    assertThat(result.getResponse()).isNotNull();
+
                     String contentAsString = result.getResponse().getContentAsString();
+
+                    assertThat(contentAsString).isNotNull();
 
                     htmlClientOrderEmptyAssertion(contentAsString, tacos);
                 })
                 .andExpect(result -> {
-                    assertThat(result.getRequest()).isNotNull();
-                    assertThat(result.getRequest().getSession()).isNotNull();
-
-                    HttpSession session = result.getRequest().getSession();
+                    HttpSession session = extractSessionWithAssertion(result);
 
                     Object actualClientOrderAsObject = session.getAttribute(TACO_ORDER_SESSION);
 
@@ -122,15 +124,16 @@ class ClientOrderApiImplIntegrationTest {
                 .andExpect(view().name("taco-shop/client-order-form"))
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                 .andExpect(result -> {
+                    assertThat(result.getResponse()).isNotNull();
+
                     String contentAsString = result.getResponse().getContentAsString();
+
+                    assertThat(contentAsString).isNotNull();
 
                     htmlAssertion(contentAsString, clientOrderInput, tacos);
                 })
                 .andExpect(result -> {
-                    assertThat(result.getRequest()).isNotNull();
-                    assertThat(result.getRequest().getSession()).isNotNull();
-
-                    HttpSession session = result.getRequest().getSession();
+                    HttpSession session = extractSessionWithAssertion(result);
 
                     Object actualClientOrderAsObject = session.getAttribute(TACO_ORDER_SESSION);
 
@@ -239,10 +242,7 @@ class ClientOrderApiImplIntegrationTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl(TacoUriConstant.Design.DESIGN_BASE_URL))
                 .andExpect(result -> {
-                    assertThat(result.getRequest()).isNotNull();
-                    assertThat(result.getRequest().getSession()).isNotNull();
-
-                    HttpSession session = result.getRequest().getSession();
+                    HttpSession session = extractSessionWithAssertion(result);
 
                     Object actualClientOrderAsObject = session.getAttribute(TACO_ORDER_SESSION);
 
@@ -309,10 +309,7 @@ class ClientOrderApiImplIntegrationTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl(TacoUriConstant.BASE_URL))
                 .andExpect(result -> {
-                    assertThat(result.getRequest()).isNotNull();
-                    assertThat(result.getRequest().getSession()).isNotNull();
-
-                    HttpSession session = result.getRequest().getSession();
+                    HttpSession session = extractSessionWithAssertion(result);
 
                     assertThat(session.getAttribute(TACO_ORDER_SESSION)).isNull();
                     assertThat(session.getAttribute(TACOS)).isNull();
@@ -374,10 +371,7 @@ class ClientOrderApiImplIntegrationTest {
                     )
                 )
                 .andExpect(result -> {
-                    assertThat(result.getRequest()).isNotNull();
-                    assertThat(result.getRequest().getSession()).isNotNull();
-
-                    HttpSession session = result.getRequest().getSession();
+                    HttpSession session = extractSessionWithAssertion(result);
 
                     assertThat(session.getAttribute(TACOS)).isEqualTo(tacoInputs);
                     htmlAssertion(result.getResponse().getContentAsString(), clientOrderInput, tacoInputs);
@@ -410,5 +404,13 @@ class ClientOrderApiImplIntegrationTest {
         assertThat(clientOrderSession.ccNumber()).isEqualTo(clientOrder.ccNumber());
         assertThat(clientOrderSession.ccExpiration()).isEqualTo(clientOrder.ccExpiration());
         assertThat(clientOrderSession.ccCVV()).isEqualTo(clientOrder.ccCVV());
+    }
+
+    private HttpSession extractSessionWithAssertion(MvcResult result) {
+        assertThat(result).isNotNull();
+        assertThat(result.getRequest()).isNotNull();
+        assertThat(result.getRequest().getSession()).isNotNull();
+
+        return result.getRequest().getSession();
     }
 }

@@ -4,8 +4,16 @@ import java.util.Random;
 
 public final class Generator {
 
-    private static final String LETTERS = "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ_+-=()*$%0123456789";
-    private static final int LETTERS_LENGTH = LETTERS.length();
+    private static final String LETTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final String SPECIAL_CHARS = " _+-=()*$%$@#:/;.,?";
+    private static final String NUMBERS = "0123456789";
+
+    private static final String LETTERS_NUMBERS_SPECIAL_CHARS = LETTERS + SPECIAL_CHARS + NUMBERS;
+    private static final int LETTERS_NUMBERS_SPECIAL_CHARS_LENGTH = LETTERS_NUMBERS_SPECIAL_CHARS.length();
+
+    private static final String LETTERS_NUMBERS = LETTERS + NUMBERS;
+    private static final int LETTERS_NUMBERS_LENGTH = LETTERS_NUMBERS.length();
+
     private static final Random RANDOM = new Random();
 
     private Generator() {}
@@ -19,7 +27,23 @@ public final class Generator {
 
         while (length-- > 0) {
             stringBuilder.append(
-                LETTERS.charAt(randomInt(0, LETTERS_LENGTH - 1))
+                LETTERS_NUMBERS_SPECIAL_CHARS.charAt(randomInt(0, LETTERS_NUMBERS_SPECIAL_CHARS_LENGTH - 1))
+            );
+        }
+
+        return stringBuilder.toString();
+    }
+
+    public static String generateAStringWithoutSpecialChars() {
+        return generateAStringWithoutSpecialChars(20);
+    }
+
+    public static String generateAStringWithoutSpecialChars(int length) {
+        final var stringBuilder = new StringBuilder(length);
+
+        while (length-- > 0) {
+            stringBuilder.append(
+                LETTERS_NUMBERS.charAt(randomInt(0, LETTERS_NUMBERS_LENGTH - 1))
             );
         }
 

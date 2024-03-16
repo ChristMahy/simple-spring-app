@@ -34,26 +34,31 @@ public class DesignApiImpl implements DesignApi {
         this.ingredientOutputMapper = ingredientOutputMapper;
     }
 
+    @ModelAttribute(name = "wrap")
     public Set<IngredientOutputApiVo> wrap() {
         return ingredientByTypeQuery.execute(Ingredient.Type.WRAP).stream()
             .map(ingredientOutputMapper::map).collect(Collectors.toSet());
     }
 
+    @ModelAttribute(name = "protein")
     public Set<IngredientOutputApiVo> protein() {
         return ingredientByTypeQuery.execute(Ingredient.Type.PROTEIN).stream()
             .map(ingredientOutputMapper::map).collect(Collectors.toSet());
     }
 
+    @ModelAttribute(name = "cheese")
     public Set<IngredientOutputApiVo> cheese() {
         return ingredientByTypeQuery.execute(Ingredient.Type.CHEESE).stream()
             .map(ingredientOutputMapper::map).collect(Collectors.toSet());
     }
 
+    @ModelAttribute(name = "veggies")
     public Set<IngredientOutputApiVo> veggies() {
         return ingredientByTypeQuery.execute(Ingredient.Type.VEGGIES).stream()
             .map(ingredientOutputMapper::map).collect(Collectors.toSet());
     }
 
+    @ModelAttribute(name = "sauce")
     public Set<IngredientOutputApiVo> sauce() {
         return ingredientByTypeQuery.execute(Ingredient.Type.SAUCE).stream()
             .map(ingredientOutputMapper::map).collect(Collectors.toSet());

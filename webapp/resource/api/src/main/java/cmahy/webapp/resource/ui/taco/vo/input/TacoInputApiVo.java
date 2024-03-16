@@ -10,9 +10,10 @@ import java.util.Collections;
 import java.util.List;
 
 public record TacoInputApiVo(
-    @NotNull
+    @NotNull(message = "Name must be at least 5 characters long")
     @Size(min = 5, message = "Name must be at least 5 characters long")
     String name,
+    @NotNull(message = "You must choose at least 1 ingredient")
     @Size(min = 1, message = "You must choose at least 1 ingredient")
     List<IngredientApiId> ingredientIds
 ) {
@@ -21,7 +22,12 @@ public record TacoInputApiVo(
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
             .append("name", name)
-            .append("ingredientIds", ingredientIds.stream().map(IngredientApiId::value).toList())
+            .append(
+                "ingredientIds",
+                ingredientIds == null ?
+                    Collections.emptyList() :
+                    ingredientIds.stream().map(IngredientApiId::value).toList()
+            )
             .build();
     }
 

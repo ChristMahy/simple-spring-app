@@ -18,21 +18,6 @@ public interface DesignApi {
     String TACO = "taco";
     String TACOS = "tacos";
 
-    @ModelAttribute(name = "wrap")
-    public Set<IngredientOutputApiVo> wrap();
-
-    @ModelAttribute(name = "protein")
-    public Set<IngredientOutputApiVo> protein();
-
-    @ModelAttribute(name = "cheese")
-    public Set<IngredientOutputApiVo> cheese();
-
-    @ModelAttribute(name = "veggies")
-    public Set<IngredientOutputApiVo> veggies();
-
-    @ModelAttribute(name = "sauce")
-    public Set<IngredientOutputApiVo> sauce();
-
     @GetMapping
     String designForm(Model model);
 
