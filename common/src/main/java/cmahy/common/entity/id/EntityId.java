@@ -1,7 +1,7 @@
-package cmahy.common.entity;
+package cmahy.common.entity.id;
 
-import cmahy.common.entity.json.EntityIdDeserializer;
-import cmahy.common.entity.json.EntityIdSerializer;
+import cmahy.common.entity.id.json.EntityIdDeserializer;
+import cmahy.common.entity.id.json.EntityIdSerializer;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

@@ -1,12 +1,12 @@
-package cmahy.common.entity.json.exception;
+package cmahy.common.entity.exception;
 
 public class NoSuitableConstructorFoundException extends RuntimeException {
 
-    public NoSuitableConstructorFoundException() {
-        this("No suitable constructor found");
-    }
-
     public NoSuitableConstructorFoundException(String message) {
         super(message);
+    }
+
+    public NoSuitableConstructorFoundException(String message, Throwable cause) {
+        super(message, cause);
     }
 }
