@@ -4,6 +4,8 @@ spring:
   datasource:
     generate-unique-name: false
     name: webapp-resource-cloud
+  jpa:
+    open-in-view: false
   task:
     execution:
       thread-name-prefix: cmahy-broker-consumer-
@@ -11,3 +13,9 @@ spring:
         core-size: 2
         max-size: 20
         queue-capacity: 10000
+
+application:
+  start-up:
+    order:
+      generate: true
+      initial-size: 1

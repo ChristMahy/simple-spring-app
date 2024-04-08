@@ -1,6 +1,6 @@
 package cmahy.brokers.publisher.api.vo.id;
 
-import cmahy.common.entity.EntityId;
+import cmahy.common.entity.id.EntityId;
 
 public record MessageApiId(Long value) implements EntityId<Long> {
 }

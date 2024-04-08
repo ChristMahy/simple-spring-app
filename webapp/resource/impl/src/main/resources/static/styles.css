@@ -13,6 +13,10 @@ html, body {
     color: var(--main-color-text);
 }
 
+a {
+    color: inherit;
+}
+
 .main-content {
     display: flex;
 
@@ -32,8 +36,8 @@ html, body {
 
 .main-content > .page-links {
     display: flex;
-
     flex-direction: row;
-
     gap: 15px;
+
+    padding-bottom: 10px;
 }

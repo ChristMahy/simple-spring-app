@@ -1,6 +1,6 @@
 package cmahy.webapp.resource.ui.taco.vo.id;
 
-import cmahy.common.entity.EntityId;
+import cmahy.common.entity.id.EntityId;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 

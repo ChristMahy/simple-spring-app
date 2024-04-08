@@ -23,5 +23,6 @@ public final class TacoUriConstant {
         private ClientOrder() {}
 
         public static final String CLIENT_ORDER_BASE_URL = BASE_URL + "/client-order";
+        public static final String CLIENT_ORDER_HISTORY_URL = "/history";
     }
 }

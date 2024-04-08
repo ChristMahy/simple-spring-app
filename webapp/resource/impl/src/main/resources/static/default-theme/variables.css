@@ -1,4 +1,6 @@
 :root {
     --main-color-bg: inherit;
     --main-color-text: inherit;
+    --opacity-010: rgba(0, 0, 0, 0.1);
+    --opacity-050: rgba(0, 0, 0, 0.5);
 }

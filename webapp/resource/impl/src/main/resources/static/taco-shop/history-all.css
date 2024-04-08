@@ -1,0 +1,95 @@
+.main-content img {
+    height: auto;
+    max-width: 600px;
+}
+
+.history-orders {
+    border: 1px solid;
+    border-radius: 5px;
+
+    padding: 15px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    width: 500px;
+}
+
+.history-orders .history-orders-title {
+    border-radius: 5px;
+    background-color: var(--opacity-010);
+    padding: 3px 5px;
+}
+
+.history-orders .history-tacos {
+    display: grid;
+
+    grid-template-areas: "title content";
+    grid-template-columns: auto 1fr;
+
+    gap: 15px;
+}
+
+.history-orders .history-tacos > div:nth-child(odd) {
+    grid-area: title;
+}
+
+.history-orders .history-tacos > div:nth-child(even) {
+    grid-area: content;
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.history-orders .history-tacos .history-taco {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    border-radius: 5px;
+    padding: 5px 20px 5px 5px;
+    background-color: var(--opacity-010);
+}
+
+.history-orders .history-tacos .history-taco-title {
+    border-bottom: 1px solid var(--opacity-050);
+}
+
+.history-orders .history-tacos .history-ingredients {
+    display: grid;
+
+    grid-template-areas: "title content";
+
+    gap: 15px;
+}
+
+.history-orders .history-tacos .history-ingredients > div:nth-child(odd) {
+    grid-area: title;
+}
+
+.history-orders .history-tacos .history-ingredients > div:nth-child(even) {
+    grid-area: content;
+}
+
+.history-orders .history-tacos .history-ingredients .history-ingredients-list {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    border-left: 2px solid var(--opacity-010);
+    border-right: 2px solid var(--opacity-010);
+    border-radius: 5px;
+    padding: 0 7px;
+}
+
+.pagination {
+    display: flex;
+
+    flex-direction: row;
+
+    flex-wrap: wrap;
+
+    gap: 15px;
+}

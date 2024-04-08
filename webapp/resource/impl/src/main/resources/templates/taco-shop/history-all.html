@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html
+    lang="en"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{partial/base-template.html}"
+>
+<head>
+    <title>History orders</title>
+    <link rel="stylesheet" th:href="@{/taco-shop/history-all.css}"/>
+</head>
+<body>
+<th:block layout:fragment="content">
+    <h1>Tacos orders</h1>
+
+    <img alt="No image" th:src="@{/images/home-logo.jpg}"/>
+
+    <div class="history-orders" th:each="order : ${orders.content}">
+        <div class="history-orders-title" th:text="${order.deliveryName}"></div>
+
+        <div class="history-tacos">
+            <div>Tacos:</div>
+            <div>
+                <div class="history-taco" th:each="taco : ${order.tacos}">
+                    <div class="history-taco-title" th:text="${taco.name}"></div>
+
+                    <div class="history-ingredients">
+                        <div>Ingredients:</div>
+                        <div class="history-ingredients-list">
+                            <div
+                                th:each="ingredient : ${taco.ingredients}"
+                                th:text="${ingredient.name} + ' - [' + ${ingredient.type} + ']'"
+                            ></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${!pagination.isEmpty()}">
+        <div th:text="${pagination.totalElements + ' elements'}"></div>
+        <div class="pagination">
+            <a
+                th:each="pageNumber : ${pagination.pageNumbers}"
+                th:href="@{/taco/client-order/history(page-size=${pagination.pageSize}, page-number=${pageNumber - 1})}"
+                th:text="${pageNumber}"
+            ></a>
+        </div>
+    </div>
+</th:block>
+</body>
+</html>

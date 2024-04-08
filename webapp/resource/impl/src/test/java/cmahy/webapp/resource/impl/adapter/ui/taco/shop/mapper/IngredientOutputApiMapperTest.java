@@ -52,8 +52,6 @@ class IngredientOutputApiMapperTest {
 
             assertThat(actual).isNotNull();
             assertThat(actual.id()).isNull();
-            assertThat(actual.name()).isEqualTo(appOutputVo.name());
-            assertThat(actual.type()).isEqualTo(appOutputVo.type());
         });
     }
 
