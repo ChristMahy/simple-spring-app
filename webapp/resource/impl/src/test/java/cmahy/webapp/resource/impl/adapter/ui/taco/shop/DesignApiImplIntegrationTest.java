@@ -4,6 +4,7 @@ import cmahy.webapp.resource.impl.application.taco.shop.query.GetIngredientByTyp
 import cmahy.webapp.resource.impl.application.taco.shop.vo.output.IngredientOutputAppVo;
 import cmahy.webapp.resource.impl.domain.taco.Ingredient;
 import cmahy.webapp.resource.impl.domain.taco.id.IngredientId;
+import cmahy.webapp.resource.impl.helper.security.user.SecurityUserGenerator;
 import cmahy.webapp.resource.ui.taco.TacoUriConstant;
 import cmahy.webapp.resource.ui.taco.vo.id.IngredientApiId;
 import cmahy.webapp.resource.ui.taco.vo.input.TacoInputApiVo;
@@ -30,6 +31,7 @@ import static cmahy.webapp.resource.ui.taco.shop.DesignApi.TACOS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -65,7 +67,10 @@ class DesignApiImplIntegrationTest {
     void designForm_whenNoTacosInSession_thenCreateEmptyTacosList() {
         assertDoesNotThrow(() -> {
             mockMvc
-                .perform(get(TacoUriConstant.Design.DESIGN_BASE_URL))
+                .perform(
+                    get(TacoUriConstant.Design.DESIGN_BASE_URL)
+                        .with(SecurityUserGenerator.generateRandomUser())
+                )
                 .andExpect(status().isOk())
                 .andExpect(view().name("taco-shop/design"))
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
@@ -105,6 +110,7 @@ class DesignApiImplIntegrationTest {
             mockMvc
                 .perform(
                     get(TacoUriConstant.Design.DESIGN_BASE_URL)
+                        .with(SecurityUserGenerator.generateRandomUser())
                         .sessionAttr(TACOS, tacos)
                 )
                 .andExpect(status().isOk())
@@ -149,6 +155,8 @@ class DesignApiImplIntegrationTest {
             mockMvc
                 .perform(
                     post(TacoUriConstant.Design.DESIGN_BASE_URL)
+                        .with(SecurityUserGenerator.generateRandomUser())
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .sessionAttr(TACOS, new ArrayList<>(tacos))
                         .param("action", "add")
@@ -194,6 +202,8 @@ class DesignApiImplIntegrationTest {
             mockMvc
                 .perform(
                     post(TacoUriConstant.Design.DESIGN_BASE_URL)
+                        .with(SecurityUserGenerator.generateRandomUser())
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .sessionAttr(TACOS, new ArrayList<>(tacos))
                         .param("action", "add")
@@ -239,6 +249,8 @@ class DesignApiImplIntegrationTest {
             mockMvc
                 .perform(
                     post(TacoUriConstant.Design.DESIGN_BASE_URL)
+                        .with(SecurityUserGenerator.generateRandomUser())
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .sessionAttr(TACOS, new ArrayList<>(tacos))
                         .param("action", "create")
@@ -268,6 +280,8 @@ class DesignApiImplIntegrationTest {
             mockMvc
                 .perform(
                     post(TacoUriConstant.Design.DESIGN_BASE_URL)
+                        .with(SecurityUserGenerator.generateRandomUser())
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .sessionAttr(TACOS, new ArrayList<>())
                         .param("action", "create")
@@ -300,6 +314,8 @@ class DesignApiImplIntegrationTest {
             mockMvc
                 .perform(
                     post(TacoUriConstant.Design.DESIGN_BASE_URL)
+                        .with(SecurityUserGenerator.generateRandomUser())
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .sessionAttr(TACOS, new ArrayList<>(tacos))
                         .param("action", "create")

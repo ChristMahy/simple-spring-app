@@ -8,7 +8,7 @@
 >
 <head>
     <title>Design</title>
-    <link rel="stylesheet" th:href="@{/taco-shop/design.css}"/>
+    <link rel="stylesheet" th:href="@{/css/taco-shop/design.css}"/>
 </head>
 <body>
 <th:block layout:fragment="content">
@@ -119,6 +119,9 @@
                 <button type="submit" value="create" name="action">Submit Your Taco(s)</button>
             </div>
         </div>
+
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+
     </form>
 </th:block>
 </body>

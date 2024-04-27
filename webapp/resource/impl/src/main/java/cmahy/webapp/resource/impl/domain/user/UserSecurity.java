@@ -1,6 +1,5 @@
-package cmahy.webapp.resource.impl.adapter.user.domain;
+package cmahy.webapp.resource.impl.domain.user;
 
-import cmahy.webapp.resource.impl.domain.user.User;
 import jakarta.persistence.*;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;

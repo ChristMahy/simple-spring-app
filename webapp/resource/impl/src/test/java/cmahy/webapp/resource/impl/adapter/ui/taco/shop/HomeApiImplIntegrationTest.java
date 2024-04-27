@@ -1,5 +1,6 @@
 package cmahy.webapp.resource.impl.adapter.ui.taco.shop;
 
+import cmahy.webapp.resource.impl.helper.security.user.SecurityUserGenerator;
 import cmahy.webapp.resource.ui.taco.TacoUriConstant;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,10 @@ class HomeApiImplIntegrationTest {
     void home() {
         assertDoesNotThrow(() -> {
             mockMvc
-                .perform(get(TacoUriConstant.BASE_URL))
+                .perform(
+                    get(TacoUriConstant.BASE_URL)
+                        .with(SecurityUserGenerator.generateRandomUser())
+                )
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("taco-shop/home"))

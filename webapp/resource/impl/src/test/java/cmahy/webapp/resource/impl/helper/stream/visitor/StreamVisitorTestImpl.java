@@ -5,7 +5,7 @@ import cmahy.webapp.resource.impl.application.stream.visitor.StreamVisitor;
 
 import java.util.Optional;
 
-public class StreamVisitorTestImpl implements StreamVisitor<String, StreamConsumer, StreamVisitorResponseTestImpl> {
+public final class StreamVisitorTestImpl implements StreamVisitor<String, StreamConsumer, StreamVisitorResponseTestImpl> {
 
     private Optional<String> prepareResult;
 

@@ -1,11 +1,16 @@
 package cmahy.webapp.resource.impl.adapter.ui.taco.shop;
 
+import cmahy.webapp.resource.impl.adapter.security.vo.UserSecurityDetails;
 import cmahy.webapp.resource.impl.adapter.taco.shop.mapper.input.ClientOrderInputApiToAppMapper;
 import cmahy.webapp.resource.impl.adapter.taco.shop.mapper.input.TacoInputApiToAppMapper;
 import cmahy.webapp.resource.impl.application.taco.shop.command.ReceiveNewClientOrderCommand;
 import cmahy.webapp.resource.impl.application.taco.shop.vo.input.ClientOrderInputAppVo;
 import cmahy.webapp.resource.impl.application.taco.shop.vo.input.TacoInputAppVo;
 import cmahy.webapp.resource.impl.application.taco.shop.vo.output.ClientOrderOutputAppVo;
+import cmahy.webapp.resource.impl.application.user.vo.output.UserSecurityOutputAppVo;
+import cmahy.webapp.resource.impl.domain.user.AuthProvider;
+import cmahy.webapp.resource.impl.domain.user.id.UserId;
+import cmahy.webapp.resource.impl.helper.security.user.SecurityUserGenerator;
 import cmahy.webapp.resource.ui.taco.TacoUriConstant;
 import cmahy.webapp.resource.ui.taco.vo.input.ClientOrderInputApiVo;
 import cmahy.webapp.resource.ui.taco.vo.input.TacoInputApiVo;
@@ -13,9 +18,12 @@ import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.*;
 
 import java.util.*;
@@ -23,14 +31,15 @@ import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import static cmahy.common.helper.Generator.generateAString;
-import static cmahy.common.helper.Generator.randomInt;
+import static cmahy.common.helper.Generator.*;
 import static cmahy.webapp.resource.ui.taco.shop.ClientOrderApi.TACOS;
 import static cmahy.webapp.resource.ui.taco.shop.ClientOrderApi.TACO_ORDER_SESSION;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -65,6 +74,7 @@ class ClientOrderApiImplIntegrationTest {
                 .perform(
                     get(TacoUriConstant.ClientOrder.CLIENT_ORDER_BASE_URL)
                         .sessionAttr(TACOS, tacos)
+                        .with(SecurityUserGenerator.generateRandomUser())
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -118,6 +128,7 @@ class ClientOrderApiImplIntegrationTest {
                     get(TacoUriConstant.ClientOrder.CLIENT_ORDER_BASE_URL)
                         .sessionAttr(TACOS, tacos)
                         .sessionAttr(TACO_ORDER_SESSION, clientOrderInput)
+                        .with(SecurityUserGenerator.generateRandomUser())
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -182,7 +193,10 @@ class ClientOrderApiImplIntegrationTest {
     void current_onNoTacos_thenRedirectToDesignTacoPage() {
         assertDoesNotThrow(() -> {
             mockMvc
-                .perform(get(TacoUriConstant.ClientOrder.CLIENT_ORDER_BASE_URL))
+                .perform(
+                    get(TacoUriConstant.ClientOrder.CLIENT_ORDER_BASE_URL)
+                        .with(SecurityUserGenerator.generateRandomUser())
+                )
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl(TacoUriConstant.Design.DESIGN_BASE_URL));
@@ -196,6 +210,7 @@ class ClientOrderApiImplIntegrationTest {
                 .perform(
                     get(TacoUriConstant.ClientOrder.CLIENT_ORDER_BASE_URL)
                         .sessionAttr(TACOS, Collections.emptyList())
+                        .with(SecurityUserGenerator.generateRandomUser())
                 )
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
@@ -226,6 +241,8 @@ class ClientOrderApiImplIntegrationTest {
             mockMvc
                 .perform(
                     post(TacoUriConstant.ClientOrder.CLIENT_ORDER_BASE_URL)
+                        .with(SecurityUserGenerator.generateRandomUser())
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .sessionAttr(TACOS, tacos)
                         .param("action", "another-taco")
@@ -293,6 +310,8 @@ class ClientOrderApiImplIntegrationTest {
             mockMvc
                 .perform(
                     post(TacoUriConstant.ClientOrder.CLIENT_ORDER_BASE_URL)
+                        .with(SecurityUserGenerator.generateRandomUser())
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .sessionAttr(TACOS, tacoInputs)
                         .param("action", "process-order")
@@ -342,6 +361,8 @@ class ClientOrderApiImplIntegrationTest {
             mockMvc
                 .perform(
                     post(TacoUriConstant.ClientOrder.CLIENT_ORDER_BASE_URL)
+                        .with(SecurityUserGenerator.generateRandomUser())
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .sessionAttr(TACOS, tacoInputs)
                         .param("action", "process-order")

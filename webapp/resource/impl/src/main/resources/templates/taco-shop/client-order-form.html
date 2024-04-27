@@ -8,7 +8,7 @@
 >
 <head>
     <title>Shopping cart</title>
-    <link rel="stylesheet" th:href="@{/taco-shop/client-order-form.css}"/>
+    <link rel="stylesheet" th:href="@{/css/taco-shop/client-order-form.css}"/>
 </head>
 <body>
     <th:block layout:fragment="content">
@@ -126,6 +126,9 @@
                     Submit Order
                 </button>
             </div>
+
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+
         </form>
     </th:block>
 </body>

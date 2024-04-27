@@ -1,0 +1,31 @@
+.main-content img {
+    height: auto;
+    max-width: 600px;
+}
+
+#loginForm {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 15px;
+}
+
+#loginForm > div {
+    display: grid;
+
+    grid-gap: 7px;
+
+    grid-template-areas: "label input";
+    grid-template-columns: minmax(0, 1fr) auto;
+}
+
+#loginForm > div > label {
+    grid-area: label;
+}
+
+#loginForm > div > input {
+    grid-area: input;
+
+    width: 100%;
+}

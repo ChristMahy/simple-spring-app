@@ -13,9 +13,3 @@ spring:
         core-size: 2
         max-size: 20
         queue-capacity: 10000
-
-application:
-  start-up:
-    order:
-      generate: true
-      initial-size: 1

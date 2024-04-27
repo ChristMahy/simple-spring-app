@@ -17,7 +17,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 @Component
-@Order(2)
+@Order(102)
 @ConditionalOnProperty(name = "application.start-up.order.generate", havingValue = "true")
 public class ClientOrderGenerator implements ApplicationRunner {
 
@@ -78,8 +78,7 @@ public class ClientOrderGenerator implements ApplicationRunner {
                 return clientOrder;
             })
             .map(clientOrderRepository::save)
-            .forEach(clientOrder -> {
-            });
+            .forEach(clientOrder -> {});
     }
 
     private Taco applyAllIngredientsToTaco(Taco taco) {

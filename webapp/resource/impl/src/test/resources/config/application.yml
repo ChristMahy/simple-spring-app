@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: webapp-resource
+  datasource:
+    generate-unique-name: false
+    name: webapp-resource-cloud
+  jpa:
+    open-in-view: false
+  task:
+    execution:
+      thread-name-prefix: cmahy-broker-consumer-
+      pool:
+        core-size: 2
+        max-size: 20
+        queue-capacity: 10000
+
+application:
+  google:
+    api-url: https://GOOGLE_SHOULD_NEVER_BE_CALLED
+  taco:
+    orders:
+      page-size: 20
+      sub-samples:
+        test-it: exact-match

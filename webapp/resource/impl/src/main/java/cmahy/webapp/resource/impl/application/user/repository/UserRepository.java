@@ -4,7 +4,9 @@ import cmahy.webapp.resource.impl.domain.user.User;
 
 import java.util.Optional;
 
-public interface UserRepository<T extends User> {
+public interface UserRepository {
 
-    Optional<T> findById(Long id);
+    Optional<User> findById(Long id);
+
+    Optional<User> findByUserName(String username);
 }

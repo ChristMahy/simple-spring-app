@@ -1,18 +1,13 @@
 package cmahy.webapp.resource.impl.adapter.ui;
 
-import cmahy.webapp.resource.api.UriConstant;
+import cmahy.webapp.resource.impl.helper.security.user.SecurityUserGenerator;
 import cmahy.webapp.resource.ui.IndexApi;
-import cmahy.webapp.resource.ui.taco.TacoUriConstant;
 import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseCookie;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,11 +17,10 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class IndexApiImplTest {
+class IndexApiImplIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -35,7 +29,10 @@ class IndexApiImplTest {
     void index() {
         assertDoesNotThrow(() -> {
             mockMvc
-                .perform(get("/"))
+                .perform(
+                    get("/")
+                        .with(SecurityUserGenerator.generateRandomUser())
+                )
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("index"))
@@ -50,7 +47,10 @@ class IndexApiImplTest {
     void toggleTheme() {
         assertDoesNotThrow(() -> {
             mockMvc
-                .perform(get("/" + IndexApi.TOGGLE_THEME))
+                .perform(
+                    get("/" + IndexApi.TOGGLE_THEME)
+                        .with(SecurityUserGenerator.generateRandomUser())
+                )
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"))
@@ -61,13 +61,17 @@ class IndexApiImplTest {
                     assertThat(cookie.getValue()).isEqualTo("dark-theme");
 
                     mockMvc
-                        .perform(get(result.getResponse().getRedirectedUrl()).cookie(cookie))
+                        .perform(
+                            get(result.getResponse().getRedirectedUrl())
+                                .cookie(cookie)
+                                .with(SecurityUserGenerator.generateRandomUser())
+                        )
                         .andDo(print())
                         .andExpect(status().isOk())
                         .andExpect(view().name("index"))
                         .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                         .andExpect(content().string(containsString("<title>Index - Spring app demo</title>")))
-                        .andExpect(content().string(containsString("<link rel=\"stylesheet\" href=\"/dark-theme/variables.css\"/>")));
+                        .andExpect(content().string(containsString("<link rel=\"stylesheet\" href=\"/css/dark-theme/variables.css\"/>")));
                 });
         });
     }

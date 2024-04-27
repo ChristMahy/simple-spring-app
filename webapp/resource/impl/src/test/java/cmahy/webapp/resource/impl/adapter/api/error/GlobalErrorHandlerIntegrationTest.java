@@ -1,5 +1,6 @@
 package cmahy.webapp.resource.impl.adapter.api.error;
 
+import cmahy.webapp.resource.impl.helper.security.user.SecurityUserGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -26,6 +27,7 @@ class GlobalErrorHandlerIntegrationTest {
         assertDoesNotThrow(() -> {
             mockMvc.perform(
                 get(GlobalErrorHandlerTestPurposeApi.BASE_URL + GlobalErrorHandlerTestPurposeApi.NO_ERROR_URL)
+                    .with(SecurityUserGenerator.generateRandomUser())
             )
                 .andDo(print())
                 .andExpect(status().is(HttpStatus.OK.value()))
@@ -41,6 +43,7 @@ class GlobalErrorHandlerIntegrationTest {
         assertDoesNotThrow(() -> {
             mockMvc.perform(
                 get(GlobalErrorHandlerTestPurposeApi.BASE_URL + GlobalErrorHandlerTestPurposeApi.IO_EXCEPTION_URL)
+                    .with(SecurityUserGenerator.generateRandomUser())
             )
                 .andDo(print())
                 .andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()))
@@ -55,6 +58,7 @@ class GlobalErrorHandlerIntegrationTest {
         assertDoesNotThrow(() -> {
             mockMvc.perform(
                     get(GlobalErrorHandlerTestPurposeApi.BASE_URL + GlobalErrorHandlerTestPurposeApi.EXCEPTION_URL)
+                        .with(SecurityUserGenerator.generateRandomUser())
                 )
                 .andDo(print())
                 .andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()))
@@ -69,6 +73,7 @@ class GlobalErrorHandlerIntegrationTest {
         assertDoesNotThrow(() -> {
             mockMvc.perform(
                 get(GlobalErrorHandlerTestPurposeApi.BASE_URL + GlobalErrorHandlerTestPurposeApi.RUNTIME_EXCEPTION_URL)
+                    .with(SecurityUserGenerator.generateRandomUser())
             )
                 .andDo(print())
                 .andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()))

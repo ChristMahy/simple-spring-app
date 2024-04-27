@@ -1,0 +1,12 @@
+application:
+  start-up:
+    order:
+      generate: true
+      initial-size: 1
+  google:
+    api-url: https://www.googleapis.com/oauth2/v3/userinfo
+  taco:
+    orders:
+      page-size: 20
+      sub-samples:
+        test-it: exact-match

@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">Spring app demo</title>
     <link rel="stylesheet" th:href="${@themeModes.code('variables')}"/>
-    <link rel="stylesheet" th:href="@{/styles.css}"/>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
 </head>
 <body>
     <div class="main-content">
@@ -18,6 +18,9 @@
             <a th:href="@{/}">Home page</a>
             <a th:href="@{/taco/design}">Design a taco</a>
             <a th:href="@{/taco/client-order/history}">Tacos history</a>
+            <form method="POST" th:action="@{/logout}">
+                <input type="submit" value="Logout"/>
+            </form>
         </div>
     </div>
 </body>

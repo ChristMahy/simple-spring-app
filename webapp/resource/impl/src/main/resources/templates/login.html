@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html
+    lang="en"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{partial/base-template.html}"
+>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}"/>
+</head>
+<body>
+<th:block layout:fragment="content">
+    <h1>Login</h1>
+
+    <img
+        style="width: 200px; height: auto;"
+        th:src="@{/images/home-logo.jpg}"
+    />
+
+    <p>New here? Click <a th:href="@{/register}">here</a> to register.</p>
+
+    <div th:if="${error}">
+        Unable to login. Check your username and password.
+    </div>
+
+    <form
+        method="post"
+        th:action="@{/login}"
+        id="loginForm"
+    >
+
+        <div>
+            <label for="username">Username: </label>
+            <input type="text" name="username" id="username"/>
+        </div>
+
+        <div>
+            <label for="password">Password: </label>
+            <input type="password" name="password" id="password"/>
+        </div>
+
+        <div>
+            <input type="submit" value="Login"/>
+        </div>
+
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+
+    </form>
+
+    <div>
+        <table>
+            <tbody>
+            <tr>
+                <td>
+                    <a th:href="@{/oauth2/authorization/google}">Google</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</th:block>
+</body>
+</html>

@@ -1,8 +1,10 @@
 package cmahy.webapp.resource.impl.domain.user;
 
 import jakarta.persistence.*;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 @Table(name = "role_app")
@@ -38,5 +40,13 @@ public class Role {
 
     public void setUsers(Collection<User> users) {
         this.users = users;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+            .append("id", id)
+            .append("name", name)
+            .toString();
     }
 }
