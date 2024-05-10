@@ -1,6 +1,8 @@
 package cmahy.webapp.resource.impl.adapter.security.vo;
 
 import cmahy.webapp.resource.impl.application.user.vo.output.UserSecurityOutputAppVo;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,9 +21,8 @@ public final class UserSecurityDetails implements UserDetails, OAuth2User {
     public UserSecurityDetails(UserSecurityOutputAppVo userSecurity) {
         this.userSecurity = userSecurity;
 
-//        this.authorities = userSecurity.getRoles().stream()
-        this.authorities = Stream.of("Guest")
-            .map(role -> new SimpleGrantedAuthority("ROLE_" + role/*.getName()*/))
+        this.authorities = userSecurity.roles().stream()
+            .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
             .toList();
 
         this.attributes = new HashMap<>();
@@ -79,5 +80,14 @@ public final class UserSecurityDetails implements UserDetails, OAuth2User {
     @Override
     public String getName() {
         return Objects.isNull(userSecurity.id()) ? null : userSecurity.id().value().toString();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
+            .append("userSecurity", userSecurity)
+            .append("authorities", authorities)
+            .append("attributes", attributes)
+            .toString();
     }
 }

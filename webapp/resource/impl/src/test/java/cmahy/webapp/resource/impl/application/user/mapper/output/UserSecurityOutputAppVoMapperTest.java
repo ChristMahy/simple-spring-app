@@ -1,6 +1,7 @@
 package cmahy.webapp.resource.impl.application.user.mapper.output;
 
 import cmahy.common.helper.Generator;
+import cmahy.webapp.resource.impl.application.user.vo.output.RoleOutputAppVo;
 import cmahy.webapp.resource.impl.application.user.vo.output.UserSecurityOutputAppVo;
 import cmahy.webapp.resource.impl.domain.user.*;
 import cmahy.webapp.resource.impl.exception.NullException;
@@ -8,6 +9,7 @@ import org.assertj.core.api.recursive.comparison.RecursiveComparisonConfiguratio
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
@@ -16,9 +18,14 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class UserSecurityOutputAppVoMapperTest {
+
+    @Mock
+    private RoleOutputAppVoMapper roleOutputAppVoMapper;
 
     @InjectMocks
     private UserSecurityOutputAppVoMapper userSecurityOutputAppVoMapper;
@@ -45,6 +52,8 @@ class UserSecurityOutputAppVoMapperTest {
                         role.setName(Generator.generateAString());
                         role.setUsers(List.of(userSecurity));
 
+                        when(roleOutputAppVoMapper.map(role)).thenAnswer(invocationOnMock -> mock(RoleOutputAppVo.class));
+
                         return role;
                     })
                     .limit(Generator.randomInt(10, 20))
@@ -69,6 +78,8 @@ class UserSecurityOutputAppVoMapperTest {
 
             assertThat(actual.id()).isNotNull();
             assertThat(actual.id().value()).isEqualTo(userSecurity.getId());
+
+            assertThat(actual.roles()).hasSize(userSecurity.getRoles().size());
         });
     }
 

@@ -6,6 +6,7 @@ import cmahy.webapp.resource.impl.application.user.vo.output.UserSecurityOutputA
 import cmahy.webapp.resource.impl.domain.user.AuthProvider;
 import cmahy.webapp.resource.impl.domain.user.id.UserId;
 import cmahy.webapp.resource.impl.exception.NullException;
+import cmahy.webapp.resource.impl.helper.security.user.SecurityUserGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -41,7 +42,8 @@ class UserSecurityDetailsMapperTest {
                 Generator.randomBoolean(),
                 Generator.randomBoolean(),
                 Generator.randomBoolean(),
-                Generator.randomBoolean()
+                Generator.randomBoolean(),
+                SecurityUserGenerator.generateCommonRoles()
             );
 
             UserSecurityDetails actual = userSecurityDetailsMapper.map(user);

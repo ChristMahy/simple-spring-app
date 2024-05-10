@@ -4,6 +4,7 @@ import cmahy.common.helper.Generator;
 import cmahy.webapp.resource.impl.application.user.mapper.output.UserSecurityOutputAppVoMapper;
 import cmahy.webapp.resource.impl.application.user.repository.UserSecurityRepository;
 import cmahy.webapp.resource.impl.application.user.vo.output.UserSecurityOutputAppVo;
+import cmahy.webapp.resource.impl.domain.user.AuthProvider;
 import cmahy.webapp.resource.impl.domain.user.UserSecurity;
 import cmahy.webapp.resource.impl.exception.user.UserNotFoundException;
 import org.junit.jupiter.api.Test;
@@ -36,13 +37,14 @@ class GetUserSecurityByUsernameQueryTest {
     void execute() {
         assertDoesNotThrow(() -> {
             String username = Generator.generateAString();
+            AuthProvider authProvider = Generator.randomEnum(AuthProvider.class);
             UserSecurity userSecurity = mock(UserSecurity.class);
             UserSecurityOutputAppVo userSecurityOutputAppVo = mock(UserSecurityOutputAppVo.class);
 
-            when(userSecurityRepository.findByUserName(username)).thenReturn(Optional.of(userSecurity));
+            when(userSecurityRepository.findByUserNameAndAuthProvider(username, authProvider)).thenReturn(Optional.of(userSecurity));
             when(userSecurityOutputAppVoMapper.map(userSecurity)).thenReturn(userSecurityOutputAppVo);
 
-            UserSecurityOutputAppVo actual = getUserSecurityByUsernameQuery.execute(username);
+            UserSecurityOutputAppVo actual = getUserSecurityByUsernameQuery.execute(username, authProvider);
 
             assertThat(actual)
                 .isNotNull()
@@ -54,10 +56,11 @@ class GetUserSecurityByUsernameQueryTest {
     void execute_whenUsernameNotFound_thenThrowUserNotFoundException() {
         assertThrows(UserNotFoundException.class, () -> {
             String username = Generator.generateAString();
+            AuthProvider authProvider = Generator.randomEnum(AuthProvider.class);
 
-            when(userSecurityRepository.findByUserName(username)).thenReturn(Optional.empty());
+            when(userSecurityRepository.findByUserNameAndAuthProvider(username, authProvider)).thenReturn(Optional.empty());
 
-            getUserSecurityByUsernameQuery.execute(username);
+            getUserSecurityByUsernameQuery.execute(username, authProvider);
         });
     }
 }

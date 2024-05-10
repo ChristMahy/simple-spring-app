@@ -30,6 +30,13 @@
         th:action="@{/login}"
         id="loginForm"
     >
+        <div th:if="${param.error}">
+            Invalid username and password.
+        </div>
+
+        <div th:if="${param.logout}">
+            You have been logged out.
+        </div>
 
         <div>
             <label for="username">Username: </label>

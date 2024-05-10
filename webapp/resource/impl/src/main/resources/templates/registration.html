@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html
+    lang="en"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{partial/base-template.html}"
+>
+<head>
+    <title>Registration</title>
+    <link rel="stylesheet" th:href="@{/css/registration.css}"/>
+</head>
+<body>
+<th:block layout:fragment="content">
+    <h1>Register</h1>
+
+    <img
+        style="width: 200px; height: auto;"
+        th:src="@{/images/home-logo.jpg}"
+    />
+
+    <form
+        method="post"
+        th:action="@{/register}"
+        th:object="${registrationInput}"
+        id="registrationForm"
+    >
+        <div>
+            <label for="username">Username: </label>
+            <input type="text" id="username" th:field="*{username}"/>
+        </div>
+
+        <div>
+            <label for="password">Password: </label>
+            <input type="password" id="password" th:field="*{password}"/>
+        </div>
+
+        <div>
+            <label for="confirmPassword">Confirm password: </label>
+            <input type="password" id="confirmPassword" th:field="*{confirmPassword}"/>
+        </div>
+
+        <div>
+            <label for="fullName">Full name: </label>
+            <input type="text" id="fullName" th:field="*{fullName}"/>
+        </div>
+
+        <div>
+            <label for="street">Street: </label>
+            <input type="text" id="street" th:field="*{street}"/>
+        </div>
+
+        <div>
+            <label for="city">City: </label>
+            <input type="text" id="city" th:field="*{city}"/>
+        </div>
+
+        <div>
+            <label for="state">State: </label>
+            <input type="text" id="state" th:field="*{state}"/>
+        </div>
+
+        <div>
+            <label for="zip">Zip: </label>
+            <input type="text" id="zip" th:field="*{zip}"/>
+        </div>
+
+        <div>
+            <label for="phone">Phone: </label>
+            <input type="text" id="phone" th:field="*{phone}"/>
+        </div>
+
+        <div>
+            <input type="submit" value="Register"/>
+        </div>
+
+        <ul th:if="${#fields.hasErrors('*')}">
+            <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+        </ul>
+
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+    </form>
+</th:block>
+</body>
+</html>

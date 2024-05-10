@@ -4,6 +4,7 @@ import cmahy.common.annotation.Query;
 import cmahy.webapp.resource.impl.application.user.mapper.output.UserSecurityOutputAppVoMapper;
 import cmahy.webapp.resource.impl.application.user.repository.UserSecurityRepository;
 import cmahy.webapp.resource.impl.application.user.vo.output.UserSecurityOutputAppVo;
+import cmahy.webapp.resource.impl.domain.user.AuthProvider;
 import cmahy.webapp.resource.impl.exception.user.UserNotFoundException;
 import jakarta.inject.Named;
 
@@ -22,9 +23,9 @@ public class GetUserSecurityByUsernameQuery {
         this.userSecurityOutputAppVoMapper = userSecurityOutputAppVoMapper;
     }
 
-    public UserSecurityOutputAppVo execute(String username) {
+    public UserSecurityOutputAppVo execute(String username, AuthProvider authProvider) {
         return userSecurityOutputAppVoMapper.map(
-            userSecurityRepository.findByUserName(username)
+            userSecurityRepository.findByUserNameAndAuthProvider(username, authProvider)
                 .orElseThrow(() -> new UserNotFoundException(username))
         );
     }

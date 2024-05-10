@@ -8,10 +8,18 @@ import cmahy.webapp.resource.impl.domain.user.id.UserId;
 import cmahy.webapp.resource.impl.exception.NullException;
 import jakarta.inject.Named;
 
+import java.util.Collections;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Named
 public class UserSecurityOutputAppVoMapper {
+
+    private final RoleOutputAppVoMapper roleOutputAppVoMapper;
+
+    public UserSecurityOutputAppVoMapper(RoleOutputAppVoMapper roleOutputAppVoMapper) {
+        this.roleOutputAppVoMapper = roleOutputAppVoMapper;
+    }
 
     public UserSecurityOutputAppVo map(UserSecurity user) {
         if (Objects.isNull(user)) {
@@ -32,7 +40,8 @@ public class UserSecurityOutputAppVoMapper {
             user.getExpired(),
             user.getLocked(),
             user.getEnabled(),
-            user.getCredentialsExpired()
+            user.getCredentialsExpired(),
+            Objects.nonNull(user.getRoles()) ? user.getRoles().stream().map(roleOutputAppVoMapper::map).collect(Collectors.toSet()) : Collections.emptySet()
         );
     }
 }

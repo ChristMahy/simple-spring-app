@@ -1,10 +1,16 @@
 package cmahy.webapp.resource.impl.domain.user;
 
 import jakarta.persistence.*;
+import jakarta.validation.Constraint;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 @Entity
+@Table(
+    uniqueConstraints = {
+        @UniqueConstraint(name = "u_us_username_provider", columnNames = { "userName", "authProvider" })
+    }
+)
 @DiscriminatorValue("1")
 public class UserSecurity extends User {
 

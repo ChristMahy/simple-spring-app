@@ -4,8 +4,6 @@ import cmahy.webapp.resource.impl.domain.user.AuthProvider;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.util.Set;
-
 public record UserSecurityInputAppVo(
     String userName,
     byte[] password,
@@ -26,7 +24,7 @@ public record UserSecurityInputAppVo(
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
             .append("userName", userName)
-            .append("password", password)
+            .append("password", "...")
             .append("fullName", fullName)
             .append("street", street)
             .append("city", city)

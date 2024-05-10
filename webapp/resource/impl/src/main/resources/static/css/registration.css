@@ -1,0 +1,23 @@
+.main-content > #registrationForm {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 15px;
+}
+
+.main-content > #registrationForm > div {
+    display: grid;
+
+
+    grid-template-areas: "label input";
+    grid-template-columns: 1fr auto;
+}
+
+.main-content > #registrationForm > div > label {
+    grid-area: label;
+}
+
+.main-content > #registrationForm > div > input {
+    grid-area: input;
+}

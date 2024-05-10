@@ -1,6 +1,7 @@
 package cmahy.webapp.resource.impl.adapter.ui;
 
 import cmahy.webapp.resource.impl.helper.security.user.SecurityUserGenerator;
+import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class LoginApiImplIntegrationTest {
 
-    @Autowired
+    @Inject
     private MockMvc mockMvc;
 
     @Test

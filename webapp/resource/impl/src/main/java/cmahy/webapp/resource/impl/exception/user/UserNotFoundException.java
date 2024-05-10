@@ -7,10 +7,10 @@ import cmahy.webapp.resource.impl.exception.NotFoundException;
 public class UserNotFoundException extends NotFoundException {
 
     public UserNotFoundException(UserId id) {
-        super(User.class.getName() + ", id <" + id.value() + "> not found");
+        super(User.class.getSimpleName() + ", id <" + id.value() + "> not found");
     }
 
     public UserNotFoundException(String username) {
-        super(User.class.getName() + ", username <" + username + "> not found");
+        super(User.class.getSimpleName() + ", username <" + username + "> not found");
     }
 }
