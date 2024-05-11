@@ -1,16 +1,14 @@
 package cmahy.webapp.resource.impl.adapter.ui.taco.shop;
 
-import cmahy.webapp.resource.impl.adapter.security.vo.UserSecurityDetails;
 import cmahy.webapp.resource.impl.adapter.taco.shop.mapper.input.ClientOrderInputApiToAppMapper;
 import cmahy.webapp.resource.impl.adapter.taco.shop.mapper.input.TacoInputApiToAppMapper;
 import cmahy.webapp.resource.impl.application.taco.shop.command.ReceiveNewClientOrderCommand;
 import cmahy.webapp.resource.impl.application.taco.shop.vo.input.ClientOrderInputAppVo;
 import cmahy.webapp.resource.impl.application.taco.shop.vo.input.TacoInputAppVo;
 import cmahy.webapp.resource.impl.application.taco.shop.vo.output.ClientOrderOutputAppVo;
-import cmahy.webapp.resource.impl.application.user.vo.output.UserSecurityOutputAppVo;
-import cmahy.webapp.resource.impl.domain.user.AuthProvider;
 import cmahy.webapp.resource.impl.domain.user.id.UserId;
 import cmahy.webapp.resource.impl.helper.security.user.SecurityUserGenerator;
+import cmahy.webapp.resource.security.vo.UserSecurityDetails;
 import cmahy.webapp.resource.ui.taco.TacoUriConstant;
 import cmahy.webapp.resource.ui.taco.vo.input.ClientOrderInputApiVo;
 import cmahy.webapp.resource.ui.taco.vo.input.TacoInputApiVo;
@@ -18,20 +16,19 @@ import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
-import org.springframework.test.web.servlet.*;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
-import java.util.*;
-import java.util.regex.MatchResult;
+import java.util.Collections;
+import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import static cmahy.common.helper.Generator.*;
+import static cmahy.common.helper.Generator.generateAString;
+import static cmahy.common.helper.Generator.randomInt;
 import static cmahy.webapp.resource.ui.taco.shop.ClientOrderApi.TACOS;
 import static cmahy.webapp.resource.ui.taco.shop.ClientOrderApi.TACO_ORDER_SESSION;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -39,7 +36,6 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -269,13 +265,15 @@ class ClientOrderApiImplIntegrationTest {
 
                     clientOrderAssertion(clientOrder, clientOrderInput);
                 })
-                .andExpect(result -> verify(receiveCommand, never()).execute(any(ClientOrderInputAppVo.class)));
+                .andExpect(result -> verify(receiveCommand, never()).execute(any(ClientOrderInputAppVo.class), any(UserId.class)));
         });
     }
 
     @Test
     void saveOrder_completeOrder() {
         assertDoesNotThrow(() -> {
+            UserSecurityDetails userSecurityDetails = SecurityUserGenerator.generateRandomUserDetails();
+
             List<TacoInputApiVo> tacoInputs = Stream.generate(() -> new TacoInputApiVo(
                     generateAString(), Collections.emptyList()
                 ))
@@ -302,15 +300,16 @@ class ClientOrderApiImplIntegrationTest {
             );
 
             ClientOrderInputAppVo clientOrderInputAppVo = mock(ClientOrderInputAppVo.class);
+            UserId userId = new UserId(userSecurityDetails.userSecurity().id().value());
             ClientOrderOutputAppVo clientOrderOutputAppVo = mock(ClientOrderOutputAppVo.class);
 
             when(clientOrderInputMapper.map(clientOrderInput, tacos)).thenReturn(clientOrderInputAppVo);
-            when(receiveCommand.execute(clientOrderInputAppVo)).thenReturn(clientOrderOutputAppVo);
+            when(receiveCommand.execute(clientOrderInputAppVo, userId)).thenReturn(clientOrderOutputAppVo);
 
             mockMvc
                 .perform(
                     post(TacoUriConstant.ClientOrder.CLIENT_ORDER_BASE_URL)
-                        .with(SecurityUserGenerator.generateRandomUser())
+                        .with(SecurityUserGenerator.generateWithSpecificUser(userSecurityDetails))
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .sessionAttr(TACOS, tacoInputs)
@@ -333,7 +332,7 @@ class ClientOrderApiImplIntegrationTest {
                     assertThat(session.getAttribute(TACO_ORDER_SESSION)).isNull();
                     assertThat(session.getAttribute(TACOS)).isNull();
 
-                    verify(receiveCommand).execute(clientOrderInputAppVo);
+                    verify(receiveCommand).execute(clientOrderInputAppVo, userId);
                 });
         });
     }
@@ -397,7 +396,7 @@ class ClientOrderApiImplIntegrationTest {
                     assertThat(session.getAttribute(TACOS)).isEqualTo(tacoInputs);
                     htmlAssertion(result.getResponse().getContentAsString(), clientOrderInput, tacoInputs);
 
-                    verify(receiveCommand, never()).execute(any(ClientOrderInputAppVo.class));
+                    verify(receiveCommand, never()).execute(any(ClientOrderInputAppVo.class), any(UserId.class));
                 });
         });
     }

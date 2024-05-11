@@ -2,7 +2,10 @@ package cmahy.webapp.resource.impl.adapter.ui.taco.shop;
 
 import cmahy.webapp.resource.impl.adapter.taco.shop.mapper.input.ClientOrderInputApiToAppMapper;
 import cmahy.webapp.resource.impl.adapter.taco.shop.mapper.input.TacoInputApiToAppMapper;
+import cmahy.webapp.resource.impl.adapter.user.mapper.id.UserApiIdMapper;
 import cmahy.webapp.resource.impl.application.taco.shop.command.ReceiveNewClientOrderCommand;
+import cmahy.webapp.resource.impl.domain.user.id.UserId;
+import cmahy.webapp.resource.security.vo.UserSecurityDetails;
 import cmahy.webapp.resource.ui.taco.TacoUriConstant;
 import cmahy.webapp.resource.ui.taco.shop.ClientOrderApi;
 import cmahy.webapp.resource.ui.taco.vo.input.ClientOrderInputApiVo;
@@ -14,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.support.SessionStatus;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -22,15 +26,18 @@ public class ClientOrderApiImpl implements ClientOrderApi {
     private static final Logger LOG = LoggerFactory.getLogger(ClientOrderApiImpl.class);
 
     private final ClientOrderInputApiToAppMapper clientOrderInputMapper;
+    private final UserApiIdMapper userApiIdMapper;
     private final TacoInputApiToAppMapper tacoInputMapper;
     private final ReceiveNewClientOrderCommand receiveCommand;
 
     public ClientOrderApiImpl(
         ClientOrderInputApiToAppMapper clientOrderInputMapper,
+        UserApiIdMapper userApiIdMapper,
         TacoInputApiToAppMapper tacoInputMapper,
         ReceiveNewClientOrderCommand receiveCommand
     ) {
         this.clientOrderInputMapper = clientOrderInputMapper;
+        this.userApiIdMapper = userApiIdMapper;
         this.tacoInputMapper = tacoInputMapper;
         this.receiveCommand = receiveCommand;
     }
@@ -56,7 +63,8 @@ public class ClientOrderApiImpl implements ClientOrderApi {
         ClientOrderInputApiVo tacoOrder,
         Errors errors,
         List<TacoInputApiVo> tacos,
-        SessionStatus sessionStatus
+        SessionStatus sessionStatus,
+        UserSecurityDetails currentUserSecurityInputApiVo
     ) {
         if (errors.hasErrors()) {
             return "taco-shop/client-order-form";
@@ -67,7 +75,8 @@ public class ClientOrderApiImpl implements ClientOrderApi {
         receiveCommand.execute(
             clientOrderInputMapper.map(
                 tacoOrder, tacos.stream().map(tacoInputMapper::map).toList()
-            )
+            ),
+            userApiIdMapper.map(currentUserSecurityInputApiVo.userSecurity().id())
         );
 
         sessionStatus.setComplete();

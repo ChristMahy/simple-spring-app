@@ -3,13 +3,13 @@ package cmahy.webapp.resource.impl.application.taco.shop.mapper.input;
 import cmahy.webapp.resource.impl.application.taco.shop.vo.input.ClientOrderInputAppVo;
 import cmahy.webapp.resource.impl.application.taco.shop.vo.input.TacoInputAppVo;
 import cmahy.webapp.resource.impl.domain.taco.ClientOrder;
+import cmahy.webapp.resource.impl.domain.user.User;
 import cmahy.webapp.resource.impl.exception.NullException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 import static cmahy.common.helper.Generator.generateAString;
@@ -28,6 +28,7 @@ class ClientOrderInputAppMapperTest {
     @Test
     void map() {
         assertDoesNotThrow(() -> {
+            User user = mock(User.class);
             ClientOrderInputAppVo inputAppVo = new ClientOrderInputAppVo(
                 generateAString(),
                 generateAString(),
@@ -42,7 +43,7 @@ class ClientOrderInputAppMapperTest {
                     .toList()
             );
 
-            ClientOrder actual = clientOrderInputAppMapper.map(inputAppVo);
+            ClientOrder actual = clientOrderInputAppMapper.map(inputAppVo, user);
 
             assertThat(actual).isNotNull();
             assertThat(actual.getDeliveryName()).isEqualTo(inputAppVo.deliveryName());
@@ -63,7 +64,9 @@ class ClientOrderInputAppMapperTest {
     @Test
     public void map_whenGivenValueIsNull_thenThrowNullAssertion() {
         assertThrows(NullException.class, () -> {
-            clientOrderInputAppMapper.map(null);
+            User user = mock(User.class);
+
+            clientOrderInputAppMapper.map(null, user);
         });
     }
 }

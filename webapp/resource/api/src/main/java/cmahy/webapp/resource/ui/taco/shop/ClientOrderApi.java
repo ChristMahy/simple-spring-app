@@ -1,9 +1,11 @@
 package cmahy.webapp.resource.ui.taco.shop;
 
+import cmahy.webapp.resource.security.vo.UserSecurityDetails;
 import cmahy.webapp.resource.ui.taco.TacoUriConstant.ClientOrder;
 import cmahy.webapp.resource.ui.taco.vo.input.ClientOrderInputApiVo;
 import cmahy.webapp.resource.ui.taco.vo.input.TacoInputApiVo;
 import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +30,8 @@ public interface ClientOrderApi {
         @Valid @ModelAttribute(name = TACO_ORDER) ClientOrderInputApiVo tacoOrder,
         Errors errors,
         @ModelAttribute(name = TACOS) List<TacoInputApiVo> tacos,
-        SessionStatus sessionStatus
+        SessionStatus sessionStatus,
+        @AuthenticationPrincipal(errorOnInvalidType = true) UserSecurityDetails currentUser
     );
 
     @PostMapping(params = "action=another-taco")

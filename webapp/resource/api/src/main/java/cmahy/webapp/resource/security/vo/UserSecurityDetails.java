@@ -1,6 +1,6 @@
-package cmahy.webapp.resource.impl.adapter.security.vo;
+package cmahy.webapp.resource.security.vo;
 
-import cmahy.webapp.resource.impl.application.user.vo.output.UserSecurityOutputAppVo;
+import cmahy.webapp.resource.user.vo.output.UserSecurityOutputApiVo;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,15 +10,14 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.stream.Stream;
 
-public final class UserSecurityDetails implements UserDetails, OAuth2User {
+public class UserSecurityDetails implements UserDetails, OAuth2User {
 
-    private final UserSecurityOutputAppVo userSecurity;
+    private final UserSecurityOutputApiVo userSecurity;
     private final Collection<? extends GrantedAuthority> authorities;
     private final Map<String, Object> attributes;
 
-    public UserSecurityDetails(UserSecurityOutputAppVo userSecurity) {
+    public UserSecurityDetails(UserSecurityOutputApiVo userSecurity) {
         this.userSecurity = userSecurity;
 
         this.authorities = userSecurity.roles().stream()
@@ -28,7 +27,7 @@ public final class UserSecurityDetails implements UserDetails, OAuth2User {
         this.attributes = new HashMap<>();
     }
 
-    public UserSecurityOutputAppVo userSecurity() {
+    public UserSecurityOutputApiVo userSecurity() {
         return userSecurity;
     }
 

@@ -3,7 +3,6 @@ package cmahy.webapp.resource.impl.adapter.security.service;
 import cmahy.common.helper.Generator;
 import cmahy.webapp.resource.impl.adapter.security.mapper.output.UserSecurityDetailsMapper;
 import cmahy.webapp.resource.impl.adapter.security.service.factory.OAuth2UserInfoFactory;
-import cmahy.webapp.resource.impl.adapter.security.vo.UserSecurityDetails;
 import cmahy.webapp.resource.impl.adapter.security.vo.google.output.OAuth2UserInfo;
 import cmahy.webapp.resource.impl.application.user.command.RegisterUserSecurityCommand;
 import cmahy.webapp.resource.impl.application.user.query.GetUserSecurityByUsernameQuery;
@@ -11,6 +10,7 @@ import cmahy.webapp.resource.impl.application.user.vo.input.UserSecurityInputApp
 import cmahy.webapp.resource.impl.application.user.vo.output.UserSecurityOutputAppVo;
 import cmahy.webapp.resource.impl.domain.user.AuthProvider;
 import cmahy.webapp.resource.impl.exception.user.*;
+import cmahy.webapp.resource.security.vo.UserSecurityDetails;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

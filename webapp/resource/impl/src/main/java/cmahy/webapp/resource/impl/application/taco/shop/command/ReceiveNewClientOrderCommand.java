@@ -4,6 +4,7 @@ import cmahy.common.annotation.Command;
 import cmahy.webapp.resource.impl.application.taco.shop.service.ReceiveAndCreateClientOrder;
 import cmahy.webapp.resource.impl.application.taco.shop.vo.input.ClientOrderInputAppVo;
 import cmahy.webapp.resource.impl.application.taco.shop.vo.output.ClientOrderOutputAppVo;
+import cmahy.webapp.resource.impl.domain.user.id.UserId;
 import jakarta.inject.Named;
 
 @Command
@@ -16,7 +17,7 @@ public class ReceiveNewClientOrderCommand {
         this.receiveAndCreateClientOrder = receiveAndCreateClientOrder;
     }
 
-    public ClientOrderOutputAppVo execute(ClientOrderInputAppVo input) {
-        return receiveAndCreateClientOrder.execute(input);
+    public ClientOrderOutputAppVo execute(ClientOrderInputAppVo input, UserId clientId) {
+        return receiveAndCreateClientOrder.execute(input, clientId);
     }
 }

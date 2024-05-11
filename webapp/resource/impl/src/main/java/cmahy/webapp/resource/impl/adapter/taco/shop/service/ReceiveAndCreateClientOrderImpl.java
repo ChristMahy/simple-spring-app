@@ -7,14 +7,20 @@ import cmahy.webapp.resource.impl.application.taco.shop.repository.*;
 import cmahy.webapp.resource.impl.application.taco.shop.service.ReceiveAndCreateClientOrder;
 import cmahy.webapp.resource.impl.application.taco.shop.vo.input.ClientOrderInputAppVo;
 import cmahy.webapp.resource.impl.application.taco.shop.vo.output.ClientOrderOutputAppVo;
+import cmahy.webapp.resource.impl.application.user.repository.UserRepository;
+import cmahy.webapp.resource.impl.domain.taco.ClientOrder;
 import cmahy.webapp.resource.impl.domain.taco.id.IngredientId;
+import cmahy.webapp.resource.impl.domain.user.User;
+import cmahy.webapp.resource.impl.domain.user.id.UserId;
 import cmahy.webapp.resource.impl.exception.taco.IngredientNotFoundException;
+import cmahy.webapp.resource.impl.exception.user.UserNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ReceiveAndCreateClientOrderImpl implements ReceiveAndCreateClientOrder {
 
+    private final UserRepository userRepository;
     private final ClientOrderRepository clientOrderRepository;
     private final ClientOrderInputAppMapper clientOrderInputMapper;
     private final TacoInputAppMapper tacoInputMapper;
@@ -23,6 +29,7 @@ public class ReceiveAndCreateClientOrderImpl implements ReceiveAndCreateClientOr
     private final ClientOrderOutputMapper clientOrderOutputMapper;
 
     public ReceiveAndCreateClientOrderImpl(
+        UserRepository userRepository,
         ClientOrderRepository clientOrderRepository,
         ClientOrderInputAppMapper clientOrderInputMapper,
         TacoInputAppMapper tacoInputMapper,
@@ -30,6 +37,7 @@ public class ReceiveAndCreateClientOrderImpl implements ReceiveAndCreateClientOr
         TacoRepository tacoRepository,
         ClientOrderOutputMapper clientOrderOutputMapper
     ) {
+        this.userRepository = userRepository;
         this.clientOrderRepository = clientOrderRepository;
         this.clientOrderInputMapper = clientOrderInputMapper;
         this.tacoInputMapper = tacoInputMapper;
@@ -40,8 +48,11 @@ public class ReceiveAndCreateClientOrderImpl implements ReceiveAndCreateClientOr
 
     @Override
     @Transactional
-    public ClientOrderOutputAppVo execute(ClientOrderInputAppVo input) {
-        var clientOrder = clientOrderInputMapper.map(input);
+    public ClientOrderOutputAppVo execute(ClientOrderInputAppVo input, UserId clientId) {
+        User user = userRepository.findById(clientId.value())
+            .orElseThrow(() -> new UserNotFoundException(clientId));
+
+        ClientOrder clientOrder = clientOrderInputMapper.map(input, user);
 
         clientOrder.setTacos(input.tacos().stream().map(tacoInput -> {
             var taco = tacoInputMapper.map(tacoInput);

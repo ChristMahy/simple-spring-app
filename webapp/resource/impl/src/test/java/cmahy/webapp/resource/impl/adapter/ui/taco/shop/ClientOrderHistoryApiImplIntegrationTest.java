@@ -1,11 +1,11 @@
 package cmahy.webapp.resource.impl.adapter.ui.taco.shop;
 
-import cmahy.webapp.resource.impl.application.taco.shop.properties.OrderProperties;
 import cmahy.webapp.resource.impl.application.taco.shop.query.GetAllClientOrderPagedQuery;
 import cmahy.webapp.resource.impl.application.taco.shop.vo.output.*;
 import cmahy.webapp.resource.impl.application.vo.input.PageableInputAppVo;
-import cmahy.webapp.resource.impl.domain.taco.*;
+import cmahy.webapp.resource.impl.domain.taco.Ingredient;
 import cmahy.webapp.resource.impl.domain.taco.id.*;
+import cmahy.webapp.resource.impl.domain.user.id.UserId;
 import cmahy.webapp.resource.impl.helper.security.user.SecurityUserGenerator;
 import cmahy.webapp.resource.ui.taco.TacoUriConstant;
 import org.junit.jupiter.api.BeforeEach;
@@ -80,7 +80,7 @@ class ClientOrderHistoryApiImplIntegrationTest {
                 Integer.valueOf(clientOrders.size()).longValue()
             );
 
-            when(getAllClientOrderPagedQuery.execute(any(PageableInputAppVo.class))).thenReturn(page);
+            when(getAllClientOrderPagedQuery.execute(any(UserId.class), any(PageableInputAppVo.class))).thenReturn(page);
 
             MvcResult requestResult = mockMvc.perform(
                     get(TacoUriConstant.ClientOrder.CLIENT_ORDER_BASE_URL + TacoUriConstant.ClientOrder.CLIENT_ORDER_HISTORY_URL)

@@ -8,9 +8,13 @@ import cmahy.webapp.resource.impl.application.taco.shop.repository.*;
 import cmahy.webapp.resource.impl.application.taco.shop.vo.input.ClientOrderInputAppVo;
 import cmahy.webapp.resource.impl.application.taco.shop.vo.input.TacoInputAppVo;
 import cmahy.webapp.resource.impl.application.taco.shop.vo.output.ClientOrderOutputAppVo;
+import cmahy.webapp.resource.impl.application.user.repository.UserRepository;
 import cmahy.webapp.resource.impl.domain.taco.*;
 import cmahy.webapp.resource.impl.domain.taco.id.IngredientId;
+import cmahy.webapp.resource.impl.domain.user.User;
+import cmahy.webapp.resource.impl.domain.user.id.UserId;
 import cmahy.webapp.resource.impl.exception.taco.IngredientNotFoundException;
+import cmahy.webapp.resource.impl.exception.user.UserNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,6 +32,9 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ReceiveAndCreateClientOrderImplTest {
+
+    @Mock
+    private UserRepository userRepository;
 
     @Mock
     private ClientOrderRepository clientOrderRepository;
@@ -53,6 +60,8 @@ class ReceiveAndCreateClientOrderImplTest {
     @Test
     void execute() {
         assertDoesNotThrow(() -> {
+            UserId userId = new UserId(Generator.randomLongEqualOrAboveZero());
+            User user = mock(User.class);
             ClientOrderInputAppVo clientOrderVo = new ClientOrderInputAppVo(
                 Generator.generateAString(),
                 Generator.generateAString(),
@@ -89,11 +98,12 @@ class ReceiveAndCreateClientOrderImplTest {
             ClientOrder clientOrder = mock(ClientOrder.class);
             ClientOrderOutputAppVo clientOrderOutputVo = mock(ClientOrderOutputAppVo.class);
 
-            when(clientOrderInputMapper.map(clientOrderVo)).thenReturn(clientOrder);
+            when(userRepository.findById(userId.value())).thenReturn(Optional.of(user));
+            when(clientOrderInputMapper.map(clientOrderVo, user)).thenReturn(clientOrder);
             when(clientOrderRepository.save(clientOrder)).thenReturn(clientOrder);
             when(clientOrderOutputMapper.map(clientOrder)).thenReturn(clientOrderOutputVo);
 
-            ClientOrderOutputAppVo actual = receiveAndCreateClientOrderImpl.execute(clientOrderVo);
+            ClientOrderOutputAppVo actual = receiveAndCreateClientOrderImpl.execute(clientOrderVo, userId);
 
             assertThat(actual).isEqualTo(clientOrderOutputVo);
         });
@@ -104,6 +114,8 @@ class ReceiveAndCreateClientOrderImplTest {
         IngredientId id = new IngredientId(Generator.generateAString());
 
         IngredientNotFoundException notFoundException = assertThrows(IngredientNotFoundException.class, () -> {
+            UserId userId = new UserId(Generator.randomLongEqualOrAboveZero());
+            User user = mock(User.class);
             ClientOrderInputAppVo clientOrderVo = new ClientOrderInputAppVo(
                 Generator.generateAString(),
                 Generator.generateAString(),
@@ -134,7 +146,9 @@ class ReceiveAndCreateClientOrderImplTest {
                     .toList()
             );
 
-            receiveAndCreateClientOrderImpl.execute(clientOrderVo);
+            when(userRepository.findById(userId.value())).thenReturn(Optional.of(user));
+
+            receiveAndCreateClientOrderImpl.execute(clientOrderVo, userId);
         });
 
         assertThat(notFoundException).isNotNull();
@@ -142,5 +156,17 @@ class ReceiveAndCreateClientOrderImplTest {
 
         verify(tacoRepository, never()).save(any());
         verify(clientOrderRepository, never()).save(any());
+    }
+
+    @Test
+    void execute_whenUserNotFound_thenThrowUserNotFound() {
+        assertThrows(UserNotFoundException.class, () -> {
+            UserId userId = new UserId(Generator.randomLongEqualOrAboveZero());
+            ClientOrderInputAppVo clientOrderVo = mock(ClientOrderInputAppVo.class);
+
+            when(userRepository.findById(userId.value())).thenReturn(Optional.empty());
+
+            receiveAndCreateClientOrderImpl.execute(clientOrderVo, userId);
+        });
     }
 }

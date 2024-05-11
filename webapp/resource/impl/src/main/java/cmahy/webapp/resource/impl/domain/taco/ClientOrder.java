@@ -1,5 +1,6 @@
 package cmahy.webapp.resource.impl.domain.taco;
 
+import cmahy.webapp.resource.impl.domain.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -12,6 +13,9 @@ public class ClientOrder {
     @Id
     @GeneratedValue
     private Long id;
+
+    @ManyToOne
+    private User user;
 
     private Date placedAt;
 
@@ -30,7 +34,7 @@ public class ClientOrder {
     @NotBlank(message = "Zip code is required")
     private String deliveryZip;
 
-    //    @CreditCardNumber(message = "Not a valid credit card number")
+//    @CreditCardNumber(message = "Not a valid credit card number")
     @Digits(integer = 16, fraction = 0, message = "Not a valid credit card number")
     private String ccNumber;
 
@@ -52,6 +56,14 @@ public class ClientOrder {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Date getPlacedAt() {
