@@ -10,3 +10,8 @@ application:
       page-size: 20
       sub-samples:
         test-it: exact-match
+  password:
+    default-encoder: bcrypt
+    encoders:
+      bcrypt:
+        org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
