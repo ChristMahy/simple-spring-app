@@ -2,14 +2,12 @@ package cmahy.webapp.resource.ui.taco.shop;
 
 import cmahy.webapp.resource.ui.taco.TacoUriConstant;
 import cmahy.webapp.resource.ui.taco.vo.input.TacoInputApiVo;
-import cmahy.webapp.resource.ui.taco.vo.output.IngredientOutputApiVo;
 import jakarta.validation.Valid;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 @RequestMapping(path = TacoUriConstant.Design.DESIGN_BASE_URL)
 @SessionAttributes(names = DesignApi.TACOS)

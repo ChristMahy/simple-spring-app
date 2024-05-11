@@ -4,7 +4,7 @@ import cmahy.webapp.resource.impl.adapter.user.mapper.id.UserIdMapper;
 import cmahy.webapp.resource.impl.adapter.user.mapper.output.RoleOutputApiVoMapper;
 import cmahy.webapp.resource.impl.application.user.vo.output.UserSecurityOutputAppVo;
 import cmahy.webapp.resource.impl.exception.NullException;
-import cmahy.webapp.resource.user.vo.output.UserSecurityOutputApiVo;
+import cmahy.webapp.resource.user.api.vo.output.UserSecurityOutputApiVo;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;

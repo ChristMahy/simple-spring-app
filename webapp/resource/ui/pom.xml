@@ -7,7 +7,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cmahy.webapp.resource</groupId>
-    <artifactId>api</artifactId>
+    <artifactId>ui</artifactId>
     <version>DEV-SNAPSHOT</version>
 
     <packaging>jar</packaging>
@@ -21,6 +21,7 @@
 
     <properties>
         <cmahy.common.version>DEV-SNAPSHOT</cmahy.common.version>
+        <cmahy.webapp.resource.version>DEV-SNAPSHOT</cmahy.webapp.resource.version>
     </properties>
 
     <dependencies>
@@ -41,6 +42,12 @@
         </dependency>
 
         <dependency>
+            <groupId>cmahy.webapp.resource</groupId>
+            <artifactId>user-api</artifactId>
+            <version>${cmahy.webapp.resource.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
         </dependency>
@@ -53,6 +60,16 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-client</artifactId>
         </dependency>
     </dependencies>
 

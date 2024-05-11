@@ -1,6 +1,6 @@
-package cmahy.webapp.resource.security.vo;
+package cmahy.webapp.resource.user.api.security.vo.output;
 
-import cmahy.webapp.resource.user.vo.output.UserSecurityOutputApiVo;
+import cmahy.webapp.resource.user.api.vo.output.UserSecurityOutputApiVo;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.security.core.GrantedAuthority;

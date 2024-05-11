@@ -64,6 +64,18 @@
         </dependency>
 
         <dependency>
+            <groupId>cmahy.webapp.resource</groupId>
+            <artifactId>ui</artifactId>
+            <version>${cmahy.webapp.resource.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy.webapp.resource</groupId>
+            <artifactId>user-api</artifactId>
+            <version>${cmahy.webapp.resource.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>jakarta.inject</groupId>
             <artifactId>jakarta.inject-api</artifactId>
         </dependency>

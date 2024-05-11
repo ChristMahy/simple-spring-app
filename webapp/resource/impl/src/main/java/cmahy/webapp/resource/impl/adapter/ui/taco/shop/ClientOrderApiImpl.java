@@ -4,12 +4,11 @@ import cmahy.webapp.resource.impl.adapter.taco.shop.mapper.input.ClientOrderInpu
 import cmahy.webapp.resource.impl.adapter.taco.shop.mapper.input.TacoInputApiToAppMapper;
 import cmahy.webapp.resource.impl.adapter.user.mapper.id.UserApiIdMapper;
 import cmahy.webapp.resource.impl.application.taco.shop.command.ReceiveNewClientOrderCommand;
-import cmahy.webapp.resource.impl.domain.user.id.UserId;
-import cmahy.webapp.resource.security.vo.UserSecurityDetails;
 import cmahy.webapp.resource.ui.taco.TacoUriConstant;
 import cmahy.webapp.resource.ui.taco.shop.ClientOrderApi;
 import cmahy.webapp.resource.ui.taco.vo.input.ClientOrderInputApiVo;
 import cmahy.webapp.resource.ui.taco.vo.input.TacoInputApiVo;
+import cmahy.webapp.resource.user.api.security.vo.output.UserSecurityDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -17,7 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.support.SessionStatus;
 
-import java.security.Principal;
 import java.util.List;
 
 @Controller

@@ -1,7 +1,7 @@
 package cmahy.webapp.resource.ui.taco.shop;
 
-import cmahy.webapp.resource.security.vo.UserSecurityDetails;
 import cmahy.webapp.resource.ui.taco.TacoUriConstant;
+import cmahy.webapp.resource.user.api.security.vo.output.UserSecurityDetails;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +16,6 @@ public interface ClientOrderHistoryApi {
         @RequestParam(name = "page-size", required = false) Optional<Integer> pageSize,
         @RequestParam(name = "page-number", required = false) Optional<Integer> pageNumber,
         Model model,
-        @AuthenticationPrincipal UserSecurityDetails userSecurityDetails
+        @AuthenticationPrincipal(errorOnInvalidType = true) UserSecurityDetails userSecurityDetails
         );
 }

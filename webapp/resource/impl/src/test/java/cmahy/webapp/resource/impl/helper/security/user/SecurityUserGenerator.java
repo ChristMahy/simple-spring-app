@@ -3,11 +3,11 @@ package cmahy.webapp.resource.impl.helper.security.user;
 import cmahy.webapp.resource.impl.application.user.vo.output.RoleOutputAppVo;
 import cmahy.webapp.resource.impl.domain.user.AuthProvider;
 import cmahy.webapp.resource.impl.domain.user.id.RoleId;
-import cmahy.webapp.resource.security.vo.UserSecurityDetails;
-import cmahy.webapp.resource.user.id.RoleApiId;
-import cmahy.webapp.resource.user.id.UserApiId;
-import cmahy.webapp.resource.user.vo.output.RoleOutputApiVo;
-import cmahy.webapp.resource.user.vo.output.UserSecurityOutputApiVo;
+import cmahy.webapp.resource.user.api.security.vo.output.UserSecurityDetails;
+import cmahy.webapp.resource.user.api.vo.id.RoleApiId;
+import cmahy.webapp.resource.user.api.vo.id.UserApiId;
+import cmahy.webapp.resource.user.api.vo.output.RoleOutputApiVo;
+import cmahy.webapp.resource.user.api.vo.output.UserSecurityOutputApiVo;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 

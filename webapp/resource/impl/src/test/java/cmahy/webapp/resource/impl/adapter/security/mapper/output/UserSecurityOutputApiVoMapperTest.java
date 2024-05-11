@@ -8,9 +8,9 @@ import cmahy.webapp.resource.impl.application.user.vo.output.UserSecurityOutputA
 import cmahy.webapp.resource.impl.domain.user.AuthProvider;
 import cmahy.webapp.resource.impl.domain.user.id.UserId;
 import cmahy.webapp.resource.impl.exception.NullException;
-import cmahy.webapp.resource.user.id.UserApiId;
-import cmahy.webapp.resource.user.vo.output.RoleOutputApiVo;
-import cmahy.webapp.resource.user.vo.output.UserSecurityOutputApiVo;
+import cmahy.webapp.resource.user.api.vo.id.UserApiId;
+import cmahy.webapp.resource.user.api.vo.output.RoleOutputApiVo;
+import cmahy.webapp.resource.user.api.vo.output.UserSecurityOutputApiVo;
 import org.assertj.core.api.recursive.comparison.RecursiveComparisonConfiguration;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

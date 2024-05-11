@@ -7,7 +7,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cmahy.webapp.resource</groupId>
-    <artifactId>api</artifactId>
+    <artifactId>user-api</artifactId>
     <version>DEV-SNAPSHOT</version>
 
     <packaging>jar</packaging>
@@ -53,6 +53,16 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-client</artifactId>
         </dependency>
     </dependencies>
 
