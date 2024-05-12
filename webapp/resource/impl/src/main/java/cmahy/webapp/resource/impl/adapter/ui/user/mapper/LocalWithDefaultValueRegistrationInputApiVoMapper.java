@@ -3,7 +3,7 @@ package cmahy.webapp.resource.impl.adapter.ui.user.mapper;
 import cmahy.webapp.resource.impl.application.user.vo.input.UserSecurityInputAppVo;
 import cmahy.webapp.resource.impl.domain.user.AuthProvider;
 import cmahy.webapp.resource.impl.exception.NullException;
-import cmahy.webapp.resource.ui.vo.input.RegistrationInputApiVo;
+import cmahy.webapp.resource.ui.vo.input.RegistrationInputUiVo;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +19,9 @@ public class LocalWithDefaultValueRegistrationInputApiVoMapper {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public UserSecurityInputAppVo map(RegistrationInputApiVo input) {
+    public UserSecurityInputAppVo map(RegistrationInputUiVo input) {
         if (Objects.isNull(input)) {
-            throw new NullException(RegistrationInputApiVo.class);
+            throw new NullException(RegistrationInputUiVo.class);
         }
 
         return new UserSecurityInputAppVo(
