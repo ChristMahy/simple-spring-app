@@ -1,0 +1,57 @@
+openapi: 3.0.3
+
+paths:
+  /single-file/readme:
+    get:
+      description: Generate a readme file, with random content
+      parameters:
+        - $ref: '#/components/parameters/onFailure'
+      responses:
+        '200':
+          $ref: '#/components/responses/200octetStream'
+        '500':
+          $ref: './common/common-api.yaml#/components/responses/500InternalServerError'
+  /zip:
+    get:
+      description: Generate a large zip, with random content
+      parameters:
+        - $ref: '#/components/parameters/onFailure'
+      responses:
+        '200':
+          $ref: '#/components/responses/200octetStream'
+        '500':
+          $ref: './common/common-api.yaml#/components/responses/500InternalServerError'
+
+components:
+  parameters:
+    onFailure:
+      description: Task should failed or not, produce a failure while process generation
+      name: on-failure
+      in: query
+      schema:
+        type: boolean
+      required: false
+  responses:
+    200octetStream:
+      description: Response as binary
+      content:
+        application/octet-stream:
+          schema:
+            type: string
+            format: binary
+  schemas:
+    IngredientOutput:
+      type: object
+      properties:
+        id:
+          type: string
+    IngredientCreate:
+      type: object
+      properties:
+        test:
+          type: string
+    IngredientUpdate:
+      type: object
+      properties:
+        test:
+          type: string

@@ -1,4 +1,24 @@
 package cmahy.webapp.resource.api.taco.shop.vo.input;
 
-public record IngredientCreateApiVo() {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+public record IngredientCreateApiVo(
+    @NotNull
+    @NotBlank
+    String name,
+    @NotNull
+    @NotBlank
+    String type
+) {
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
+            .append("name", name)
+            .append("type", type)
+            .toString();
+    }
 }

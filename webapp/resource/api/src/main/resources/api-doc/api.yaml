@@ -1,0 +1,34 @@
+openapi: 3.0.3
+
+info:
+  title: Resource URLs
+  description: Resource URLs
+  version: 1.0.0
+
+servers:
+  - url: '{scheme}://{host}:{port}/api/{version}'
+    variables:
+      scheme:
+        default: https
+        enum:
+          - https
+          - http
+      host:
+        default: localhost
+      port:
+        default: 8080
+      version:
+        default: v1
+        enum:
+          - v1
+
+
+paths:
+  /ingredient:
+    $ref: './ingredient-api.yaml#/paths/~1ingredient'
+  /ingredient/{id}:
+    $ref: './ingredient-api.yaml#/paths/~1ingredient~1{id}'
+  /single-file/readme:
+    $ref: './stream-api.yaml#/paths/~1single-file~1readme'
+  /zip:
+    $ref: './stream-api.yaml#/paths/~1zip'

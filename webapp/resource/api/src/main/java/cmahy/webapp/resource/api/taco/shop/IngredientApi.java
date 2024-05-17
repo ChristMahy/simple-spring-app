@@ -21,8 +21,11 @@ public interface IngredientApi {
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     IngredientOutputApiVo create(@Valid @RequestBody IngredientCreateApiVo input);
 
-    @PatchMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    IngredientOutputApiVo update(@Valid @RequestBody IngredientUpdateApiVo input);
+    @PatchMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    IngredientOutputApiVo update(
+        @PathVariable IngredientApiId id,
+        @Valid @RequestBody IngredientUpdateApiVo input
+    );
 
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

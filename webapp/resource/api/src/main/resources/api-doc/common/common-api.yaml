@@ -1,0 +1,58 @@
+openapi: 3.0.3
+
+components:
+  parameters:
+    PageNumber:
+      name: page-number
+      in: query
+      required: true
+      schema:
+        description: Which page
+        type: number
+    PageSize:
+      name: page-size
+      in: query
+      required: true
+      schema:
+        description: Number items per page
+        type: number
+  responses:
+    500InternalServerError:
+      description: Any unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    404IdNotFound:
+      description: Entity, for given id, not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+    ValidationFailure:
+      description: Entity validation has failed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+  schemas:
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+        title:
+          type: string
+          nullable: true
+        status:
+          type: number
+        detail:
+          type: string
+          nullable: true
+        instance:
+          type: string
+          nullable: true
+        properties:
+          type: object
+          additionalProperties: true
+          nullable: true

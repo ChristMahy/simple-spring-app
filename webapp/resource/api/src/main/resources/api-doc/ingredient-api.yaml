@@ -1,0 +1,119 @@
+openapi: 3.0.3
+
+paths:
+  /ingredient:
+    get:
+      description: Get all ingredients, with pagination
+      parameters:
+        - $ref: './common/common-api.yaml#/components/parameters/PageNumber'
+        - $ref: './common/common-api.yaml#/components/parameters/PageSize'
+      responses:
+        '200':
+          description: List all ingredients
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageIngredientOutput'
+        '500':
+          $ref: './common/common-api.yaml#/components/responses/500InternalServerError'
+    post:
+      description: Create new ingredient
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IngredientCreate'
+      responses:
+        '201':
+          description: New ingredient freshly created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IngredientOutput'
+        '422':
+          $ref: './common/common-api.yaml#/components/responses/ValidationFailure'
+        '500':
+          $ref: './common/common-api.yaml#/components/responses/500InternalServerError'
+
+  /ingredient/{id}:
+    parameters:
+      - name: id
+        in: path
+        description: Ingredient's id
+        required: true
+    patch:
+      description: Update an ingredient
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IngredientUpdate'
+      responses:
+        '200':
+          description: New ingredient freshly updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IngredientOutput'
+        '404':
+          $ref: './common/common-api.yaml#/components/responses/404IdNotFound'
+        '422':
+          $ref: './common/common-api.yaml#/components/responses/ValidationFailure'
+        '500':
+          $ref: './common/common-api.yaml#/components/responses/500InternalServerError'
+    delete:
+      description: Delete an ingredient
+      responses:
+        '204':
+          description: Deletion done
+        '404':
+          $ref: './common/common-api.yaml#/components/responses/404IdNotFound'
+        '500':
+          $ref: './common/common-api.yaml#/components/responses/500InternalServerError'
+
+components:
+  parameters:
+    onFailure:
+      description: Task should failed or not, make a failure while process generation
+      name: on-failure
+      in: query
+      schema:
+        type: boolean
+      required: false
+  schemas:
+    PageIngredientOutput:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/IngredientOutput'
+        totalElements:
+          type: number
+    IngredientOutput:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+    IngredientCreate:
+      type: object
+      required:
+        - name
+        - type
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+    IngredientUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
