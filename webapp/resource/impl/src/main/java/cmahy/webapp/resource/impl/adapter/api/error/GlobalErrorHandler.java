@@ -13,7 +13,7 @@ public class GlobalErrorHandler {
     private static final Logger LOG = LoggerFactory.getLogger(GlobalErrorHandler.class);
 
     @ExceptionHandler
-    public ResponseEntity<ProblemDetail> ioHandler(Throwable anyException, WebRequest request) {
+    public ResponseEntity<ProblemDetail> anyHandler(Throwable anyException, WebRequest request) {
         print(anyException);
 
         return this.wrap(
