@@ -1,6 +1,8 @@
 package cmahy.webapp.resource.impl.application.taco.shop.vo.output;
 
 import cmahy.common.entity.page.EntityPage;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.Collection;
 
@@ -8,4 +10,12 @@ public record ClientOrderPageOutputAppVo(
     Collection<ClientOrderOutputAppVo> content,
     Long totalElements
 ) implements EntityPage<ClientOrderOutputAppVo> {
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
+            .append("content", content())
+            .append("totalElements", totalElements())
+            .toString();
+    }
 }

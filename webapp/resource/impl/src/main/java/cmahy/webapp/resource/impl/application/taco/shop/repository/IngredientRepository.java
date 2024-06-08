@@ -10,4 +10,10 @@ public interface IngredientRepository {
     Optional<Ingredient> findById(String id);
 
     Set<Ingredient> findByType(Ingredient.Type type);
+
+    Optional<Ingredient> findByNameAndType(String name, Ingredient.Type type);
+
+    Ingredient save(Ingredient ingredient);
+
+    void deleteById(String id);
 }

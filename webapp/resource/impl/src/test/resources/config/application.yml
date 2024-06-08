@@ -17,6 +17,8 @@ spring:
 application:
   google:
     api-url: https://GOOGLE_SHOULD_NEVER_BE_CALLED
+  pagination:
+    page-size: 10
   taco:
     orders:
       page-size: 20

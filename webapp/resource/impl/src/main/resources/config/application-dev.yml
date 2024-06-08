@@ -15,3 +15,5 @@ application:
     encoders:
       bcrypt:
         org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+  pagination:
+    page-size: 10

@@ -20,7 +20,7 @@ public interface ClientOrderRepositoryImpl extends
 
     @Override
     default ClientOrderPage getByUser(User user, EntityPageable pageable) {
-        Page<ClientOrder> all = ClientOrderRepositoryImpl.this.findByUser(user, PageRequest.of(pageable.pageNumber().intValue(), pageable.pageSize()));
+        Page<ClientOrder> all = ClientOrderRepositoryImpl.this.findByUser(user, PageRequest.of(pageable.pageNumber(), pageable.pageSize()));
 
         return new ClientOrderPage(
             all.getContent(),

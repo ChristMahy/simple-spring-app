@@ -1,9 +1,9 @@
 package cmahy.webapp.resource.impl.adapter.ui.taco.shop;
 
 import cmahy.common.entity.page.EntityPageableBuilder;
+import cmahy.webapp.resource.impl.adapter.taco.shop.properties.OrderProperties;
 import cmahy.webapp.resource.impl.adapter.ui.taco.shop.mapper.output.ClientOrderPageOutputUiMapper;
 import cmahy.webapp.resource.impl.adapter.user.mapper.id.UserApiIdMapper;
-import cmahy.webapp.resource.impl.application.taco.shop.properties.OrderProperties;
 import cmahy.webapp.resource.impl.application.taco.shop.query.GetAllClientOrderPagedQuery;
 import cmahy.webapp.resource.impl.application.vo.input.PageableInputAppVo;
 import cmahy.webapp.resource.ui.taco.shop.ClientOrderHistoryUi;

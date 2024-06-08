@@ -1,7 +1,6 @@
 package cmahy.webapp.resource.impl.adapter.taco.shop.properties;
 
 import cmahy.webapp.resource.impl.adapter.taco.shop.properties.nested.NestedPropertiesSample;
-import cmahy.webapp.resource.impl.application.taco.shop.properties.OrderProperties;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -12,13 +11,13 @@ import org.springframework.validation.annotation.Validated;
 
 @Validated
 @ConfigurationProperties(prefix = "application.taco.orders")
-public record OrderPropertiesImpl(
+public record OrderProperties(
     @Min(value = 5, message = "Must be between 5 and 25")
     @Max(value = 25, message = "Must be between 5 and 25")
     int pageSize,
     @Valid
     NestedPropertiesSample subSamples
-) implements OrderProperties {
+) {
 
     @Override
     public String toString() {

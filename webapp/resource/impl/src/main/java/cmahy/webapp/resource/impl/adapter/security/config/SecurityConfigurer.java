@@ -16,8 +16,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.annotation.web.configurers.SessionManagementConfigurer;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -30,7 +28,6 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 
-import static org.springframework.security.config.Customizer.withDefaults;
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
 @Configuration
@@ -101,12 +98,15 @@ public class SecurityConfigurer {
             .authorizeHttpRequests(registry -> {
                 registry
                     .requestMatchers(antMatcher(HttpMethod.OPTIONS)).permitAll()
+                    .requestMatchers(antMatcher("/api/v1/**")).permitAll()
                     .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                     .requestMatchers(mvcMatcherBuilder.pattern("/register**")).permitAll()
                     .requestMatchers(mvcMatcherBuilder.pattern("/login**")).permitAll()
                     .anyRequest().authenticated();
             })
-            .csrf(withDefaults())
+            .csrf(configurer -> {
+                configurer.ignoringRequestMatchers(antMatcher("/api/v1/**"));
+            })
             .sessionManagement(sessionConfigurer -> {
                 sessionConfigurer
                     // TODO: Trick with stateless session doesn't work, Html thymeleaf requires a session

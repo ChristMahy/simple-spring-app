@@ -1,4 +1,4 @@
-package cmahy.webapp.resource.impl.adapter.taco.shop.service;
+package cmahy.webapp.resource.impl.application.taco.shop.service;
 
 import cmahy.common.helper.Generator;
 import cmahy.webapp.resource.impl.application.taco.shop.mapper.input.ClientOrderInputAppMapper;
@@ -28,10 +28,11 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class ReceiveAndCreateClientOrderImplTest {
+class ReceiveAndCreateClientOrderTest {
 
     @Mock
     private UserRepository userRepository;
@@ -55,7 +56,7 @@ class ReceiveAndCreateClientOrderImplTest {
     private ClientOrderOutputMapper clientOrderOutputMapper;
 
     @InjectMocks
-    private ReceiveAndCreateClientOrderImpl receiveAndCreateClientOrderImpl;
+    private ReceiveAndCreateClientOrder receiveAndCreateClientOrder;
 
     @Test
     void execute() {
@@ -72,25 +73,25 @@ class ReceiveAndCreateClientOrderImplTest {
                 Generator.generateAString(),
                 Generator.generateAString(),
                 Stream.generate(() -> {
-                    TacoInputAppVo tacoInput = new TacoInputAppVo(
-                        Generator.generateAString(),
-                        Stream.generate(() -> {
-                            IngredientId id = new IngredientId(Generator.generateAString());
+                        TacoInputAppVo tacoInput = new TacoInputAppVo(
+                            Generator.generateAString(),
+                            Stream.generate(() -> {
+                                    IngredientId id = new IngredientId(Generator.generateAString());
 
-                            when(ingredientRepository.findById(id.value())).thenAnswer((invocationOnMock) -> Optional.of(mock(Ingredient.class)));
+                                    when(ingredientRepository.findById(id.value())).thenAnswer((invocationOnMock) -> Optional.of(mock(Ingredient.class)));
 
-                            return id;
-                        })
-                            .limit(Generator.randomInt(10, 30))
-                            .collect(Collectors.toSet())
-                    );
+                                    return id;
+                                })
+                                .limit(Generator.randomInt(10, 30))
+                                .collect(Collectors.toSet())
+                        );
 
-                    Taco taco = mock(Taco.class);
-                    when(tacoInputMapper.map(tacoInput)).thenAnswer((invocationOnMock) -> taco);
-                    when(tacoRepository.save(taco)).thenAnswer((invocationOnMock) -> taco);
+                        Taco taco = mock(Taco.class);
+                        when(tacoInputMapper.map(tacoInput)).thenAnswer((invocationOnMock) -> taco);
+                        when(tacoRepository.save(taco)).thenAnswer((invocationOnMock) -> taco);
 
-                    return tacoInput;
-                })
+                        return tacoInput;
+                    })
                     .limit(Generator.randomInt(5, 10))
                     .toList()
             );
@@ -103,7 +104,7 @@ class ReceiveAndCreateClientOrderImplTest {
             when(clientOrderRepository.save(clientOrder)).thenReturn(clientOrder);
             when(clientOrderOutputMapper.map(clientOrder)).thenReturn(clientOrderOutputVo);
 
-            ClientOrderOutputAppVo actual = receiveAndCreateClientOrderImpl.execute(clientOrderVo, userId);
+            ClientOrderOutputAppVo actual = receiveAndCreateClientOrder.execute(clientOrderVo, userId);
 
             assertThat(actual).isEqualTo(clientOrderOutputVo);
         });
@@ -148,11 +149,11 @@ class ReceiveAndCreateClientOrderImplTest {
 
             when(userRepository.findById(userId.value())).thenReturn(Optional.of(user));
 
-            receiveAndCreateClientOrderImpl.execute(clientOrderVo, userId);
+            receiveAndCreateClientOrder.execute(clientOrderVo, userId);
         });
 
         assertThat(notFoundException).isNotNull();
-        assertThat(notFoundException.getMessage()).contains(Ingredient.class.getName(), id.value());
+        assertThat(notFoundException.getMessage()).contains(Ingredient.class.getSimpleName(), id.value());
 
         verify(tacoRepository, never()).save(any());
         verify(clientOrderRepository, never()).save(any());
@@ -166,7 +167,7 @@ class ReceiveAndCreateClientOrderImplTest {
 
             when(userRepository.findById(userId.value())).thenReturn(Optional.empty());
 
-            receiveAndCreateClientOrderImpl.execute(clientOrderVo, userId);
+            receiveAndCreateClientOrder.execute(clientOrderVo, userId);
         });
     }
 }

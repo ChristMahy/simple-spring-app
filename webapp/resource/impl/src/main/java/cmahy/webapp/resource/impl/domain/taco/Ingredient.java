@@ -1,20 +1,28 @@
 package cmahy.webapp.resource.impl.domain.taco;
 
-import cmahy.webapp.resource.impl.application.taco.shop.exception.IngredientTypeNotFoundException;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.Arrays;
-import java.util.Set;
-import java.util.stream.Collectors;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 @Entity
 public class Ingredient {
 
+    public static final String I18N_KEY_NAME_NOT_NULL = "validation.error.ingredient.name.not-null";
+    public static final String I18N_KEY_NAME_NOT_BLANK = "validation.error.ingredient.name.not-blank";
+
+    public static final String I18N_KEY_TYPE_NOT_NULL = "validation.error.ingredient.type.not-null";
+
     @Id
     private String id;
+
+    @NotNull(message = I18N_KEY_NAME_NOT_NULL)
+    @NotBlank(message = I18N_KEY_NAME_NOT_BLANK)
     private String name;
+
+    @NotNull(message = I18N_KEY_TYPE_NOT_NULL)
     private Type type;
 
     public Ingredient() {}
@@ -29,24 +37,30 @@ public class Ingredient {
         return id;
     }
 
-    public void setId(String id) {
+    public Ingredient setId(String id) {
         this.id = id;
+
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public Ingredient setName(String name) {
         this.name = name;
+
+        return this;
     }
 
     public Type getType() {
         return type;
     }
 
-    public void setType(Type type) {
+    public Ingredient setType(Type type) {
         this.type = type;
+
+        return this;
     }
 
     public enum Type {
@@ -55,5 +69,14 @@ public class Ingredient {
         VEGGIES,
         CHEESE,
         SAUCE;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
+            .append("id", getId())
+            .append("name", getName())
+            .append("type", getType())
+            .toString();
     }
 }

@@ -7,6 +7,6 @@ import cmahy.webapp.resource.impl.exception.NotFoundException;
 public class IngredientNotFoundException extends NotFoundException {
 
     public IngredientNotFoundException(IngredientId id) {
-        super(Ingredient.class.getName() + " <" + id.value() + "> not found");
+        super(Ingredient.class.getSimpleName() + " <" + id.value() + "> not found");
     }
 }

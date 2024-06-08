@@ -82,4 +82,34 @@ class GlobalErrorHandlerIntegrationTest {
                 .andExpect(jsonPath("$.instance").value(GlobalErrorHandlerTestPurposeApi.BASE_URL + GlobalErrorHandlerTestPurposeApi.RUNTIME_EXCEPTION_URL));
         });
     }
+
+    @Test
+    void sqlException_thenShouldBeA500WithDetails() {
+        assertDoesNotThrow(() -> {
+            mockMvc.perform(
+                get(GlobalErrorHandlerTestPurposeApi.BASE_URL + GlobalErrorHandlerTestPurposeApi.SQL_EXCEPTION_URL)
+                    .with(SecurityUserGenerator.generateRandomUser())
+            )
+                .andDo(print())
+                .andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_PROBLEM_JSON))
+                .andExpect(jsonPath("$.detail").value("Access data error"))
+                .andExpect(jsonPath("$.instance").value(GlobalErrorHandlerTestPurposeApi.BASE_URL + GlobalErrorHandlerTestPurposeApi.SQL_EXCEPTION_URL));
+        });
+    }
+
+    @Test
+    void dataAccessException_thenShouldBeA500WithDetails() {
+        assertDoesNotThrow(() -> {
+            mockMvc.perform(
+                get(GlobalErrorHandlerTestPurposeApi.BASE_URL + GlobalErrorHandlerTestPurposeApi.DATA_ACCESS_EXCEPTION_URL)
+                    .with(SecurityUserGenerator.generateRandomUser())
+            )
+                .andDo(print())
+                .andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_PROBLEM_JSON))
+                .andExpect(jsonPath("$.detail").value("Access data error"))
+                .andExpect(jsonPath("$.instance").value(GlobalErrorHandlerTestPurposeApi.BASE_URL + GlobalErrorHandlerTestPurposeApi.DATA_ACCESS_EXCEPTION_URL));
+        });
+    }
 }

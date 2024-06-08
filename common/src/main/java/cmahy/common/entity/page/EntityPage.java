@@ -4,7 +4,7 @@ import java.util.Collection;
 
 public interface EntityPage<T> {
 
-    Collection<T> content();
+    <R extends Iterable<T>> R content();
 
     Long totalElements();
 }
