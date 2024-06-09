@@ -1,11 +1,11 @@
 package cmahy.webapp.resource.impl.application.taco.shop.mapper.output;
 
 import cmahy.common.helper.Generator;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.output.ClientOrderOutputAppVo;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.output.ClientOrderPageOutputAppVo;
 import cmahy.webapp.resource.impl.domain.taco.ClientOrder;
 import cmahy.webapp.resource.impl.domain.taco.page.ClientOrderPage;
 import cmahy.webapp.resource.impl.exception.NullException;
+import cmahy.webapp.resource.taco.shop.vo.output.ClientOrderOutputVo;
+import cmahy.webapp.resource.taco.shop.vo.output.ClientOrderPageOutputVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -37,16 +37,16 @@ class ClientOrderPageOutputMapperTest {
         assertDoesNotThrow(() -> {
             int clientOrdersSize = randomInt(50, 1000);
 
-            Collection<ClientOrderOutputAppVo> expectedClientOrderOutputs = new ArrayList<>(clientOrdersSize);
+            Collection<ClientOrderOutputVo> expectedClientOrderOutputs = new ArrayList<>(clientOrdersSize);
 
             ClientOrderPage clientOrderPage = new ClientOrderPage(
                 Stream.generate(() -> {
                         ClientOrder clientOrder = mock(ClientOrder.class);
 
-                        ClientOrderOutputAppVo clientOrderOutputAppVo = mock(ClientOrderOutputAppVo.class);
-                        expectedClientOrderOutputs.add(clientOrderOutputAppVo);
+                        ClientOrderOutputVo clientOrderOutputVo = mock(ClientOrderOutputVo.class);
+                        expectedClientOrderOutputs.add(clientOrderOutputVo);
 
-                        when(clientOrderOutputMapper.map(clientOrder)).thenReturn(clientOrderOutputAppVo);
+                        when(clientOrderOutputMapper.map(clientOrder)).thenReturn(clientOrderOutputVo);
 
                         return clientOrder;
                     })
@@ -55,7 +55,7 @@ class ClientOrderPageOutputMapperTest {
                 Generator.randomLongEqualOrAboveZero()
             );
 
-            ClientOrderPageOutputAppVo actual = clientOrderPageOutputMapper.map(clientOrderPage);
+            ClientOrderPageOutputVo actual = clientOrderPageOutputMapper.map(clientOrderPage);
 
             assertThat(actual).isNotNull();
 

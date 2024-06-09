@@ -2,12 +2,11 @@ package cmahy.webapp.resource.impl.adapter.ui.taco.shop;
 
 import cmahy.common.entity.page.EntityPageableBuilder;
 import cmahy.webapp.resource.impl.adapter.taco.shop.properties.OrderProperties;
-import cmahy.webapp.resource.impl.adapter.ui.taco.shop.mapper.output.ClientOrderPageOutputUiMapper;
 import cmahy.webapp.resource.impl.adapter.user.mapper.id.UserApiIdMapper;
 import cmahy.webapp.resource.impl.application.taco.shop.query.GetAllClientOrderPagedQuery;
 import cmahy.webapp.resource.impl.application.vo.input.PageableInputAppVo;
+import cmahy.webapp.resource.taco.shop.vo.output.ClientOrderPageOutputVo;
 import cmahy.webapp.resource.ui.taco.shop.ClientOrderHistoryUi;
-import cmahy.webapp.resource.ui.taco.vo.output.ClientOrderPageOutputUiVo;
 import cmahy.webapp.resource.ui.vo.output.Pagination;
 import cmahy.webapp.resource.user.api.security.vo.output.UserSecurityDetails;
 import jakarta.transaction.Transactional;
@@ -23,18 +22,15 @@ public class ClientOrderHistoryUiImpl implements ClientOrderHistoryUi {
     private final GetAllClientOrderPagedQuery getAllClientOrderPagedQuery;
     private final OrderProperties orderProperties;
     private final UserApiIdMapper userApiIdMapper;
-    private final ClientOrderPageOutputUiMapper clientOrderPageOutputUiMapper;
 
     public ClientOrderHistoryUiImpl(
         GetAllClientOrderPagedQuery getAllClientOrderPagedQuery,
         OrderProperties orderProperties,
-        UserApiIdMapper userApiIdMapper,
-        ClientOrderPageOutputUiMapper clientOrderPageOutputUiMapper
+        UserApiIdMapper userApiIdMapper
     ) {
         this.getAllClientOrderPagedQuery = getAllClientOrderPagedQuery;
         this.orderProperties = orderProperties;
         this.userApiIdMapper = userApiIdMapper;
-        this.clientOrderPageOutputUiMapper = clientOrderPageOutputUiMapper;
     }
 
     @Override
@@ -50,9 +46,8 @@ public class ClientOrderHistoryUiImpl implements ClientOrderHistoryUi {
             .withPageNumber(pageNumber.orElse(null))
             .build(PageableInputAppVo.class);
 
-        ClientOrderPageOutputUiVo orders = clientOrderPageOutputUiMapper.map(
-            getAllClientOrderPagedQuery.execute(userApiIdMapper.map(userSecurityDetails.userSecurity().id()), pageable)
-        );
+        ClientOrderPageOutputVo orders =
+            getAllClientOrderPagedQuery.execute(userApiIdMapper.map(userSecurityDetails.userSecurity().id()), pageable);
 
         model.addAttribute("orders", orders);
         model.addAttribute(

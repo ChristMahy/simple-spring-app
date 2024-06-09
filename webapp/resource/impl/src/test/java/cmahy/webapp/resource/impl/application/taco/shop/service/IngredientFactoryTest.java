@@ -1,11 +1,11 @@
 package cmahy.webapp.resource.impl.application.taco.shop.service;
 
 import cmahy.common.helper.Generator;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.input.IngredientCreateInputAppVo;
 import cmahy.webapp.resource.impl.domain.taco.Ingredient;
 import cmahy.webapp.resource.impl.exception.NullException;
 import cmahy.webapp.resource.impl.helper.ValidatorHelper;
 import cmahy.webapp.resource.impl.helper.ValidatorHelperExtension;
+import cmahy.webapp.resource.taco.shop.vo.input.IngredientCreateInputVo;
 import jakarta.validation.ConstraintViolation;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,18 +29,18 @@ class IngredientFactoryTest {
     @Test
     void create() {
         assertDoesNotThrow(() -> {
-            IngredientCreateInputAppVo createInputAppVo = new IngredientCreateInputAppVo(
+            IngredientCreateInputVo createInputVo = new IngredientCreateInputVo(
                 Generator.generateAStringWithoutSpecialChars(),
                 Generator.randomEnum(Ingredient.Type.class).name()
             );
 
-            Ingredient actual = ingredientFactory.create(createInputAppVo);
+            Ingredient actual = ingredientFactory.create(createInputVo);
 
             assertThat(actual).isNotNull();
 
             assertThat(actual.getId()).isNull();
-            assertThat(actual.getName()).isEqualTo(createInputAppVo.name());
-            assertThat(actual.getType().name()).isEqualTo(createInputAppVo.type());
+            assertThat(actual.getName()).isEqualTo(createInputVo.name());
+            assertThat(actual.getType().name()).isEqualTo(createInputVo.type());
         });
     }
 
@@ -50,12 +50,12 @@ class IngredientFactoryTest {
             String name = Generator.generateAStringWithoutSpecialChars();
             Type type = Generator.randomEnum(Ingredient.Type.class);
 
-            IngredientCreateInputAppVo createInputAppVo = new IngredientCreateInputAppVo(
+            IngredientCreateInputVo createInputVo = new IngredientCreateInputVo(
                 "         " + name + "              ",
                 "            " + type + "                 "
             );
 
-            Ingredient actual = ingredientFactory.create(createInputAppVo);
+            Ingredient actual = ingredientFactory.create(createInputVo);
 
             assertThat(actual).isNotNull();
 
@@ -68,15 +68,15 @@ class IngredientFactoryTest {
     @Test
     void execute_onEnumValueDoesNotExist_thenThrowAValidationException(ValidatorHelper validatorHelper) {
         assertDoesNotThrow(() -> {
-            IngredientCreateInputAppVo createInputAppVo = new IngredientCreateInputAppVo(
+            IngredientCreateInputVo createInputVo = new IngredientCreateInputVo(
                 Generator.generateAStringWithoutSpecialChars(),
                 Generator.generateAStringWithoutSpecialChars(100)
             );
 
-            Ingredient actual = ingredientFactory.create(createInputAppVo);
+            Ingredient actual = ingredientFactory.create(createInputVo);
 
             Set<ConstraintViolation<IngredientFactory>> constraintViolations =
-                validatorHelper.validateReturnValue(ingredientFactory, "create", List.of(IngredientCreateInputAppVo.class), actual);
+                validatorHelper.validateReturnValue(ingredientFactory, "create", List.of(IngredientCreateInputVo.class), actual);
 
             assertThat(
                 constraintViolations.stream()
@@ -89,15 +89,15 @@ class IngredientFactoryTest {
     @Test
     void execute_onAllFieldsAreNull_thenThrowAValidationException(ValidatorHelper validatorHelper) {
         assertDoesNotThrow(() -> {
-            IngredientCreateInputAppVo createInputAppVo = new IngredientCreateInputAppVo(
+            IngredientCreateInputVo createInputVo = new IngredientCreateInputVo(
                 null,
                 null
             );
 
-            Ingredient actual = ingredientFactory.create(createInputAppVo);
+            Ingredient actual = ingredientFactory.create(createInputVo);
 
             Set<ConstraintViolation<IngredientFactory>> constraintViolations =
-                validatorHelper.validateReturnValue(ingredientFactory, "create", List.of(IngredientCreateInputAppVo.class), actual);
+                validatorHelper.validateReturnValue(ingredientFactory, "create", List.of(IngredientCreateInputVo.class), actual);
 
             assertThat(
                 constraintViolations.stream()
@@ -114,15 +114,15 @@ class IngredientFactoryTest {
     @Test
     void execute_onAllBlankFields_thenThrowAValidationException(ValidatorHelper validatorHelper) {
         assertDoesNotThrow(() -> {
-            IngredientCreateInputAppVo createInputAppVo = new IngredientCreateInputAppVo(
+            IngredientCreateInputVo createInputVo = new IngredientCreateInputVo(
                 "                   \t      ",
                 "                   \t    "
             );
 
-            Ingredient actual = ingredientFactory.create(createInputAppVo);
+            Ingredient actual = ingredientFactory.create(createInputVo);
 
             Set<ConstraintViolation<IngredientFactory>> constraintViolations =
-                validatorHelper.validateReturnValue(ingredientFactory, "create", List.of(IngredientCreateInputAppVo.class), actual);
+                validatorHelper.validateReturnValue(ingredientFactory, "create", List.of(IngredientCreateInputVo.class), actual);
 
             assertThat(
                 constraintViolations.stream()

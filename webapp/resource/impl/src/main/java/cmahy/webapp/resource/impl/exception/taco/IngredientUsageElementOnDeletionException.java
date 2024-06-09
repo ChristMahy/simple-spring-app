@@ -1,7 +1,7 @@
 package cmahy.webapp.resource.impl.exception.taco;
 
-import cmahy.webapp.resource.impl.domain.taco.id.IngredientId;
 import cmahy.webapp.resource.impl.exception.UsageOnDeletionException;
+import cmahy.webapp.resource.taco.shop.id.IngredientId;
 
 import java.util.Optional;
 

@@ -43,6 +43,12 @@
 
         <dependency>
             <groupId>cmahy.webapp.resource</groupId>
+            <artifactId>vo</artifactId>
+            <version>${cmahy.webapp.resource.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy.webapp.resource</groupId>
             <artifactId>user-api</artifactId>
             <version>${cmahy.webapp.resource.version}</version>
         </dependency>

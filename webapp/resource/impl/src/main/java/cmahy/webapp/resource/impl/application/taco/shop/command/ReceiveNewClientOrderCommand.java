@@ -2,9 +2,9 @@ package cmahy.webapp.resource.impl.application.taco.shop.command;
 
 import cmahy.common.annotation.Command;
 import cmahy.webapp.resource.impl.application.taco.shop.service.ReceiveAndCreateClientOrder;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.input.ClientOrderInputAppVo;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.output.ClientOrderOutputAppVo;
 import cmahy.webapp.resource.impl.domain.user.id.UserId;
+import cmahy.webapp.resource.taco.shop.vo.input.ClientOrderInputVo;
+import cmahy.webapp.resource.taco.shop.vo.output.ClientOrderOutputVo;
 import jakarta.inject.Named;
 
 @Command
@@ -17,7 +17,7 @@ public class ReceiveNewClientOrderCommand {
         this.receiveAndCreateClientOrder = receiveAndCreateClientOrder;
     }
 
-    public ClientOrderOutputAppVo execute(ClientOrderInputAppVo input, UserId clientId) {
+    public ClientOrderOutputVo execute(ClientOrderInputVo input, UserId clientId) {
         return receiveAndCreateClientOrder.execute(input, clientId);
     }
 }

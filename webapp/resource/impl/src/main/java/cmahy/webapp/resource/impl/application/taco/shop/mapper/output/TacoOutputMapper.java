@@ -1,9 +1,9 @@
 package cmahy.webapp.resource.impl.application.taco.shop.mapper.output;
 
-import cmahy.webapp.resource.impl.domain.taco.id.TacoId;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.output.TacoOutputAppVo;
 import cmahy.webapp.resource.impl.domain.taco.Taco;
 import cmahy.webapp.resource.impl.exception.NullException;
+import cmahy.webapp.resource.taco.shop.id.TacoId;
+import cmahy.webapp.resource.taco.shop.vo.output.TacoOutputVo;
 import jakarta.inject.Named;
 
 import java.util.Objects;
@@ -17,12 +17,12 @@ public class TacoOutputMapper {
         this.ingredientOutputMapper = ingredientOutputMapper;
     }
 
-    public TacoOutputAppVo map(Taco taco) {
+    public TacoOutputVo map(Taco taco) {
         if (Objects.isNull(taco)) {
             throw new NullException(Taco.class);
         }
 
-        return new TacoOutputAppVo(
+        return new TacoOutputVo(
             new TacoId(taco.getId()),
             taco.getCreatedAt(),
             taco.getName(),

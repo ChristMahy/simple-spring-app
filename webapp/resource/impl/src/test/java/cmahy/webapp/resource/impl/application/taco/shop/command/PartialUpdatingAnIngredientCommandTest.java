@@ -1,9 +1,9 @@
 package cmahy.webapp.resource.impl.application.taco.shop.command;
 
 import cmahy.webapp.resource.impl.application.taco.shop.service.PartialUpdatingAnIngredient;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.input.IngredientUpdateInputAppVo;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.output.IngredientOutputAppVo;
-import cmahy.webapp.resource.impl.domain.taco.id.IngredientId;
+import cmahy.webapp.resource.taco.shop.id.IngredientId;
+import cmahy.webapp.resource.taco.shop.vo.input.IngredientUpdateInputVo;
+import cmahy.webapp.resource.taco.shop.vo.output.IngredientOutputVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,17 +28,17 @@ class PartialUpdatingAnIngredientCommandTest {
     void execute() {
         assertDoesNotThrow(() -> {
             IngredientId ingredientId = mock(IngredientId.class);
-            IngredientUpdateInputAppVo ingredientUpdateInputAppVo = mock(IngredientUpdateInputAppVo.class);
+            IngredientUpdateInputVo ingredientUpdateInputVo = mock(IngredientUpdateInputVo.class);
 
-            IngredientOutputAppVo ingredientOutputAppVo = mock(IngredientOutputAppVo.class);
+            IngredientOutputVo ingredientOutputVo = mock(IngredientOutputVo.class);
 
-            when(partialUpdatingAnIngredient.execute(ingredientId, ingredientUpdateInputAppVo)).thenReturn(ingredientOutputAppVo);
+            when(partialUpdatingAnIngredient.execute(ingredientId, ingredientUpdateInputVo)).thenReturn(ingredientOutputVo);
 
-            IngredientOutputAppVo actual = partialUpdatingAnIngredientCommand.execute(ingredientId, ingredientUpdateInputAppVo);
+            IngredientOutputVo actual = partialUpdatingAnIngredientCommand.execute(ingredientId, ingredientUpdateInputVo);
 
             assertThat(actual)
                 .isNotNull()
-                .isEqualTo(ingredientOutputAppVo);
+                .isEqualTo(ingredientOutputVo);
         });
     }
 }

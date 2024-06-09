@@ -1,7 +1,7 @@
 package cmahy.webapp.resource.impl.adapter.startup.generator.taco;
 
 import cmahy.webapp.resource.impl.application.taco.shop.command.CreateIngredientCommand;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.input.IngredientCreateInputAppVo;
+import cmahy.webapp.resource.taco.shop.vo.input.IngredientCreateInputVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,7 +28,7 @@ class IngredientGeneratorTest {
 
             ingredientGenerator.run(applicationArguments);
 
-            verify(createIngredientCommand, times(10)).execute(any(IngredientCreateInputAppVo.class));
+            verify(createIngredientCommand, times(10)).execute(any(IngredientCreateInputVo.class));
         });
     }
 }

@@ -2,9 +2,9 @@ package cmahy.webapp.resource.impl.application.taco.shop.query;
 
 import cmahy.webapp.resource.impl.application.taco.shop.mapper.output.IngredientPageOutputMapper;
 import cmahy.webapp.resource.impl.application.taco.shop.repository.IngredientPagingRepository;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.output.IngredientPageOutputAppVo;
 import cmahy.webapp.resource.impl.application.vo.input.PageableInputAppVo;
 import cmahy.webapp.resource.impl.domain.taco.page.IngredientPage;
+import cmahy.webapp.resource.taco.shop.vo.output.IngredientPageOutputVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -33,16 +33,16 @@ class GetAllIngredientPagedQueryTest {
         assertDoesNotThrow(() -> {
             PageableInputAppVo pageableInputAppVo = mock(PageableInputAppVo.class);
             IngredientPage ingredientPage = mock(IngredientPage.class);
-            IngredientPageOutputAppVo ingredientPageOutputAppVo = mock(IngredientPageOutputAppVo.class);
+            IngredientPageOutputVo ingredientPageOutputVo = mock(IngredientPageOutputVo.class);
 
             when(ingredientPagingRepository.findAll(pageableInputAppVo)).thenReturn(ingredientPage);
-            when(ingredientPageOutputMapper.map(ingredientPage)).thenReturn(ingredientPageOutputAppVo);
+            when(ingredientPageOutputMapper.map(ingredientPage)).thenReturn(ingredientPageOutputVo);
 
-            IngredientPageOutputAppVo actual = getAllIngredientPagedQuery.execute(pageableInputAppVo);
+            IngredientPageOutputVo actual = getAllIngredientPagedQuery.execute(pageableInputAppVo);
 
             assertThat(actual)
                 .isNotNull()
-                .isEqualTo(ingredientPageOutputAppVo);
+                .isEqualTo(ingredientPageOutputVo);
         });
     }
 }

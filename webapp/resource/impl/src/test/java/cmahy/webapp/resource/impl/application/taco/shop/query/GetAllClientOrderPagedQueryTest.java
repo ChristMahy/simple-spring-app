@@ -5,13 +5,13 @@ import cmahy.common.helper.Generator;
 import cmahy.webapp.resource.impl.application.mapper.PageableInputAppVoMapper;
 import cmahy.webapp.resource.impl.application.taco.shop.mapper.output.ClientOrderPageOutputMapper;
 import cmahy.webapp.resource.impl.application.taco.shop.repository.ClientOrderPagingRepository;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.output.ClientOrderPageOutputAppVo;
 import cmahy.webapp.resource.impl.application.user.repository.UserRepository;
 import cmahy.webapp.resource.impl.application.vo.input.PageableInputAppVo;
 import cmahy.webapp.resource.impl.domain.taco.page.ClientOrderPage;
 import cmahy.webapp.resource.impl.domain.user.User;
 import cmahy.webapp.resource.impl.domain.user.id.UserId;
 import cmahy.webapp.resource.impl.exception.user.UserNotFoundException;
+import cmahy.webapp.resource.taco.shop.vo.output.ClientOrderPageOutputVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -52,16 +52,16 @@ class GetAllClientOrderPagedQueryTest {
             PageableInputAppVo pageableInputVo = mock(PageableInputAppVo.class);
             EntityPageable entityPageable = mock(EntityPageable.class);
             ClientOrderPage clientOrderPage = mock(ClientOrderPage.class);
-            ClientOrderPageOutputAppVo clientOrderPageOutputAppVo = mock(ClientOrderPageOutputAppVo.class);
+            ClientOrderPageOutputVo clientOrderPageOutputVo = mock(ClientOrderPageOutputVo.class);
 
             when(userRepository.findById(userId.value())).thenReturn(Optional.of(user));
             when(pageableInputAppVoMapper.map(pageableInputVo)).thenReturn(entityPageable);
             when(clientOrderPagingRepository.getByUser(user, entityPageable)).thenReturn(clientOrderPage);
-            when(clientOrderPageOutputMapper.map(clientOrderPage)).thenReturn(clientOrderPageOutputAppVo);
+            when(clientOrderPageOutputMapper.map(clientOrderPage)).thenReturn(clientOrderPageOutputVo);
 
-            ClientOrderPageOutputAppVo actual = getAllClientOrderPagedQuery.execute(userId, pageableInputVo);
+            ClientOrderPageOutputVo actual = getAllClientOrderPagedQuery.execute(userId, pageableInputVo);
 
-            assertThat(actual).isEqualTo(clientOrderPageOutputAppVo);
+            assertThat(actual).isEqualTo(clientOrderPageOutputVo);
         });
     }
 

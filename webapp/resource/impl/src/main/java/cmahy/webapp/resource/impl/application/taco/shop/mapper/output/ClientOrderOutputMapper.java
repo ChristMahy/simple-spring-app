@@ -1,9 +1,9 @@
 package cmahy.webapp.resource.impl.application.taco.shop.mapper.output;
 
-import cmahy.webapp.resource.impl.domain.taco.id.ClientOrderId;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.output.ClientOrderOutputAppVo;
 import cmahy.webapp.resource.impl.domain.taco.ClientOrder;
 import cmahy.webapp.resource.impl.exception.NullException;
+import cmahy.webapp.resource.taco.shop.id.ClientOrderId;
+import cmahy.webapp.resource.taco.shop.vo.output.ClientOrderOutputVo;
 import jakarta.inject.Named;
 
 import java.util.Objects;
@@ -17,12 +17,12 @@ public class ClientOrderOutputMapper {
         this.tacoOutputMapper = tacoOutputMapper;
     }
 
-    public ClientOrderOutputAppVo map(ClientOrder clientOrder) {
+    public ClientOrderOutputVo map(ClientOrder clientOrder) {
         if (Objects.isNull(clientOrder)) {
             throw new NullException(ClientOrder.class);
         }
 
-        return new ClientOrderOutputAppVo(
+        return new ClientOrderOutputVo(
             new ClientOrderId(clientOrder.getId()),
             clientOrder.getPlacedAt(),
             clientOrder.getDeliveryName(),

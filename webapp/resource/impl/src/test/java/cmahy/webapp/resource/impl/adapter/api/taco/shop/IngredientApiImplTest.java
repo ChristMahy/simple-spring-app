@@ -1,24 +1,16 @@
 package cmahy.webapp.resource.impl.adapter.api.taco.shop;
 
 import cmahy.common.helper.Generator;
-import cmahy.webapp.resource.api.taco.shop.vo.id.IngredientApiId;
-import cmahy.webapp.resource.api.taco.shop.vo.input.IngredientCreateApiVo;
-import cmahy.webapp.resource.api.taco.shop.vo.input.IngredientUpdateApiVo;
-import cmahy.webapp.resource.api.taco.shop.vo.output.IngredientOutputApiVo;
-import cmahy.webapp.resource.api.taco.shop.vo.output.IngredientPageOutputApiVo;
-import cmahy.webapp.resource.impl.adapter.api.taco.shop.mapper.input.*;
-import cmahy.webapp.resource.impl.adapter.api.taco.shop.mapper.output.IngredientOutputAppMapper;
-import cmahy.webapp.resource.impl.adapter.api.taco.shop.mapper.output.IngredientPageOutputAppMapper;
 import cmahy.webapp.resource.impl.adapter.config.properties.PaginationProperties;
 import cmahy.webapp.resource.impl.application.taco.shop.command.*;
 import cmahy.webapp.resource.impl.application.taco.shop.query.GetAllIngredientPagedQuery;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.input.IngredientCreateInputAppVo;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.input.IngredientUpdateInputAppVo;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.output.IngredientOutputAppVo;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.output.IngredientPageOutputAppVo;
 import cmahy.webapp.resource.impl.application.vo.input.PageableInputAppVo;
-import cmahy.webapp.resource.impl.domain.taco.id.IngredientId;
 import cmahy.webapp.resource.impl.exception.NullException;
+import cmahy.webapp.resource.taco.shop.id.IngredientId;
+import cmahy.webapp.resource.taco.shop.vo.input.IngredientCreateInputVo;
+import cmahy.webapp.resource.taco.shop.vo.input.IngredientUpdateInputVo;
+import cmahy.webapp.resource.taco.shop.vo.output.IngredientOutputVo;
+import cmahy.webapp.resource.taco.shop.vo.output.IngredientPageOutputVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
@@ -39,18 +31,6 @@ class IngredientApiImplTest {
     private GetAllIngredientPagedQuery getAllIngredientPagedQuery;
 
     @Mock
-    private IngredientPageOutputAppMapper ingredientPageOutputAppMapper;
-
-    @Mock
-    private IngredientApiIdMapper ingredientApiIdMapper;
-
-    @Mock
-    private IngredientCreateInputApiMapper ingredientCreateInputApiMapper;
-
-    @Mock
-    private IngredientUpdateInputApiMapper ingredientUpdateInputApiMapper;
-
-    @Mock
     private CreateIngredientCommand createIngredientCommand;
 
     @Mock
@@ -58,9 +38,6 @@ class IngredientApiImplTest {
 
     @Mock
     private DeleteAnIngredientCommand deleteAnIngredientCommand;
-
-    @Mock
-    private IngredientOutputAppMapper ingredientOutputAppMapper;
 
     @InjectMocks
     private IngredientApiImpl ingredientApiImpl;
@@ -71,21 +48,19 @@ class IngredientApiImplTest {
             Integer pageNumber = Generator.randomIntEqualOrAboveZero();
             Integer pageSize = Generator.randomIntEqualOrAboveZero();
 
-            IngredientPageOutputAppVo ingredientPageOutputAppVo = mock(IngredientPageOutputAppVo.class);
-            IngredientPageOutputApiVo ingredientPageOutputApiVo = mock(IngredientPageOutputApiVo.class);
+            IngredientPageOutputVo ingredientPageOutputVo = mock(IngredientPageOutputVo.class);
 
             when(paginationProperties.pageSize()).thenReturn(Generator.randomIntEqualOrAboveZero());
 
             ArgumentCaptor<PageableInputAppVo> captor = ArgumentCaptor.forClass(PageableInputAppVo.class);
 
-            when(getAllIngredientPagedQuery.execute(captor.capture())).thenReturn(ingredientPageOutputAppVo);
-            when(ingredientPageOutputAppMapper.map(ingredientPageOutputAppVo)).thenReturn(ingredientPageOutputApiVo);
+            when(getAllIngredientPagedQuery.execute(captor.capture())).thenReturn(ingredientPageOutputVo);
 
-            IngredientPageOutputApiVo actual = ingredientApiImpl.getAll(pageNumber, pageSize);
+            IngredientPageOutputVo actual = ingredientApiImpl.getAll(pageNumber, pageSize);
 
             assertThat(actual)
                 .isNotNull()
-                .isEqualTo(ingredientPageOutputApiVo);
+                .isEqualTo(ingredientPageOutputVo);
 
             assertThat(captor.getAllValues()).hasSize(1);
             assertThat(captor.getValue().pageNumber()).isEqualTo(pageNumber);
@@ -96,68 +71,44 @@ class IngredientApiImplTest {
     @Test
     void create() {
         assertDoesNotThrow(() -> {
-            IngredientCreateApiVo createVo = mock(IngredientCreateApiVo.class);
-            IngredientCreateInputAppVo createAppVo = mock(IngredientCreateInputAppVo.class);
-            IngredientOutputAppVo outputAppVo = mock(IngredientOutputAppVo.class);
-            IngredientOutputApiVo outputApiVo = mock(IngredientOutputApiVo.class);
+            IngredientCreateInputVo createVo = mock(IngredientCreateInputVo.class);
+            IngredientOutputVo outputVo = mock(IngredientOutputVo.class);
 
-            when(ingredientCreateInputApiMapper.map(createVo)).thenReturn(createAppVo);
-            when(createIngredientCommand.execute(createAppVo)).thenReturn(outputAppVo);
-            when(ingredientOutputAppMapper.map(outputAppVo)).thenReturn(outputApiVo);
+            when(createIngredientCommand.execute(createVo)).thenReturn(outputVo);
 
-            IngredientOutputApiVo actual = ingredientApiImpl.create(createVo);
+            IngredientOutputVo actual = ingredientApiImpl.create(createVo);
 
             assertThat(actual)
                 .isNotNull()
-                .isEqualTo(outputApiVo);
+                .isEqualTo(outputVo);
         });
     }
 
     @Test
     void update() {
         assertDoesNotThrow(() -> {
-            IngredientUpdateApiVo updateVo = mock(IngredientUpdateApiVo.class);
-            IngredientApiId apiId = mock(IngredientApiId.class);
-            IngredientUpdateInputAppVo updateAppVo = mock(IngredientUpdateInputAppVo.class);
+            IngredientUpdateInputVo updateVo = mock(IngredientUpdateInputVo.class);
             IngredientId id = mock(IngredientId.class);
-            IngredientOutputAppVo outputAppVo = mock(IngredientOutputAppVo.class);
-            IngredientOutputApiVo outputApiVo = mock(IngredientOutputApiVo.class);
+            IngredientOutputVo outputVo = mock(IngredientOutputVo.class);
 
-            when(ingredientApiIdMapper.map(apiId)).thenReturn(id);
-            when(ingredientUpdateInputApiMapper.map(updateVo)).thenReturn(updateAppVo);
-            when(partialUpdatingAnIngredientCommand.execute(id, updateAppVo)).thenReturn(outputAppVo);
-            when(ingredientOutputAppMapper.map(outputAppVo)).thenReturn(outputApiVo);
+            when(partialUpdatingAnIngredientCommand.execute(id, updateVo)).thenReturn(outputVo);
 
-            IngredientOutputApiVo actual = ingredientApiImpl.update(apiId, updateVo);
+            IngredientOutputVo actual = ingredientApiImpl.update(id, updateVo);
 
             assertThat(actual)
                 .isNotNull()
-                .isEqualTo(outputApiVo);
+                .isEqualTo(outputVo);
         });
     }
 
     @Test
     void delete() {
         assertDoesNotThrow(() -> {
-            IngredientApiId apiId = mock(IngredientApiId.class);
             IngredientId id = mock(IngredientId.class);
 
-            when(ingredientApiIdMapper.map(apiId)).thenReturn(id);
-
-            ingredientApiImpl.delete(apiId);
+            ingredientApiImpl.delete(id);
 
             verify(deleteAnIngredientCommand).execute(id);
         });
-    }
-
-    @Test
-    void delete_whenGivenIdIsNull_thenThrowNullException() {
-        assertThrows(NullException.class, () -> {
-            when(ingredientApiIdMapper.map(null)).thenThrow(NullException.class);
-
-            ingredientApiImpl.delete(null);
-        });
-
-        verifyNoInteractions(deleteAnIngredientCommand);
     }
 }

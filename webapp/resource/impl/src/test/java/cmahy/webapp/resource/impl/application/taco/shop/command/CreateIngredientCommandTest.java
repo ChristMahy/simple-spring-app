@@ -1,10 +1,10 @@
 package cmahy.webapp.resource.impl.application.taco.shop.command;
 
 import cmahy.webapp.resource.impl.application.taco.shop.service.CreateAnIngredient;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.input.IngredientCreateInputAppVo;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.output.IngredientOutputAppVo;
 import cmahy.webapp.resource.impl.helper.ValidatorHelper;
 import cmahy.webapp.resource.impl.helper.ValidatorHelperExtension;
+import cmahy.webapp.resource.taco.shop.vo.input.IngredientCreateInputVo;
+import cmahy.webapp.resource.taco.shop.vo.output.IngredientOutputVo;
 import jakarta.validation.ConstraintViolation;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,14 +31,14 @@ class CreateIngredientCommandTest {
     @Test
     void execute() {
         assertDoesNotThrow(() -> {
-            IngredientCreateInputAppVo createInputAppVo = mock(IngredientCreateInputAppVo.class);
-            IngredientOutputAppVo outputAppVo = mock(IngredientOutputAppVo.class);
+            IngredientCreateInputVo createInputVo = mock(IngredientCreateInputVo.class);
+            IngredientOutputVo outputVo = mock(IngredientOutputVo.class);
 
-            when(createAnIngredient.execute(createInputAppVo)).thenReturn(outputAppVo);
+            when(createAnIngredient.execute(createInputVo)).thenReturn(outputVo);
 
-            IngredientOutputAppVo actual = createIngredientCommand.execute(createInputAppVo);
+            IngredientOutputVo actual = createIngredientCommand.execute(createInputVo);
 
-            assertThat(actual).isEqualTo(outputAppVo);
+            assertThat(actual).isEqualTo(outputVo);
         });
     }
 

@@ -1,8 +1,8 @@
 package cmahy.webapp.resource.ui.taco.shop;
 
+import cmahy.webapp.resource.taco.shop.vo.input.ClientOrderInputVo;
+import cmahy.webapp.resource.taco.shop.vo.input.TacoInputVo;
 import cmahy.webapp.resource.ui.taco.TacoUriConstant.ClientOrder;
-import cmahy.webapp.resource.ui.taco.vo.input.ClientOrderInputUiVo;
-import cmahy.webapp.resource.ui.taco.vo.input.TacoInputUiVo;
 import cmahy.webapp.resource.user.api.security.vo.output.UserSecurityDetails;
 import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -27,9 +27,9 @@ public interface ClientOrderUi {
     @PostMapping(params = "action=process-order")
     String saveOrder(
         Model model,
-        @Valid @ModelAttribute(name = TACO_ORDER) ClientOrderInputUiVo tacoOrder,
+        @Valid @ModelAttribute(name = TACO_ORDER) ClientOrderInputVo tacoOrder,
         Errors errors,
-        @ModelAttribute(name = TACOS) List<TacoInputUiVo> tacos,
+        @ModelAttribute(name = TACOS) List<TacoInputVo> tacos,
         SessionStatus sessionStatus,
         @AuthenticationPrincipal(errorOnInvalidType = true) UserSecurityDetails currentUser
     );
@@ -37,6 +37,6 @@ public interface ClientOrderUi {
     @PostMapping(params = "action=another-taco")
     String saveOrder(
         Model model,
-        @ModelAttribute(name = TACO_ORDER) ClientOrderInputUiVo tacoOrder
+        @ModelAttribute(name = TACO_ORDER) ClientOrderInputVo tacoOrder
     );
 }

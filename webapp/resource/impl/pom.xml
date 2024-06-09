@@ -59,6 +59,12 @@
 
         <dependency>
             <groupId>cmahy.webapp.resource</groupId>
+            <artifactId>vo</artifactId>
+            <version>${cmahy.webapp.resource.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy.webapp.resource</groupId>
             <artifactId>api</artifactId>
             <version>${cmahy.webapp.resource.version}</version>
         </dependency>

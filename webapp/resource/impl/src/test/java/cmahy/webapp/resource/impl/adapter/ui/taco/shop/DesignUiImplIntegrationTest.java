@@ -1,13 +1,12 @@
 package cmahy.webapp.resource.impl.adapter.ui.taco.shop;
 
 import cmahy.webapp.resource.impl.application.taco.shop.query.GetIngredientByTypeQuery;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.output.IngredientOutputAppVo;
 import cmahy.webapp.resource.impl.domain.taco.Ingredient;
-import cmahy.webapp.resource.impl.domain.taco.id.IngredientId;
 import cmahy.webapp.resource.impl.helper.security.user.SecurityUserGenerator;
+import cmahy.webapp.resource.taco.shop.id.IngredientId;
+import cmahy.webapp.resource.taco.shop.vo.input.TacoInputVo;
+import cmahy.webapp.resource.taco.shop.vo.output.IngredientOutputVo;
 import cmahy.webapp.resource.ui.taco.TacoUriConstant;
-import cmahy.webapp.resource.ui.taco.vo.id.IngredientUiId;
-import cmahy.webapp.resource.ui.taco.vo.input.TacoInputUiVo;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -51,7 +50,7 @@ class DesignUiImplIntegrationTest {
         assertDoesNotThrow(() -> {
             for (Ingredient.Type value : Ingredient.Type.values()) {
                 when(ingredientByTypeQuery.execute(value)).thenReturn(
-                    Stream.generate(() -> new IngredientOutputAppVo(
+                    Stream.generate(() -> new IngredientOutputVo(
                             new IngredientId(generateAStringWithoutSpecialChars(5)),
                             generateAStringWithoutSpecialChars(),
                             value.name()
@@ -78,7 +77,7 @@ class DesignUiImplIntegrationTest {
                     HttpSession session = extractSessionWithAssertion(result);
 
                     assertThat(session.getAttribute(TACOS)).isNotNull();
-                    assertThat((List<TacoInputUiVo>) session.getAttribute(TACOS)).isEmpty();
+                    assertThat((List<TacoInputVo>) session.getAttribute(TACOS)).isEmpty();
 
                     String contentAsString = extractContentAsStringWithAssertion(result);
 
@@ -100,9 +99,9 @@ class DesignUiImplIntegrationTest {
     @Test
     void designForm_whenTacosPresent_thenKeepItThroughRequest() {
         assertDoesNotThrow(() -> {
-            List<TacoInputUiVo> tacos = Stream.generate(() -> new TacoInputUiVo(
+            List<TacoInputVo> tacos = Stream.generate(() -> new TacoInputVo(
                     generateAString(),
-                    Collections.emptyList()
+                    Collections.emptySet()
                 ))
                 .limit(randomInt(5, 10))
                 .toList();
@@ -120,7 +119,7 @@ class DesignUiImplIntegrationTest {
                     HttpSession session = extractSessionWithAssertion(result);
 
                     assertThat(session.getAttribute(TACOS)).isNotNull();
-                    assertThat((List<TacoInputUiVo>) session.getAttribute(TACOS)).containsExactlyElementsOf(tacos);
+                    assertThat((List<TacoInputVo>) session.getAttribute(TACOS)).containsExactlyElementsOf(tacos);
 
                     String contentAsString = extractContentAsStringWithAssertion(result);
 
@@ -134,22 +133,22 @@ class DesignUiImplIntegrationTest {
     @Test
     void addDesignTaco() {
         assertDoesNotThrow(() -> {
-            List<TacoInputUiVo> tacos = Stream.generate(() -> new TacoInputUiVo(
+            List<TacoInputVo> tacos = Stream.generate(() -> new TacoInputVo(
                     generateAString(),
-                    Stream.generate(() -> new IngredientUiId(generateAStringWithoutSpecialChars(10)))
+                    Stream.generate(() -> new IngredientId(generateAStringWithoutSpecialChars(10)))
                         .limit(randomInt(2, 5))
-                        .toList()
+                        .collect(Collectors.toSet())
                 ))
                 .limit(randomInt(5, 10))
                 .toList();
 
-            TacoInputUiVo tacoInputUiVo = new TacoInputUiVo(
+            TacoInputVo TacoInputVo = new TacoInputVo(
                 generateAString(),
-                Stream.generate(() -> new IngredientUiId(
+                Stream.generate(() -> new IngredientId(
                         generateAStringWithoutSpecialChars(10)
                     ))
                     .limit(randomInt(2, 10))
-                    .toList()
+                    .collect(Collectors.toSet())
             );
 
             mockMvc
@@ -160,10 +159,10 @@ class DesignUiImplIntegrationTest {
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .sessionAttr(TACOS, new ArrayList<>(tacos))
                         .param("action", "add")
-                        .param("name", tacoInputUiVo.name())
+                        .param("name", TacoInputVo.name())
                         .param(
                             "ingredientIds",
-                            tacoInputUiVo.ingredientIds().stream().map(IngredientUiId::value).toArray(String[]::new)
+                            TacoInputVo.ingredientIds().stream().map(IngredientId::value).toArray(String[]::new)
                         )
                 )
                 .andExpect(status().isOk())
@@ -174,9 +173,9 @@ class DesignUiImplIntegrationTest {
 
                     assertThat(session.getAttribute(TACOS)).isNotNull();
 
-                    List<TacoInputUiVo> tacosWithNewOne = new ArrayList<>(tacos);
-                    tacosWithNewOne.add(tacoInputUiVo);
-                    assertThat((List<TacoInputUiVo>) session.getAttribute(TACOS)).containsExactlyElementsOf(tacosWithNewOne);
+                    List<TacoInputVo> tacosWithNewOne = new ArrayList<>(tacos);
+                    tacosWithNewOne.add(TacoInputVo);
+                    assertThat((List<TacoInputVo>) session.getAttribute(TACOS)).containsExactlyElementsOf(tacosWithNewOne);
 
                     String contentAsString = extractContentAsStringWithAssertion(result);
 
@@ -190,11 +189,11 @@ class DesignUiImplIntegrationTest {
     @Test
     void addDesignTaco_whenTacoIsInvalid_thenShouldNotAddToTacosSessionListAndUIShowsErrorsToUser() {
         assertDoesNotThrow(() -> {
-            List<TacoInputUiVo> tacos = Stream.generate(() -> new TacoInputUiVo(
+            List<TacoInputVo> tacos = Stream.generate(() -> new TacoInputVo(
                     generateAString(),
-                    Stream.generate(() -> new IngredientUiId(generateAStringWithoutSpecialChars(10)))
+                    Stream.generate(() -> new IngredientId(generateAStringWithoutSpecialChars(10)))
                         .limit(randomInt(2, 5))
-                        .toList()
+                        .collect(Collectors.toSet())
                 ))
                 .limit(randomInt(5, 10))
                 .toList();
@@ -216,7 +215,7 @@ class DesignUiImplIntegrationTest {
 
                     assertThat(session.getAttribute(TACOS)).isNotNull();
 
-                    assertThat((List<TacoInputUiVo>) session.getAttribute(TACOS)).containsExactlyElementsOf(tacos);
+                    assertThat((List<TacoInputVo>) session.getAttribute(TACOS)).containsExactlyElementsOf(tacos);
                 })
                 .andExpectAll(
                     model().hasErrors(),
@@ -228,22 +227,22 @@ class DesignUiImplIntegrationTest {
     @Test
     void saveDesignTaco() {
         assertDoesNotThrow(() -> {
-            List<TacoInputUiVo> tacos = Stream.generate(() -> new TacoInputUiVo(
+            List<TacoInputVo> tacos = Stream.generate(() -> new TacoInputVo(
                     generateAString(),
-                    Stream.generate(() -> new IngredientUiId(generateAStringWithoutSpecialChars(10)))
+                    Stream.generate(() -> new IngredientId(generateAStringWithoutSpecialChars(10)))
                         .limit(randomInt(2, 5))
-                        .toList()
+                        .collect(Collectors.toSet())
                 ))
                 .limit(randomInt(5, 10))
                 .toList();
 
-            TacoInputUiVo tacoInputUiVo = new TacoInputUiVo(
+            TacoInputVo TacoInputVo = new TacoInputVo(
                 generateAString(),
-                Stream.generate(() -> new IngredientUiId(
+                Stream.generate(() -> new IngredientId(
                         generateAStringWithoutSpecialChars(10)
                     ))
                     .limit(randomInt(2, 10))
-                    .toList()
+                    .collect(Collectors.toSet())
             );
 
             mockMvc
@@ -254,10 +253,10 @@ class DesignUiImplIntegrationTest {
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .sessionAttr(TACOS, new ArrayList<>(tacos))
                         .param("action", "create")
-                        .param("name", tacoInputUiVo.name())
+                        .param("name", TacoInputVo.name())
                         .param(
                             "ingredientIds",
-                            tacoInputUiVo.ingredientIds().stream().map(IngredientUiId::value).toArray(String[]::new)
+                            TacoInputVo.ingredientIds().stream().map(IngredientId::value).toArray(String[]::new)
                         )
                 )
                 .andExpect(status().is3xxRedirection())
@@ -267,9 +266,9 @@ class DesignUiImplIntegrationTest {
 
                     assertThat(session.getAttribute(TACOS)).isNotNull();
 
-                    List<TacoInputUiVo> tacosWithNewOne = new ArrayList<>(tacos);
-                    tacosWithNewOne.add(tacoInputUiVo);
-                    assertThat((List<TacoInputUiVo>) session.getAttribute(TACOS)).containsExactlyElementsOf(tacosWithNewOne);
+                    List<TacoInputVo> tacosWithNewOne = new ArrayList<>(tacos);
+                    tacosWithNewOne.add(TacoInputVo);
+                    assertThat((List<TacoInputVo>) session.getAttribute(TACOS)).containsExactlyElementsOf(tacosWithNewOne);
                 });
         });
     }
@@ -293,7 +292,7 @@ class DesignUiImplIntegrationTest {
 
                     assertThat(session.getAttribute(TACOS)).isNotNull();
 
-                    assertThat((List<TacoInputUiVo>) session.getAttribute(TACOS)).isEmpty();
+                    assertThat((List<TacoInputVo>) session.getAttribute(TACOS)).isEmpty();
                 });
         });
     }
@@ -302,11 +301,11 @@ class DesignUiImplIntegrationTest {
     void saveDesignTaco_whenTacoIsInvalidAndTacosIsNotEmpty_thenShouldNotAddToTacosSessionListButKeepGoingToOrderPage() {
         assertDoesNotThrow(() -> {
 
-            List<TacoInputUiVo> tacos = Stream.generate(() -> new TacoInputUiVo(
+            List<TacoInputVo> tacos = Stream.generate(() -> new TacoInputVo(
                     generateAString(),
-                    Stream.generate(() -> new IngredientUiId(generateAStringWithoutSpecialChars(10)))
+                    Stream.generate(() -> new IngredientId(generateAStringWithoutSpecialChars(10)))
                         .limit(randomInt(2, 5))
-                        .toList()
+                        .collect(Collectors.toSet())
                 ))
                 .limit(randomInt(5, 10))
                 .toList();
@@ -327,7 +326,7 @@ class DesignUiImplIntegrationTest {
 
                     assertThat(session.getAttribute(TACOS)).isNotNull();
 
-                    assertThat((List<TacoInputUiVo>) session.getAttribute(TACOS)).containsExactlyElementsOf(tacos);
+                    assertThat((List<TacoInputVo>) session.getAttribute(TACOS)).containsExactlyElementsOf(tacos);
                 });
         });
     }

@@ -1,20 +1,20 @@
 package cmahy.webapp.resource.impl.application.taco.shop.service;
 
 import cmahy.common.helper.Generator;
-import cmahy.webapp.resource.impl.application.taco.shop.mapper.input.ClientOrderInputAppMapper;
-import cmahy.webapp.resource.impl.application.taco.shop.mapper.input.TacoInputAppMapper;
+import cmahy.webapp.resource.impl.application.taco.shop.mapper.input.ClientOrderInputMapper;
+import cmahy.webapp.resource.impl.application.taco.shop.mapper.input.TacoInputMapper;
 import cmahy.webapp.resource.impl.application.taco.shop.mapper.output.ClientOrderOutputMapper;
 import cmahy.webapp.resource.impl.application.taco.shop.repository.*;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.input.ClientOrderInputAppVo;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.input.TacoInputAppVo;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.output.ClientOrderOutputAppVo;
 import cmahy.webapp.resource.impl.application.user.repository.UserRepository;
 import cmahy.webapp.resource.impl.domain.taco.*;
-import cmahy.webapp.resource.impl.domain.taco.id.IngredientId;
 import cmahy.webapp.resource.impl.domain.user.User;
 import cmahy.webapp.resource.impl.domain.user.id.UserId;
 import cmahy.webapp.resource.impl.exception.taco.IngredientNotFoundException;
 import cmahy.webapp.resource.impl.exception.user.UserNotFoundException;
+import cmahy.webapp.resource.taco.shop.id.IngredientId;
+import cmahy.webapp.resource.taco.shop.vo.input.ClientOrderInputVo;
+import cmahy.webapp.resource.taco.shop.vo.input.TacoInputVo;
+import cmahy.webapp.resource.taco.shop.vo.output.ClientOrderOutputVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -41,10 +41,10 @@ class ReceiveAndCreateClientOrderTest {
     private ClientOrderRepository clientOrderRepository;
 
     @Mock
-    private ClientOrderInputAppMapper clientOrderInputMapper;
+    private ClientOrderInputMapper clientOrderInputMapper;
 
     @Mock
-    private TacoInputAppMapper tacoInputMapper;
+    private TacoInputMapper tacoInputMapper;
 
     @Mock
     private IngredientRepository ingredientRepository;
@@ -63,7 +63,7 @@ class ReceiveAndCreateClientOrderTest {
         assertDoesNotThrow(() -> {
             UserId userId = new UserId(Generator.randomLongEqualOrAboveZero());
             User user = mock(User.class);
-            ClientOrderInputAppVo clientOrderVo = new ClientOrderInputAppVo(
+            ClientOrderInputVo clientOrderVo = new ClientOrderInputVo(
                 Generator.generateAString(),
                 Generator.generateAString(),
                 Generator.generateAString(),
@@ -73,7 +73,7 @@ class ReceiveAndCreateClientOrderTest {
                 Generator.generateAString(),
                 Generator.generateAString(),
                 Stream.generate(() -> {
-                        TacoInputAppVo tacoInput = new TacoInputAppVo(
+                        TacoInputVo tacoInput = new TacoInputVo(
                             Generator.generateAString(),
                             Stream.generate(() -> {
                                     IngredientId id = new IngredientId(Generator.generateAString());
@@ -97,14 +97,14 @@ class ReceiveAndCreateClientOrderTest {
             );
 
             ClientOrder clientOrder = mock(ClientOrder.class);
-            ClientOrderOutputAppVo clientOrderOutputVo = mock(ClientOrderOutputAppVo.class);
+            ClientOrderOutputVo clientOrderOutputVo = mock(ClientOrderOutputVo.class);
 
             when(userRepository.findById(userId.value())).thenReturn(Optional.of(user));
             when(clientOrderInputMapper.map(clientOrderVo, user)).thenReturn(clientOrder);
             when(clientOrderRepository.save(clientOrder)).thenReturn(clientOrder);
             when(clientOrderOutputMapper.map(clientOrder)).thenReturn(clientOrderOutputVo);
 
-            ClientOrderOutputAppVo actual = receiveAndCreateClientOrder.execute(clientOrderVo, userId);
+            ClientOrderOutputVo actual = receiveAndCreateClientOrder.execute(clientOrderVo, userId);
 
             assertThat(actual).isEqualTo(clientOrderOutputVo);
         });
@@ -117,7 +117,7 @@ class ReceiveAndCreateClientOrderTest {
         IngredientNotFoundException notFoundException = assertThrows(IngredientNotFoundException.class, () -> {
             UserId userId = new UserId(Generator.randomLongEqualOrAboveZero());
             User user = mock(User.class);
-            ClientOrderInputAppVo clientOrderVo = new ClientOrderInputAppVo(
+            ClientOrderInputVo clientOrderVo = new ClientOrderInputVo(
                 Generator.generateAString(),
                 Generator.generateAString(),
                 Generator.generateAString(),
@@ -127,7 +127,7 @@ class ReceiveAndCreateClientOrderTest {
                 Generator.generateAString(),
                 Generator.generateAString(),
                 Stream.generate(() -> {
-                        TacoInputAppVo tacoInput = new TacoInputAppVo(
+                        TacoInputVo tacoInput = new TacoInputVo(
                             Generator.generateAString(),
                             Stream.generate(() -> {
                                     when(ingredientRepository.findById(id.value())).thenAnswer((invocationOnMock) -> Optional.empty());
@@ -163,7 +163,7 @@ class ReceiveAndCreateClientOrderTest {
     void execute_whenUserNotFound_thenThrowUserNotFound() {
         assertThrows(UserNotFoundException.class, () -> {
             UserId userId = new UserId(Generator.randomLongEqualOrAboveZero());
-            ClientOrderInputAppVo clientOrderVo = mock(ClientOrderInputAppVo.class);
+            ClientOrderInputVo clientOrderVo = mock(ClientOrderInputVo.class);
 
             when(userRepository.findById(userId.value())).thenReturn(Optional.empty());
 

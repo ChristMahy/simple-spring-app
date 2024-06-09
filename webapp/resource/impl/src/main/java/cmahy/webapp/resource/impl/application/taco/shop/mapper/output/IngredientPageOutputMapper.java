@@ -1,8 +1,8 @@
 package cmahy.webapp.resource.impl.application.taco.shop.mapper.output;
 
-import cmahy.webapp.resource.impl.application.taco.shop.vo.output.IngredientPageOutputAppVo;
 import cmahy.webapp.resource.impl.domain.taco.page.IngredientPage;
 import cmahy.webapp.resource.impl.exception.NullException;
+import cmahy.webapp.resource.taco.shop.vo.output.IngredientPageOutputVo;
 import jakarta.inject.Named;
 
 import java.util.Objects;
@@ -16,12 +16,12 @@ public class IngredientPageOutputMapper {
         this.ingredientOutputMapper = ingredientOutputMapper;
     }
 
-    public IngredientPageOutputAppVo map(IngredientPage source) {
+    public IngredientPageOutputVo map(IngredientPage source) {
         if (Objects.isNull(source)) {
             throw new NullException(IngredientPage.class);
         }
 
-        return new IngredientPageOutputAppVo(
+        return new IngredientPageOutputVo(
             source.content().stream().map(ingredientOutputMapper::map).toList(),
             source.totalElements()
         );

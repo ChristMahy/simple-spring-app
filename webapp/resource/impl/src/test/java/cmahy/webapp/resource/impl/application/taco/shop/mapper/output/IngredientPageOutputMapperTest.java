@@ -1,11 +1,11 @@
 package cmahy.webapp.resource.impl.application.taco.shop.mapper.output;
 
 import cmahy.common.helper.Generator;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.output.IngredientOutputAppVo;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.output.IngredientPageOutputAppVo;
 import cmahy.webapp.resource.impl.domain.taco.Ingredient;
 import cmahy.webapp.resource.impl.domain.taco.page.IngredientPage;
 import cmahy.webapp.resource.impl.exception.NullException;
+import cmahy.webapp.resource.taco.shop.vo.output.IngredientOutputVo;
+import cmahy.webapp.resource.taco.shop.vo.output.IngredientPageOutputVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -36,16 +36,16 @@ class IngredientPageOutputMapperTest {
         assertDoesNotThrow(() -> {
             int ingredientsSize = Generator.randomInt(50, 1000);
 
-            Collection<IngredientOutputAppVo> expectedIngredientsOutput = new ArrayList<>(ingredientsSize);
+            Collection<IngredientOutputVo> expectedIngredientsOutput = new ArrayList<>(ingredientsSize);
 
             IngredientPage ingredientPage = new IngredientPage(
                 Stream.generate(() -> {
                     Ingredient ingredient = mock(Ingredient.class);
 
-                    IngredientOutputAppVo ingredientOutputAppVo = mock(IngredientOutputAppVo.class);
-                    expectedIngredientsOutput.add(ingredientOutputAppVo);
+                    IngredientOutputVo ingredientOutputVo = mock(IngredientOutputVo.class);
+                    expectedIngredientsOutput.add(ingredientOutputVo);
 
-                    when(ingredientOutputMapper.map(ingredient)).thenReturn(ingredientOutputAppVo);
+                    when(ingredientOutputMapper.map(ingredient)).thenReturn(ingredientOutputVo);
 
                     return ingredient;
                 })
@@ -54,7 +54,7 @@ class IngredientPageOutputMapperTest {
                 Generator.randomLongEqualOrAboveZero()
             );
 
-            IngredientPageOutputAppVo actual = ingredientPageOutputMapper.map(ingredientPage);
+            IngredientPageOutputVo actual = ingredientPageOutputMapper.map(ingredientPage);
 
             assertThat(actual).isNotNull();
 

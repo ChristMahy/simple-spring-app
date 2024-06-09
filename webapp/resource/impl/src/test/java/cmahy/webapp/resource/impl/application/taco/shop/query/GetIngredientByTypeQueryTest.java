@@ -2,8 +2,8 @@ package cmahy.webapp.resource.impl.application.taco.shop.query;
 
 import cmahy.webapp.resource.impl.application.taco.shop.mapper.output.IngredientOutputMapper;
 import cmahy.webapp.resource.impl.application.taco.shop.repository.IngredientRepository;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.output.IngredientOutputAppVo;
 import cmahy.webapp.resource.impl.domain.taco.Ingredient;
+import cmahy.webapp.resource.taco.shop.vo.output.IngredientOutputVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -38,13 +38,13 @@ class GetIngredientByTypeQueryTest {
             Set<Ingredient> ingredients = Stream.generate(() -> mock(Ingredient.class))
                 .limit(randomInt(20, 100))
                 .collect(Collectors.toSet());
-            Set<IngredientOutputAppVo> ingredientOutputAppVos = ingredients.stream()
+            Set<IngredientOutputVo> ingredientOutputVos = ingredients.stream()
                 .map(ingredient -> {
-                    IngredientOutputAppVo ingredientOutputAppVo = mock(IngredientOutputAppVo.class);
+                    IngredientOutputVo ingredientOutputVo = mock(IngredientOutputVo.class);
 
-                    when(ingredientOutputMapper.map(ingredient)).thenReturn(ingredientOutputAppVo);
+                    when(ingredientOutputMapper.map(ingredient)).thenReturn(ingredientOutputVo);
 
-                    return ingredientOutputAppVo;
+                    return ingredientOutputVo;
                 })
                 .collect(Collectors.toSet());
 
@@ -52,10 +52,10 @@ class GetIngredientByTypeQueryTest {
 
             when(ingredientRepository.findByType(type)).thenReturn(ingredients);
 
-            Set<IngredientOutputAppVo> actual = getIngredientByTypeQuery.execute(type);
+            Set<IngredientOutputVo> actual = getIngredientByTypeQuery.execute(type);
 
             assertThat(actual).isNotNull();
-            assertThat(actual).containsExactlyElementsOf(ingredientOutputAppVos);
+            assertThat(actual).containsExactlyElementsOf(ingredientOutputVos);
         });
     }
 }

@@ -4,11 +4,11 @@ import cmahy.common.annotation.Query;
 import cmahy.webapp.resource.impl.application.mapper.PageableInputAppVoMapper;
 import cmahy.webapp.resource.impl.application.taco.shop.mapper.output.ClientOrderPageOutputMapper;
 import cmahy.webapp.resource.impl.application.taco.shop.repository.ClientOrderPagingRepository;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.output.ClientOrderPageOutputAppVo;
 import cmahy.webapp.resource.impl.application.user.repository.UserRepository;
 import cmahy.webapp.resource.impl.application.vo.input.PageableInputAppVo;
 import cmahy.webapp.resource.impl.domain.user.id.UserId;
 import cmahy.webapp.resource.impl.exception.user.UserNotFoundException;
+import cmahy.webapp.resource.taco.shop.vo.output.ClientOrderPageOutputVo;
 import jakarta.inject.Named;
 
 @Query
@@ -32,7 +32,7 @@ public class GetAllClientOrderPagedQuery {
         this.pageableInputAppVoMapper = pageableInputAppVoMapper;
     }
 
-    public ClientOrderPageOutputAppVo execute(UserId userId, PageableInputAppVo pageable) {
+    public ClientOrderPageOutputVo execute(UserId userId, PageableInputAppVo pageable) {
         return clientOrderPageOutputMapper.map(
             clientOrderPagingRepository.getByUser(
                 userRepository.findById(userId.value()).orElseThrow(() -> new UserNotFoundException(userId)),

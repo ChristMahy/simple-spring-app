@@ -17,5 +17,5 @@ public interface ClientOrderHistoryUi {
         @RequestParam(name = "page-number", required = false) Optional<Integer> pageNumber,
         Model model,
         @AuthenticationPrincipal(errorOnInvalidType = true) UserSecurityDetails userSecurityDetails
-        );
+    );
 }

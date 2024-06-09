@@ -1,12 +1,12 @@
 package cmahy.webapp.resource.impl.adapter.ui.taco.shop;
 
 import cmahy.webapp.resource.impl.application.taco.shop.query.GetAllClientOrderPagedQuery;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.output.*;
 import cmahy.webapp.resource.impl.application.vo.input.PageableInputAppVo;
 import cmahy.webapp.resource.impl.domain.taco.Ingredient;
-import cmahy.webapp.resource.impl.domain.taco.id.*;
 import cmahy.webapp.resource.impl.domain.user.id.UserId;
 import cmahy.webapp.resource.impl.helper.security.user.SecurityUserGenerator;
+import cmahy.webapp.resource.taco.shop.id.*;
+import cmahy.webapp.resource.taco.shop.vo.output.*;
 import cmahy.webapp.resource.ui.taco.TacoUriConstant;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,14 +39,14 @@ class ClientOrderHistoryUiImplIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private List<IngredientOutputAppVo> ingrediants;
+    private List<IngredientOutputVo> ingrediants;
 
     @BeforeEach
     void setUp() {
         this.ingrediants = generateSomeIngredients(1000);
     }
 
-    private List<IngredientOutputAppVo> generateSomeIngredients(int limit) {
+    private List<IngredientOutputVo> generateSomeIngredients(int limit) {
         Set<String> ingredientIds = new HashSet<>(limit);
 
         return Stream.generate(() -> {
@@ -58,7 +58,7 @@ class ClientOrderHistoryUiImplIntegrationTest {
 
                 ingredientIds.add(id);
 
-                return new IngredientOutputAppVo(
+                return new IngredientOutputVo(
                     new IngredientId(id.toUpperCase()),
                     id.toUpperCase(),
                     randomEnum(Ingredient.Type.class).name()
@@ -71,8 +71,8 @@ class ClientOrderHistoryUiImplIntegrationTest {
     @Test
     void orders() {
         assertDoesNotThrow(() -> {
-            List<ClientOrderOutputAppVo> clientOrders = generateSomeClientOrders(1000);
-            ClientOrderPageOutputAppVo page = new ClientOrderPageOutputAppVo(
+            List<ClientOrderOutputVo> clientOrders = generateSomeClientOrders(1000);
+            ClientOrderPageOutputVo page = new ClientOrderPageOutputVo(
                 Stream.generate(() -> clientOrders.get(randomInt(0, clientOrders.size() - 1)))
                     .distinct()
                     .limit(10)
@@ -123,9 +123,9 @@ class ClientOrderHistoryUiImplIntegrationTest {
         });
     }
 
-    private List<ClientOrderOutputAppVo> generateSomeClientOrders(int limit) {
+    private List<ClientOrderOutputVo> generateSomeClientOrders(int limit) {
         return LongStream.rangeClosed(1, limit)
-            .mapToObj(index -> new ClientOrderOutputAppVo(
+            .mapToObj(index -> new ClientOrderOutputVo(
                 new ClientOrderId(index),
                 new Date(),
                 generateAString(100),
@@ -146,9 +146,9 @@ class ClientOrderHistoryUiImplIntegrationTest {
             .toList();
     }
 
-    private List<TacoOutputAppVo> generateSomeTacos(int limit) {
+    private List<TacoOutputVo> generateSomeTacos(int limit) {
         return LongStream.rangeClosed(1, limit)
-            .mapToObj(index -> new TacoOutputAppVo(
+            .mapToObj(index -> new TacoOutputVo(
                 new TacoId(index),
                 new Date(),
                 generateAString(100),

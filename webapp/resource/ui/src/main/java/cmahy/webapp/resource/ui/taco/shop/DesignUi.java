@@ -1,7 +1,7 @@
 package cmahy.webapp.resource.ui.taco.shop;
 
+import cmahy.webapp.resource.taco.shop.vo.input.TacoInputVo;
 import cmahy.webapp.resource.ui.taco.TacoUriConstant;
-import cmahy.webapp.resource.ui.taco.vo.input.TacoInputUiVo;
 import jakarta.validation.Valid;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -22,15 +22,15 @@ public interface DesignUi {
     @PostMapping(params = "action=add")
     String addDesignTaco(
         Model model,
-        @Valid @ModelAttribute(TACO) TacoInputUiVo taco,
+        @Valid @ModelAttribute(TACO) TacoInputVo taco,
         Errors errors,
-        @ModelAttribute(TACOS) List<TacoInputUiVo> tacos
+        @ModelAttribute(TACOS) List<TacoInputVo> tacos
     );
 
     @PostMapping(params = "action=create")
     String saveDesignTaco(
-        @Valid @ModelAttribute(TACO) TacoInputUiVo taco,
+        @Valid @ModelAttribute(TACO) TacoInputVo taco,
         Errors errors,
-        @ModelAttribute(TACOS) List<TacoInputUiVo> tacos
+        @ModelAttribute(TACOS) List<TacoInputVo> tacos
     );
 }

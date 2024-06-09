@@ -1,8 +1,8 @@
 package cmahy.webapp.resource.impl.exception.taco;
 
 import cmahy.webapp.resource.impl.domain.taco.Ingredient;
-import cmahy.webapp.resource.impl.domain.taco.id.IngredientId;
 import cmahy.webapp.resource.impl.exception.NotFoundException;
+import cmahy.webapp.resource.taco.shop.id.IngredientId;
 
 public class IngredientNotFoundException extends NotFoundException {
 

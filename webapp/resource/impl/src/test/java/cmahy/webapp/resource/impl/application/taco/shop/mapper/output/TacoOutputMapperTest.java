@@ -1,11 +1,11 @@
 package cmahy.webapp.resource.impl.application.taco.shop.mapper.output;
 
 import cmahy.common.helper.Generator;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.output.IngredientOutputAppVo;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.output.TacoOutputAppVo;
 import cmahy.webapp.resource.impl.domain.taco.Ingredient;
 import cmahy.webapp.resource.impl.domain.taco.Taco;
 import cmahy.webapp.resource.impl.exception.NullException;
+import cmahy.webapp.resource.taco.shop.vo.output.IngredientOutputVo;
+import cmahy.webapp.resource.taco.shop.vo.output.TacoOutputVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -39,9 +39,9 @@ class TacoOutputMapperTest {
             List<Ingredient> ingredients = Stream.generate(() -> mock(Ingredient.class))
                 .limit(Generator.randomInt(10, 100))
                 .toList();
-            List<IngredientOutputAppVo> ingredientOutputAppVos = ingredients.stream()
+            List<IngredientOutputVo> ingredientOutputVos = ingredients.stream()
                 .map(ingredient -> {
-                    IngredientOutputAppVo output = mock(IngredientOutputAppVo.class);
+                    IngredientOutputVo output = mock(IngredientOutputVo.class);
 
                     when(ingredientOutputMapper.map(ingredient)).thenReturn(output);
 
@@ -55,13 +55,13 @@ class TacoOutputMapperTest {
             taco.setCreatedAt(new Date());
             taco.setIngredients(ingredients);
 
-            TacoOutputAppVo actual = tacoOutputMapper.map(taco);
+            TacoOutputVo actual = tacoOutputMapper.map(taco);
 
             assertThat(actual).isNotNull();
             assertThat(actual.id()).isNotNull();
             assertThat(actual.id().value()).isEqualTo(taco.getId());
             assertThat(actual.createdAt()).isEqualTo(taco.getCreatedAt());
-            assertThat(actual.ingredients()).containsExactlyElementsOf(ingredientOutputAppVos);
+            assertThat(actual.ingredients()).containsExactlyElementsOf(ingredientOutputVos);
             assertThat(actual.name()).isEqualTo(taco.getName());
         });
     }

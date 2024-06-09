@@ -1,10 +1,10 @@
 package cmahy.webapp.resource.api.taco.shop;
 
 import cmahy.common.entity.page.EntityPage;
-import cmahy.webapp.resource.api.taco.shop.vo.id.IngredientApiId;
-import cmahy.webapp.resource.api.taco.shop.vo.input.IngredientCreateApiVo;
-import cmahy.webapp.resource.api.taco.shop.vo.input.IngredientUpdateApiVo;
-import cmahy.webapp.resource.api.taco.shop.vo.output.IngredientOutputApiVo;
+import cmahy.webapp.resource.taco.shop.id.IngredientId;
+import cmahy.webapp.resource.taco.shop.vo.input.IngredientCreateInputVo;
+import cmahy.webapp.resource.taco.shop.vo.input.IngredientUpdateInputVo;
+import cmahy.webapp.resource.taco.shop.vo.output.IngredientOutputVo;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,21 +19,21 @@ public interface IngredientApi {
     String PATH_VARIABLE_INGREDIENT_ID = "{id}";
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    EntityPage<IngredientOutputApiVo> getAll(
+    EntityPage<IngredientOutputVo> getAll(
         @RequestParam(name = "page-number") Integer pageNumber,
         @RequestParam(name = "page-size") Integer pageSize
     );
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    IngredientOutputApiVo create(@Valid @RequestBody IngredientCreateApiVo input);
+    IngredientOutputVo create(@Valid @RequestBody IngredientCreateInputVo input);
 
     @PatchMapping(path = "/" + PATH_VARIABLE_INGREDIENT_ID, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    IngredientOutputApiVo update(
-        @PathVariable IngredientApiId id,
-        @Valid @RequestBody IngredientUpdateApiVo input
+    IngredientOutputVo update(
+        @PathVariable IngredientId id,
+        @Valid @RequestBody IngredientUpdateInputVo input
     );
 
     @DeleteMapping(path = "/" + PATH_VARIABLE_INGREDIENT_ID)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void delete(@PathVariable IngredientApiId id);
+    void delete(@PathVariable IngredientId id);
 }

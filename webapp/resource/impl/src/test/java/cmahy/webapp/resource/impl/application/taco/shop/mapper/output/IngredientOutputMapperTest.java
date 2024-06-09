@@ -1,9 +1,8 @@
 package cmahy.webapp.resource.impl.application.taco.shop.mapper.output;
 
-import cmahy.common.helper.Generator;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.output.IngredientOutputAppVo;
 import cmahy.webapp.resource.impl.domain.taco.Ingredient;
 import cmahy.webapp.resource.impl.exception.NullException;
+import cmahy.webapp.resource.taco.shop.vo.output.IngredientOutputVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,7 +29,7 @@ class IngredientOutputMapperTest {
             ingredient.setName(generateAString());
             ingredient.setType(randomEnum(Ingredient.Type.class));
 
-            IngredientOutputAppVo actual = ingredientOutputMapper.map(ingredient);
+            IngredientOutputVo actual = ingredientOutputMapper.map(ingredient);
 
             assertThat(actual).isNotNull();
             assertThat(actual.id()).isNotNull();

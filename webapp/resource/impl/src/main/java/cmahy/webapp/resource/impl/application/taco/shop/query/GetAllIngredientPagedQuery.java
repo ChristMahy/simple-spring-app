@@ -3,8 +3,8 @@ package cmahy.webapp.resource.impl.application.taco.shop.query;
 import cmahy.common.annotation.Query;
 import cmahy.webapp.resource.impl.application.taco.shop.mapper.output.IngredientPageOutputMapper;
 import cmahy.webapp.resource.impl.application.taco.shop.repository.IngredientPagingRepository;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.output.IngredientPageOutputAppVo;
 import cmahy.webapp.resource.impl.application.vo.input.PageableInputAppVo;
+import cmahy.webapp.resource.taco.shop.vo.output.IngredientPageOutputVo;
 import jakarta.inject.Named;
 
 @Query
@@ -22,7 +22,7 @@ public class GetAllIngredientPagedQuery {
         this.ingredientPageOutputMapper = ingredientPageOutputMapper;
     }
 
-    public IngredientPageOutputAppVo execute(PageableInputAppVo pageable) {
+    public IngredientPageOutputVo execute(PageableInputAppVo pageable) {
         return ingredientPageOutputMapper.map(
             ingredientPagingRepository.findAll(pageable)
         );

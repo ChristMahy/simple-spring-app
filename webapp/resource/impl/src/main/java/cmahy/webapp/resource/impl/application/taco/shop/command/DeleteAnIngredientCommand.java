@@ -2,7 +2,7 @@ package cmahy.webapp.resource.impl.application.taco.shop.command;
 
 import cmahy.common.annotation.Command;
 import cmahy.webapp.resource.impl.application.taco.shop.service.DeleteAnIngredient;
-import cmahy.webapp.resource.impl.domain.taco.id.IngredientId;
+import cmahy.webapp.resource.taco.shop.id.IngredientId;
 import jakarta.inject.Named;
 
 @Command

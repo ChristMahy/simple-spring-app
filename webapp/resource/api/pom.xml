@@ -21,6 +21,7 @@
 
     <properties>
         <cmahy.common.version>DEV-SNAPSHOT</cmahy.common.version>
+        <cmahy.webapp.resource.version>DEV-SNAPSHOT</cmahy.webapp.resource.version>
     </properties>
 
     <dependencies>
@@ -38,6 +39,12 @@
             <groupId>cmahy</groupId>
             <artifactId>common</artifactId>
             <version>${cmahy.common.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy.webapp.resource</groupId>
+            <artifactId>vo</artifactId>
+            <version>${cmahy.webapp.resource.version}</version>
         </dependency>
 
         <dependency>

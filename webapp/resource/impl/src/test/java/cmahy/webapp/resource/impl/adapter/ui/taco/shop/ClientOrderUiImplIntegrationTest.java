@@ -1,16 +1,12 @@
 package cmahy.webapp.resource.impl.adapter.ui.taco.shop;
 
-import cmahy.webapp.resource.impl.adapter.ui.taco.shop.mapper.input.ClientOrderInputUiToAppMapper;
-import cmahy.webapp.resource.impl.adapter.ui.taco.shop.mapper.input.TacoInputUiToAppMapper;
 import cmahy.webapp.resource.impl.application.taco.shop.command.ReceiveNewClientOrderCommand;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.input.ClientOrderInputAppVo;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.input.TacoInputAppVo;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.output.ClientOrderOutputAppVo;
 import cmahy.webapp.resource.impl.domain.user.id.UserId;
 import cmahy.webapp.resource.impl.helper.security.user.SecurityUserGenerator;
+import cmahy.webapp.resource.taco.shop.vo.input.ClientOrderInputVo;
+import cmahy.webapp.resource.taco.shop.vo.input.TacoInputVo;
+import cmahy.webapp.resource.taco.shop.vo.output.ClientOrderOutputVo;
 import cmahy.webapp.resource.ui.taco.TacoUriConstant;
-import cmahy.webapp.resource.ui.taco.vo.input.ClientOrderInputUiVo;
-import cmahy.webapp.resource.ui.taco.vo.input.TacoInputUiVo;
 import cmahy.webapp.resource.user.api.security.vo.output.UserSecurityDetails;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.Test;
@@ -22,8 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -46,12 +41,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class ClientOrderUiImplIntegrationTest {
 
     @MockBean
-    private ClientOrderInputUiToAppMapper clientOrderInputMapper;
-
-    @MockBean
-    private TacoInputUiToAppMapper tacoInputMapper;
-
-    @MockBean
     private ReceiveNewClientOrderCommand receiveCommand;
 
     @Autowired
@@ -60,8 +49,8 @@ class ClientOrderUiImplIntegrationTest {
     @Test
     void current_whenEmptyOrder_thenAnOrderShouldBePresentOnSessionAndEmpty() {
         assertDoesNotThrow(() -> {
-            List<TacoInputUiVo> tacos = Stream.generate(() -> new TacoInputUiVo(
-                    generateAString(), Collections.emptyList()
+            List<TacoInputVo> tacos = Stream.generate(() -> new TacoInputVo(
+                    generateAString(), Collections.emptySet()
                 ))
                 .limit(randomInt(10, 50))
                 .toList();
@@ -90,9 +79,9 @@ class ClientOrderUiImplIntegrationTest {
 
                     Object actualClientOrderAsObject = session.getAttribute(TACO_ORDER_SESSION);
 
-                    assertThat(actualClientOrderAsObject).isInstanceOf(ClientOrderInputUiVo.class);
+                    assertThat(actualClientOrderAsObject).isInstanceOf(ClientOrderInputVo.class);
 
-                    ClientOrderInputUiVo clientOrder = (ClientOrderInputUiVo) actualClientOrderAsObject;
+                    ClientOrderInputVo clientOrder = (ClientOrderInputVo) actualClientOrderAsObject;
 
                     clientOrderEmptyAssertion(clientOrder);
                 });
@@ -102,13 +91,13 @@ class ClientOrderUiImplIntegrationTest {
     @Test
     void current_whenPresentOrderWithValues_thenFormShouldBePrefilledWithTheseValues() {
         assertDoesNotThrow(() -> {
-            List<TacoInputUiVo> tacos = Stream.generate(() -> new TacoInputUiVo(
-                    generateAString(), Collections.emptyList()
+            List<TacoInputVo> tacos = Stream.generate(() -> new TacoInputVo(
+                    generateAString(), Collections.emptySet()
                 ))
                 .limit(randomInt(10, 50))
                 .toList();
 
-            ClientOrderInputUiVo clientOrderInput = new ClientOrderInputUiVo(
+            ClientOrderInputVo clientOrderInput = new ClientOrderInputVo(
                 generateAString(),
                 generateAString(),
                 generateAString(),
@@ -116,7 +105,8 @@ class ClientOrderUiImplIntegrationTest {
                 generateAString(),
                 generateAString(),
                 generateAString(),
-                generateAString()
+                generateAString(),
+                Collections.emptyList()
             );
 
             mockMvc
@@ -144,9 +134,9 @@ class ClientOrderUiImplIntegrationTest {
 
                     Object actualClientOrderAsObject = session.getAttribute(TACO_ORDER_SESSION);
 
-                    assertThat(actualClientOrderAsObject).isInstanceOf(ClientOrderInputUiVo.class);
+                    assertThat(actualClientOrderAsObject).isInstanceOf(ClientOrderInputVo.class);
 
-                    ClientOrderInputUiVo clientOrder = (ClientOrderInputUiVo) actualClientOrderAsObject;
+                    ClientOrderInputVo clientOrder = (ClientOrderInputVo) actualClientOrderAsObject;
 
                     clientOrderAssertion(clientOrder, clientOrderInput);
                 });
@@ -155,15 +145,15 @@ class ClientOrderUiImplIntegrationTest {
 
     private void htmlClientOrderEmptyAssertion(
         String contentAsString,
-        List<TacoInputUiVo> tacos
+        List<TacoInputVo> tacos
     ) {
         htmlAssertion(contentAsString, null, tacos);
     }
 
     private void htmlAssertion(
         String contentAsString,
-        ClientOrderInputUiVo clientOrderInput,
-        List<TacoInputUiVo> tacos
+        ClientOrderInputVo clientOrderInput,
+        List<TacoInputVo> tacos
     ) {
         assertThat(contentAsString).contains("<title>Shopping cart - Spring app demo</title>");
 
@@ -217,13 +207,13 @@ class ClientOrderUiImplIntegrationTest {
     @Test
     void saveOrder_whenUserWantToAddTaco_thenKeepOnSessionOrderFieldsFilled() {
         assertDoesNotThrow(() -> {
-            List<TacoInputUiVo> tacos = Stream.generate(() -> new TacoInputUiVo(
-                    generateAString(), Collections.emptyList()
+            List<TacoInputVo> tacos = Stream.generate(() -> new TacoInputVo(
+                    generateAString(), Collections.emptySet()
                 ))
                 .limit(randomInt(10, 50))
                 .toList();
 
-            ClientOrderInputUiVo clientOrderInput = new ClientOrderInputUiVo(
+            ClientOrderInputVo clientOrderInput = new ClientOrderInputVo(
                 generateAString(),
                 generateAString(),
                 generateAString(),
@@ -231,7 +221,8 @@ class ClientOrderUiImplIntegrationTest {
                 generateAString(),
                 generateAString(),
                 generateAString(),
-                generateAString()
+                generateAString(),
+                Collections.emptyList()
             );
 
             mockMvc
@@ -259,13 +250,13 @@ class ClientOrderUiImplIntegrationTest {
 
                     Object actualClientOrderAsObject = session.getAttribute(TACO_ORDER_SESSION);
 
-                    assertThat(actualClientOrderAsObject).isInstanceOf(ClientOrderInputUiVo.class);
+                    assertThat(actualClientOrderAsObject).isInstanceOf(ClientOrderInputVo.class);
 
-                    ClientOrderInputUiVo clientOrder = (ClientOrderInputUiVo) actualClientOrderAsObject;
+                    ClientOrderInputVo clientOrder = (ClientOrderInputVo) actualClientOrderAsObject;
 
                     clientOrderAssertion(clientOrder, clientOrderInput);
                 })
-                .andExpect(result -> verify(receiveCommand, never()).execute(any(ClientOrderInputAppVo.class), any(UserId.class)));
+                .andExpect(result -> verify(receiveCommand, never()).execute(any(ClientOrderInputVo.class), any(UserId.class)));
         });
     }
 
@@ -274,21 +265,13 @@ class ClientOrderUiImplIntegrationTest {
         assertDoesNotThrow(() -> {
             UserSecurityDetails userSecurityDetails = SecurityUserGenerator.generateRandomUserDetails();
 
-            List<TacoInputUiVo> tacoInputs = Stream.generate(() -> new TacoInputUiVo(
-                    generateAString(), Collections.emptyList()
+            List<TacoInputVo> tacoInputs = Stream.generate(() -> new TacoInputVo(
+                    generateAString(), Collections.emptySet()
                 ))
                 .limit(randomInt(10, 50))
                 .toList();
 
-            List<TacoInputAppVo> tacos = tacoInputs.stream().map(t -> {
-                TacoInputAppVo taco = mock(TacoInputAppVo.class);
-
-                when(tacoInputMapper.map(t)).thenReturn(taco);
-
-                return taco;
-            }).toList();
-
-            ClientOrderInputUiVo clientOrderInput = new ClientOrderInputUiVo(
+            ClientOrderInputVo clientOrderInput = new ClientOrderInputVo(
                 generateAString(),
                 generateAString(),
                 generateAString(),
@@ -296,15 +279,14 @@ class ClientOrderUiImplIntegrationTest {
                 "5000",
                 "1234123412341234",
                 "08/24",
-                "123"
+                "123",
+                tacoInputs
             );
 
-            ClientOrderInputAppVo clientOrderInputAppVo = mock(ClientOrderInputAppVo.class);
             UserId userId = new UserId(userSecurityDetails.userSecurity().id().value());
-            ClientOrderOutputAppVo clientOrderOutputAppVo = mock(ClientOrderOutputAppVo.class);
+            ClientOrderOutputVo clientOrderOutputVo = mock(ClientOrderOutputVo.class);
 
-            when(clientOrderInputMapper.map(clientOrderInput, tacos)).thenReturn(clientOrderInputAppVo);
-            when(receiveCommand.execute(clientOrderInputAppVo, userId)).thenReturn(clientOrderOutputAppVo);
+            when(receiveCommand.execute(clientOrderInput, userId)).thenReturn(clientOrderOutputVo);
 
             mockMvc
                 .perform(
@@ -332,7 +314,7 @@ class ClientOrderUiImplIntegrationTest {
                     assertThat(session.getAttribute(TACO_ORDER_SESSION)).isNull();
                     assertThat(session.getAttribute(TACOS)).isNull();
 
-                    verify(receiveCommand).execute(clientOrderInputAppVo, userId);
+                    verify(receiveCommand).execute(clientOrderInput, userId);
                 });
         });
     }
@@ -340,13 +322,13 @@ class ClientOrderUiImplIntegrationTest {
     @Test
     void saveOrder_completeOrder_whenSomeFieldsOnError_thenStayOnSamePageAndShowFieldsWithError() {
         assertDoesNotThrow(() -> {
-            List<TacoInputUiVo> tacoInputs = Stream.generate(() -> new TacoInputUiVo(
-                    generateAString(), Collections.emptyList()
+            List<TacoInputVo> tacoInputs = Stream.generate(() -> new TacoInputVo(
+                    generateAString(), Collections.emptySet()
                 ))
                 .limit(randomInt(10, 50))
                 .toList();
 
-            ClientOrderInputUiVo clientOrderInput = new ClientOrderInputUiVo(
+            ClientOrderInputVo clientOrderInput = new ClientOrderInputVo(
                 "",
                 "",
                 "",
@@ -354,7 +336,8 @@ class ClientOrderUiImplIntegrationTest {
                 "",
                 "",
                 "",
-                ""
+                "",
+                Collections.emptyList()
             );
 
             mockMvc
@@ -396,12 +379,12 @@ class ClientOrderUiImplIntegrationTest {
                     assertThat(session.getAttribute(TACOS)).isEqualTo(tacoInputs);
                     htmlAssertion(result.getResponse().getContentAsString(), clientOrderInput, tacoInputs);
 
-                    verify(receiveCommand, never()).execute(any(ClientOrderInputAppVo.class), any(UserId.class));
+                    verify(receiveCommand, never()).execute(any(ClientOrderInputVo.class), any(UserId.class));
                 });
         });
     }
 
-    private void clientOrderEmptyAssertion(ClientOrderInputUiVo clientOrderSession) {
+    private void clientOrderEmptyAssertion(ClientOrderInputVo clientOrderSession) {
         assertThat(clientOrderSession.deliveryName()).isEmpty();
         assertThat(clientOrderSession.deliveryCity()).isEmpty();
         assertThat(clientOrderSession.deliveryState()).isEmpty();
@@ -413,8 +396,8 @@ class ClientOrderUiImplIntegrationTest {
     }
 
     private void clientOrderAssertion(
-        ClientOrderInputUiVo clientOrderSession,
-        ClientOrderInputUiVo clientOrder
+        ClientOrderInputVo clientOrderSession,
+        ClientOrderInputVo clientOrder
     ) {
         assertThat(clientOrderSession.deliveryName()).isEqualTo(clientOrder.deliveryName());
         assertThat(clientOrderSession.deliveryCity()).isEqualTo(clientOrder.deliveryCity());

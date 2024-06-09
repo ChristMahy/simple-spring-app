@@ -1,8 +1,8 @@
 package cmahy.webapp.resource.impl.application.taco.shop.service;
 
 import cmahy.webapp.resource.impl.application.taco.shop.repository.IngredientRepository;
-import cmahy.webapp.resource.impl.domain.taco.id.IngredientId;
 import cmahy.webapp.resource.impl.exception.taco.IngredientUsageElementOnDeletionException;
+import cmahy.webapp.resource.taco.shop.id.IngredientId;
 import jakarta.inject.Named;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

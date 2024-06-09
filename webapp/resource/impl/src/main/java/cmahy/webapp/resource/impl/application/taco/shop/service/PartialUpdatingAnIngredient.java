@@ -2,11 +2,11 @@ package cmahy.webapp.resource.impl.application.taco.shop.service;
 
 import cmahy.webapp.resource.impl.application.taco.shop.mapper.output.IngredientOutputMapper;
 import cmahy.webapp.resource.impl.application.taco.shop.repository.IngredientRepository;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.input.IngredientUpdateInputAppVo;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.output.IngredientOutputAppVo;
 import cmahy.webapp.resource.impl.domain.taco.Ingredient;
-import cmahy.webapp.resource.impl.domain.taco.id.IngredientId;
 import cmahy.webapp.resource.impl.exception.taco.IngredientNotFoundException;
+import cmahy.webapp.resource.taco.shop.id.IngredientId;
+import cmahy.webapp.resource.taco.shop.vo.input.IngredientUpdateInputVo;
+import cmahy.webapp.resource.taco.shop.vo.output.IngredientOutputVo;
 import jakarta.inject.Named;
 import org.apache.commons.lang3.StringUtils;
 
@@ -26,19 +26,19 @@ public class PartialUpdatingAnIngredient {
         this.ingredientOutputMapper = ingredientOutputMapper;
     }
 
-    public IngredientOutputAppVo execute(IngredientId id, IngredientUpdateInputAppVo inputAppVo) {
+    public IngredientOutputVo execute(IngredientId id, IngredientUpdateInputVo inputVo) {
         Ingredient ingredient = ingredientRepository.findById(id.value())
             .orElseThrow(() -> new IngredientNotFoundException(id));
 
         ingredient = ingredient
             .setName(
-                inputAppVo.name()
+                inputVo.name()
                     .map(String::trim)
                     .filter(StringUtils::isNotBlank)
                     .orElse(ingredient.getName())
             )
             .setType(
-                inputAppVo.type()
+                inputVo.type()
                     .map(String::trim)
                     .filter(typeTrimmed -> Arrays.stream(Ingredient.Type.values()).anyMatch(t -> StringUtils.equals(typeTrimmed, t.name())))
                     .map(Ingredient.Type::valueOf)

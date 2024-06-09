@@ -3,7 +3,7 @@ package cmahy.webapp.resource.impl.application.taco.shop.service;
 import cmahy.webapp.resource.impl.application.taco.shop.repository.IngredientRepository;
 import cmahy.webapp.resource.impl.application.taco.shop.repository.TacoRepository;
 import cmahy.webapp.resource.impl.domain.taco.Ingredient;
-import cmahy.webapp.resource.impl.domain.taco.id.IngredientId;
+import cmahy.webapp.resource.taco.shop.id.IngredientId;
 import jakarta.inject.Named;
 
 import java.util.Optional;

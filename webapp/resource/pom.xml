@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>vo</module>
         <module>api</module>
         <module>ui</module>
         <module>user-api</module>

@@ -1,8 +1,8 @@
 package cmahy.webapp.resource.impl.application.taco.shop.mapper.output;
 
-import cmahy.webapp.resource.impl.application.taco.shop.vo.output.ClientOrderPageOutputAppVo;
 import cmahy.webapp.resource.impl.domain.taco.page.ClientOrderPage;
 import cmahy.webapp.resource.impl.exception.NullException;
+import cmahy.webapp.resource.taco.shop.vo.output.ClientOrderPageOutputVo;
 import jakarta.inject.Named;
 
 import java.util.Objects;
@@ -16,12 +16,12 @@ public class ClientOrderPageOutputMapper {
         this.clientOrderOutputMapper = clientOrderOutputMapper;
     }
 
-    public ClientOrderPageOutputAppVo map(ClientOrderPage source) {
+    public ClientOrderPageOutputVo map(ClientOrderPage source) {
         if (Objects.isNull(source)) {
             throw new NullException(ClientOrderPage.class);
         }
 
-        return new ClientOrderPageOutputAppVo(
+        return new ClientOrderPageOutputVo(
             source.content().stream().map(clientOrderOutputMapper::map).toList(),
             source.totalElements()
         );

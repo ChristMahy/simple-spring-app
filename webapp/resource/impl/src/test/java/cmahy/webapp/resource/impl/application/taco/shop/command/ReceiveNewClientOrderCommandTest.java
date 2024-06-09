@@ -1,9 +1,9 @@
 package cmahy.webapp.resource.impl.application.taco.shop.command;
 
 import cmahy.webapp.resource.impl.application.taco.shop.service.ReceiveAndCreateClientOrder;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.input.ClientOrderInputAppVo;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.output.ClientOrderOutputAppVo;
 import cmahy.webapp.resource.impl.domain.user.id.UserId;
+import cmahy.webapp.resource.taco.shop.vo.input.ClientOrderInputVo;
+import cmahy.webapp.resource.taco.shop.vo.output.ClientOrderOutputVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -27,13 +27,13 @@ class ReceiveNewClientOrderCommandTest {
     @Test
     void execute() {
         assertDoesNotThrow(() -> {
-            var input = mock(ClientOrderInputAppVo.class);
-            var output = mock(ClientOrderOutputAppVo.class);
+            var input = mock(ClientOrderInputVo.class);
+            var output = mock(ClientOrderOutputVo.class);
             UserId userId = mock(UserId.class);
 
             when(receiveAndCreateClientOrder.execute(input, userId)).thenReturn(output);
 
-            ClientOrderOutputAppVo actual = receiveNewClientOrderCommand.execute(input, userId);
+            ClientOrderOutputVo actual = receiveNewClientOrderCommand.execute(input, userId);
 
             assertThat(actual).isEqualTo(output);
 

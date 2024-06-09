@@ -1,7 +1,7 @@
 package cmahy.webapp.resource.impl.adapter.ui.taco.shop.convertor;
 
 import cmahy.common.helper.Generator;
-import cmahy.webapp.resource.ui.taco.vo.id.IngredientUiId;
+import cmahy.webapp.resource.taco.shop.id.IngredientId;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -21,7 +21,7 @@ class StringToIngredientIdConvertorTest {
         assertDoesNotThrow(() -> {
             String id = Generator.generateAString();
 
-            IngredientUiId actual = stringToIngredientIdConvertor.convert(id);
+            IngredientId actual = stringToIngredientIdConvertor.convert(id);
 
             assertThat(actual).isNotNull();
             assertThat(actual.value()).isEqualTo(id);

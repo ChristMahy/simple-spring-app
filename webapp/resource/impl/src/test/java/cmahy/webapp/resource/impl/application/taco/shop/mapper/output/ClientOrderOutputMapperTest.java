@@ -1,10 +1,10 @@
 package cmahy.webapp.resource.impl.application.taco.shop.mapper.output;
 
-import cmahy.webapp.resource.impl.application.taco.shop.vo.output.ClientOrderOutputAppVo;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.output.TacoOutputAppVo;
 import cmahy.webapp.resource.impl.domain.taco.ClientOrder;
 import cmahy.webapp.resource.impl.domain.taco.Taco;
 import cmahy.webapp.resource.impl.exception.NullException;
+import cmahy.webapp.resource.taco.shop.vo.output.ClientOrderOutputVo;
+import cmahy.webapp.resource.taco.shop.vo.output.TacoOutputVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -37,13 +37,13 @@ class ClientOrderOutputMapperTest {
             List<Taco> tacos = Stream.generate(() -> mock(Taco.class))
                 .limit(randomInt(10, 100))
                 .toList();
-            List<TacoOutputAppVo> tacoOutputAppVos = tacos.stream()
+            List<TacoOutputVo> tacoOutputVos = tacos.stream()
                 .map(taco -> {
-                    TacoOutputAppVo outputAppVo = mock(TacoOutputAppVo.class);
+                    TacoOutputVo outputVo = mock(TacoOutputVo.class);
 
-                    when(tacoOutputMapper.map(taco)).thenReturn(outputAppVo);
+                    when(tacoOutputMapper.map(taco)).thenReturn(outputVo);
 
-                    return outputAppVo;
+                    return outputVo;
                 })
                 .toList();
 
@@ -61,7 +61,7 @@ class ClientOrderOutputMapperTest {
             order.setCcExpiration(generateAString());
             order.setTacos(tacos);
 
-            ClientOrderOutputAppVo actual = clientOrderOutputMapper.map(order);
+            ClientOrderOutputVo actual = clientOrderOutputMapper.map(order);
 
             assertThat(actual).isNotNull();
             assertThat(actual.id()).isNotNull();
@@ -75,7 +75,7 @@ class ClientOrderOutputMapperTest {
             assertThat(actual.ccNumber()).isEqualTo(order.getCcNumber());
             assertThat(actual.ccExpiration()).isEqualTo(order.getCcExpiration());
             assertThat(actual.ccCVV()).isEqualTo(order.getCcCVV());
-            assertThat(actual.tacos()).containsExactlyElementsOf(tacoOutputAppVos);
+            assertThat(actual.tacos()).containsExactlyElementsOf(tacoOutputVos);
         });
     }
 

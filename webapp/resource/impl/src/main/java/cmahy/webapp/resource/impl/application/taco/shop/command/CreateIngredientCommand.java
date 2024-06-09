@@ -2,8 +2,8 @@ package cmahy.webapp.resource.impl.application.taco.shop.command;
 
 import cmahy.common.annotation.Command;
 import cmahy.webapp.resource.impl.application.taco.shop.service.CreateAnIngredient;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.input.IngredientCreateInputAppVo;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.output.IngredientOutputAppVo;
+import cmahy.webapp.resource.taco.shop.vo.input.IngredientCreateInputVo;
+import cmahy.webapp.resource.taco.shop.vo.output.IngredientOutputVo;
 import jakarta.inject.Named;
 import jakarta.validation.constraints.NotNull;
 
@@ -19,10 +19,10 @@ public class CreateIngredientCommand {
         this.createAnIngredient = createAnIngredient;
     }
 
-    public IngredientOutputAppVo execute(
+    public IngredientOutputVo execute(
         @NotNull(message = I18N_KEY_CREATE_INGREDIENT_NOT_NULL)
-        IngredientCreateInputAppVo ingredientInputAppVo
+        IngredientCreateInputVo ingredientInputVo
     ) {
-        return createAnIngredient.execute(ingredientInputAppVo);
+        return createAnIngredient.execute(ingredientInputVo);
     }
 }

@@ -3,11 +3,11 @@ package cmahy.webapp.resource.impl.application.taco.shop.service;
 import cmahy.common.helper.Generator;
 import cmahy.webapp.resource.impl.application.taco.shop.mapper.output.IngredientOutputMapper;
 import cmahy.webapp.resource.impl.application.taco.shop.repository.IngredientRepository;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.input.IngredientCreateInputAppVo;
-import cmahy.webapp.resource.impl.application.taco.shop.vo.output.IngredientOutputAppVo;
 import cmahy.webapp.resource.impl.domain.taco.Ingredient;
 import cmahy.webapp.resource.impl.exception.taco.IngredientDuplicateException;
 import cmahy.webapp.resource.impl.exception.taco.IngredientValidationException;
+import cmahy.webapp.resource.taco.shop.vo.input.IngredientCreateInputVo;
+import cmahy.webapp.resource.taco.shop.vo.output.IngredientOutputVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -46,24 +46,24 @@ class CreateAnIngredientTest {
             String name = Generator.generateAString();
             Ingredient.Type type = Generator.randomEnum(Ingredient.Type.class);
 
-            IngredientCreateInputAppVo ingredientCreateInputAppVo = mock(IngredientCreateInputAppVo.class);
+            IngredientCreateInputVo IngredientCreateInputVo = mock(IngredientCreateInputVo.class);
             Ingredient ingredient = new Ingredient(
                 id,
                 name,
                 type
             );
-            IngredientOutputAppVo ingredientOutputAppVo = mock(IngredientOutputAppVo.class);
+            IngredientOutputVo IngredientOutputVo = mock(IngredientOutputVo.class);
 
-            when(ingredientFactory.create(ingredientCreateInputAppVo)).thenReturn(ingredient);
+            when(ingredientFactory.create(IngredientCreateInputVo)).thenReturn(ingredient);
             when(ingredientRepository.findByNameAndType(name, type)).thenReturn(Optional.empty());
             when(ingredientRepository.save(ingredient)).thenReturn(ingredient);
-            when(ingredientOutputMapper.map(ingredient)).thenReturn(ingredientOutputAppVo);
+            when(ingredientOutputMapper.map(ingredient)).thenReturn(IngredientOutputVo);
 
-            IngredientOutputAppVo actual = createAnIngredient.execute(ingredientCreateInputAppVo);
+            IngredientOutputVo actual = createAnIngredient.execute(IngredientCreateInputVo);
 
             assertThat(actual)
                 .isNotNull()
-                .isEqualTo(ingredientOutputAppVo);
+                .isEqualTo(IngredientOutputVo);
         });
     }
 
@@ -74,17 +74,17 @@ class CreateAnIngredientTest {
             String name = Generator.generateAString();
             Ingredient.Type type = Generator.randomEnum(Ingredient.Type.class);
 
-            IngredientCreateInputAppVo ingredientCreateInputAppVo = mock(IngredientCreateInputAppVo.class);
+            IngredientCreateInputVo IngredientCreateInputVo = mock(IngredientCreateInputVo.class);
             Ingredient ingredient = new Ingredient(
                 id,
                 name,
                 type
             );
 
-            when(ingredientFactory.create(ingredientCreateInputAppVo)).thenReturn(ingredient);
+            when(ingredientFactory.create(IngredientCreateInputVo)).thenReturn(ingredient);
             when(ingredientRepository.findByNameAndType(name, type)).thenReturn(Optional.of(ingredient));
 
-            createAnIngredient.execute(ingredientCreateInputAppVo);
+            createAnIngredient.execute(IngredientCreateInputVo);
         });
 
         verify(ingredientRepository, never()).save(any(Ingredient.class));
@@ -93,11 +93,11 @@ class CreateAnIngredientTest {
     @Test
     void execute_onValidationFailed_thenThrowValidationException() {
         assertThrows(IngredientValidationException.class, () -> {
-            IngredientCreateInputAppVo ingredientCreateInputAppVo = mock(IngredientCreateInputAppVo.class);
+            IngredientCreateInputVo IngredientCreateInputVo = mock(IngredientCreateInputVo.class);
 
-            when(ingredientFactory.create(ingredientCreateInputAppVo)).thenThrow(IngredientValidationException.class);
+            when(ingredientFactory.create(IngredientCreateInputVo)).thenThrow(IngredientValidationException.class);
 
-            createAnIngredient.execute(ingredientCreateInputAppVo);
+            createAnIngredient.execute(IngredientCreateInputVo);
         });
 
         verifyNoInteractions(ingredientRepository);

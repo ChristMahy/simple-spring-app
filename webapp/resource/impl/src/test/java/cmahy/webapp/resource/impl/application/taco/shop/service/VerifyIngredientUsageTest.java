@@ -5,7 +5,7 @@ import cmahy.webapp.resource.impl.application.taco.shop.repository.IngredientRep
 import cmahy.webapp.resource.impl.application.taco.shop.repository.TacoRepository;
 import cmahy.webapp.resource.impl.domain.taco.Ingredient;
 import cmahy.webapp.resource.impl.domain.taco.Taco;
-import cmahy.webapp.resource.impl.domain.taco.id.IngredientId;
+import cmahy.webapp.resource.taco.shop.id.IngredientId;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -38,7 +38,7 @@ class VerifyIngredientUsageTest {
         assertDoesNotThrow(() -> {
             IngredientId ingredientId = new IngredientId(Generator.generateAString());
             Ingredient ingredient = mock(Ingredient.class);
-            Set<Taco> tacos = Set.of();
+            Set<Taco> tacos = Collections.emptySet();
 
             when(ingredientRepository.findById(ingredientId.value())).thenReturn(Optional.of(ingredient));
             when(tacoRepository.findByIngredientId(ingredientId)).thenReturn(tacos);
