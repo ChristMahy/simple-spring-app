@@ -21,7 +21,7 @@ public class EntityIdSerializer extends StdSerializer<EntityId> {
     public void serialize(EntityId tEntityId, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
 
         if (tEntityId != null && tEntityId.value() != null) {
-            jsonGenerator.writeRawValue(tEntityId.value().toString());
+            jsonGenerator.writeRawValue("\"" + tEntityId.value().toString() + "\"");
         }
     }
 }

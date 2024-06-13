@@ -41,7 +41,7 @@ class EntityIdSerializerTest {
                 assertThat(writer.toString())
                     .isNotNull()
                     .isNotEmpty()
-                    .isEqualTo(idValue.toString());
+                    .isEqualTo("\"" + idValue + "\"");
             }
         });
     }
