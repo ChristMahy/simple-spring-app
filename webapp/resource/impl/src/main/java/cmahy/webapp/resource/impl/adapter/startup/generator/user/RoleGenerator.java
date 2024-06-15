@@ -27,7 +27,7 @@ public class RoleGenerator implements ApplicationRunner {
     @Override
     @Transactional
     public void run(ApplicationArguments args) throws Exception {
-        Stream.of("Guest")
+        Stream.of("Guest", "Admin")
             .forEach(name -> {
                 Role role = new Role();
 
