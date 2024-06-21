@@ -6,8 +6,9 @@ application:
       read-timeout: 5s
       write-timeout: 5s
     taco:
-      username: machine2machine
-      password: machine2machine
+      credentials:
+        username: machine2machine
+        password: machine2machine
   start-up:
     order:
       generate: true

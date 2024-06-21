@@ -22,8 +22,9 @@ application:
       read-timeout: 5s
       write-timeout: 5s
     taco:
-      username: test
-      password: test
+      credentials:
+        username: test
+        password: test
   google:
     api-url: https://GOOGLE_SHOULD_NEVER_BE_CALLED
   taco:
