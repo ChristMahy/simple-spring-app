@@ -1,6 +1,7 @@
 package cmahy.webapp.resource.impl.application.taco.shop.mapper.output;
 
 import cmahy.webapp.resource.impl.domain.taco.Ingredient;
+import cmahy.webapp.resource.impl.domain.taco.IngredientType;
 import cmahy.webapp.resource.impl.exception.NullException;
 import cmahy.webapp.resource.taco.shop.vo.output.IngredientOutputVo;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ class IngredientOutputMapperTest {
 
             ingredient.setId(generateAString());
             ingredient.setName(generateAString());
-            ingredient.setType(randomEnum(Ingredient.Type.class));
+            ingredient.setType(randomEnum(IngredientType.class));
 
             IngredientOutputVo actual = ingredientOutputMapper.map(ingredient);
 

@@ -23,11 +23,11 @@ public class Ingredient {
     private String name;
 
     @NotNull(message = I18N_KEY_TYPE_NOT_NULL)
-    private Type type;
+    private IngredientType type;
 
     public Ingredient() {}
 
-    public Ingredient(String id, String name, Type type) {
+    public Ingredient(String id, String name, IngredientType type) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -53,22 +53,14 @@ public class Ingredient {
         return this;
     }
 
-    public Type getType() {
+    public IngredientType getType() {
         return type;
     }
 
-    public Ingredient setType(Type type) {
+    public Ingredient setType(IngredientType type) {
         this.type = type;
 
         return this;
-    }
-
-    public enum Type {
-        WRAP,
-        PROTEIN,
-        VEGGIES,
-        CHEESE,
-        SAUCE;
     }
 
     @Override

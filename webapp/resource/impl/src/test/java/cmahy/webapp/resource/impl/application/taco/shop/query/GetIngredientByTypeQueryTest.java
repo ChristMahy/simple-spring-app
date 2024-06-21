@@ -3,6 +3,7 @@ package cmahy.webapp.resource.impl.application.taco.shop.query;
 import cmahy.webapp.resource.impl.application.taco.shop.mapper.output.IngredientOutputMapper;
 import cmahy.webapp.resource.impl.application.taco.shop.repository.IngredientRepository;
 import cmahy.webapp.resource.impl.domain.taco.Ingredient;
+import cmahy.webapp.resource.impl.domain.taco.IngredientType;
 import cmahy.webapp.resource.taco.shop.vo.output.IngredientOutputVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -48,7 +49,7 @@ class GetIngredientByTypeQueryTest {
                 })
                 .collect(Collectors.toSet());
 
-            Ingredient.Type type = mock(Ingredient.Type.class);
+            IngredientType type = mock(IngredientType.class);
 
             when(ingredientRepository.findByType(type)).thenReturn(ingredients);
 

@@ -53,7 +53,7 @@ class ClientOrderGeneratorTest {
         assertDoesNotThrow(() -> {
             ApplicationArguments applicationArguments = mock(ApplicationArguments.class);
 
-            Arrays.stream(Ingredient.Type.values()).forEach(type -> {
+            Arrays.stream(IngredientType.values()).forEach(type -> {
                 Set<Ingredient> ingredients = Stream.generate(() -> {
                         Ingredient ingredient = new Ingredient();
 

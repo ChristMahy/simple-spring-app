@@ -1,7 +1,7 @@
 package cmahy.webapp.resource.impl.adapter.ui.taco.shop;
 
 import cmahy.webapp.resource.impl.application.taco.shop.query.GetIngredientByTypeQuery;
-import cmahy.webapp.resource.impl.domain.taco.Ingredient;
+import cmahy.webapp.resource.impl.domain.taco.IngredientType;
 import cmahy.webapp.resource.taco.shop.vo.input.TacoInputVo;
 import cmahy.webapp.resource.taco.shop.vo.output.IngredientOutputVo;
 import cmahy.webapp.resource.ui.taco.TacoUriConstant;
@@ -31,27 +31,27 @@ public class DesignUiImpl implements DesignUi {
 
     @ModelAttribute(name = "wrap")
     public Set<IngredientOutputVo> wrap() {
-        return ingredientByTypeQuery.execute(Ingredient.Type.WRAP);
+        return ingredientByTypeQuery.execute(IngredientType.WRAP);
     }
 
     @ModelAttribute(name = "protein")
     public Set<IngredientOutputVo> protein() {
-        return ingredientByTypeQuery.execute(Ingredient.Type.PROTEIN);
+        return ingredientByTypeQuery.execute(IngredientType.PROTEIN);
     }
 
     @ModelAttribute(name = "cheese")
     public Set<IngredientOutputVo> cheese() {
-        return ingredientByTypeQuery.execute(Ingredient.Type.CHEESE);
+        return ingredientByTypeQuery.execute(IngredientType.CHEESE);
     }
 
     @ModelAttribute(name = "veggies")
     public Set<IngredientOutputVo> veggies() {
-        return ingredientByTypeQuery.execute(Ingredient.Type.VEGGIES);
+        return ingredientByTypeQuery.execute(IngredientType.VEGGIES);
     }
 
     @ModelAttribute(name = "sauce")
     public Set<IngredientOutputVo> sauce() {
-        return ingredientByTypeQuery.execute(Ingredient.Type.SAUCE);
+        return ingredientByTypeQuery.execute(IngredientType.SAUCE);
     }
 
     @Override

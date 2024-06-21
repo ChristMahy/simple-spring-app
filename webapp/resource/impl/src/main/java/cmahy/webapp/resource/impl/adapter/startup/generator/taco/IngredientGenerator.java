@@ -1,7 +1,7 @@
 package cmahy.webapp.resource.impl.adapter.startup.generator.taco;
 
 import cmahy.webapp.resource.impl.application.taco.shop.command.CreateIngredientCommand;
-import cmahy.webapp.resource.impl.domain.taco.Ingredient;
+import cmahy.webapp.resource.impl.domain.taco.IngredientType;
 import cmahy.webapp.resource.taco.shop.vo.input.IngredientCreateInputVo;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -20,15 +20,15 @@ public class IngredientGenerator implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        createIngredientCommand.execute(new IngredientCreateInputVo("Flour Tortilla", Ingredient.Type.WRAP.name()));
-        createIngredientCommand.execute(new IngredientCreateInputVo("Corn Tortilla", Ingredient.Type.WRAP.name()));
-        createIngredientCommand.execute(new IngredientCreateInputVo("Ground Beef", Ingredient.Type.PROTEIN.name()));
-        createIngredientCommand.execute(new IngredientCreateInputVo("Carnitas", Ingredient.Type.PROTEIN.name()));
-        createIngredientCommand.execute(new IngredientCreateInputVo("Diced Tomatoes", Ingredient.Type.VEGGIES.name()));
-        createIngredientCommand.execute(new IngredientCreateInputVo("Lettuce", Ingredient.Type.VEGGIES.name()));
-        createIngredientCommand.execute(new IngredientCreateInputVo("Cheddar", Ingredient.Type.CHEESE.name()));
-        createIngredientCommand.execute(new IngredientCreateInputVo("Monterrey Jack", Ingredient.Type.CHEESE.name()));
-        createIngredientCommand.execute(new IngredientCreateInputVo("Salsa", Ingredient.Type.SAUCE.name()));
-        createIngredientCommand.execute(new IngredientCreateInputVo("Sour Cream", Ingredient.Type.SAUCE.name()));
+        createIngredientCommand.execute(new IngredientCreateInputVo("Flour Tortilla", IngredientType.WRAP.name()));
+        createIngredientCommand.execute(new IngredientCreateInputVo("Corn Tortilla", IngredientType.WRAP.name()));
+        createIngredientCommand.execute(new IngredientCreateInputVo("Ground Beef", IngredientType.PROTEIN.name()));
+        createIngredientCommand.execute(new IngredientCreateInputVo("Carnitas", IngredientType.PROTEIN.name()));
+        createIngredientCommand.execute(new IngredientCreateInputVo("Diced Tomatoes", IngredientType.VEGGIES.name()));
+        createIngredientCommand.execute(new IngredientCreateInputVo("Lettuce", IngredientType.VEGGIES.name()));
+        createIngredientCommand.execute(new IngredientCreateInputVo("Cheddar", IngredientType.CHEESE.name()));
+        createIngredientCommand.execute(new IngredientCreateInputVo("Monterrey Jack", IngredientType.CHEESE.name()));
+        createIngredientCommand.execute(new IngredientCreateInputVo("Salsa", IngredientType.SAUCE.name()));
+        createIngredientCommand.execute(new IngredientCreateInputVo("Sour Cream", IngredientType.SAUCE.name()));
     }
 }

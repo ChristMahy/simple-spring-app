@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 @Component
 @Order(102)
@@ -84,7 +83,7 @@ public class ClientOrderGenerator implements ApplicationRunner {
     private Taco applyAllIngredientsToTaco(Taco taco) {
         Set<Ingredient> allIngredients = new HashSet<>();
 
-        for (Ingredient.Type ingredientType : Ingredient.Type.values()) {
+        for (IngredientType ingredientType : IngredientType.values()) {
             allIngredients.addAll(ingredientRepository.findByType(ingredientType));
         }
 

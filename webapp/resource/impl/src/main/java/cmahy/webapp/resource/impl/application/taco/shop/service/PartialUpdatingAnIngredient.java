@@ -3,6 +3,7 @@ package cmahy.webapp.resource.impl.application.taco.shop.service;
 import cmahy.webapp.resource.impl.application.taco.shop.mapper.output.IngredientOutputMapper;
 import cmahy.webapp.resource.impl.application.taco.shop.repository.IngredientRepository;
 import cmahy.webapp.resource.impl.domain.taco.Ingredient;
+import cmahy.webapp.resource.impl.domain.taco.IngredientType;
 import cmahy.webapp.resource.impl.exception.taco.IngredientNotFoundException;
 import cmahy.webapp.resource.taco.shop.id.IngredientId;
 import cmahy.webapp.resource.taco.shop.vo.input.IngredientUpdateInputVo;
@@ -40,8 +41,8 @@ public class PartialUpdatingAnIngredient {
             .setType(
                 inputVo.type()
                     .map(String::trim)
-                    .filter(typeTrimmed -> Arrays.stream(Ingredient.Type.values()).anyMatch(t -> StringUtils.equals(typeTrimmed, t.name())))
-                    .map(Ingredient.Type::valueOf)
+                    .filter(typeTrimmed -> Arrays.stream(IngredientType.values()).anyMatch(t -> StringUtils.equals(typeTrimmed, t.name())))
+                    .map(IngredientType::valueOf)
                     .orElse(ingredient.getType())
             );
 

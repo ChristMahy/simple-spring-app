@@ -4,6 +4,7 @@ import cmahy.common.helper.Generator;
 import cmahy.webapp.resource.impl.application.taco.shop.mapper.output.IngredientOutputMapper;
 import cmahy.webapp.resource.impl.application.taco.shop.repository.IngredientRepository;
 import cmahy.webapp.resource.impl.domain.taco.Ingredient;
+import cmahy.webapp.resource.impl.domain.taco.IngredientType;
 import cmahy.webapp.resource.impl.exception.taco.IngredientNotFoundException;
 import cmahy.webapp.resource.impl.helper.ValidatorHelperExtension;
 import cmahy.webapp.resource.taco.shop.id.IngredientId;
@@ -39,9 +40,9 @@ class PartialUpdatingAnIngredientTest {
         assertDoesNotThrow(() -> {
             String previousId = Generator.generateAStringWithoutSpecialChars();
             String previousName = Generator.generateAStringWithoutSpecialChars();
-            Ingredient.Type previousType = Generator.randomEnum(Ingredient.Type.class);
+            IngredientType previousType = Generator.randomEnum(IngredientType.class);
 
-            Ingredient.Type type = Generator.randomEnum(Ingredient.Type.class);
+            IngredientType type = Generator.randomEnum(IngredientType.class);
             String name = Generator.generateAStringWithoutSpecialChars();
 
             IngredientId ingredientId = new IngredientId(Generator.generateAString());
@@ -75,7 +76,7 @@ class PartialUpdatingAnIngredientTest {
 
             String previousId = Generator.generateAStringWithoutSpecialChars();
             String previousName = Generator.generateAStringWithoutSpecialChars();
-            Ingredient.Type previousType = Generator.randomEnum(Ingredient.Type.class);
+            IngredientType previousType = Generator.randomEnum(IngredientType.class);
 
             IngredientId ingredientId = new IngredientId(Generator.generateAString());
             IngredientUpdateInputVo ingredientUpdateInputVo = new IngredientUpdateInputVo(
@@ -107,7 +108,7 @@ class PartialUpdatingAnIngredientTest {
         assertDoesNotThrow(() -> {
             String previousId = Generator.generateAStringWithoutSpecialChars();
             String previousName = Generator.generateAStringWithoutSpecialChars();
-            Ingredient.Type previousType = Generator.randomEnum(Ingredient.Type.class);
+            IngredientType previousType = Generator.randomEnum(IngredientType.class);
 
             IngredientId ingredientId = new IngredientId(Generator.generateAString());
             IngredientUpdateInputVo ingredientUpdateInputVo = new IngredientUpdateInputVo(
@@ -136,7 +137,7 @@ class PartialUpdatingAnIngredientTest {
         assertDoesNotThrow(() -> {
             String previousId = Generator.generateAStringWithoutSpecialChars();
             String previousName = Generator.generateAStringWithoutSpecialChars();
-            Ingredient.Type previousType = Generator.randomEnum(Ingredient.Type.class);
+            IngredientType previousType = Generator.randomEnum(IngredientType.class);
 
             IngredientId ingredientId = new IngredientId(Generator.generateAString());
             IngredientUpdateInputVo ingredientUpdateInputVo = new IngredientUpdateInputVo(
@@ -165,9 +166,9 @@ class PartialUpdatingAnIngredientTest {
         assertDoesNotThrow(() -> {
             String previousId = Generator.generateAStringWithoutSpecialChars();
             String previousName = Generator.generateAStringWithoutSpecialChars();
-            Ingredient.Type previousType = Generator.randomEnum(Ingredient.Type.class);
+            IngredientType previousType = Generator.randomEnum(IngredientType.class);
 
-            Ingredient.Type type = Generator.randomEnum(Ingredient.Type.class);
+            IngredientType type = Generator.randomEnum(IngredientType.class);
             String name = Generator.generateAStringWithoutSpecialChars();
 
             IngredientId ingredientId = new IngredientId(Generator.generateAString());

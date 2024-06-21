@@ -4,6 +4,7 @@ import cmahy.common.helper.Generator;
 import cmahy.webapp.resource.impl.application.taco.shop.mapper.output.IngredientOutputMapper;
 import cmahy.webapp.resource.impl.application.taco.shop.repository.IngredientRepository;
 import cmahy.webapp.resource.impl.domain.taco.Ingredient;
+import cmahy.webapp.resource.impl.domain.taco.IngredientType;
 import cmahy.webapp.resource.impl.exception.taco.IngredientDuplicateException;
 import cmahy.webapp.resource.impl.exception.taco.IngredientValidationException;
 import cmahy.webapp.resource.taco.shop.vo.input.IngredientCreateInputVo;
@@ -44,7 +45,7 @@ class CreateAnIngredientTest {
         assertDoesNotThrow(() -> {
             String id = UUID.randomUUID().toString();
             String name = Generator.generateAString();
-            Ingredient.Type type = Generator.randomEnum(Ingredient.Type.class);
+            IngredientType type = Generator.randomEnum(IngredientType.class);
 
             IngredientCreateInputVo IngredientCreateInputVo = mock(IngredientCreateInputVo.class);
             Ingredient ingredient = new Ingredient(
@@ -72,7 +73,7 @@ class CreateAnIngredientTest {
         assertThrows(IngredientDuplicateException.class, () -> {
             String id = UUID.randomUUID().toString();
             String name = Generator.generateAString();
-            Ingredient.Type type = Generator.randomEnum(Ingredient.Type.class);
+            IngredientType type = Generator.randomEnum(IngredientType.class);
 
             IngredientCreateInputVo IngredientCreateInputVo = mock(IngredientCreateInputVo.class);
             Ingredient ingredient = new Ingredient(

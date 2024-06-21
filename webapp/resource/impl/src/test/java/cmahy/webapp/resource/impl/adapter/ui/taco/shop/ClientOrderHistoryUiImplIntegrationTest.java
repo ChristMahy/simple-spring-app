@@ -2,7 +2,7 @@ package cmahy.webapp.resource.impl.adapter.ui.taco.shop;
 
 import cmahy.webapp.resource.impl.application.taco.shop.query.GetAllClientOrderPagedQuery;
 import cmahy.webapp.resource.impl.application.vo.input.PageableInputAppVo;
-import cmahy.webapp.resource.impl.domain.taco.Ingredient;
+import cmahy.webapp.resource.impl.domain.taco.IngredientType;
 import cmahy.webapp.resource.impl.domain.user.id.UserId;
 import cmahy.webapp.resource.impl.helper.security.user.SecurityUserGenerator;
 import cmahy.webapp.resource.taco.shop.id.*;
@@ -61,7 +61,7 @@ class ClientOrderHistoryUiImplIntegrationTest {
                 return new IngredientOutputVo(
                     new IngredientId(id.toUpperCase()),
                     id.toUpperCase(),
-                    randomEnum(Ingredient.Type.class).name()
+                    randomEnum(IngredientType.class).name()
                 );
             })
             .limit(limit)
@@ -105,8 +105,8 @@ class ClientOrderHistoryUiImplIntegrationTest {
                                             .map(taco ->
                                                 "(" + Pattern.quote(taco.name()) + ")[\\s\\S]*(" +
                                                     taco.ingredients().stream()
-                                                        .map(ingrediant ->
-                                                            "(" + Pattern.quote(ingrediant.name() + " - [" + ingrediant.type() + "]") + ")"
+                                                        .map(ingredient ->
+                                                            "(" + Pattern.quote(ingredient.name() + " - [" + ingredient.type() + "]") + ")"
                                                         )
                                                         .collect(Collectors.joining("[\\s\\S]*")) +
                                                     ")"

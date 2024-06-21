@@ -1,6 +1,7 @@
 package cmahy.webapp.resource.impl.application.taco.shop.service;
 
 import cmahy.webapp.resource.impl.domain.taco.Ingredient;
+import cmahy.webapp.resource.impl.domain.taco.IngredientType;
 import cmahy.webapp.resource.impl.exception.NullException;
 import cmahy.webapp.resource.taco.shop.vo.input.IngredientCreateInputVo;
 import jakarta.inject.Named;
@@ -26,8 +27,8 @@ public class IngredientFactory {
             .setType(
                 Optional.ofNullable(ingredientCreateInputVo.type())
                     .map(String::trim)
-                    .filter(typeTrimmed -> Arrays.stream(Ingredient.Type.values()).anyMatch(t -> StringUtils.equals(typeTrimmed, t.name())))
-                    .map(Ingredient.Type::valueOf)
+                    .filter(typeTrimmed -> Arrays.stream(IngredientType.values()).anyMatch(t -> StringUtils.equals(typeTrimmed, t.name())))
+                    .map(IngredientType::valueOf)
                     .orElse(null)
             );
     }

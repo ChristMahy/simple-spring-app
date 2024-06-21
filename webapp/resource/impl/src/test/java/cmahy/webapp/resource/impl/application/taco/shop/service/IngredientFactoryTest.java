@@ -2,6 +2,7 @@ package cmahy.webapp.resource.impl.application.taco.shop.service;
 
 import cmahy.common.helper.Generator;
 import cmahy.webapp.resource.impl.domain.taco.Ingredient;
+import cmahy.webapp.resource.impl.domain.taco.IngredientType;
 import cmahy.webapp.resource.impl.exception.NullException;
 import cmahy.webapp.resource.impl.helper.ValidatorHelper;
 import cmahy.webapp.resource.impl.helper.ValidatorHelperExtension;
@@ -31,7 +32,7 @@ class IngredientFactoryTest {
         assertDoesNotThrow(() -> {
             IngredientCreateInputVo createInputVo = new IngredientCreateInputVo(
                 Generator.generateAStringWithoutSpecialChars(),
-                Generator.randomEnum(Ingredient.Type.class).name()
+                Generator.randomEnum(IngredientType.class).name()
             );
 
             Ingredient actual = ingredientFactory.create(createInputVo);
@@ -48,7 +49,7 @@ class IngredientFactoryTest {
     void execute_whenValuesHaveSpaceBeforeAndAfter_thenTrimSpaceAndCreateIngredient() {
         assertDoesNotThrow(() -> {
             String name = Generator.generateAStringWithoutSpecialChars();
-            Type type = Generator.randomEnum(Ingredient.Type.class);
+            IngredientType type = Generator.randomEnum(IngredientType.class);
 
             IngredientCreateInputVo createInputVo = new IngredientCreateInputVo(
                 "         " + name + "              ",

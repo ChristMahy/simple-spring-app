@@ -3,7 +3,7 @@ package cmahy.webapp.resource.impl.application.taco.shop.query;
 import cmahy.common.annotation.Query;
 import cmahy.webapp.resource.impl.application.taco.shop.mapper.output.IngredientOutputMapper;
 import cmahy.webapp.resource.impl.application.taco.shop.repository.IngredientRepository;
-import cmahy.webapp.resource.impl.domain.taco.Ingredient;
+import cmahy.webapp.resource.impl.domain.taco.IngredientType;
 import cmahy.webapp.resource.taco.shop.vo.output.IngredientOutputVo;
 import jakarta.inject.Named;
 
@@ -25,7 +25,7 @@ public class GetIngredientByTypeQuery {
         this.ingredientOutputMapper = ingredientOutputMapper;
     }
 
-    public Set<IngredientOutputVo> execute(Ingredient.Type type) {
+    public Set<IngredientOutputVo> execute(IngredientType type) {
         return ingredientRepository
             .findByType(type)
             .stream()

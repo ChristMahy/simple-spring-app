@@ -1,7 +1,7 @@
 package cmahy.webapp.resource.impl.adapter.ui.taco.shop;
 
 import cmahy.webapp.resource.impl.application.taco.shop.query.GetIngredientByTypeQuery;
-import cmahy.webapp.resource.impl.domain.taco.Ingredient;
+import cmahy.webapp.resource.impl.domain.taco.IngredientType;
 import cmahy.webapp.resource.impl.helper.security.user.SecurityUserGenerator;
 import cmahy.webapp.resource.taco.shop.id.IngredientId;
 import cmahy.webapp.resource.taco.shop.vo.input.TacoInputVo;
@@ -48,7 +48,7 @@ class DesignUiImplIntegrationTest {
     @BeforeEach
     void setUp() {
         assertDoesNotThrow(() -> {
-            for (Ingredient.Type value : Ingredient.Type.values()) {
+            for (IngredientType value : IngredientType.values()) {
                 when(ingredientByTypeQuery.execute(value)).thenReturn(
                     Stream.generate(() -> new IngredientOutputVo(
                             new IngredientId(generateAStringWithoutSpecialChars(5)),
