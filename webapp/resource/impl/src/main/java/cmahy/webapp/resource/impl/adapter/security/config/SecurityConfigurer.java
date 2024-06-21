@@ -11,10 +11,10 @@ import org.springframework.context.annotation.*;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
-import org.springframework.security.config.annotation.web.configurers.SessionManagementConfigurer;
+import org.springframework.security.config.annotation.web.configurers.*;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
@@ -22,6 +22,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.*;
 import org.springframework.security.web.authentication.*;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
@@ -93,46 +94,40 @@ public class SecurityConfigurer {
             .build();
     }
 
-    private HttpSecurity defaultSecurity(MvcRequestMatcher.Builder mvcMatcherBuilder, HttpSecurity http) throws Exception {
+    private HttpSecurity defaultSecurity(
+        MvcRequestMatcher.Builder mvcMatcherBuilder,
+        HttpSecurity http
+    ) throws Exception {
         return http
+            .anonymous(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(registry -> {
                 registry
                     .requestMatchers(antMatcher(HttpMethod.OPTIONS)).permitAll()
-                    .requestMatchers(antMatcher("/api/v1/**")).permitAll()
                     .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                    .requestMatchers(mvcMatcherBuilder.pattern( "")).permitAll()
+                    .requestMatchers(mvcMatcherBuilder.pattern( "/")).permitAll()
+                    .requestMatchers(mvcMatcherBuilder.pattern( "/without-controller")).permitAll()
+                    .requestMatchers(mvcMatcherBuilder.pattern( "/toggle-theme")).permitAll()
                     .requestMatchers(mvcMatcherBuilder.pattern("/register**")).permitAll()
                     .requestMatchers(mvcMatcherBuilder.pattern("/login**")).permitAll()
-                    .anyRequest().authenticated();
+                    .anyRequest().fullyAuthenticated();
             })
-            .csrf(configurer -> {
-                configurer.ignoringRequestMatchers(antMatcher("/api/v1/**"));
-            })
+            .csrf(csrfConfigurer -> csrfConfigurer
+                .csrfTokenRepository(new CookieCsrfTokenRepository())
+                .ignoringRequestMatchers(antMatcher("/api/v1/**"))
+            )
             .sessionManagement(sessionConfigurer -> {
                 sessionConfigurer
-                    // TODO: Trick with stateless session doesn't work, Html thymeleaf requires a session
+                    // TODO: Trick with stateless session doesn't work, Html thymeleaf requires a session. Explore io.jsonwebtoken ???
 //                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     .sessionFixation(SessionManagementConfigurer.SessionFixationConfigurer::migrateSession);
             })
-            // TODO: Trick with stateless session doesn't work
-//            .httpBasic(basic -> basic
-//                .addObjectPostProcessor(new ObjectPostProcessor<BasicAuthenticationFilter>() {
-//                    @Override
-//                    public <O extends BasicAuthenticationFilter> O postProcess(O filter) {
-//                        filter.setSecurityContextRepository(
-//                            new DelegatingSecurityContextRepository(
-//                                new RequestAttributeSecurityContextRepository(),
-//                                new HttpSessionSecurityContextRepository()
-//                            )
-//                        );
-//                        return filter;
-//                    }
-//                })
-//            )
             .logout(configurer -> configurer
                 .logoutSuccessUrl("/")
                 .deleteCookies("JSESSIONID")
             )
-            .formLogin(configurer -> configurer.loginPage("/login"));
+            .formLogin(configurer -> configurer.loginPage("/login"))
+            .httpBasic(Customizer.withDefaults());
     }
 
     private AuthenticationFailureHandler authenticationFailureHandler() {

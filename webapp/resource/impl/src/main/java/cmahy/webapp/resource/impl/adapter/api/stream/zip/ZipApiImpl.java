@@ -5,6 +5,7 @@ import cmahy.webapp.resource.impl.adapter.api.stream.factory.GeneratorOptionsFac
 import cmahy.webapp.resource.impl.adapter.api.stream.visitor.StreamVisitorFactory;
 import cmahy.webapp.resource.impl.application.stream.query.zip.GenerateZipWithRandomContentQuery;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
@@ -29,6 +30,7 @@ public class ZipApiImpl implements ZipApi {
     }
 
     @Override
+    @PreAuthorize("hasAuthority(@preAuthorizeScope.GUEST)")
     public ResponseEntity<StreamingResponseBody> makeAZip(Optional<Boolean> onFailure) throws IOException {
         var streamVisitor = streamVisitorFactory.create();
 

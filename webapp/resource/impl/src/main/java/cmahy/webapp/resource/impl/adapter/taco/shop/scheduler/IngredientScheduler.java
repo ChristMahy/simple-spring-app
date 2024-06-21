@@ -1,15 +1,15 @@
 package cmahy.webapp.resource.impl.adapter.taco.shop.scheduler;
 
-import cmahy.webapp.resource.impl.adapter.taco.shop.properties.ingredient.IngredientProperties;
-import cmahy.webapp.resource.taco.shop.vo.output.IngredientOutputVo;
-import cmahy.webapp.resource.taco.shop.vo.output.IngredientPageOutputVo;
+import cmahy.webapp.resource.impl.application.taco.external.query.GetAllExternalIngredientQuery;
+import cmahy.webapp.resource.impl.domain.taco.external.IngredientExternal;
+import cmahy.webapp.resource.impl.domain.taco.external.page.IngredientExternalPage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.Objects;
 
 @Component
 @ConditionalOnProperty(value = "application.taco.ingredients.external-resource.scheduler.enable", havingValue = "true")
@@ -17,15 +17,10 @@ public class IngredientScheduler {
 
     private static final Logger LOG = LoggerFactory.getLogger(IngredientScheduler.class);
 
-    private final IngredientProperties ingredientProperties;
-    private final RestTemplate commonRestTemplate;
+    private final GetAllExternalIngredientQuery getAllExternalIngredientQuery;
 
-    public IngredientScheduler(
-        IngredientProperties ingredientProperties,
-        RestTemplate commonRestTemplate
-    ) {
-        this.ingredientProperties = ingredientProperties;
-        this.commonRestTemplate = commonRestTemplate;
+    public IngredientScheduler(GetAllExternalIngredientQuery getAllExternalIngredientQuery) {
+        this.getAllExternalIngredientQuery = getAllExternalIngredientQuery;
     }
 
     @Scheduled(
@@ -36,22 +31,16 @@ public class IngredientScheduler {
         LOG.info("Run ingredient template");
 
         try {
-            IngredientPageOutputVo forObject = commonRestTemplate.getForObject(
-                UriComponentsBuilder.fromHttpUrl(ingredientProperties.externalResource().baseUrl() + "/ingredient")
-                    .queryParam("page-number", 0)
-                    .queryParam("page-size", Integer.MAX_VALUE)
-                    .encode()
-                    .toUriString(),
-                IngredientPageOutputVo.class
-            );
+            IngredientExternalPage pageIngredients = getAllExternalIngredientQuery.execute();
 
-            if (forObject != null) {
-                LOG.info("Ingredient list size <{}/{}>", forObject.content().size(), forObject.totalElements());
-                for (IngredientOutputVo ingredient : forObject.content()) {
+            if (Objects.nonNull(pageIngredients)) {
+                LOG.info("Ingredient list size <{}/{}>", pageIngredients.content().size(), pageIngredients.totalElements());
+
+                for (IngredientExternal ingredient : pageIngredients.content()) {
                     LOG.info("Ingredient: {}", ingredient);
                 }
             }
-        } catch(Exception exce) {
+        } catch(Throwable exce) {
             LOG.error(exce.getMessage(), exce);
         }
     }

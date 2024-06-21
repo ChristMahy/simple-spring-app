@@ -8,6 +8,7 @@ import cmahy.webapp.resource.ui.taco.TacoUriConstant;
 import cmahy.webapp.resource.ui.taco.shop.DesignUi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -54,6 +55,7 @@ public class DesignUiImpl implements DesignUi {
     }
 
     @Override
+    @PreAuthorize("hasRole(@preAuthorizeScope.GUEST)")
     public String designForm(Model model) {
         model.addAttribute(TACO, new TacoInputVo(
             "", new HashSet<>(0)
@@ -67,6 +69,7 @@ public class DesignUiImpl implements DesignUi {
     }
 
     @Override
+    @PreAuthorize("hasRole(@preAuthorizeScope.GUEST)")
     public String addDesignTaco(
         Model model,
         TacoInputVo taco,
@@ -87,6 +90,7 @@ public class DesignUiImpl implements DesignUi {
     }
 
     @Override
+    @PreAuthorize("hasRole(@preAuthorizeScope.GUEST)")
     public String saveDesignTaco(
         TacoInputVo taco,
         Errors errors,

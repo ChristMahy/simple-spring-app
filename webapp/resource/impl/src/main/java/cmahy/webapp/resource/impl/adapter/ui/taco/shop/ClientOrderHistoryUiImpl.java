@@ -10,6 +10,7 @@ import cmahy.webapp.resource.ui.taco.shop.ClientOrderHistoryUi;
 import cmahy.webapp.resource.ui.vo.output.Pagination;
 import cmahy.webapp.resource.user.api.security.vo.output.UserSecurityDetails;
 import jakarta.transaction.Transactional;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
@@ -34,6 +35,7 @@ public class ClientOrderHistoryUiImpl implements ClientOrderHistoryUi {
     }
 
     @Override
+    @PreAuthorize("hasRole(@preAuthorizeScope.GUEST)")
     @Transactional
     public String orders(
         Optional<Integer> pageSize,

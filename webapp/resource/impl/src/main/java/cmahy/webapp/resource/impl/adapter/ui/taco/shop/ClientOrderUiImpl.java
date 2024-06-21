@@ -7,8 +7,10 @@ import cmahy.webapp.resource.taco.shop.vo.input.TacoInputVo;
 import cmahy.webapp.resource.ui.taco.TacoUriConstant;
 import cmahy.webapp.resource.ui.taco.shop.ClientOrderUi;
 import cmahy.webapp.resource.user.api.security.vo.output.UserSecurityDetails;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -34,6 +36,7 @@ public class ClientOrderUiImpl implements ClientOrderUi {
     }
 
     @Override
+    @PreAuthorize("hasRole(@preAuthorizeScope.GUEST)")
     public String current(Model model) {
         if (!model.containsAttribute(TACOS) || ((List<TacoInputVo>) model.getAttribute(TACOS)).isEmpty()) {
             return "redirect:" + TacoUriConstant.Design.DESIGN_BASE_URL;
@@ -59,6 +62,8 @@ public class ClientOrderUiImpl implements ClientOrderUi {
     }
 
     @Override
+    @PreAuthorize("hasRole(@preAuthorizeScope.GUEST)")
+    @Transactional
     public String saveOrder(
         Model model,
         ClientOrderInputVo tacoOrder,
@@ -94,6 +99,7 @@ public class ClientOrderUiImpl implements ClientOrderUi {
     }
 
     @Override
+    @PreAuthorize("hasRole(@preAuthorizeScope.GUEST)")
     public String saveOrder(
         Model model,
         ClientOrderInputVo tacoOrder

@@ -1,8 +1,13 @@
 application:
-  rest-template:
+  web-client:
     common:
       connect-timeout: 5s
+      response-timeout: 5s
       read-timeout: 5s
+      write-timeout: 5s
+    taco:
+      username: machine2machine
+      password: machine2machine
   start-up:
     order:
       generate: true

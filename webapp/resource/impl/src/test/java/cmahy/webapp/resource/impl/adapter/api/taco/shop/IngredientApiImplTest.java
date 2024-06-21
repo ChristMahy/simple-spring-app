@@ -5,7 +5,6 @@ import cmahy.webapp.resource.impl.adapter.config.properties.PaginationProperties
 import cmahy.webapp.resource.impl.application.taco.shop.command.*;
 import cmahy.webapp.resource.impl.application.taco.shop.query.GetAllIngredientPagedQuery;
 import cmahy.webapp.resource.impl.application.vo.input.PageableInputAppVo;
-import cmahy.webapp.resource.impl.exception.NullException;
 import cmahy.webapp.resource.taco.shop.id.IngredientId;
 import cmahy.webapp.resource.taco.shop.vo.input.IngredientCreateInputVo;
 import cmahy.webapp.resource.taco.shop.vo.input.IngredientUpdateInputVo;
@@ -18,7 +17,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)

@@ -38,7 +38,7 @@ public class UserGenerator implements ApplicationRunner {
     @Override
     @Transactional
     public void run(ApplicationArguments args) throws Exception {
-        UserSecurity userSecurity = new UserSecurity();
+        UserSecurity machine2MachineUser = new UserSecurity();
 
         Role guestRole = roleRepository.findByName("Guest")
             .orElseThrow(() -> new RoleNotFoundException("Guest"));
@@ -46,45 +46,45 @@ public class UserGenerator implements ApplicationRunner {
         Role adminRole = roleRepository.findByName("Admin")
             .orElseThrow(() -> new RoleNotFoundException("Admin"));
 
-        userSecurity.setUserName("machine2machine");
-        userSecurity.setFullName("machine2machine");
-        userSecurity.setStreet("Local");
-        userSecurity.setState("Local_Machine");
-        userSecurity.setCity("Machine");
-        userSecurity.setZip("1234");
-        userSecurity.setPhoneNumber("Call_Me_Maybe");
-        userSecurity.setPassword(passwordEncoder.encode("machine2machine").getBytes());
-        userSecurity.setRoles(new HashSet<>(2) {{
+        machine2MachineUser.setUserName("machine2machine");
+        machine2MachineUser.setFullName("machine2machine");
+        machine2MachineUser.setStreet("Local");
+        machine2MachineUser.setState("Local_Machine");
+        machine2MachineUser.setCity("Machine");
+        machine2MachineUser.setZip("1234");
+        machine2MachineUser.setPhoneNumber("Call_Me_Maybe");
+        machine2MachineUser.setPassword(passwordEncoder.encode("machine2machine").getBytes());
+        machine2MachineUser.setRoles(new HashSet<>(2) {{
             add(guestRole);
             add(adminRole);
         }});
-        userSecurity.setAuthProvider(AuthProvider.LOCAL);
-        userSecurity.setEnabled(true);
-        userSecurity.setExpired(false);
-        userSecurity.setCredentialsExpired(false);
-        userSecurity.setLocked(false);
+        machine2MachineUser.setAuthProvider(AuthProvider.LOCAL);
+        machine2MachineUser.setEnabled(true);
+        machine2MachineUser.setExpired(false);
+        machine2MachineUser.setCredentialsExpired(false);
+        machine2MachineUser.setLocked(false);
 
-        userSecurityRepository.save(userSecurity);
+        userSecurityRepository.save(machine2MachineUser);
+
+        UserSecurity testUser = new UserSecurity();
+
+        testUser.setUserName("test");
+        testUser.setFullName("test");
+        testUser.setStreet("Local");
+        testUser.setState("Local_Test");
+        testUser.setCity("Test");
+        testUser.setZip("1234");
+        testUser.setPhoneNumber("Call_Me_Maybe");
+        testUser.setPassword(passwordEncoder.encode("test").getBytes());
+        testUser.setRoles(new HashSet<>(1) {{
+            add(guestRole);
+        }});
+        testUser.setAuthProvider(AuthProvider.LOCAL);
+        testUser.setEnabled(true);
+        testUser.setExpired(false);
+        testUser.setCredentialsExpired(false);
+        testUser.setLocked(false);
+
+        userSecurityRepository.save(testUser);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

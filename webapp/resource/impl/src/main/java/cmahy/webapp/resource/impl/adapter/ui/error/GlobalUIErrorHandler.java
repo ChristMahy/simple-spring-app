@@ -1,22 +1,25 @@
-package cmahy.webapp.resource.impl.adapter.api.error;
+package cmahy.webapp.resource.impl.adapter.ui.error;
 
 import cmahy.webapp.resource.impl.exception.UsageOnDeletionException;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.*;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.sql.SQLException;
 
-@ControllerAdvice(annotations = RestController.class)
-public class GlobalErrorHandler extends ResponseEntityExceptionHandler {
+@ControllerAdvice(annotations = Controller.class)
+public class GlobalUIErrorHandler extends ResponseEntityExceptionHandler {
 
-    private static final Logger LOG = LoggerFactory.getLogger(GlobalErrorHandler.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GlobalUIErrorHandler.class);
 
     @ExceptionHandler
     public ResponseEntity<ProblemDetail> anyHandler(Throwable anyException, WebRequest request) {
@@ -52,7 +55,7 @@ public class GlobalErrorHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<ProblemDetail> authenticationExceptionHandler(
         AuthenticationCredentialsNotFoundException authenticationException
     ) {
-        print(authenticationException);
+        LOG.debug(authenticationException.getMessage(), authenticationException);
 
         return this.wrap(ProblemDetail.forStatusAndDetail(
             HttpStatus.UNAUTHORIZED,
@@ -64,7 +67,7 @@ public class GlobalErrorHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<ProblemDetail> accessDeniedExceptionHandler(
         AccessDeniedException accessDeniedException
     ) {
-        print(accessDeniedException);
+        LOG.debug(accessDeniedException.getMessage(), accessDeniedException);
 
         return this.wrap(ProblemDetail.forStatusAndDetail(
             HttpStatus.FORBIDDEN,

@@ -7,5 +7,4 @@ public record IngredientExternalResource(
     @NotNull(message = "Must be not null")
     @NotBlank(message = "Must be not blank")
     String baseUrl
-) {
-}
+) { }

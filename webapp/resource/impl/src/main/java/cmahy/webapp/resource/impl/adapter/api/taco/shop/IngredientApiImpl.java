@@ -11,6 +11,7 @@ import cmahy.webapp.resource.taco.shop.vo.input.IngredientCreateInputVo;
 import cmahy.webapp.resource.taco.shop.vo.input.IngredientUpdateInputVo;
 import cmahy.webapp.resource.taco.shop.vo.output.IngredientOutputVo;
 import cmahy.webapp.resource.taco.shop.vo.output.IngredientPageOutputVo;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -37,6 +38,7 @@ public class IngredientApiImpl implements IngredientApi {
     }
 
     @Override
+    @PreAuthorize("hasRole(@preAuthorizeScope.GUEST)")
     public IngredientPageOutputVo getAll(
         Integer pageNumber,
         Integer pageSize
@@ -50,16 +52,19 @@ public class IngredientApiImpl implements IngredientApi {
     }
 
     @Override
+    @PreAuthorize("hasRole(@preAuthorizeScope.ADMIN)")
     public IngredientOutputVo create(IngredientCreateInputVo input) {
         return createIngredientCommand.execute(input);
     }
 
     @Override
+    @PreAuthorize("hasRole(@preAuthorizeScope.ADMIN)")
     public IngredientOutputVo update(IngredientId id, IngredientUpdateInputVo input) {
         return partialUpdatingAnIngredientCommand.execute(id, input);
     }
 
     @Override
+    @PreAuthorize("hasRole(@preAuthorizeScope.ADMIN)")
     public void delete(IngredientId id) {
         deleteAnIngredientCommand.execute(id);
     }

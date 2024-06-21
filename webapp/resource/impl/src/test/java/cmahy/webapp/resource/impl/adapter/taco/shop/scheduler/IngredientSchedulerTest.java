@@ -1,34 +1,31 @@
 package cmahy.webapp.resource.impl.adapter.taco.shop.scheduler;
 
 import cmahy.common.helper.Generator;
-import cmahy.webapp.resource.impl.adapter.taco.shop.properties.ingredient.IngredientProperties;
-import cmahy.webapp.resource.taco.shop.vo.output.IngredientOutputVo;
-import cmahy.webapp.resource.taco.shop.vo.output.IngredientPageOutputVo;
+import cmahy.webapp.resource.impl.application.taco.external.query.GetAllExternalIngredientQuery;
+import cmahy.webapp.resource.impl.domain.taco.IngredientType;
+import cmahy.webapp.resource.impl.domain.taco.external.IngredientExternal;
+import cmahy.webapp.resource.impl.domain.taco.external.page.IngredientExternalPage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class IngredientSchedulerTest {
 
-    @Mock(answer = Answers.RETURNS_DEEP_STUBS)
-    private IngredientProperties ingredientProperties;
-
     @Mock
-    private RestTemplate commonRestTemplate;
+    private GetAllExternalIngredientQuery getAllExternalIngredientQuery;
 
     @InjectMocks
     private IngredientScheduler ingredientScheduler;
@@ -36,38 +33,48 @@ class IngredientSchedulerTest {
     @Test
     void runGetAllQuery() {
         assertDoesNotThrow(() -> {
-            String url = "http://" +
-                Generator.generateAStringWithoutSpecialChars() + "." +
-                Generator.generateAStringWithoutSpecialChars(3);
+            List<IngredientExternal> ingredients = Stream
+                .generate(() -> {
+                    IngredientExternal ingredient = new IngredientExternal(
+                        Generator.generateAString(),
+                        Generator.generateAString(),
+                        Generator.randomEnum(IngredientType.class)
+                        );
 
-            Integer ingredientListSize = Generator.randomInt(500, 5000);
+                    return ingredient;
+                })
+                .limit(Generator.randomInt(50, 1000))
+                .toList();
 
-            IngredientPageOutputVo ingredientPageOutputVo = new IngredientPageOutputVo(
-                Stream
-                    .generate(() -> mock(IngredientOutputVo.class))
-                    .limit(ingredientListSize)
-                    .toList(),
-                ingredientListSize.longValue()
+            IngredientExternalPage page = new IngredientExternalPage(
+                ingredients,
+                Integer.valueOf(ingredients.size()).longValue()
             );
 
-            when(ingredientProperties.externalResource().baseUrl()).thenReturn(url);
-            when(commonRestTemplate.getForObject(anyString(), eq(IngredientPageOutputVo.class))).thenReturn(ingredientPageOutputVo);
+            when(getAllExternalIngredientQuery.execute()).thenReturn(page);
 
             ingredientScheduler.runGetAllQuery();
         });
     }
 
-    @Test
-    void runGetAllQuery_isRunningThreadSafe() {
+    @ParameterizedTest()
+    @MethodSource({ "exceptions" })
+    void runGetAllQuery_isRunningThreadSafe(Throwable exception) {
         assertDoesNotThrow(() -> {
-            String url = "http://" +
-                Generator.generateAStringWithoutSpecialChars() + "." +
-                Generator.generateAStringWithoutSpecialChars(3);
-
-            when(ingredientProperties.externalResource().baseUrl()).thenReturn(url);
-            when(commonRestTemplate.getForObject(anyString(), eq(IngredientPageOutputVo.class))).thenThrow(RestClientException.class);
+            when(getAllExternalIngredientQuery.execute()).thenAnswer(invocationOnMock -> { throw exception; });
 
             ingredientScheduler.runGetAllQuery();
         });
+    }
+
+    private static Set<Throwable> exceptions() {
+        return Set.of(
+            new Throwable(Generator.generateAString()),
+            new Exception(Generator.generateAString()),
+            new RuntimeException(Generator.generateAString()),
+            new IllegalArgumentException(Generator.generateAString()),
+            new IllegalStateException(Generator.generateAString()),
+            new IOException(Generator.generateAString())
+        );
     }
 }

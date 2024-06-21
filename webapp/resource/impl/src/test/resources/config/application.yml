@@ -15,14 +15,17 @@ spring:
         queue-capacity: 10000
 
 application:
-  rest-template:
+  web-client:
     common:
       connect-timeout: 5s
+      response-timeout: 5s
       read-timeout: 5s
+      write-timeout: 5s
+    taco:
+      username: test
+      password: test
   google:
     api-url: https://GOOGLE_SHOULD_NEVER_BE_CALLED
-  pagination:
-    page-size: 10
   taco:
     orders:
       page-size: 20
@@ -32,9 +35,11 @@ application:
       external-resource:
         scheduler:
           enable: false
-        base-url: http://localhost:8080/api/v1
+        base-url: http://RESOURCE_SHOULD_NEVER_BE_CALLED
   password:
     default-encoder: bcrypt
     encoders:
       bcrypt:
         org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+  pagination:
+    page-size: 10
