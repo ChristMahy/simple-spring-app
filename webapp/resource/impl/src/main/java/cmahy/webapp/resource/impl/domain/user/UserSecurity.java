@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 @Entity
 @Table(
+    name = "user_app",
     uniqueConstraints = {
         @UniqueConstraint(name = "u_us_username_provider", columnNames = { "userName", "authProvider" })
     }
