@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.*;
@@ -15,6 +16,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.*;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
@@ -82,10 +84,12 @@ public class SecurityConfigurer {
 
         LOG.info("OAuth2 Security Configurer active");
 
+        http.authorizeHttpRequests(registry -> registry.requestMatchers(antMatcher("/oauth2/authorization**")).permitAll());
+
         return defaultSecurity(mvcMatcherBuilder, http)
             .oauth2Login(configurer -> {
                 configurer
-                    .loginPage("/login")
+                    .loginPage("/login").permitAll()
                     .failureHandler(authenticationFailureHandler())
                     .userInfoEndpoint(userInfoEndpoint -> {
                         userInfoEndpoint.userService(oAuth2UserService);
@@ -114,12 +118,12 @@ public class SecurityConfigurer {
             })
             .csrf(csrfConfigurer -> csrfConfigurer
                 .csrfTokenRepository(new CookieCsrfTokenRepository())
-                .ignoringRequestMatchers(antMatcher("/api/v1/**"))
+                .ignoringRequestMatchers(antMatcher("/api/v1**"))
             )
             .sessionManagement(sessionConfigurer -> {
                 sessionConfigurer
                     // TODO: Trick with stateless session doesn't work, Html thymeleaf requires a session. Explore io.jsonwebtoken ???
-//                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                     .sessionFixation(SessionManagementConfigurer.SessionFixationConfigurer::migrateSession);
             })
             .logout(configurer -> configurer
