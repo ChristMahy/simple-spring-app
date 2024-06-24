@@ -1,19 +1,21 @@
 package cmahy.webapp.resource.impl.adapter.api.error;
 
+import cmahy.webapp.resource.impl.exception.UsageOnDeletionException;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
 
 @RestController
-@RequestMapping(path = GlobalErrorHandlerTestPurposeApi.BASE_URL)
-public class GlobalErrorHandlerTestPurposeApi {
+@RequestMapping(path = RestGlobalErrorHandlerTestPurposeApi.BASE_URL)
+public class RestGlobalErrorHandlerTestPurposeApi {
 
-    public static final String BASE_URL = "/global-error/test";
+    public static final String BASE_URL = "/rest-global-error/test";
 
     public static final String NO_ERROR_URL = "/no-error";
     public static final String IO_EXCEPTION_URL = "/io-exception";
@@ -21,6 +23,9 @@ public class GlobalErrorHandlerTestPurposeApi {
     public static final String RUNTIME_EXCEPTION_URL = "/runtime-exception";
     public static final String SQL_EXCEPTION_URL = "/sql-exception";
     public static final String DATA_ACCESS_EXCEPTION_URL = "/data-access-exception";
+    public static final String USAGE_ON_DELETION_EXCEPTION_URL = "/usage-on-deletion-exception";
+    public static final String ACCESS_DENIED_EXCEPTION_URL = "/access-denied-exception";
+    public static final String AUTHENTICATION_CREDENTIALS_NOT_FOUND_EXCEPTION_URL = "/authentication-credentials-not-found-exception";
 
     @GetMapping(path = NO_ERROR_URL, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> noError() {
@@ -50,5 +55,20 @@ public class GlobalErrorHandlerTestPurposeApi {
     @GetMapping(path = DATA_ACCESS_EXCEPTION_URL)
     public ResponseEntity<String> throwDataAccessException() throws DataAccessException {
         throw new DataAccessException("should-be-an-data-access-exception") {};
+    }
+
+    @GetMapping(path = USAGE_ON_DELETION_EXCEPTION_URL)
+    public ResponseEntity<String> throwUsageOnDeletionException() throws UsageOnDeletionException {
+        throw new UsageOnDeletionException("should-be-an-usage-on-deletion-exception") {};
+    }
+
+    @GetMapping(path = ACCESS_DENIED_EXCEPTION_URL)
+    public ResponseEntity<String> throwAccessDeniedException() throws AccessDeniedException {
+        throw new AccessDeniedException("should-be-an-access-denied-exception");
+    }
+
+    @GetMapping(path = AUTHENTICATION_CREDENTIALS_NOT_FOUND_EXCEPTION_URL)
+    public ResponseEntity<String> throwAuthenticationCredentialsNotFoundException() throws AuthenticationCredentialsNotFoundException {
+        throw new AuthenticationCredentialsNotFoundException("should-be-an-authentication-credentials-not-found-exception");
     }
 }

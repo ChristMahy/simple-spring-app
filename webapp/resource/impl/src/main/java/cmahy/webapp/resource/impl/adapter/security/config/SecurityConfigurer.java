@@ -116,10 +116,12 @@ public class SecurityConfigurer {
                     .requestMatchers(mvcMatcherBuilder.pattern("/login**")).permitAll()
                     .anyRequest().fullyAuthenticated();
             })
-            .csrf(csrfConfigurer -> csrfConfigurer
-                .csrfTokenRepository(new CookieCsrfTokenRepository())
-                .ignoringRequestMatchers(antMatcher("/api/v1**"))
-            )
+            .csrf(csrfConfigurer -> {
+                csrfConfigurer
+                    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                    .ignoringRequestMatchers(antMatcher("/api/**"));
+            })
+            .cors(Customizer.withDefaults())
             .sessionManagement(sessionConfigurer -> {
                 sessionConfigurer
                     // TODO: Trick with stateless session doesn't work, Html thymeleaf requires a session. Explore io.jsonwebtoken ???

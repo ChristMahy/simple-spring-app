@@ -35,8 +35,8 @@ public class WebClientConfigurer {
         return WebClient.builder()
             .baseUrl(ingredientProperties.externalResource().baseUrl())
             .filter(basicAuthentication(
-                new String(webClientProperties.taco().credentials().username(), StandardCharsets.UTF_8),
-                new String(webClientProperties.taco().credentials().password(), StandardCharsets.UTF_8)
+                webClientProperties.taco().credentials().usernameToString(),
+                webClientProperties.taco().credentials().passwordToString()
             ))
             .clientConnector(new ReactorClientHttpConnector(httpClient))
             .build();

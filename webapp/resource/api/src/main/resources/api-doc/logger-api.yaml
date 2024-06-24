@@ -1,0 +1,16 @@
+openapi: 3.0.3
+
+paths:
+  /log:
+    post:
+      description: New endpoint
+      requestBody:
+        description: Post a log, what you want
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+      responses:
+        '204':
+          description: Log received

@@ -32,3 +32,5 @@ paths:
     $ref: './stream-api.yaml#/paths/~1single-file~1readme'
   /zip:
     $ref: './stream-api.yaml#/paths/~1zip'
+  /log:
+    $ref: './logger-api.yaml#/paths/~1log'
