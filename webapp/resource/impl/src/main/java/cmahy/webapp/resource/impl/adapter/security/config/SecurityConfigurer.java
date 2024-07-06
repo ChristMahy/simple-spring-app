@@ -5,8 +5,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.condition.*;
+import org.springframework.boot.autoconfigure.h2.H2ConsoleProperties;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.*;
 import org.springframework.core.annotation.Order;
@@ -46,7 +46,14 @@ public class SecurityConfigurer {
 
     @Bean
     @Order(1)
-    @Profile("dev")
+    @ConditionalOnExpression(
+        """
+            ${spring.h2.console.enabled:false} eq true or
+            ${spring.h2.console.enabled:false} eq 'true' or
+            ${spring.h2.console.enabled:false} eq 'on' or
+            ${spring.h2.console.enabled:false} eq '1'
+        """
+    )
     public SecurityFilterChain h2ConsoleSecurityFilterChain(HttpSecurity http) throws Exception {
         PathRequest.H2ConsoleRequestMatcher h2ConsoleRequestMatcher = PathRequest.toH2Console();
 
