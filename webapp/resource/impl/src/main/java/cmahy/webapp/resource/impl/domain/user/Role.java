@@ -2,6 +2,7 @@ package cmahy.webapp.resource.impl.domain.user;
 
 import jakarta.persistence.*;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.Collection;
 import java.util.Objects;
@@ -44,7 +45,7 @@ public class Role {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
             .append("id", id)
             .append("name", name)
             .toString();
