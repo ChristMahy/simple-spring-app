@@ -5,7 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
 import picocli.CommandLine;
 
 @SpringBootApplication(scanBasePackages = { "cmahy.webapp.shell.client" })
@@ -15,10 +14,9 @@ public class ShellClientApplication implements CommandLineRunner, ExitCodeGenera
 
     public static void main(String[] args) {
         SpringApplication.exit(
-            new SpringApplicationBuilder(ShellClientApplication.class)
-                .web(WebApplicationType.NONE)
-                .bannerMode(Banner.Mode.OFF)
-                .run(args)
+            SpringApplication.run(
+                ShellClientApplication.class, args
+            )
         );
     }
 

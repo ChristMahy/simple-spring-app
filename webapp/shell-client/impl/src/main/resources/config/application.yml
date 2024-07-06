@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: ShellClient
+  main:
+    web-application-type: none
+  config:
+    import: classpath:messages/help-messages.yml
+  output:
+    ansi:
+      enabled: always
+
+application:
+  console:
+    output:
+      format: "\n\r# --------------- @ --------------- @ --------------- #\n\r%s# --------------- @ --------------- @ --------------- #\n\r\n\r"

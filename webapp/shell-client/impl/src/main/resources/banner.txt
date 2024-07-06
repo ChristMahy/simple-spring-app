@@ -1,0 +1,11 @@
+${AnsiColor.BLUE}${AnsiStyle.BOLD}
+... .... . .-.. .-..      -.-. .-.. .. . -. -
+
+  __|  |           |  |     __|  | _)              |
+\__ \    \    -_)  |  |    (     |  |   -_)    \    _|
+____/ _| _| \___| _| _|   \___| _| _| \___| _| _| \__|
+
+01010011 01101000 01100101 01101100 01101100
+                          01000011 01101100 01101001 01100101 01101110 01110100
+${AnsiColor.CYAN}
+:: ${application.title} :: ${application.formatted-version} :: ${spring-boot.formatted-version} ::${AnsiStyle.NORMAL}${AnsiColor.DEFAULT}

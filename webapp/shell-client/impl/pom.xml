@@ -22,12 +22,14 @@
     </parent>
 
     <properties>
+        <application.title>ShellClient</application.title>
+
         <cmahy.common.version>DEV-SNAPSHOT</cmahy.common.version>
         <cmahy.webapp.shell-client.version>DEV-SNAPSHOT</cmahy.webapp.shell-client.version>
 
         <picocli.version>4.7.6</picocli.version>
 
-        <start-class>cmahy.webapp.resource.impl.adapter.ResourceApplication</start-class>
+        <start-class>cmahy.webapp.shell.client.impl.adapter.ShellClientApplication</start-class>
     </properties>
 
     <dependencies>
@@ -97,6 +99,8 @@
     </dependencies>
 
     <build>
+        <finalName>${application.title}-${project.version}</finalName>
+
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -131,6 +135,13 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Implementation-Title>${application.title}</Implementation-Title>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
             </plugin>
 
             <plugin>
