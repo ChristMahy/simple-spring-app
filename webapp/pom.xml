@@ -17,7 +17,7 @@
 
     <modules>
         <module>resource</module>
-        <module>client</module>
+        <module>shell-client</module>
         <module>authorization</module>
         <module>reactive</module>
     </modules>
