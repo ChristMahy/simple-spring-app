@@ -6,7 +6,8 @@ import java.util.concurrent.Callable;
 
 @CommandLine.Command(
     subcommands = {
-        VersionApi.class
+        VersionApi.class,
+        OtherApi.class
     }
 )
 public abstract class MainApi implements Callable<Integer> {
