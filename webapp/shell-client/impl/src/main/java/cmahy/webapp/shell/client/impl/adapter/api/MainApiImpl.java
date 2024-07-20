@@ -1,10 +1,11 @@
 package cmahy.webapp.shell.client.impl.adapter.api;
 
 import cmahy.webapp.shell.client.api.MainApi;
+import cmahy.webapp.shell.client.impl.application.query.PrintMessageQuery;
+import cmahy.webapp.shell.client.impl.application.repository.property.ConsolePropertyRepository;
 import jakarta.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import picocli.CommandLine;
 
 import java.io.ByteArrayOutputStream;
@@ -16,13 +17,15 @@ public class MainApiImpl extends MainApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(MainApiImpl.class);
 
-    private final String consoleFormatter;
+    private final PrintMessageQuery printMessageQuery;
+    private final ConsolePropertyRepository consolePropertyRepository;
 
     public MainApiImpl(
-        @Value("${application.console.output.format}")
-        String consoleFormatter
+        PrintMessageQuery printMessageQuery,
+        ConsolePropertyRepository consolePropertyRepository
     ) {
-        this.consoleFormatter = consoleFormatter;
+        this.printMessageQuery = printMessageQuery;
+        this.consolePropertyRepository = consolePropertyRepository;
     }
 
     @Override
@@ -36,7 +39,12 @@ public class MainApiImpl extends MainApi {
             ) {
                 CommandLine.usage(this, ps);
 
-                System.out.printf(consoleFormatter, baos.toString(StandardCharsets.UTF_8));
+                printMessageQuery.execute(String.format(
+                    consolePropertyRepository
+                        .findFormat()
+                        .orElse("%s"),
+                    baos.toString(StandardCharsets.UTF_8)
+                ));
             }
 
             LOG.info("Main app menu has been finished successfully.");

@@ -1,8 +1,8 @@
 shell-client:
   help:
     general:
-      message: '\n\rUsage: serverscripts.jar [options]\n\r\n\r\
+      message: "\n\rUsage: java -jar <Application name>-<Version>.jar [options]\n\r\n\r\
         Where options:\n\r\n\r\
         \t-ah, --app-help\t\t\t\tDisplay this menu\n\r\
         \t-av, --app-version\t\t\tDisplay current application version\
-        \n\r'
+        \n\r\n\r"
