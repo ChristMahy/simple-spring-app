@@ -1,0 +1,12 @@
+package cmahy.webapp.user.kernel.application.repository;
+
+import cmahy.webapp.user.kernel.domain.Role;
+
+import java.util.Optional;
+
+public interface RoleRepository {
+
+    Optional<Role> findByName(String name);
+
+    Role save(Role role);
+}

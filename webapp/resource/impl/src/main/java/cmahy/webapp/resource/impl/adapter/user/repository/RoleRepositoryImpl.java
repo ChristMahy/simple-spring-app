@@ -1,7 +1,7 @@
 package cmahy.webapp.resource.impl.adapter.user.repository;
 
-import cmahy.webapp.resource.impl.application.user.repository.RoleRepository;
-import cmahy.webapp.resource.impl.domain.user.Role;
+import cmahy.webapp.user.kernel.application.repository.RoleRepository;
+import cmahy.webapp.user.kernel.domain.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

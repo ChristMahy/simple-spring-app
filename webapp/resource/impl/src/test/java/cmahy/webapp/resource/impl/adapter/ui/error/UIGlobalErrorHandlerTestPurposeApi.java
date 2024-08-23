@@ -1,8 +1,7 @@
 package cmahy.webapp.resource.impl.adapter.ui.error;
 
-import cmahy.webapp.resource.impl.exception.UsageOnDeletionException;
+import cmahy.webapp.taco.shop.kernel.exception.UsageOnDeletionException;
 import org.springframework.dao.DataAccessException;
-import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.stereotype.Controller;

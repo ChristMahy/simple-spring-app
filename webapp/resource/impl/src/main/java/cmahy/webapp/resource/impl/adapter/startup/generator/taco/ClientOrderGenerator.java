@@ -1,7 +1,7 @@
 package cmahy.webapp.resource.impl.adapter.startup.generator.taco;
 
-import cmahy.webapp.resource.impl.application.taco.shop.repository.*;
-import cmahy.webapp.resource.impl.domain.taco.*;
+import cmahy.webapp.taco.shop.kernel.application.repository.*;
+import cmahy.webapp.taco.shop.kernel.domain.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

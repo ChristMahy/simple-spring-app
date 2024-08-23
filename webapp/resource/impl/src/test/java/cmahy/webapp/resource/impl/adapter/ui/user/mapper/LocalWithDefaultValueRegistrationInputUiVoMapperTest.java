@@ -1,10 +1,10 @@
 package cmahy.webapp.resource.impl.adapter.ui.user.mapper;
 
 import cmahy.common.helper.Generator;
-import cmahy.webapp.resource.impl.application.user.vo.input.UserSecurityInputAppVo;
-import cmahy.webapp.resource.impl.domain.user.AuthProvider;
-import cmahy.webapp.resource.impl.exception.NullException;
 import cmahy.webapp.resource.ui.vo.input.RegistrationInputUiVo;
+import cmahy.webapp.user.kernel.domain.AuthProvider;
+import cmahy.webapp.user.kernel.exception.RequiredException;
+import cmahy.webapp.user.kernel.vo.input.UserSecurityInputAppVo;
 import org.assertj.core.api.recursive.comparison.RecursiveComparisonConfiguration;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -70,7 +70,7 @@ class LocalWithDefaultValueRegistrationInputUiVoMapperTest {
 
     @Test
     void map_whenGivenValueIsNull_thenThrowNullAssertion() {
-        assertThrows(NullException.class, () -> {
+        assertThrows(RequiredException.class, () -> {
             localWithDefaultValueRegistrationInputApiVoMapper.map(null);
         });
     }

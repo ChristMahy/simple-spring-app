@@ -1,10 +1,12 @@
 package cmahy.webapp.resource.impl.adapter.taco.shop.scheduler;
 
+import cmahy.common.entity.page.EntityPageable;
 import cmahy.common.helper.Generator;
-import cmahy.webapp.resource.impl.application.taco.external.query.GetAllExternalIngredientQuery;
-import cmahy.webapp.resource.impl.domain.taco.IngredientType;
-import cmahy.webapp.resource.impl.domain.taco.external.IngredientExternal;
-import cmahy.webapp.resource.impl.domain.taco.external.page.IngredientExternalPage;
+import cmahy.webapp.taco.shop.kernel.application.query.GetAllRemoteIngredientPagedQuery;
+import cmahy.webapp.taco.shop.kernel.domain.IngredientType;
+import cmahy.webapp.taco.shop.kernel.domain.id.IngredientId;
+import cmahy.webapp.taco.shop.kernel.vo.output.IngredientOutputVo;
+import cmahy.webapp.taco.shop.kernel.vo.output.IngredientPageOutputVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,13 +21,14 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class IngredientSchedulerTest {
 
     @Mock
-    private GetAllExternalIngredientQuery getAllExternalIngredientQuery;
+    private GetAllRemoteIngredientPagedQuery getAllRemoteIngredientQuery;
 
     @InjectMocks
     private IngredientScheduler ingredientScheduler;
@@ -33,25 +36,23 @@ class IngredientSchedulerTest {
     @Test
     void runGetAllQuery() {
         assertDoesNotThrow(() -> {
-            List<IngredientExternal> ingredients = Stream
-                .generate(() -> {
-                    IngredientExternal ingredient = new IngredientExternal(
-                        Generator.generateAString(),
-                        Generator.generateAString(),
-                        Generator.randomEnum(IngredientType.class)
-                        );
+            EntityPageable pageable = mock(EntityPageable.class);
 
-                    return ingredient;
-                })
+            List<IngredientOutputVo> ingredients = Stream
+                .generate(() -> new IngredientOutputVo(
+                    new IngredientId(Generator.generateAString()),
+                    Generator.generateAString(),
+                    Generator.randomEnum(IngredientType.class).name()
+                ))
                 .limit(Generator.randomInt(50, 1000))
                 .toList();
 
-            IngredientExternalPage page = new IngredientExternalPage(
+            IngredientPageOutputVo page = new IngredientPageOutputVo(
                 ingredients,
                 Integer.valueOf(ingredients.size()).longValue()
             );
 
-            when(getAllExternalIngredientQuery.execute()).thenReturn(page);
+            when(getAllRemoteIngredientQuery.execute(pageable)).thenReturn(page);
 
             ingredientScheduler.runGetAllQuery();
         });
@@ -61,7 +62,9 @@ class IngredientSchedulerTest {
     @MethodSource({ "exceptions" })
     void runGetAllQuery_isRunningThreadSafe(Throwable exception) {
         assertDoesNotThrow(() -> {
-            when(getAllExternalIngredientQuery.execute()).thenAnswer(invocationOnMock -> { throw exception; });
+            EntityPageable pageable = mock(EntityPageable.class);
+
+            when(getAllRemoteIngredientQuery.execute(pageable)).thenAnswer(_ -> { throw exception; });
 
             ingredientScheduler.runGetAllQuery();
         });

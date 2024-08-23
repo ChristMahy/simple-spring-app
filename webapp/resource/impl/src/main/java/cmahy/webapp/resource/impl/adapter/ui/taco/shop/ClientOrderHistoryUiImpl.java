@@ -1,14 +1,15 @@
 package cmahy.webapp.resource.impl.adapter.ui.taco.shop;
 
+import cmahy.common.entity.page.DefaultEntityPageableImpl;
 import cmahy.common.entity.page.EntityPageableBuilder;
 import cmahy.webapp.resource.impl.adapter.taco.shop.properties.OrderProperties;
-import cmahy.webapp.resource.impl.adapter.user.mapper.id.UserApiIdMapper;
-import cmahy.webapp.resource.impl.application.taco.shop.query.GetAllClientOrderPagedQuery;
-import cmahy.webapp.resource.impl.application.vo.input.PageableInputAppVo;
-import cmahy.webapp.resource.taco.shop.vo.output.ClientOrderPageOutputVo;
 import cmahy.webapp.resource.ui.taco.shop.ClientOrderHistoryUi;
 import cmahy.webapp.resource.ui.vo.output.Pagination;
-import cmahy.webapp.resource.user.api.security.vo.output.UserSecurityDetails;
+import cmahy.webapp.resource.ui.vo.output.UserSecurityDetails;
+import cmahy.webapp.taco.shop.kernel.application.query.GetAllClientOrderPagedQuery;
+import cmahy.webapp.taco.shop.kernel.exception.RequiredException;
+import cmahy.webapp.taco.shop.kernel.vo.output.ClientOrderPageOutputVo;
+import cmahy.webapp.user.kernel.exception.UserNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -22,16 +23,13 @@ public class ClientOrderHistoryUiImpl implements ClientOrderHistoryUi {
 
     private final GetAllClientOrderPagedQuery getAllClientOrderPagedQuery;
     private final OrderProperties orderProperties;
-    private final UserApiIdMapper userApiIdMapper;
 
     public ClientOrderHistoryUiImpl(
         GetAllClientOrderPagedQuery getAllClientOrderPagedQuery,
-        OrderProperties orderProperties,
-        UserApiIdMapper userApiIdMapper
+        OrderProperties orderProperties
     ) {
         this.getAllClientOrderPagedQuery = getAllClientOrderPagedQuery;
         this.orderProperties = orderProperties;
-        this.userApiIdMapper = userApiIdMapper;
     }
 
     @Override
@@ -42,14 +40,14 @@ public class ClientOrderHistoryUiImpl implements ClientOrderHistoryUi {
         Optional<Integer> pageNumber,
         Model model,
         UserSecurityDetails userSecurityDetails
-    ) {
-        PageableInputAppVo pageable = EntityPageableBuilder.<PageableInputAppVo>instance(orderProperties.pageSize())
+    ) throws UserNotFoundException, RequiredException {
+        DefaultEntityPageableImpl pageable = EntityPageableBuilder.<DefaultEntityPageableImpl>instance(orderProperties.pageSize())
             .withPageSize(pageSize.orElse(null))
             .withPageNumber(pageNumber.orElse(null))
-            .build(PageableInputAppVo.class);
+            .build(DefaultEntityPageableImpl.class);
 
         ClientOrderPageOutputVo orders =
-            getAllClientOrderPagedQuery.execute(userApiIdMapper.map(userSecurityDetails.userSecurity().id()), pageable);
+            getAllClientOrderPagedQuery.execute(userSecurityDetails.userSecurity().id(), pageable);
 
         model.addAttribute("orders", orders);
         model.addAttribute(

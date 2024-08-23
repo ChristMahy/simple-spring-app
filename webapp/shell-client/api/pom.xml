@@ -21,11 +21,8 @@
 
     <properties>
         <cmahy.common.version>DEV-SNAPSHOT</cmahy.common.version>
-        <cmahy.webapp.shell-client.version>DEV-SNAPSHOT</cmahy.webapp.shell-client.version>
 
         <picocli.version>4.7.6</picocli.version>
-
-        <start-class>cmahy.webapp.resource.impl.adapter.ResourceApplication</start-class>
     </properties>
 
     <dependencies>

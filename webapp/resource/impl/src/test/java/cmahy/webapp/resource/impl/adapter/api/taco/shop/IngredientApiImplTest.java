@@ -1,15 +1,15 @@
 package cmahy.webapp.resource.impl.adapter.api.taco.shop;
 
+import cmahy.common.entity.page.EntityPageable;
 import cmahy.common.helper.Generator;
 import cmahy.webapp.resource.impl.adapter.config.properties.PaginationProperties;
-import cmahy.webapp.resource.impl.application.taco.shop.command.*;
-import cmahy.webapp.resource.impl.application.taco.shop.query.GetAllIngredientPagedQuery;
-import cmahy.webapp.resource.impl.application.vo.input.PageableInputAppVo;
-import cmahy.webapp.resource.taco.shop.id.IngredientId;
-import cmahy.webapp.resource.taco.shop.vo.input.IngredientCreateInputVo;
-import cmahy.webapp.resource.taco.shop.vo.input.IngredientUpdateInputVo;
-import cmahy.webapp.resource.taco.shop.vo.output.IngredientOutputVo;
-import cmahy.webapp.resource.taco.shop.vo.output.IngredientPageOutputVo;
+import cmahy.webapp.taco.shop.kernel.application.command.*;
+import cmahy.webapp.taco.shop.kernel.application.query.GetAllIngredientPagedQuery;
+import cmahy.webapp.taco.shop.kernel.domain.id.IngredientId;
+import cmahy.webapp.taco.shop.kernel.vo.input.IngredientCreateInputVo;
+import cmahy.webapp.taco.shop.kernel.vo.input.IngredientUpdateInputVo;
+import cmahy.webapp.taco.shop.kernel.vo.output.IngredientOutputVo;
+import cmahy.webapp.taco.shop.kernel.vo.output.IngredientPageOutputVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
@@ -50,7 +50,7 @@ class IngredientApiImplTest {
 
             when(paginationProperties.pageSize()).thenReturn(Generator.randomIntEqualOrAboveZero());
 
-            ArgumentCaptor<PageableInputAppVo> captor = ArgumentCaptor.forClass(PageableInputAppVo.class);
+            ArgumentCaptor<EntityPageable> captor = ArgumentCaptor.forClass(EntityPageable.class);
 
             when(getAllIngredientPagedQuery.execute(captor.capture())).thenReturn(ingredientPageOutputVo);
 

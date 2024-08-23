@@ -2,11 +2,11 @@ package cmahy.webapp.resource.impl.adapter.security.service;
 
 import cmahy.common.helper.Generator;
 import cmahy.webapp.resource.impl.adapter.security.mapper.output.UserSecurityDetailsMapper;
-import cmahy.webapp.resource.impl.application.user.query.GetUserSecurityByUsernameQuery;
-import cmahy.webapp.resource.impl.application.user.vo.output.UserSecurityOutputAppVo;
-import cmahy.webapp.resource.impl.domain.user.AuthProvider;
-import cmahy.webapp.resource.impl.exception.user.UserNotFoundException;
-import cmahy.webapp.resource.user.api.security.vo.output.UserSecurityDetails;
+import cmahy.webapp.resource.ui.vo.output.UserSecurityDetails;
+import cmahy.webapp.user.kernel.application.query.GetUserSecurityByUsernameQuery;
+import cmahy.webapp.user.kernel.domain.AuthProvider;
+import cmahy.webapp.user.kernel.exception.UserNotFoundException;
+import cmahy.webapp.user.kernel.vo.output.UserSecurityOutputAppVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

@@ -1,0 +1,92 @@
+package cmahy.webapp.kernel.taco.shop.impl.application.mapper.output;
+
+import cmahy.webapp.taco.shop.kernel.application.mapper.output.ClientOrderOutputMapper;
+import cmahy.webapp.taco.shop.kernel.application.mapper.output.TacoOutputMapper;
+import cmahy.webapp.taco.shop.kernel.domain.ClientOrder;
+import cmahy.webapp.taco.shop.kernel.domain.Taco;
+import cmahy.webapp.taco.shop.kernel.exception.RequiredException;
+import cmahy.webapp.taco.shop.kernel.vo.output.ClientOrderOutputVo;
+import cmahy.webapp.taco.shop.kernel.vo.output.TacoOutputVo;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Stream;
+
+import static cmahy.common.helper.Generator.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
+class ClientOrderOutputMapperTest {
+
+    @Mock
+    private TacoOutputMapper tacoOutputMapper;
+
+    @InjectMocks
+    private ClientOrderOutputMapper clientOrderOutputMapper;
+
+    @Test
+    void map() {
+        assertDoesNotThrow(() -> {
+            List<Taco> tacos = Stream.generate(() -> mock(Taco.class))
+                .limit(randomInt(10, 100))
+                .toList();
+            List<TacoOutputVo> tacoOutputVos = tacos.stream()
+                .map(taco -> {
+                    TacoOutputVo outputVo = mock(TacoOutputVo.class);
+
+                    try {
+                        when(tacoOutputMapper.map(taco)).thenReturn(outputVo);
+                    } catch (RequiredException ignored) {}
+
+                    return outputVo;
+                })
+                .toList();
+
+            ClientOrder order = new ClientOrder();
+
+            order.setId(randomLongEqualOrAboveZero());
+            order.setPlacedAt(new Date());
+            order.setDeliveryName(generateAString());
+            order.setDeliveryStreet(generateAString());
+            order.setDeliveryState(generateAString());
+            order.setDeliveryCity(generateAString());
+            order.setDeliveryZip(generateAString());
+            order.setCcNumber(generateAString());
+            order.setCcCVV(generateAString());
+            order.setCcExpiration(generateAString());
+            order.setTacos(tacos);
+
+            ClientOrderOutputVo actual = clientOrderOutputMapper.map(order);
+
+            assertThat(actual).isNotNull();
+            assertThat(actual.id()).isNotNull();
+            assertThat(actual.id().value()).isEqualTo(order.getId());
+            assertThat(actual.placedAt()).isEqualTo(order.getPlacedAt());
+            assertThat(actual.deliveryName()).isEqualTo(order.getDeliveryName());
+            assertThat(actual.deliveryStreet()).isEqualTo(order.getDeliveryStreet());
+            assertThat(actual.deliveryCity()).isEqualTo(order.getDeliveryCity());
+            assertThat(actual.deliveryState()).isEqualTo(order.getDeliveryState());
+            assertThat(actual.deliveryZip()).isEqualTo(order.getDeliveryZip());
+            assertThat(actual.ccNumber()).isEqualTo(order.getCcNumber());
+            assertThat(actual.ccExpiration()).isEqualTo(order.getCcExpiration());
+            assertThat(actual.ccCVV()).isEqualTo(order.getCcCVV());
+            assertThat(actual.tacos()).containsExactlyElementsOf(tacoOutputVos);
+        });
+    }
+
+    @Test
+    void map_whenGivenValueIsNull_thenThrowNullAssertion() {
+        assertThrows(RequiredException.class, () -> {
+            clientOrderOutputMapper.map(null);
+        });
+    }
+}

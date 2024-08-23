@@ -1,13 +1,12 @@
 package cmahy.webapp.resource.impl.adapter.security.mapper.output;
 
 import cmahy.common.helper.Generator;
-import cmahy.webapp.resource.impl.application.user.vo.output.UserSecurityOutputAppVo;
-import cmahy.webapp.resource.impl.domain.user.AuthProvider;
-import cmahy.webapp.resource.impl.exception.NullException;
 import cmahy.webapp.resource.impl.helper.security.user.SecurityUserGenerator;
-import cmahy.webapp.resource.user.api.security.vo.output.UserSecurityDetails;
-import cmahy.webapp.resource.user.api.vo.id.UserApiId;
-import cmahy.webapp.resource.user.api.vo.output.UserSecurityOutputApiVo;
+import cmahy.webapp.resource.ui.vo.output.UserSecurityDetails;
+import cmahy.webapp.user.kernel.domain.AuthProvider;
+import cmahy.webapp.user.kernel.domain.id.UserId;
+import cmahy.webapp.user.kernel.exception.RequiredException;
+import cmahy.webapp.user.kernel.vo.output.UserSecurityOutputAppVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,18 +24,14 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class UserSecurityDetailsMapperTest {
 
-    @Mock
-    private UserSecurityOutputApiVoMapper userSecurityOutputApiVoMapper;
-
     @InjectMocks
     private UserSecurityDetailsMapper userSecurityDetailsMapper;
 
     @Test
     void map() {
         assertDoesNotThrow(() -> {
-            UserSecurityOutputAppVo appOutput = mock(UserSecurityOutputAppVo.class);
-            UserSecurityOutputApiVo user = new UserSecurityOutputApiVo(
-                new UserApiId(Generator.randomLongEqualOrAboveZero()),
+            UserSecurityOutputAppVo user = new UserSecurityOutputAppVo(
+                new UserId(Generator.randomLongEqualOrAboveZero()),
                 Generator.generateAString(),
                 Generator.generateAString().getBytes(),
                 Generator.generateAString(),
@@ -45,17 +40,15 @@ class UserSecurityDetailsMapperTest {
                 Generator.generateAString(),
                 Generator.generateAString(),
                 Generator.generateAString(),
-                Generator.randomEnum(AuthProvider.class).name(),
+                Generator.randomEnum(AuthProvider.class),
                 Generator.randomBoolean(),
                 Generator.randomBoolean(),
                 Generator.randomBoolean(),
                 Generator.randomBoolean(),
-                SecurityUserGenerator.generateCommonApiRoles()
+                SecurityUserGenerator.generateCommonAppRoles()
             );
 
-            when(userSecurityOutputApiVoMapper.map(appOutput)).thenReturn(user);
-
-            UserSecurityDetails actual = userSecurityDetailsMapper.map(appOutput);
+            UserSecurityDetails actual = userSecurityDetailsMapper.map(user);
 
             assertThat(actual).isNotNull();
 
@@ -73,7 +66,7 @@ class UserSecurityDetailsMapperTest {
 
     @Test
     void map_whenSourceIsNull_thenThrowNullException() {
-        assertThrows(NullException.class, () -> {
+        assertThrows(RequiredException.class, () -> {
             userSecurityDetailsMapper.map(null);
         });
     }

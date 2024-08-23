@@ -1,8 +1,11 @@
 package cmahy.webapp.resource.impl.adapter.taco.shop.scheduler;
 
-import cmahy.webapp.resource.impl.application.taco.external.query.GetAllExternalIngredientQuery;
-import cmahy.webapp.resource.impl.domain.taco.external.IngredientExternal;
-import cmahy.webapp.resource.impl.domain.taco.external.page.IngredientExternalPage;
+import cmahy.common.entity.page.DefaultEntityPageableImpl;
+import cmahy.webapp.taco.shop.kernel.application.query.GetAllRemoteIngredientPagedQuery;
+import cmahy.webapp.taco.shop.kernel.domain.Ingredient;
+import cmahy.webapp.taco.shop.kernel.domain.page.IngredientPage;
+import cmahy.webapp.taco.shop.kernel.vo.output.IngredientOutputVo;
+import cmahy.webapp.taco.shop.kernel.vo.output.IngredientPageOutputVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -17,26 +20,28 @@ public class IngredientScheduler {
 
     private static final Logger LOG = LoggerFactory.getLogger(IngredientScheduler.class);
 
-    private final GetAllExternalIngredientQuery getAllExternalIngredientQuery;
+    private final GetAllRemoteIngredientPagedQuery getAllRemoteIngredientPagedQuery;
 
-    public IngredientScheduler(GetAllExternalIngredientQuery getAllExternalIngredientQuery) {
-        this.getAllExternalIngredientQuery = getAllExternalIngredientQuery;
+    public IngredientScheduler(GetAllRemoteIngredientPagedQuery getAllRemoteIngredientPagedQuery) {
+        this.getAllRemoteIngredientPagedQuery = getAllRemoteIngredientPagedQuery;
     }
 
     @Scheduled(
         initialDelayString = "${application.taco.ingredients.external-resource.scheduler.initial-delay:5000}",
-        fixedRateString = "${application.taco.ingredients.external-resource.scheduler.fixed-rate:5000}"
+        fixedDelayString = "${application.taco.ingredients.external-resource.scheduler.fixed-delay:5000}"
     )
     public void runGetAllQuery() {
         LOG.info("Run ingredient template");
 
         try {
-            IngredientExternalPage pageIngredients = getAllExternalIngredientQuery.execute();
+            IngredientPageOutputVo pageIngredients = getAllRemoteIngredientPagedQuery.execute(
+                new DefaultEntityPageableImpl(0, Integer.MAX_VALUE)
+            );
 
             if (Objects.nonNull(pageIngredients)) {
                 LOG.info("Ingredient list size <{}/{}>", pageIngredients.content().size(), pageIngredients.totalElements());
 
-                for (IngredientExternal ingredient : pageIngredients.content()) {
+                for (IngredientOutputVo ingredient : pageIngredients.content()) {
                     LOG.info("Ingredient: {}", ingredient);
                 }
             }

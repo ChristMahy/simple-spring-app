@@ -10,8 +10,8 @@
     <artifactId>webapp</artifactId>
     <version>DEV-SNAPSHOT</version>
 
-    <name>spring-webapp</name>
-    <description>Spring Webapp sample project</description>
+    <name>Spring Web-App</name>
+    <description>Spring Web-App</description>
 
     <packaging>pom</packaging>
 
@@ -20,5 +20,7 @@
         <module>shell-client</module>
         <module>authorization</module>
         <module>reactive</module>
+        <module>taco</module>
+        <module>user</module>
     </modules>
 </project>

@@ -1,11 +1,12 @@
 package cmahy.webapp.resource.impl.adapter.ui.taco.shop;
 
-import cmahy.webapp.resource.impl.application.taco.shop.query.GetIngredientByTypeQuery;
-import cmahy.webapp.resource.impl.domain.taco.IngredientType;
-import cmahy.webapp.resource.taco.shop.vo.input.TacoInputVo;
-import cmahy.webapp.resource.taco.shop.vo.output.IngredientOutputVo;
 import cmahy.webapp.resource.ui.taco.TacoUriConstant;
 import cmahy.webapp.resource.ui.taco.shop.DesignUi;
+import cmahy.webapp.taco.shop.kernel.application.query.GetIngredientByTypeQuery;
+import cmahy.webapp.taco.shop.kernel.domain.IngredientType;
+import cmahy.webapp.taco.shop.kernel.exception.RequiredException;
+import cmahy.webapp.taco.shop.kernel.vo.input.TacoInputVo;
+import cmahy.webapp.taco.shop.kernel.vo.output.IngredientOutputVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,27 +31,27 @@ public class DesignUiImpl implements DesignUi {
     }
 
     @ModelAttribute(name = "wrap")
-    public Set<IngredientOutputVo> wrap() {
+    public Set<IngredientOutputVo> wrap() throws RequiredException {
         return ingredientByTypeQuery.execute(IngredientType.WRAP);
     }
 
     @ModelAttribute(name = "protein")
-    public Set<IngredientOutputVo> protein() {
+    public Set<IngredientOutputVo> protein() throws RequiredException {
         return ingredientByTypeQuery.execute(IngredientType.PROTEIN);
     }
 
     @ModelAttribute(name = "cheese")
-    public Set<IngredientOutputVo> cheese() {
+    public Set<IngredientOutputVo> cheese() throws RequiredException {
         return ingredientByTypeQuery.execute(IngredientType.CHEESE);
     }
 
     @ModelAttribute(name = "veggies")
-    public Set<IngredientOutputVo> veggies() {
+    public Set<IngredientOutputVo> veggies() throws RequiredException {
         return ingredientByTypeQuery.execute(IngredientType.VEGGIES);
     }
 
     @ModelAttribute(name = "sauce")
-    public Set<IngredientOutputVo> sauce() {
+    public Set<IngredientOutputVo> sauce() throws RequiredException {
         return ingredientByTypeQuery.execute(IngredientType.SAUCE);
     }
 

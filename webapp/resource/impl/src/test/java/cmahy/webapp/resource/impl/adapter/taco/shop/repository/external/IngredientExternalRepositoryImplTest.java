@@ -1,8 +1,9 @@
 package cmahy.webapp.resource.impl.adapter.taco.shop.repository.external;
 
+import cmahy.common.entity.page.EntityPageable;
 import cmahy.common.helper.Generator;
-import cmahy.webapp.resource.impl.domain.taco.external.page.IngredientExternalPage;
-import cmahy.webapp.resource.impl.domain.taco.page.IngredientPage;
+import cmahy.webapp.taco.shop.adapter.webclient.repository.ExternalIngredientRepositoryImpl;
+import cmahy.webapp.taco.shop.kernel.domain.page.IngredientPage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,7 +34,7 @@ class IngredientExternalRepositoryImplTest {
     private WebClient tacoResource;
 
     @InjectMocks
-    private IngredientExternalRepositoryImpl ingredientExternalRepository;
+    private ExternalIngredientRepositoryImpl ingredientExternalRepository;
 
     @Mock
     private WebClient.RequestHeadersUriSpec requestHeadersUriSpec;
@@ -56,11 +57,12 @@ class IngredientExternalRepositoryImplTest {
     @Test
     void findAllIngredients() {
         assertDoesNotThrow(() -> {
-            IngredientExternalPage page = mock(IngredientExternalPage.class);
+            EntityPageable pageable = mock(EntityPageable.class);
+            IngredientPage page = mock(IngredientPage.class);
 
-            when(responseSpec.bodyToMono(IngredientExternalPage.class)).thenReturn(Mono.just(page));
+            when(responseSpec.bodyToMono(IngredientPage.class)).thenReturn(Mono.just(page));
 
-            IngredientExternalPage actual = ingredientExternalRepository.findAllIngredients();
+            IngredientPage actual = ingredientExternalRepository.findAll(pageable);
 
             assertThat(actual)
                 .isNotNull()
@@ -72,9 +74,11 @@ class IngredientExternalRepositoryImplTest {
     @MethodSource("exceptions")
     void findAllIngredients_onAnyError_thenReturnEmptyPage(Throwable throwable) {
         assertDoesNotThrow(() -> {
-            when(responseSpec.bodyToMono(IngredientExternalPage.class)).thenReturn(Mono.error(throwable));
+            EntityPageable pageable = mock(EntityPageable.class);
 
-            IngredientExternalPage actual = ingredientExternalRepository.findAllIngredients();
+            when(responseSpec.bodyToMono(IngredientPage.class)).thenReturn(Mono.error(throwable));
+
+            IngredientPage actual = ingredientExternalRepository.findAll(pageable);
 
             assertThat(actual).isNotNull();
 

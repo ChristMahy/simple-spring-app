@@ -26,6 +26,8 @@
 
         <cmahy.common.version>DEV-SNAPSHOT</cmahy.common.version>
         <cmahy.webapp.shell-client.version>DEV-SNAPSHOT</cmahy.webapp.shell-client.version>
+        <cmahy.webapp.taco.shop.version>DEV-SNAPSHOT</cmahy.webapp.taco.shop.version>
+        <cmahy.webapp.user.version>DEV-SNAPSHOT</cmahy.webapp.user.version>
 
         <picocli.version>4.7.6</picocli.version>
 
@@ -36,7 +38,49 @@
         <dependency>
             <groupId>cmahy.webapp.shell-client</groupId>
             <artifactId>api</artifactId>
-            <version>DEV-SNAPSHOT</version>
+            <version>${cmahy.webapp.shell-client.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy.webapp.user.kernel</groupId>
+            <artifactId>domain</artifactId>
+            <version>${cmahy.webapp.user.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy.webapp.user.kernel</groupId>
+            <artifactId>vo</artifactId>
+            <version>${cmahy.webapp.user.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy.webapp.user.kernel</groupId>
+            <artifactId>application</artifactId>
+            <version>${cmahy.webapp.user.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy.webapp.taco.shop.kernel</groupId>
+            <artifactId>application</artifactId>
+            <version>${cmahy.webapp.taco.shop.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy.webapp.taco.shop.kernel</groupId>
+            <artifactId>domain</artifactId>
+            <version>${cmahy.webapp.taco.shop.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy.webapp.taco.shop.kernel</groupId>
+            <artifactId>vo</artifactId>
+            <version>${cmahy.webapp.taco.shop.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy.webapp.taco.shop.adapter.repository</groupId>
+            <artifactId>webclient</artifactId>
+            <version>${cmahy.webapp.taco.shop.version}</version>
         </dependency>
 
         <dependency>
@@ -76,6 +120,16 @@
                     <artifactId>picocli</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
         <dependency>

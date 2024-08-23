@@ -1,6 +1,6 @@
 package cmahy.webapp.resource.impl.adapter.api.error;
 
-import cmahy.webapp.resource.impl.exception.UsageOnDeletionException;
+import cmahy.webapp.taco.shop.kernel.exception.UsageOnDeletionException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

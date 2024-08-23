@@ -22,6 +22,7 @@
     <properties>
         <cmahy.common.version>DEV-SNAPSHOT</cmahy.common.version>
         <cmahy.webapp.resource.version>DEV-SNAPSHOT</cmahy.webapp.resource.version>
+        <cmahy.webapp.taco.shop.version>DEV-SNAPSHOT</cmahy.webapp.taco.shop.version>
     </properties>
 
     <dependencies>
@@ -42,9 +43,17 @@
         </dependency>
 
         <dependency>
-            <groupId>cmahy.webapp.resource</groupId>
+            <groupId>cmahy.webapp.taco.shop.kernel</groupId>
+            <artifactId>domain</artifactId>
+            <version>${cmahy.webapp.taco.shop.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy.webapp.taco.shop.kernel</groupId>
             <artifactId>vo</artifactId>
-            <version>${cmahy.webapp.resource.version}</version>
+            <version>${cmahy.webapp.taco.shop.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>

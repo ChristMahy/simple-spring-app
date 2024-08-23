@@ -2,8 +2,8 @@ package cmahy.webapp.resource.impl.adapter.api.taco.shop;
 
 import cmahy.common.helper.Generator;
 import cmahy.webapp.resource.impl.helper.security.user.SecurityUserGenerator;
-import cmahy.webapp.resource.taco.shop.vo.input.IngredientCreateInputVo;
-import cmahy.webapp.resource.taco.shop.vo.input.IngredientUpdateInputVo;
+import cmahy.webapp.taco.shop.kernel.vo.input.IngredientCreateInputVo;
+import cmahy.webapp.taco.shop.kernel.vo.input.IngredientUpdateInputVo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,7 +87,7 @@ class IngredientApiImplSecurityIntegrationTest {
                     post("/api/v1/ingredient")
                         .with(
                             SecurityUserGenerator.generateRandomUserWithSpecificRoles(
-                                SecurityUserGenerator.generateCommonApiRoles()
+                                SecurityUserGenerator.generateCommonAppRoles()
                             )
                         )
                         .contentType(MediaType.APPLICATION_JSON)
@@ -130,7 +130,7 @@ class IngredientApiImplSecurityIntegrationTest {
                     patch("/api/v1/ingredient/{id}", UUID.randomUUID().toString())
                         .with(
                             SecurityUserGenerator.generateRandomUserWithSpecificRoles(
-                                SecurityUserGenerator.generateCommonApiRoles()
+                                SecurityUserGenerator.generateCommonAppRoles()
                             )
                         )
                         .contentType(MediaType.APPLICATION_JSON)
@@ -160,7 +160,7 @@ class IngredientApiImplSecurityIntegrationTest {
                     delete("/api/v1/ingredient/{id}", UUID.randomUUID().toString())
                         .with(
                             SecurityUserGenerator.generateRandomUserWithSpecificRoles(
-                                SecurityUserGenerator.generateCommonApiRoles()
+                                SecurityUserGenerator.generateCommonAppRoles()
                             )
                         )
                 )

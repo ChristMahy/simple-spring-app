@@ -2,8 +2,8 @@ package cmahy.webapp.resource.impl.adapter.api.file;
 
 import cmahy.common.helper.Generator;
 import cmahy.webapp.resource.api.file.LoggerApi;
-import cmahy.webapp.resource.impl.adapter.config.properties.webclient.WebClientProperties;
 import cmahy.webapp.resource.impl.application.file.repository.LoggerRepository;
+import cmahy.webapp.taco.shop.adapter.webclient.config.properties.webclient.WebClientProperties;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

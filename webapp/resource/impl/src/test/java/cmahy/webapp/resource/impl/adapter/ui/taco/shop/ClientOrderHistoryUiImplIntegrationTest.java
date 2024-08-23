@@ -1,13 +1,13 @@
 package cmahy.webapp.resource.impl.adapter.ui.taco.shop;
 
-import cmahy.webapp.resource.impl.application.taco.shop.query.GetAllClientOrderPagedQuery;
-import cmahy.webapp.resource.impl.application.vo.input.PageableInputAppVo;
-import cmahy.webapp.resource.impl.domain.taco.IngredientType;
-import cmahy.webapp.resource.impl.domain.user.id.UserId;
+import cmahy.common.entity.page.EntityPageable;
 import cmahy.webapp.resource.impl.helper.security.user.SecurityUserGenerator;
-import cmahy.webapp.resource.taco.shop.id.*;
-import cmahy.webapp.resource.taco.shop.vo.output.*;
 import cmahy.webapp.resource.ui.taco.TacoUriConstant;
+import cmahy.webapp.taco.shop.kernel.application.query.GetAllClientOrderPagedQuery;
+import cmahy.webapp.taco.shop.kernel.domain.IngredientType;
+import cmahy.webapp.taco.shop.kernel.domain.id.*;
+import cmahy.webapp.taco.shop.kernel.vo.output.*;
+import cmahy.webapp.user.kernel.domain.id.UserId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,7 +80,7 @@ class ClientOrderHistoryUiImplIntegrationTest {
                 Integer.valueOf(clientOrders.size()).longValue()
             );
 
-            when(getAllClientOrderPagedQuery.execute(any(UserId.class), any(PageableInputAppVo.class))).thenReturn(page);
+            when(getAllClientOrderPagedQuery.execute(any(UserId.class), any(EntityPageable.class))).thenReturn(page);
 
             MvcResult requestResult = mockMvc.perform(
                     get(TacoUriConstant.ClientOrder.CLIENT_ORDER_BASE_URL + TacoUriConstant.ClientOrder.CLIENT_ORDER_HISTORY_URL)
@@ -96,7 +96,7 @@ class ClientOrderHistoryUiImplIntegrationTest {
             assertThat(contentAsString)
                 .isNotBlank()
                 .matches(
-                    s -> Pattern.matches(
+                    _ -> Pattern.matches(
                         "^[\\s\\S]*(" +
                             page.content().stream()
                                 .map(clientOrder ->

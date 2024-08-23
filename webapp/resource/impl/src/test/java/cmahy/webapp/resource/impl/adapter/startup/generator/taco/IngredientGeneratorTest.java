@@ -1,7 +1,7 @@
 package cmahy.webapp.resource.impl.adapter.startup.generator.taco;
 
-import cmahy.webapp.resource.impl.application.taco.shop.command.CreateIngredientCommand;
-import cmahy.webapp.resource.taco.shop.vo.input.IngredientCreateInputVo;
+import cmahy.webapp.taco.shop.kernel.application.command.CreateIngredientCommand;
+import cmahy.webapp.taco.shop.kernel.vo.input.IngredientCreateInputVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

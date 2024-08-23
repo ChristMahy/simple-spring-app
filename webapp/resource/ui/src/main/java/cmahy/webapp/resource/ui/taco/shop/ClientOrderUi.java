@@ -1,9 +1,9 @@
 package cmahy.webapp.resource.ui.taco.shop;
 
-import cmahy.webapp.resource.taco.shop.vo.input.ClientOrderInputVo;
-import cmahy.webapp.resource.taco.shop.vo.input.TacoInputVo;
 import cmahy.webapp.resource.ui.taco.TacoUriConstant.ClientOrder;
-import cmahy.webapp.resource.user.api.security.vo.output.UserSecurityDetails;
+import cmahy.webapp.resource.ui.vo.output.UserSecurityDetails;
+import cmahy.webapp.taco.shop.kernel.vo.input.ClientOrderInputVo;
+import cmahy.webapp.taco.shop.kernel.vo.input.TacoInputVo;
 import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
@@ -32,7 +32,8 @@ public interface ClientOrderUi {
         @ModelAttribute(name = TACOS) List<TacoInputVo> tacos,
         SessionStatus sessionStatus,
         @AuthenticationPrincipal(errorOnInvalidType = true) UserSecurityDetails currentUser
-    );
+    ) throws Exception;
+    // TODO: Better exception as signature... (More specific ???)
 
     @PostMapping(params = "action=another-taco")
     String saveOrder(

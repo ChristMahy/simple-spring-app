@@ -1,12 +1,14 @@
 package cmahy.webapp.resource.impl.adapter.ui.taco.shop;
 
-import cmahy.webapp.resource.impl.adapter.user.mapper.id.UserApiIdMapper;
-import cmahy.webapp.resource.impl.application.taco.shop.command.ReceiveNewClientOrderCommand;
-import cmahy.webapp.resource.taco.shop.vo.input.ClientOrderInputVo;
-import cmahy.webapp.resource.taco.shop.vo.input.TacoInputVo;
 import cmahy.webapp.resource.ui.taco.TacoUriConstant;
 import cmahy.webapp.resource.ui.taco.shop.ClientOrderUi;
-import cmahy.webapp.resource.user.api.security.vo.output.UserSecurityDetails;
+import cmahy.webapp.resource.ui.vo.output.UserSecurityDetails;
+import cmahy.webapp.taco.shop.kernel.application.command.ReceiveNewClientOrderCommand;
+import cmahy.webapp.taco.shop.kernel.exception.RequiredException;
+import cmahy.webapp.taco.shop.kernel.exception.ingredient.IngredientNotFoundException;
+import cmahy.webapp.taco.shop.kernel.vo.input.ClientOrderInputVo;
+import cmahy.webapp.taco.shop.kernel.vo.input.TacoInputVo;
+import cmahy.webapp.user.kernel.exception.UserNotFoundException;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,14 +26,11 @@ public class ClientOrderUiImpl implements ClientOrderUi {
 
     private static final Logger LOG = LoggerFactory.getLogger(ClientOrderUiImpl.class);
 
-    private final UserApiIdMapper userApiIdMapper;
     private final ReceiveNewClientOrderCommand receiveCommand;
 
     public ClientOrderUiImpl(
-        UserApiIdMapper userApiIdMapper,
         ReceiveNewClientOrderCommand receiveCommand
     ) {
-        this.userApiIdMapper = userApiIdMapper;
         this.receiveCommand = receiveCommand;
     }
 
@@ -71,7 +70,7 @@ public class ClientOrderUiImpl implements ClientOrderUi {
         List<TacoInputVo> tacos,
         SessionStatus sessionStatus,
         UserSecurityDetails currentUserSecurityInputApiVo
-    ) {
+    ) throws UserNotFoundException, IngredientNotFoundException, RequiredException {
         if (errors.hasErrors()) {
             return "taco-shop/client-order-form";
         }
@@ -90,7 +89,7 @@ public class ClientOrderUiImpl implements ClientOrderUi {
                 tacoOrder.ccCVV(),
                 tacos
             ),
-            userApiIdMapper.map(currentUserSecurityInputApiVo.userSecurity().id())
+            currentUserSecurityInputApiVo.userSecurity().id()
         );
 
         sessionStatus.setComplete();

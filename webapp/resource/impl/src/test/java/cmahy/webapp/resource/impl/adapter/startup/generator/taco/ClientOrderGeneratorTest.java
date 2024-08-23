@@ -1,8 +1,8 @@
 package cmahy.webapp.resource.impl.adapter.startup.generator.taco;
 
 import cmahy.common.helper.Generator;
-import cmahy.webapp.resource.impl.application.taco.shop.repository.*;
-import cmahy.webapp.resource.impl.domain.taco.*;
+import cmahy.webapp.taco.shop.kernel.application.repository.*;
+import cmahy.webapp.taco.shop.kernel.domain.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

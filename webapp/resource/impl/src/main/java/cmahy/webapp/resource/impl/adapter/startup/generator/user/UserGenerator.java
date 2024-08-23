@@ -1,12 +1,10 @@
 package cmahy.webapp.resource.impl.adapter.startup.generator.user;
 
-import cmahy.webapp.resource.impl.application.user.repository.RoleRepository;
-import cmahy.webapp.resource.impl.application.user.repository.UserSecurityRepository;
-import cmahy.webapp.resource.impl.domain.user.*;
-import cmahy.webapp.resource.impl.exception.user.RoleNotFoundException;
+import cmahy.webapp.user.kernel.application.repository.RoleRepository;
+import cmahy.webapp.user.kernel.application.repository.UserSecurityRepository;
+import cmahy.webapp.user.kernel.domain.*;
+import cmahy.webapp.user.kernel.exception.RoleNotFoundException;
 import jakarta.transaction.Transactional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
@@ -18,8 +16,6 @@ import java.util.HashSet;
 @Component
 @Order(2)
 public class UserGenerator implements ApplicationRunner {
-
-    private static final Logger LOG = LoggerFactory.getLogger(UserGenerator.class);
 
     private final UserSecurityRepository userSecurityRepository;
     private final RoleRepository roleRepository;

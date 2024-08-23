@@ -1,7 +1,7 @@
 package cmahy.webapp.resource.impl.adapter.user.repository;
 
-import cmahy.webapp.resource.impl.application.user.repository.UserSecurityRepository;
-import cmahy.webapp.resource.impl.domain.user.UserSecurity;
+import cmahy.webapp.user.kernel.application.repository.UserSecurityRepository;
+import cmahy.webapp.user.kernel.domain.UserSecurity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

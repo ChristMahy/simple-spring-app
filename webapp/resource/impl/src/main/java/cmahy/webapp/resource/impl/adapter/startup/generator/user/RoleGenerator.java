@@ -1,7 +1,7 @@
 package cmahy.webapp.resource.impl.adapter.startup.generator.user;
 
-import cmahy.webapp.resource.impl.application.user.repository.RoleRepository;
-import cmahy.webapp.resource.impl.domain.user.Role;
+import cmahy.webapp.user.kernel.application.repository.RoleRepository;
+import cmahy.webapp.user.kernel.domain.Role;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

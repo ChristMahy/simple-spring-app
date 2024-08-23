@@ -4,7 +4,6 @@ import cmahy.common.helper.Generator;
 import cmahy.webapp.resource.impl.adapter.security.request.userinfo.GetUserInfoOauth2Service;
 import cmahy.webapp.resource.impl.adapter.security.request.userinfo.vo.input.UserInfoRequestConfig;
 import cmahy.webapp.resource.impl.adapter.security.vo.google.output.OAuth2UserInfo;
-import cmahy.webapp.resource.impl.domain.user.AuthProvider;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

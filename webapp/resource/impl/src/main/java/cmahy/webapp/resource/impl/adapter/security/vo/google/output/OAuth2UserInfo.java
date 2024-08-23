@@ -1,6 +1,6 @@
 package cmahy.webapp.resource.impl.adapter.security.vo.google.output;
 
-import cmahy.webapp.resource.impl.domain.user.AuthProvider;
+import cmahy.webapp.user.kernel.domain.AuthProvider;
 
 import java.util.*;
 

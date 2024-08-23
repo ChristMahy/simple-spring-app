@@ -31,7 +31,3 @@ application:
           enabled: true
           bundle-name: taco-external-resource
         base-url: https://localhost:8443/api/v1
-
-trust:
-  store: classpath:keystore/baeldung.p12
-  store-password: testtest

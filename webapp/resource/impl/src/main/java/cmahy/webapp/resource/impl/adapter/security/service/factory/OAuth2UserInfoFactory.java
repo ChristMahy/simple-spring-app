@@ -3,7 +3,7 @@ package cmahy.webapp.resource.impl.adapter.security.service.factory;
 import cmahy.webapp.resource.impl.adapter.security.request.userinfo.GetUserInfoOauth2Service;
 import cmahy.webapp.resource.impl.adapter.security.request.userinfo.vo.input.UserInfoRequestConfig;
 import cmahy.webapp.resource.impl.adapter.security.vo.google.output.OAuth2UserInfo;
-import cmahy.webapp.resource.impl.domain.user.AuthProvider;
+import cmahy.webapp.user.kernel.domain.AuthProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;

@@ -4,18 +4,19 @@ import cmahy.common.helper.Generator;
 import cmahy.webapp.resource.impl.adapter.security.mapper.output.UserSecurityDetailsMapper;
 import cmahy.webapp.resource.impl.adapter.security.service.factory.OAuth2UserInfoFactory;
 import cmahy.webapp.resource.impl.adapter.security.vo.google.output.OAuth2UserInfo;
-import cmahy.webapp.resource.impl.application.user.command.RegisterUserSecurityCommand;
-import cmahy.webapp.resource.impl.application.user.query.GetUserSecurityByUsernameQuery;
-import cmahy.webapp.resource.impl.application.user.vo.input.UserSecurityInputAppVo;
-import cmahy.webapp.resource.impl.application.user.vo.output.UserSecurityOutputAppVo;
-import cmahy.webapp.resource.impl.domain.user.AuthProvider;
-import cmahy.webapp.resource.impl.exception.user.*;
-import cmahy.webapp.resource.user.api.security.vo.output.UserSecurityDetails;
+import cmahy.webapp.resource.ui.vo.output.UserSecurityDetails;
+import cmahy.webapp.user.kernel.application.command.RegisterUserSecurityCommand;
+import cmahy.webapp.user.kernel.application.query.GetUserSecurityByUsernameQuery;
+import cmahy.webapp.user.kernel.domain.AuthProvider;
+import cmahy.webapp.user.kernel.exception.*;
+import cmahy.webapp.user.kernel.vo.input.UserSecurityInputAppVo;
+import cmahy.webapp.user.kernel.vo.output.UserSecurityOutputAppVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -135,7 +136,7 @@ class OAuth2ServiceImplTest {
 
             when(oAuth2UserInfoFactory.create(oAuth2UserRequest)).thenReturn(Optional.of(oAuth2UserInfo));
             when(getUserSecurityByUsernameQuery.execute(email, AuthProvider.GOOGLE)).thenThrow(UserNotFoundException.class);
-            when(registerUserSecurityCommand.execute(any(UserSecurityInputAppVo.class))).thenAnswer(invocationOnMock -> {
+            when(registerUserSecurityCommand.execute(any(UserSecurityInputAppVo.class))).thenAnswer(_ -> {
                 throw new Exception(errorMessage);
             });
 
@@ -148,7 +149,7 @@ class OAuth2ServiceImplTest {
 
     @Test
     void loadUser_onUserInfoMailIsBlank_thenThrowException() {
-        assertThrows(UserValidationException.class, () -> {
+        OAuth2AuthenticationException oAuth2AuthenticationException = assertThrows(OAuth2AuthenticationException.class, () -> {
             OAuth2UserRequest oAuth2UserRequest = mock(OAuth2UserRequest.class, RETURNS_DEEP_STUBS);
             OAuth2UserInfo oAuth2UserInfo = mock(OAuth2UserInfo.class);
 
@@ -161,12 +162,14 @@ class OAuth2ServiceImplTest {
             oAuth2ServiceImpl.loadUser(oAuth2UserRequest);
         });
 
+        assertThat(oAuth2AuthenticationException).hasCauseExactlyInstanceOf(UserValidationException.class);
+
         verifyNoInteractions(getUserSecurityByUsernameQuery, registerUserSecurityCommand);
     }
 
     @Test
     void loadUser_onUserInfoIsNull_thenThrowException() {
-        assertThrows(UserNotFoundException.class, () -> {
+        assertThrows(UsernameNotFoundException.class, () -> {
             OAuth2UserRequest oAuth2UserRequest = mock(OAuth2UserRequest.class);
 
             when(oAuth2UserInfoFactory.create(oAuth2UserRequest)).thenReturn(Optional.empty());

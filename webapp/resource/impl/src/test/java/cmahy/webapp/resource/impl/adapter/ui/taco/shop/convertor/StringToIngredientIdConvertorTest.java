@@ -1,7 +1,7 @@
 package cmahy.webapp.resource.impl.adapter.ui.taco.shop.convertor;
 
 import cmahy.common.helper.Generator;
-import cmahy.webapp.resource.taco.shop.id.IngredientId;
+import cmahy.webapp.taco.shop.kernel.domain.id.IngredientId;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

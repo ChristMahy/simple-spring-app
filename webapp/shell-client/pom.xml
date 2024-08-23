@@ -12,6 +12,8 @@
 
     <packaging>pom</packaging>
 
+    <name>Taco - Shell</name>
+
     <modules>
         <module>api</module>
         <module>impl</module>

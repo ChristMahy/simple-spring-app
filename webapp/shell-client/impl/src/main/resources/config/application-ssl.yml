@@ -1,0 +1,20 @@
+spring:
+  ssl:
+    bundle:
+      jks:
+        taco-external-resource:
+          key:
+            alias: https-server
+          truststore:
+            location: classpath:ssl/truststore-server.p12
+            password: testtest
+            type: PKCS12
+
+application:
+  taco:
+    ingredients:
+      external-resource:
+        ssl:
+          enabled: true
+          bundle-name: taco-external-resource
+        base-url: https://localhost:8443/api/v1

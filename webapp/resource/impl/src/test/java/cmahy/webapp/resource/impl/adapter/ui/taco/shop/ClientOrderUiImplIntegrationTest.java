@@ -1,13 +1,13 @@
 package cmahy.webapp.resource.impl.adapter.ui.taco.shop;
 
-import cmahy.webapp.resource.impl.application.taco.shop.command.ReceiveNewClientOrderCommand;
-import cmahy.webapp.resource.impl.domain.user.id.UserId;
 import cmahy.webapp.resource.impl.helper.security.user.SecurityUserGenerator;
-import cmahy.webapp.resource.taco.shop.vo.input.ClientOrderInputVo;
-import cmahy.webapp.resource.taco.shop.vo.input.TacoInputVo;
-import cmahy.webapp.resource.taco.shop.vo.output.ClientOrderOutputVo;
 import cmahy.webapp.resource.ui.taco.TacoUriConstant;
-import cmahy.webapp.resource.user.api.security.vo.output.UserSecurityDetails;
+import cmahy.webapp.resource.ui.vo.output.UserSecurityDetails;
+import cmahy.webapp.taco.shop.kernel.application.command.ReceiveNewClientOrderCommand;
+import cmahy.webapp.taco.shop.kernel.vo.input.ClientOrderInputVo;
+import cmahy.webapp.taco.shop.kernel.vo.input.TacoInputVo;
+import cmahy.webapp.taco.shop.kernel.vo.output.ClientOrderOutputVo;
+import cmahy.webapp.user.kernel.domain.id.UserId;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -256,7 +256,7 @@ class ClientOrderUiImplIntegrationTest {
 
                     clientOrderAssertion(clientOrder, clientOrderInput);
                 })
-                .andExpect(result -> verify(receiveCommand, never()).execute(any(ClientOrderInputVo.class), any(UserId.class)));
+                .andExpect(_ -> verify(receiveCommand, never()).execute(any(ClientOrderInputVo.class), any(UserId.class)));
         });
     }
 
