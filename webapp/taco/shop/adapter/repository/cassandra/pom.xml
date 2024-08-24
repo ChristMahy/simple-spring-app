@@ -7,7 +7,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cmahy.webapp.taco.shop.adapter.repository</groupId>
-    <artifactId>casandra</artifactId>
+    <artifactId>cassandra</artifactId>
     <version>DEV-SNAPSHOT</version>
 
     <packaging>jar</packaging>
@@ -18,6 +18,39 @@
         <version>DEV-SNAPSHOT</version>
         <relativePath/>
     </parent>
+
+    <properties>
+        <cmahy.webapp.taco.shop.version>DEV-SNAPSHOT</cmahy.webapp.taco.shop.version>
+        <cmahy.webapp.user.version>DEV-SNAPSHOT</cmahy.webapp.user.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>cmahy.webapp.taco.shop.kernel</groupId>
+            <artifactId>application</artifactId>
+            <version>${cmahy.webapp.taco.shop.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy.webapp.taco.shop.kernel</groupId>
+            <artifactId>domain</artifactId>
+            <version>${cmahy.webapp.taco.shop.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy.webapp.user.kernel</groupId>
+            <artifactId>domain</artifactId>
+            <version>${cmahy.webapp.user.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-cassandra</artifactId>
+        </dependency>
+    </dependencies>
 
     <build>
         <finalName>taco-shop-adapter-repository-${project.artifactId}-${project.version}</finalName>

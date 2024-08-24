@@ -16,7 +16,7 @@
 
     <modules>
         <module>h2</module>
-        <module>casandra</module>
+        <module>cassandra</module>
         <module>webclient</module>
     </modules>
 </project>
