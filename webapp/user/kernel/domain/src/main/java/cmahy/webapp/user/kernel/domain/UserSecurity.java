@@ -1,29 +1,15 @@
 package cmahy.webapp.user.kernel.domain;
 
-import jakarta.persistence.*;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-@Entity
-@Table(
-    name = "user_app",
-    uniqueConstraints = {
-        @UniqueConstraint(name = "u_us_username_provider", columnNames = { "userName", "authProvider" })
-    }
-)
-@DiscriminatorValue("1")
 public class UserSecurity extends User {
 
-    @Enumerated(EnumType.STRING)
     private AuthProvider authProvider;
 
-    @Column(columnDefinition = "smallint default 0")
     private Boolean isExpired;
-    @Column(columnDefinition = "smallint default 0")
     private Boolean isLocked;
-    @Column(columnDefinition = "smallint default 1")
     private Boolean isEnabled;
-    @Column(columnDefinition = "smallint default 0")
     private Boolean isCredentialsExpired;
 
     public AuthProvider getAuthProvider() {

@@ -10,9 +10,9 @@ import cmahy.webapp.taco.shop.kernel.application.query.GetAllClientOrderPagedQue
 import cmahy.webapp.taco.shop.kernel.exception.RequiredException;
 import cmahy.webapp.taco.shop.kernel.vo.output.ClientOrderPageOutputVo;
 import cmahy.webapp.user.kernel.exception.UserNotFoundException;
-import jakarta.transaction.Transactional;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import java.util.Optional;

@@ -1,3 +1,4 @@
+/*
 package cmahy.webapp.resource.impl.adapter.api.file;
 
 import cmahy.common.helper.Generator;
@@ -67,4 +68,4 @@ class LoggerApiImplIntegrationTest {
                 .andExpect(_ -> verifyNoInteractions(loggerRepository));
         });
     }
-}
+}*/

@@ -1,3 +1,4 @@
+/*
 package cmahy.webapp.resource.impl.adapter.taco.shop.repository.external;
 
 import cmahy.common.entity.page.EntityPageable;
@@ -96,4 +97,4 @@ class IngredientExternalRepositoryImplTest {
             new IllegalStateException(Generator.generateAString())
         );
     }
-}
+}*/

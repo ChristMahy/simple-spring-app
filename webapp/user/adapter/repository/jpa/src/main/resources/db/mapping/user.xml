@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm" version="3.1">
+    <entity class="cmahy.webapp.user.kernel.domain.Role">
+        <table name="role_app" />
+
+        <attributes>
+            <id name="id">
+                <generated-value strategy="AUTO" />
+            </id>
+
+            <many-to-many
+                    name="users"
+                    mapped-by="roles"
+                    target-entity="cmahy.webapp.user.kernel.domain.User"
+            />
+        </attributes>
+    </entity>
+
+    <entity class="cmahy.webapp.user.kernel.domain.User">
+        <table name="user_app" />
+
+        <inheritance strategy="SINGLE_TABLE" />
+
+        <discriminator-value><![CDATA[0]]></discriminator-value>
+
+        <discriminator-column name="discriminator" discriminator-type="INTEGER" />
+
+        <attributes>
+            <id name="id">
+                <generated-value strategy="AUTO" />
+            </id>
+
+            <many-to-many
+                    name="roles"
+                    target-entity="cmahy.webapp.user.kernel.domain.Role"
+                    fetch="EAGER"
+            >
+                <join-table name="user_app_role">
+                    <join-column name="user_app_id" />
+                    <inverse-join-column name="role_id" />
+                    <unique-constraint name="u_user_app_role">
+                        <column-name><![CDATA[user_app_id]]></column-name>
+                        <column-name><![CDATA[role_id]]></column-name>
+                    </unique-constraint>
+                </join-table>
+
+                <cascade />
+            </many-to-many>
+        </attributes>
+    </entity>
+
+    <entity class="cmahy.webapp.user.kernel.domain.UserSecurity">
+        <table name="user_app">
+            <unique-constraint name="u_us_username_provider">
+                <column-name><![CDATA["userName"]]></column-name>
+                <column-name><![CDATA["authProvider"]]></column-name>
+            </unique-constraint>
+        </table>
+
+        <discriminator-value><![CDATA[1]]></discriminator-value>
+
+        <attributes>
+            <id name="id">
+                <generated-value strategy="AUTO" />
+            </id>
+
+            <basic name="authProvider">
+                <enumerated>STRING</enumerated>
+            </basic>
+
+            <basic name="expired">
+                <column column-definition="smallint default 0" />
+            </basic>
+
+            <basic name="locked">
+                <column column-definition="smallint default 0" />
+            </basic>
+
+            <basic name="enabled">
+                <column column-definition="smallint default 1" />
+            </basic>
+
+            <basic name="credentialsExpired">
+                <column column-definition="smallint default 0" />
+            </basic>
+
+            <many-to-many
+                    name="roles"
+                    target-entity="cmahy.webapp.user.kernel.domain.Role"
+                    fetch="EAGER"
+            >
+                <join-table name="user_app_role">
+                    <join-column name="user_app_id" />
+                    <inverse-join-column name="role_id" />
+                    <unique-constraint name="u_user_app_role">
+                        <column-name><![CDATA[user_app_id]]></column-name>
+                        <column-name><![CDATA[role_id]]></column-name>
+                    </unique-constraint>
+                </join-table>
+
+                <cascade />
+            </many-to-many>
+        </attributes>
+    </entity>
+</entity-mappings>

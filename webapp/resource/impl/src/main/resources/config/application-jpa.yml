@@ -1,0 +1,6 @@
+spring:
+  jpa:
+    open-in-view: false
+    mapping-resources:
+      - classpath:db/mapping/user.xml
+      - classpath:db/mapping/taco-shop.xml

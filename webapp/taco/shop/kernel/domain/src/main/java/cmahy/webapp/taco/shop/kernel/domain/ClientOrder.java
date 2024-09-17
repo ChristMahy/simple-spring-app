@@ -1,20 +1,15 @@
 package cmahy.webapp.taco.shop.kernel.domain;
 
 import cmahy.webapp.user.kernel.domain.User;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.*;
 
-@Entity
 public class ClientOrder {
-    @Id
-    @GeneratedValue
     private Long id;
 
-    @ManyToOne
     private User user;
 
     private Date placedAt;
@@ -47,7 +42,6 @@ public class ClientOrder {
     @Digits(integer = 3, fraction = 0, message = "Invalid CVV")
     private String ccCVV;
 
-    @OneToMany(cascade = CascadeType.ALL)
     private List<Taco> tacos = new ArrayList<>();
 
     public Long getId() {
@@ -150,7 +144,6 @@ public class ClientOrder {
         this.tacos.add(taco);
     }
 
-    @PrePersist
     public void prePersist() {
         if (Objects.isNull(placedAt)) {
             this.placedAt = new Date();

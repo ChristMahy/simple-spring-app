@@ -1,20 +1,12 @@
 package cmahy.webapp.user.kernel.domain;
 
-import jakarta.persistence.*;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.Collection;
 
-@Entity
-@Table(name = "user_app")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "discriminator", discriminatorType = DiscriminatorType.INTEGER)
-@DiscriminatorValue("0")
 public class User {
 
-    @Id
-    @GeneratedValue
     private Long id;
     private String userName;
     private byte[] password;
@@ -25,22 +17,6 @@ public class User {
     private String zip;
     private String phoneNumber;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-        name = "user_app_role",
-        joinColumns = {
-            @JoinColumn(name = "user_app_id")
-        },
-        inverseJoinColumns = {
-            @JoinColumn(name = "role_id")
-        },
-        uniqueConstraints = {
-            @UniqueConstraint(
-                name = "u_user_app_role",
-                columnNames = {"user_app_id", "role_id"}
-            )
-        }
-    )
     private Collection<Role> roles;
 
     public Long getId() {

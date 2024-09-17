@@ -1,21 +1,15 @@
 package cmahy.webapp.user.kernel.domain;
 
-import jakarta.persistence.*;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.Collection;
 
-@Entity
-@Table(name = "role_app")
 public class Role {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
     String name;
 
-    @ManyToMany(mappedBy = "roles")
     Collection<User> users;
 
     public Long getId() {

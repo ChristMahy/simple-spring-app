@@ -50,6 +50,64 @@
                 </dependency>
             </dependencies>
         </profile>
+
+        <profile>
+            <id>h2</id>
+
+            <dependencies>
+                <dependency>
+                    <groupId>com.h2database</groupId>
+                    <artifactId>h2</artifactId>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
+            <id>jpa</id>
+
+            <dependencies>
+                <dependency>
+                    <groupId>cmahy.webapp.taco.shop.adapter.repository</groupId>
+                    <artifactId>jpa</artifactId>
+                    <version>${cmahy.webapp.taco.shop.version}</version>
+                </dependency>
+
+                <dependency>
+                    <groupId>cmahy.webapp.user.adapter.repository</groupId>
+                    <artifactId>jpa</artifactId>
+                    <version>${cmahy.webapp.user.version}</version>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-data-jpa</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
+            <id>cassandra</id>
+
+            <dependencies>
+                <dependency>
+                    <groupId>cmahy.webapp.taco.shop.adapter.repository</groupId>
+                    <artifactId>cassandra</artifactId>
+                    <version>${cmahy.webapp.taco.shop.version}</version>
+                </dependency>
+
+<!--                <dependency>-->
+<!--                    <groupId>cmahy.webapp.user.adapter.repository</groupId>-->
+<!--                    <artifactId>cassandra</artifactId>-->
+<!--                    <version>${cmahy.webapp.user.version}</version>-->
+<!--                </dependency>-->
+
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-data-cassandra</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
     </profiles>
 
     <dependencies>
@@ -74,12 +132,6 @@
         <dependency>
             <groupId>cmahy.webapp.taco.shop.kernel</groupId>
             <artifactId>application</artifactId>
-            <version>${cmahy.webapp.taco.shop.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>cmahy.webapp.taco.shop.adapter.repository</groupId>
-            <artifactId>h2</artifactId>
             <version>${cmahy.webapp.taco.shop.version}</version>
         </dependency>
 
@@ -144,16 +196,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
         </dependency>
 
         <dependency>

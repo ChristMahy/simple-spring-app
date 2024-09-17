@@ -13,3 +13,6 @@ application:
   console:
     output:
       format: "\n\r# --------------- @ --------------- @ --------------- #\n\r%s\n\r# --------------- @ --------------- @ --------------- #\n\r\n\r"
+  taco-shop:
+    webclient:
+      enabled: true

@@ -1,13 +1,10 @@
 package cmahy.webapp.taco.shop.kernel.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-@Entity
 public class Ingredient {
 
     public static final String I18N_KEY_NAME_NOT_NULL = "validation.error.ingredient.name.not-null";
@@ -15,7 +12,6 @@ public class Ingredient {
 
     public static final String I18N_KEY_TYPE_NOT_NULL = "validation.error.ingredient.type.not-null";
 
-    @Id
     private String id;
 
     @NotNull(message = I18N_KEY_NAME_NOT_NULL)

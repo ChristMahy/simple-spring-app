@@ -15,7 +15,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>h2</module>
+        <module>jpa</module>
         <module>cassandra</module>
         <module>webclient</module>
     </modules>

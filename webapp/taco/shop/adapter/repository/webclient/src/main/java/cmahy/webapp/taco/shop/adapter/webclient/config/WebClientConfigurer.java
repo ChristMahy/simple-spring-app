@@ -1,5 +1,6 @@
 package cmahy.webapp.taco.shop.adapter.webclient.config;
 
+import cmahy.webapp.taco.shop.adapter.webclient.config.primary.*;
 import cmahy.webapp.taco.shop.adapter.webclient.config.properties.webclient.WebClientProperties;
 import cmahy.webapp.taco.shop.adapter.webclient.config.properties.ingredient.IngredientProperties;
 import cmahy.webapp.taco.shop.adapter.webclient.config.properties.ingredient.SslOption;
@@ -9,6 +10,7 @@ import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.handler.timeout.WriteTimeoutHandler;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.boot.ssl.SslBundle;
@@ -28,9 +30,19 @@ import java.util.concurrent.TimeUnit;
 
 import static org.springframework.web.reactive.function.client.ExchangeFilterFunctions.basicAuthentication;
 
-@Configuration
+@AutoConfiguration
+@ConditionalOnProperty(value = "application.taco-shop.webclient.enabled", havingValue = "true")
 @ConfigurationPropertiesScan(basePackageClasses = {WebClientProperties.class, IngredientProperties.class})
-@ComponentScan({"cmahy.webapp.taco.shop.adapter.webclient.repository"})
+@ComponentScan({
+    "cmahy.webapp.taco.shop.adapter.webclient.repository"
+})
+@Import({
+    ClientOrderRepositoryPrimaryConfigurer.class,
+    ClientOrderPagingRepositoryPrimaryConfigurer.class,
+    IngredientRepositoryPrimaryConfigurer.class,
+    IngredientPagingRepositoryPrimaryConfigurer.class,
+    TacoRepositoryPrimaryConfigurer.class
+})
 public class WebClientConfigurer {
     protected static final String SSL_ACTIVATION_PROPERTY_NAME = "application.taco.ingredients.external-resource.ssl.enabled";
 

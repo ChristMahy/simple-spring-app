@@ -1,6 +1,5 @@
 package cmahy.webapp.taco.shop.kernel.domain;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -8,11 +7,8 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.*;
 
-@Entity
 public class Taco {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private Date createdAt;
@@ -22,7 +18,6 @@ public class Taco {
     private String name;
 
     @Size(min = 1, message = "You must choose at least 1 ingredient")
-    @ManyToMany
     private List<Ingredient> ingredients = new ArrayList<>();
 
     public Long getId() {
@@ -61,7 +56,6 @@ public class Taco {
         ingredients.add(ingredient);
     }
 
-    @PrePersist
     public void prePersist() {
         if (Objects.isNull(this.createdAt)) {
             this.createdAt = new Date();

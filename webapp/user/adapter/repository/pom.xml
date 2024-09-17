@@ -15,6 +15,6 @@
     <name>User repositories</name>
 
     <modules>
-        <!-- TODO: Move all user repositories implementations here -->
+        <module>jpa</module>
     </modules>
 </project>

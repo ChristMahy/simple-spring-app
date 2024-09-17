@@ -2,13 +2,13 @@ package cmahy.webapp.resource.impl.adapter.startup.generator.user;
 
 import cmahy.webapp.user.kernel.application.repository.RoleRepository;
 import cmahy.webapp.user.kernel.domain.Role;
-import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.stream.Stream;
 
