@@ -8,8 +8,11 @@ import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.type.SimpleType;
-import com.fasterxml.jackson.databind.type.TypeBase;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static cmahy.common.helper.Generator.randomLong;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,8 +45,9 @@ class EntityIdDeserializerTest {
         });
     }
 
-    @Test
-    void deserialize_whenNoSuitableConstructorFound_thenThrowNoSuitableConstructorFoundException() {
+    @ParameterizedTest
+    @MethodSource("noSuitableClasses")
+    void deserialize_whenNoSuitableConstructorFound_thenThrowNoSuitableConstructorFoundException(Class<? extends EntityId<Long>> entityIdClass) {
         assertThrows(NoSuitableConstructorFoundException.class, () -> {
             ObjectMapper jsonMapper = JsonMapperFactory.create();
 
@@ -56,8 +60,41 @@ class EntityIdDeserializerTest {
 
             Long idValue = randomLong();
 
-            jsonMapper.readValue(idValue.toString(), EntityId.class);
+            jsonMapper.readValue(idValue.toString(), entityIdClass);
         });
+    }
+
+    private static Stream<Class<? extends EntityId<Long>>> noSuitableClasses() {
+        return Stream.of(
+            ConcreteTestEntityNoConstructor.class,
+            ConcreteTestEntityPrivateConstructor.class,
+            ConcreteTestEntityMultiArgumentsConstructor.class
+        );
+    }
+
+    protected static class ConcreteTestEntityNoConstructor implements EntityId<Long> {
+        @Override
+        public Long value() {
+            throw new IllegalStateException("Not yet implemented ! Should not be used !");
+        }
+    }
+
+    protected static class ConcreteTestEntityPrivateConstructor implements EntityId<Long> {
+        private ConcreteTestEntityPrivateConstructor() {}
+
+        @Override
+        public Long value() {
+            throw new IllegalStateException("Not yet implemented ! Should not be used !");
+        }
+    }
+
+    protected static class ConcreteTestEntityMultiArgumentsConstructor implements EntityId<Long> {
+        public ConcreteTestEntityMultiArgumentsConstructor(Long param1, Long param2) {}
+
+        @Override
+        public Long value() {
+            throw new IllegalStateException("Not yet implemented ! Should not be used !");
+        }
     }
 
     @Test
