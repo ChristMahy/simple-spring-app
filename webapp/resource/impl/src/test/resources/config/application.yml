@@ -1,11 +1,6 @@
 spring:
   application:
     name: webapp-resource
-  datasource:
-    generate-unique-name: false
-    name: webapp-resource-cloud
-  jpa:
-    open-in-view: false
   task:
     execution:
       thread-name-prefix: cmahy-broker-consumer-
@@ -23,10 +18,13 @@ application:
       write-timeout: 5s
     taco:
       credentials:
-        username: test
-        password: test
+        username: test2test
+        password: test2test
+  start-up:
+    order:
+      generate: false
   google:
-    api-url: https://GOOGLE_SHOULD_NEVER_BE_CALLED
+    api-url: https://SHOULD_NEVER_BE_CALLED
   taco:
     orders:
       page-size: 20
@@ -36,7 +34,7 @@ application:
       external-resource:
         scheduler:
           enable: false
-        base-url: http://RESOURCE_SHOULD_NEVER_BE_CALLED
+        base-url: 'http://localhost:8080/api/v1'
   password:
     default-encoder: bcrypt
     encoders:
