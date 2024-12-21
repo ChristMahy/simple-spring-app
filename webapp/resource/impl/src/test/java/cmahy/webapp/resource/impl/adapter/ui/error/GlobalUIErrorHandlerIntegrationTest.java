@@ -8,6 +8,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+
+import java.io.UnsupportedEncodingException;
+import java.util.regex.Pattern;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -26,9 +30,9 @@ class GlobalUIErrorHandlerIntegrationTest {
     void noError_thenShouldBeA200() {
         assertDoesNotThrow(() -> {
             mockMvc.perform(
-                get(UIGlobalErrorHandlerTestPurposeApi.BASE_URL + UIGlobalErrorHandlerTestPurposeApi.NO_ERROR_URL)
-                    .with(SecurityUserGenerator.generateRandomUser())
-            )
+                    get(UIGlobalErrorHandlerTestPurposeApi.BASE_URL + UIGlobalErrorHandlerTestPurposeApi.NO_ERROR_URL)
+                        .with(SecurityUserGenerator.generateRandomUser())
+                )
                 .andDo(print())
                 .andExpect(status().is(HttpStatus.OK.value()))
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
@@ -41,120 +45,139 @@ class GlobalUIErrorHandlerIntegrationTest {
     @Test
     void ioException_thenShouldBeA500WithDetails() {
         assertDoesNotThrow(() -> {
-            mockMvc.perform(
-                get(UIGlobalErrorHandlerTestPurposeApi.BASE_URL + UIGlobalErrorHandlerTestPurposeApi.IO_EXCEPTION_URL)
-                    .with(SecurityUserGenerator.generateRandomUser())
-            )
+            MvcResult requestResult = mockMvc.perform(
+                    get(UIGlobalErrorHandlerTestPurposeApi.BASE_URL + UIGlobalErrorHandlerTestPurposeApi.IO_EXCEPTION_URL)
+                        .with(SecurityUserGenerator.generateRandomUser())
+                )
                 .andDo(print())
-                .andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()))
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_PROBLEM_JSON))
-                .andExpect(jsonPath("$.detail").value("should-be-an-IO-exception"))
-                .andExpect(jsonPath("$.instance").value(UIGlobalErrorHandlerTestPurposeApi.BASE_URL + UIGlobalErrorHandlerTestPurposeApi.IO_EXCEPTION_URL));
+                .andExpect(status().is(HttpStatus.OK.value()))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
+                .andReturn();
+
+            resultContentAssertion(requestResult, HttpStatus.INTERNAL_SERVER_ERROR, "should-be-an-IO-exception");
         });
     }
 
     @Test
     void exception_thenShouldBeA500WithDetails() {
         assertDoesNotThrow(() -> {
-            mockMvc.perform(
+            MvcResult requestResult = mockMvc.perform(
                     get(UIGlobalErrorHandlerTestPurposeApi.BASE_URL + UIGlobalErrorHandlerTestPurposeApi.EXCEPTION_URL)
                         .with(SecurityUserGenerator.generateRandomUser())
                 )
                 .andDo(print())
-                .andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()))
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_PROBLEM_JSON))
-                .andExpect(jsonPath("$.detail").value("should-be-an-exception"))
-                .andExpect(jsonPath("$.instance").value(UIGlobalErrorHandlerTestPurposeApi.BASE_URL + UIGlobalErrorHandlerTestPurposeApi.EXCEPTION_URL));
+                .andExpect(status().is(HttpStatus.OK.value()))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
+                .andReturn();
+
+            resultContentAssertion(requestResult, HttpStatus.INTERNAL_SERVER_ERROR, "should-be-an-exception");
         });
     }
 
     @Test
     void runtimeException_thenShouldBeA500WithDetails() {
         assertDoesNotThrow(() -> {
-            mockMvc.perform(
+            MvcResult requestResult = mockMvc.perform(
                 get(UIGlobalErrorHandlerTestPurposeApi.BASE_URL + UIGlobalErrorHandlerTestPurposeApi.RUNTIME_EXCEPTION_URL)
                     .with(SecurityUserGenerator.generateRandomUser())
             )
                 .andDo(print())
-                .andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()))
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_PROBLEM_JSON))
-                .andExpect(jsonPath("$.detail").value("should-be-an-runtime-exception"))
-                .andExpect(jsonPath("$.instance").value(UIGlobalErrorHandlerTestPurposeApi.BASE_URL + UIGlobalErrorHandlerTestPurposeApi.RUNTIME_EXCEPTION_URL));
+                .andExpect(status().is(HttpStatus.OK.value()))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
+                .andReturn();
+
+            resultContentAssertion(requestResult, HttpStatus.INTERNAL_SERVER_ERROR, "should-be-an-runtime-exception");
         });
     }
 
     @Test
     void sqlException_thenShouldBeA500WithDetails() {
         assertDoesNotThrow(() -> {
-            mockMvc.perform(
+            MvcResult requestResult = mockMvc.perform(
                 get(UIGlobalErrorHandlerTestPurposeApi.BASE_URL + UIGlobalErrorHandlerTestPurposeApi.SQL_EXCEPTION_URL)
                     .with(SecurityUserGenerator.generateRandomUser())
             )
                 .andDo(print())
-                .andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()))
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_PROBLEM_JSON))
-                .andExpect(jsonPath("$.detail").value("Access data error"))
-                .andExpect(jsonPath("$.instance").value(UIGlobalErrorHandlerTestPurposeApi.BASE_URL + UIGlobalErrorHandlerTestPurposeApi.SQL_EXCEPTION_URL));
+                .andExpect(status().is(HttpStatus.OK.value()))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
+                .andReturn();
+
+            resultContentAssertion(requestResult, HttpStatus.INTERNAL_SERVER_ERROR, "Access data error");
         });
     }
 
     @Test
     void dataAccessException_thenShouldBeA500WithDetails() {
         assertDoesNotThrow(() -> {
-            mockMvc.perform(
+            MvcResult requestResult = mockMvc.perform(
                 get(UIGlobalErrorHandlerTestPurposeApi.BASE_URL + UIGlobalErrorHandlerTestPurposeApi.DATA_ACCESS_EXCEPTION_URL)
                     .with(SecurityUserGenerator.generateRandomUser())
             )
                 .andDo(print())
-                .andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()))
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_PROBLEM_JSON))
-                .andExpect(jsonPath("$.detail").value("Access data error"))
-                .andExpect(jsonPath("$.instance").value(UIGlobalErrorHandlerTestPurposeApi.BASE_URL + UIGlobalErrorHandlerTestPurposeApi.DATA_ACCESS_EXCEPTION_URL));
+                .andExpect(status().is(HttpStatus.OK.value()))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
+                .andReturn();
+
+            resultContentAssertion(requestResult, HttpStatus.INTERNAL_SERVER_ERROR, "Access data error");
         });
     }
 
     @Test
     void usageOnDeletionException_thenShouldBeA406WithDetails() {
         assertDoesNotThrow(() -> {
-            mockMvc.perform(
+            MvcResult requestResult = mockMvc.perform(
                     get(UIGlobalErrorHandlerTestPurposeApi.BASE_URL + UIGlobalErrorHandlerTestPurposeApi.USAGE_ON_DELETION_EXCEPTION_URL)
                         .with(SecurityUserGenerator.generateRandomUser())
-                )
+            )
                 .andDo(print())
-                .andExpect(status().is(HttpStatus.NOT_ACCEPTABLE.value()))
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_PROBLEM_JSON))
-                .andExpect(jsonPath("$.detail").value("should-be-an-usage-on-deletion-exception"))
-                .andExpect(jsonPath("$.instance").value(UIGlobalErrorHandlerTestPurposeApi.BASE_URL + UIGlobalErrorHandlerTestPurposeApi.USAGE_ON_DELETION_EXCEPTION_URL));
+                .andExpect(status().is(HttpStatus.OK.value()))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
+                .andReturn();
+
+            resultContentAssertion(requestResult, HttpStatus.NOT_ACCEPTABLE, "should-be-an-usage-on-deletion-exception");
         });
     }
 
     @Test
     void accessDeniedException_thenShouldBeA403WithDetails() {
         assertDoesNotThrow(() -> {
-            mockMvc.perform(
+            MvcResult requestResult = mockMvc.perform(
                 get(UIGlobalErrorHandlerTestPurposeApi.BASE_URL + UIGlobalErrorHandlerTestPurposeApi.ACCESS_DENIED_EXCEPTION_URL)
                     .with(SecurityUserGenerator.generateRandomUser())
             )
                 .andDo(print())
-                .andExpect(status().is(HttpStatus.FORBIDDEN.value()))
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_PROBLEM_JSON))
-                .andExpect(jsonPath("$.detail").value(HttpStatus.FORBIDDEN.getReasonPhrase()))
-                .andExpect(jsonPath("$.instance").value(UIGlobalErrorHandlerTestPurposeApi.BASE_URL + UIGlobalErrorHandlerTestPurposeApi.ACCESS_DENIED_EXCEPTION_URL));
+                .andExpect(status().is(HttpStatus.OK.value()))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
+                .andReturn();
+
+            resultContentAssertion(requestResult, HttpStatus.FORBIDDEN, "should-be-an-access-denied-exception");
         });
     }
 
     @Test
     void authenticationCredentialsNotFoundException_thenShouldBeA401WithDetails() {
         assertDoesNotThrow(() -> {
-            mockMvc.perform(
+            MvcResult requestResult = mockMvc.perform(
                 get(UIGlobalErrorHandlerTestPurposeApi.BASE_URL + UIGlobalErrorHandlerTestPurposeApi.AUTHENTICATION_CREDENTIALS_NOT_FOUND_EXCEPTION_URL)
                     .with(SecurityUserGenerator.generateRandomUser())
             )
                 .andDo(print())
-                .andExpect(status().is(HttpStatus.UNAUTHORIZED.value()))
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_PROBLEM_JSON))
-                .andExpect(jsonPath("$.detail").value(HttpStatus.UNAUTHORIZED.getReasonPhrase()))
-                .andExpect(jsonPath("$.instance").value(UIGlobalErrorHandlerTestPurposeApi.BASE_URL + UIGlobalErrorHandlerTestPurposeApi.AUTHENTICATION_CREDENTIALS_NOT_FOUND_EXCEPTION_URL));
+                .andExpect(status().is(HttpStatus.OK.value()))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
+                .andReturn();
+
+            resultContentAssertion(requestResult, HttpStatus.UNAUTHORIZED, "should-be-an-authentication-credentials-not-found-exception");
         });
+    }
+
+    private void resultContentAssertion(MvcResult requestResult, HttpStatus httpStatus, String message) throws UnsupportedEncodingException {
+        String contentAsString = requestResult.getResponse().getContentAsString();
+
+        assertThat(contentAsString)
+            .isNotBlank()
+            .matches("[\\s\\S]*<div class=\"error-content-row\">[\\s\\S]*<div>[\\s\\S]*<span>Error</span>[\\s\\S]*</div>[\\s\\S]*<div>[\\s\\S]*<span>" + Pattern.quote(httpStatus.getReasonPhrase()) + "</span>[\\s\\S]*</div>[\\s\\S]*</div>[\\s\\S]*")
+            .matches("[\\s\\S]*<div class=\"error-content-row\">[\\s\\S]*<div>[\\s\\S]*<span>Status</span>[\\s\\S]*</div>[\\s\\S]*<div>[\\s\\S]*<span>" + httpStatus.value() + "</span>[\\s\\S]*</div>[\\s\\S]*</div>[\\s\\S]*")
+            .matches("[\\s\\S]*<div class=\"error-content-row\">[\\s\\S]*<div>[\\s\\S]*<span>Message</span>[\\s\\S]*</div>[\\s\\S]*<div>[\\s\\S]*<span>" + Pattern.quote(message) + "</span>[\\s\\S]*</div>[\\s\\S]*</div>[\\s\\S]*")
+            .matches("[\\s\\S]*<div class=\"error-content-row\">[\\s\\S]*<div>[\\s\\S]*<span>Exception</span>[\\s\\S]*</div>[\\s\\S]*<div>[\\s\\S]*<span>" + Pattern.quote(message) + "</span>[\\s\\S]*</div>[\\s\\S]*</div>[\\s\\S]*");
     }
 }

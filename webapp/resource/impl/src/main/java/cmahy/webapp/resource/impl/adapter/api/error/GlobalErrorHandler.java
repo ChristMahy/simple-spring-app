@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.sql.SQLException;
 
-@ControllerAdvice(annotations = RestController.class)
+@RestControllerAdvice(basePackages = { "cmahy.webapp.resource.impl.adapter.api" })
 public class GlobalErrorHandler extends ResponseEntityExceptionHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(GlobalErrorHandler.class);

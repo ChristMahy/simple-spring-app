@@ -27,7 +27,7 @@ public class RestGlobalErrorHandlerTestPurposeApi {
     public static final String ACCESS_DENIED_EXCEPTION_URL = "/access-denied-exception";
     public static final String AUTHENTICATION_CREDENTIALS_NOT_FOUND_EXCEPTION_URL = "/authentication-credentials-not-found-exception";
 
-    @GetMapping(path = NO_ERROR_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = NO_ERROR_URL, produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> noError() {
         return ResponseEntity.ok("should-not-be-an-error");
     }

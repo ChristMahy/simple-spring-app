@@ -31,7 +31,7 @@ class GlobalErrorHandlerIntegrationTest {
             )
                 .andDo(print())
                 .andExpect(status().is(HttpStatus.OK.value()))
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_PLAIN))
                 .andExpect(result -> {
                     assertThat(result.getResponse().getContentAsString()).isEqualTo("should-not-be-an-error");
                 });
