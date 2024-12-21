@@ -15,7 +15,7 @@ import java.util.Optional;
 public class GetUserByUsernameQuery {
 
     private final UserOutputAppVoMapper outputVoMapper;
-    private final UserRepository userRepository;
+    private final UserRepository<User> userRepository;
 
     public GetUserByUsernameQuery(
         UserOutputAppVoMapper outputVoMapper,

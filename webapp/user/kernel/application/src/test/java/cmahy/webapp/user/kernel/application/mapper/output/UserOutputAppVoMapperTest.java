@@ -1,8 +1,8 @@
 package cmahy.webapp.user.kernel.application.mapper.output;
 
 import cmahy.common.helper.Generator;
-import cmahy.webapp.user.kernel.domain.Role;
-import cmahy.webapp.user.kernel.domain.User;
+import cmahy.webapp.user.kernel.domain.RoleStub;
+import cmahy.webapp.user.kernel.domain.UserStub;
 import cmahy.webapp.user.kernel.exception.RequiredException;
 import cmahy.webapp.user.kernel.vo.output.UserOutputAppVo;
 import org.assertj.core.api.recursive.comparison.RecursiveComparisonConfiguration;
@@ -27,27 +27,23 @@ class UserOutputAppVoMapperTest {
     @Test
     void map() {
         assertDoesNotThrow(() -> {
-            User user = new User();
+            UserStub user = new UserStub()
+                .setId(Generator.randomLongEqualOrAboveZero())
+                .setUserName(Generator.generateAString())
+                .setPassword(Generator.randomBytes(20))
+                .setFullName(Generator.generateAString())
+                .setPhoneNumber(Generator.generateAString())
+                .setCity(Generator.generateAString())
+                .setState(Generator.generateAString())
+                .setStreet(Generator.generateAString())
+                .setZip(Generator.generateAString());
 
-            user.setId(Generator.randomLongEqualOrAboveZero());
-            user.setUserName(Generator.generateAString());
-            user.setPassword(Generator.randomBytes(20));
-            user.setFullName(Generator.generateAString());
-            user.setPhoneNumber(Generator.generateAString());
-            user.setCity(Generator.generateAString());
-            user.setState(Generator.generateAString());
-            user.setStreet(Generator.generateAString());
-            user.setZip(Generator.generateAString());
             user.setRoles(
-                Stream.generate(() -> {
-                    Role role = new Role();
-
-                    role.setId(Generator.randomLongEqualOrAboveZero());
-                    role.setName(Generator.generateAString());
-                    role.setUsers(Set.of(user));
-
-                    return role;
-                })
+                Stream.generate(() -> new RoleStub()
+                        .setId(Generator.randomLongEqualOrAboveZero())
+                        .setName(Generator.generateAString())
+                        .setUsers(Set.of(user))
+                    )
                     .limit(Generator.randomInt(5, 10))
                     .toList()
             );
@@ -65,6 +61,19 @@ class UserOutputAppVoMapperTest {
 
             assertThat(actual.id()).isNotNull();
             assertThat(actual.id().value()).isEqualTo(user.getId());
+        });
+    }
+
+    @Test
+    void map_whenAllPropertiesAreNull_thenResultPropertiesAreNull() {
+        assertDoesNotThrow(() -> {
+            UserStub user = new UserStub();
+
+            UserOutputAppVo actual = userOutputAppVoMapper.map(user);
+
+            assertThat(actual)
+                .isNotNull()
+                .hasAllNullFieldsOrProperties();
         });
     }
 

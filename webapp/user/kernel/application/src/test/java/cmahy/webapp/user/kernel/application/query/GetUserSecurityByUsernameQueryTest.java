@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 class GetUserSecurityByUsernameQueryTest {
 
     @Mock
-    private UserSecurityRepository userSecurityRepository;
+    private UserSecurityRepository<UserSecurity> userSecurityRepository;
 
     @Mock
     private UserSecurityOutputAppVoMapper userSecurityOutputAppVoMapper;

@@ -7,6 +7,7 @@ import cmahy.webapp.user.kernel.application.repository.RoleRepository;
 import cmahy.webapp.user.kernel.application.repository.UserSecurityRepository;
 import cmahy.webapp.user.kernel.domain.Role;
 import cmahy.webapp.user.kernel.domain.UserSecurity;
+import cmahy.webapp.user.kernel.domain.builder.factory.UserSecurityBuilderFactory;
 import cmahy.webapp.user.kernel.exception.RoleNotFoundException;
 import cmahy.webapp.user.kernel.exception.UserExistsException;
 import cmahy.webapp.user.kernel.vo.input.UserSecurityInputAppVo;
@@ -20,21 +21,24 @@ import java.util.Optional;
 @Named
 public class RegisterUserSecurityCommand {
 
-    private final UserSecurityRepository userSecurityRepository;
-    private final RoleRepository roleRepository;
+    private final UserSecurityRepository<UserSecurity> userSecurityRepository;
+    private final RoleRepository<Role> roleRepository;
     private final UserSecurityInputAppVoMapper userSecurityInputAppVoMapper;
     private final UserSecurityOutputAppVoMapper userSecurityOutputAppVoMapper;
+    private final UserSecurityBuilderFactory<UserSecurity> userSecurityBuilderFactory;
 
     public RegisterUserSecurityCommand(
         UserSecurityRepository userSecurityRepository,
         RoleRepository roleRepository,
         UserSecurityInputAppVoMapper userSecurityInputAppVoMapper,
-        UserSecurityOutputAppVoMapper userSecurityOutputAppVoMapper
+        UserSecurityOutputAppVoMapper userSecurityOutputAppVoMapper,
+        UserSecurityBuilderFactory userSecurityBuilderFactory
     ) {
         this.userSecurityRepository = userSecurityRepository;
         this.roleRepository = roleRepository;
         this.userSecurityInputAppVoMapper = userSecurityInputAppVoMapper;
         this.userSecurityOutputAppVoMapper = userSecurityOutputAppVoMapper;
+        this.userSecurityBuilderFactory = userSecurityBuilderFactory;
     }
 
     public UserSecurityOutputAppVo execute(UserSecurityInputAppVo userSecurityInput) throws UserExistsException, RoleNotFoundException {
@@ -55,9 +59,11 @@ public class RegisterUserSecurityCommand {
 
         UserSecurity userSecurity = userSecurityInputAppVoMapper.map(userSecurityInput);
 
-        userSecurity.setRoles(new HashSet<>(1) {{
-            add(guestRole);
-        }});
+        userSecurity = userSecurityBuilderFactory.create(userSecurity)
+            .roles(new HashSet<>(1) {{
+                add(guestRole);
+            }})
+            .build();
 
         return userSecurityOutputAppVoMapper.map(
             userSecurityRepository.save(userSecurity)

@@ -27,7 +27,7 @@ class GetUserByUsernameQueryTest {
     private UserOutputAppVoMapper outputVoMapper;
 
     @Mock
-    private UserRepository userRepository;
+    private UserRepository<User> userRepository;
 
     @InjectMocks
     private GetUserByUsernameQuery getUserByUsernameQuery;

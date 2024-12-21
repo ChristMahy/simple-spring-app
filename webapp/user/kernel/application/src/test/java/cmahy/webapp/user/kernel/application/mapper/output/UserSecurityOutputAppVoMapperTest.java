@@ -12,7 +12,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,24 +32,25 @@ class UserSecurityOutputAppVoMapperTest {
     @Test
     void map() {
         assertDoesNotThrow(() -> {
-            UserSecurity userSecurity = new UserSecurity();
+            UserSecurityStub userSecurity = new UserSecurityStub()
+                .setId(Generator.randomLongEqualOrAboveZero())
+                .setUserName(Generator.generateAString())
+                .setFullName(Generator.generateAString())
+                .setPassword(Generator.randomBytes(20))
+                .setPhoneNumber(Generator.generateAString())
+                .setCity(Generator.generateAString())
+                .setState(Generator.generateAString())
+                .setStreet(Generator.generateAString())
+                .setZip(Generator.generateAString())
+                .setAuthProvider(Generator.randomEnum(AuthProvider.class))
+                .setEnabled(Generator.randomBoolean())
+                .setExpired(Generator.randomBoolean())
+                .setLocked(Generator.randomBoolean())
+                .setCredentialsExpired(Generator.randomBoolean());
 
-            userSecurity.setId(Generator.randomLongEqualOrAboveZero());
-            userSecurity.setUserName(Generator.generateAString());
-            userSecurity.setFullName(Generator.generateAString());
-            userSecurity.setPassword(Generator.randomBytes(20));
-            userSecurity.setPhoneNumber(Generator.generateAString());
-            userSecurity.setCity(Generator.generateAString());
-            userSecurity.setState(Generator.generateAString());
-            userSecurity.setStreet(Generator.generateAString());
-            userSecurity.setZip(Generator.generateAString());
             userSecurity.setRoles(
                 Stream.generate(() -> {
-                        Role role = new Role();
-
-                        role.setId(Generator.randomLongEqualOrAboveZero());
-                        role.setName(Generator.generateAString());
-                        role.setUsers(List.of(userSecurity));
+                        RoleStub role = mock(RoleStub.class);
 
                         when(roleOutputAppVoMapper.map(role)).thenAnswer(_ -> mock(RoleOutputAppVo.class));
 
@@ -59,11 +59,6 @@ class UserSecurityOutputAppVoMapperTest {
                     .limit(Generator.randomInt(10, 20))
                     .toList()
             );
-            userSecurity.setAuthProvider(Generator.randomEnum(AuthProvider.class));
-            userSecurity.setEnabled(Generator.randomBoolean());
-            userSecurity.setExpired(Generator.randomBoolean());
-            userSecurity.setLocked(Generator.randomBoolean());
-            userSecurity.setCredentialsExpired(Generator.randomBoolean());
 
             UserSecurityOutputAppVo actual = userSecurityOutputAppVoMapper.map(userSecurity);
 
@@ -71,7 +66,7 @@ class UserSecurityOutputAppVoMapperTest {
                 .isNotNull()
                 .usingRecursiveComparison(
                     RecursiveComparisonConfiguration.builder()
-                        .withIgnoredFields("roles", "id")
+                        .withIgnoredFields("roles", "id", "isCredentialsExpired", "isLocked", "isEnabled", "isExpired")
                         .build()
                 )
                 .isEqualTo(userSecurity);
@@ -80,6 +75,26 @@ class UserSecurityOutputAppVoMapperTest {
             assertThat(actual.id().value()).isEqualTo(userSecurity.getId());
 
             assertThat(actual.roles()).hasSize(userSecurity.getRoles().size());
+
+            assertThat(actual.isCredentialsExpired()).isEqualTo(userSecurity.getCredentialsExpired());
+            assertThat(actual.isLocked()).isEqualTo(userSecurity.getLocked());
+            assertThat(actual.isEnabled()).isEqualTo(userSecurity.getEnabled());
+            assertThat(actual.isExpired()).isEqualTo(userSecurity.getExpired());
+        });
+    }
+
+    @Test
+    void map_whenAllPropertiesAreNull_thenResultPropertiesAreNull() {
+        assertDoesNotThrow(() -> {
+            UserSecurityStub userSecurity = new UserSecurityStub();
+
+            UserSecurityOutputAppVo actual = userSecurityOutputAppVoMapper.map(userSecurity);
+
+            assertThat(actual)
+                .isNotNull()
+                .hasAllNullFieldsOrPropertiesExcept("roles");
+
+            assertThat(actual.roles()).isEmpty();
         });
     }
 

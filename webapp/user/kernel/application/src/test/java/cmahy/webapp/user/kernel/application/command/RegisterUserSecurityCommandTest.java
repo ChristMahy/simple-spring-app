@@ -6,6 +6,8 @@ import cmahy.webapp.user.kernel.application.mapper.output.UserSecurityOutputAppV
 import cmahy.webapp.user.kernel.application.repository.RoleRepository;
 import cmahy.webapp.user.kernel.application.repository.UserSecurityRepository;
 import cmahy.webapp.user.kernel.domain.*;
+import cmahy.webapp.user.kernel.domain.builder.UserSecurityBuilder;
+import cmahy.webapp.user.kernel.domain.builder.factory.UserSecurityBuilderFactory;
 import cmahy.webapp.user.kernel.exception.RoleNotFoundException;
 import cmahy.webapp.user.kernel.exception.UserExistsException;
 import cmahy.webapp.user.kernel.vo.input.UserSecurityInputAppVo;
@@ -28,16 +30,19 @@ import static org.mockito.Mockito.*;
 class RegisterUserSecurityCommandTest {
 
     @Mock
-    private UserSecurityRepository userSecurityRepository;
+    private UserSecurityRepository<UserSecurity> userSecurityRepository;
 
     @Mock
-    private RoleRepository roleRepository;
+    private RoleRepository<Role> roleRepository;
 
     @Mock
     private UserSecurityInputAppVoMapper userSecurityInputAppVoMapper;
 
     @Mock
     private UserSecurityOutputAppVoMapper userSecurityOutputAppVoMapper;
+
+    @Mock
+    private UserSecurityBuilderFactory<UserSecurity> userSecurityBuilderFactory;
 
     @InjectMocks
     private RegisterUserSecurityCommand registerUserSecurityCommand;
@@ -52,15 +57,19 @@ class RegisterUserSecurityCommandTest {
             Role role = mock(Role.class);
             UserSecurity userSecurity = mock(UserSecurity.class);
             UserSecurityOutputAppVo outputAppVo = mock(UserSecurityOutputAppVo.class);
+            UserSecurityBuilder<UserSecurity> builder = mock(UserSecurityBuilder.class, RETURNS_SELF);
 
             when(inputAppVo.userName()).thenReturn(username);
             when(inputAppVo.authProvider()).thenReturn(authProvider);
+
+            when(builder.build()).thenReturn(userSecurity);
 
             when(userSecurityRepository.findByUserNameAndAuthProvider(username, authProvider)).thenReturn(Optional.empty());
             when(roleRepository.findByName(anyString())).thenReturn(Optional.of(role));
             when(userSecurityInputAppVoMapper.map(inputAppVo)).thenReturn(userSecurity);
             when(userSecurityRepository.save(userSecurity)).thenReturn(userSecurity);
             when(userSecurityOutputAppVoMapper.map(userSecurity)).thenReturn(outputAppVo);
+            when(userSecurityBuilderFactory.create(userSecurity)).thenReturn(builder);
 
             UserSecurityOutputAppVo actual = registerUserSecurityCommand.execute(inputAppVo);
 

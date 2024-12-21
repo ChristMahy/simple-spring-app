@@ -4,9 +4,9 @@ import cmahy.webapp.user.kernel.domain.Role;
 
 import java.util.Optional;
 
-public interface RoleRepository {
+public interface RoleRepository<R extends Role> {
 
-    Optional<Role> findByName(String name);
+    Optional<R> findByName(String name);
 
-    Role save(Role role);
+    R save(R role);
 }

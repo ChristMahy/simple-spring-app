@@ -5,9 +5,9 @@ import cmahy.webapp.user.kernel.domain.UserSecurity;
 
 import java.util.Optional;
 
-public interface UserSecurityRepository {
+public interface UserSecurityRepository<US extends UserSecurity> {
 
-    Optional<UserSecurity> findByUserNameAndAuthProvider(String username, AuthProvider authProvider);
+    Optional<US> findByUserNameAndAuthProvider(String username, AuthProvider authProvider);
 
-    UserSecurity save(UserSecurity userSecurity);
+    US save(US userSecurity);
 }
