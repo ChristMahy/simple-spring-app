@@ -15,8 +15,8 @@
     <name>User kernel</name>
 
     <modules>
-        <module>domain</module>
         <module>vo</module>
+        <module>domain</module>
         <module>application</module>
     </modules>
 </project>
