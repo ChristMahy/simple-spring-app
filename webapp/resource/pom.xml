@@ -10,6 +10,8 @@
     <artifactId>resource</artifactId>
     <version>DEV-SNAPSHOT</version>
 
+    <name>Taco - Resources</name>
+
     <packaging>pom</packaging>
 
     <modules>
