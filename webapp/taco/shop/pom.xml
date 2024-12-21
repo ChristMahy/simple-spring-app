@@ -15,7 +15,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>adapter</module>
         <module>kernel</module>
+        <module>adapter</module>
     </modules>
 </project>
