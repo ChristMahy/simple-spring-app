@@ -39,6 +39,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>cmahy</groupId>
+            <artifactId>common</artifactId>
+            <version>${cmahy.common.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>cmahy.webapp.shell-client</groupId>
             <artifactId>api</artifactId>
             <version>${cmahy.webapp.shell-client.version}</version>
@@ -63,14 +69,14 @@
         </dependency>
 
         <dependency>
-            <groupId>cmahy.webapp.taco.shop.kernel</groupId>
-            <artifactId>application</artifactId>
-            <version>${cmahy.webapp.taco.shop.version}</version>
+            <groupId>cmahy.webapp.user.adapter.repository</groupId>
+            <artifactId>webclient</artifactId>
+            <version>${cmahy.webapp.user.version}</version>
         </dependency>
 
         <dependency>
             <groupId>cmahy.webapp.taco.shop.kernel</groupId>
-            <artifactId>domain</artifactId>
+            <artifactId>application</artifactId>
             <version>${cmahy.webapp.taco.shop.version}</version>
         </dependency>
 
@@ -81,15 +87,15 @@
         </dependency>
 
         <dependency>
-            <groupId>cmahy.webapp.taco.shop.adapter.repository</groupId>
-            <artifactId>webclient</artifactId>
+            <groupId>cmahy.webapp.taco.shop.kernel</groupId>
+            <artifactId>domain</artifactId>
             <version>${cmahy.webapp.taco.shop.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>cmahy</groupId>
-            <artifactId>common</artifactId>
-            <version>${cmahy.common.version}</version>
+            <groupId>cmahy.webapp.taco.shop.adapter.repository</groupId>
+            <artifactId>webclient</artifactId>
+            <version>${cmahy.webapp.taco.shop.version}</version>
         </dependency>
 
         <dependency>
