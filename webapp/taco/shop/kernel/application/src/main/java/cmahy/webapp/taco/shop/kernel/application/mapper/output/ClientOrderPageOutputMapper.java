@@ -18,7 +18,7 @@ public class ClientOrderPageOutputMapper {
         this.clientOrderOutputMapper = clientOrderOutputMapper;
     }
 
-    public ClientOrderPageOutputVo map(ClientOrderPage source) throws RequiredException {
+    public ClientOrderPageOutputVo map(ClientOrderPage<ClientOrder> source) throws RequiredException {
         if (Objects.isNull(source)) {
             throw new RequiredException(ClientOrderPage.class);
         }

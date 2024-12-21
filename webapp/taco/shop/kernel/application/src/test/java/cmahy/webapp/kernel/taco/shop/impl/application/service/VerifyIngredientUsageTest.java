@@ -26,10 +26,10 @@ import static org.mockito.Mockito.when;
 class VerifyIngredientUsageTest {
 
     @Mock
-    private IngredientRepository ingredientRepository;
+    private IngredientRepository<Ingredient> ingredientRepository;
 
     @Mock
-    private TacoRepository tacoRepository;
+    private TacoRepository<Taco> tacoRepository;
 
     @InjectMocks
     private VerifyIngredientUsage verifyIngredientUsage;

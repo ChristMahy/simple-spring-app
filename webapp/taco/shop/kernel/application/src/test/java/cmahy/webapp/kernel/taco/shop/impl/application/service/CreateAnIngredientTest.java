@@ -5,8 +5,7 @@ import cmahy.webapp.taco.shop.kernel.application.mapper.output.IngredientOutputM
 import cmahy.webapp.taco.shop.kernel.application.repository.IngredientRepository;
 import cmahy.webapp.taco.shop.kernel.application.service.CreateAnIngredient;
 import cmahy.webapp.taco.shop.kernel.application.service.IngredientFactory;
-import cmahy.webapp.taco.shop.kernel.domain.Ingredient;
-import cmahy.webapp.taco.shop.kernel.domain.IngredientType;
+import cmahy.webapp.taco.shop.kernel.domain.*;
 import cmahy.webapp.taco.shop.kernel.exception.ingredient.IngredientDuplicateException;
 import cmahy.webapp.taco.shop.kernel.exception.ingredient.IngredientValidationException;
 import cmahy.webapp.taco.shop.kernel.vo.input.IngredientCreateInputVo;
@@ -34,7 +33,7 @@ class CreateAnIngredientTest {
     private IngredientFactory ingredientFactory;
 
     @Mock
-    private IngredientRepository ingredientRepository;
+    private IngredientRepository<Ingredient> ingredientRepository;
 
     @Mock
     private IngredientOutputMapper ingredientOutputMapper;
@@ -49,24 +48,23 @@ class CreateAnIngredientTest {
             String name = Generator.generateAString();
             IngredientType type = Generator.randomEnum(IngredientType.class);
 
-            IngredientCreateInputVo IngredientCreateInputVo = mock(IngredientCreateInputVo.class);
-            Ingredient ingredient = new Ingredient(
-                id,
-                name,
-                type
-            );
-            IngredientOutputVo IngredientOutputVo = mock(IngredientOutputVo.class);
+            IngredientCreateInputVo ingredientCreateInputVo = mock(IngredientCreateInputVo.class);
+            Ingredient ingredient = new IngredientStub()
+                .setId(id)
+                .setName(name)
+                .setType(type);
+            IngredientOutputVo ingredientOutputVo = mock(IngredientOutputVo.class);
 
-            when(ingredientFactory.create(IngredientCreateInputVo)).thenReturn(ingredient);
+            when(ingredientFactory.create(ingredientCreateInputVo)).thenReturn(ingredient);
             when(ingredientRepository.findByNameAndType(name, type)).thenReturn(Optional.empty());
             when(ingredientRepository.save(ingredient)).thenReturn(ingredient);
-            when(ingredientOutputMapper.map(ingredient)).thenReturn(IngredientOutputVo);
+            when(ingredientOutputMapper.map(ingredient)).thenReturn(ingredientOutputVo);
 
-            IngredientOutputVo actual = createAnIngredient.execute(IngredientCreateInputVo);
+            IngredientOutputVo actual = createAnIngredient.execute(ingredientCreateInputVo);
 
             assertThat(actual)
                 .isNotNull()
-                .isEqualTo(IngredientOutputVo);
+                .isEqualTo(ingredientOutputVo);
         });
     }
 
@@ -78,11 +76,10 @@ class CreateAnIngredientTest {
             IngredientType type = Generator.randomEnum(IngredientType.class);
 
             IngredientCreateInputVo IngredientCreateInputVo = mock(IngredientCreateInputVo.class);
-            Ingredient ingredient = new Ingredient(
-                id,
-                name,
-                type
-            );
+            Ingredient ingredient = new IngredientStub()
+                .setId(id)
+                .setName(name)
+                .setType(type);
 
             when(ingredientFactory.create(IngredientCreateInputVo)).thenReturn(ingredient);
             when(ingredientRepository.findByNameAndType(name, type)).thenReturn(Optional.of(ingredient));

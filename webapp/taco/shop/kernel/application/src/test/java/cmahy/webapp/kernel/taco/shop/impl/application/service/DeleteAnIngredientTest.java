@@ -4,6 +4,7 @@ import cmahy.common.helper.Generator;
 import cmahy.webapp.taco.shop.kernel.application.repository.IngredientRepository;
 import cmahy.webapp.taco.shop.kernel.application.service.DeleteAnIngredient;
 import cmahy.webapp.taco.shop.kernel.application.service.VerifyIngredientUsage;
+import cmahy.webapp.taco.shop.kernel.domain.Ingredient;
 import cmahy.webapp.taco.shop.kernel.domain.id.IngredientId;
 import cmahy.webapp.taco.shop.kernel.exception.ingredient.IngredientUsageElementOnDeletionException;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,7 @@ import static org.mockito.Mockito.*;
 class DeleteAnIngredientTest {
 
     @Mock
-    private IngredientRepository ingredientRepository;
+    private IngredientRepository<Ingredient> ingredientRepository;
 
     @Mock
     private VerifyIngredientUsage verifyIngredientUsage;

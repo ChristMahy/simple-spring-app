@@ -18,7 +18,7 @@ public class IngredientPageOutputMapper {
         this.ingredientOutputMapper = ingredientOutputMapper;
     }
 
-    public IngredientPageOutputVo map(IngredientPage source) throws RequiredException {
+    public IngredientPageOutputVo map(IngredientPage<Ingredient> source) throws RequiredException {
         if (Objects.isNull(source)) {
             throw new RequiredException(IngredientPage.class);
         }

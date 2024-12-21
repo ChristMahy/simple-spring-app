@@ -20,7 +20,7 @@ public class CreateAnIngredient {
     private static final Logger LOG = LoggerFactory.getLogger(CreateAnIngredient.class);
 
     private final IngredientFactory ingredientFactory;
-    private final IngredientRepository ingredientRepository;
+    private final IngredientRepository<Ingredient> ingredientRepository;
     private final IngredientOutputMapper ingredientOutputMapper;
 
     public CreateAnIngredient(
@@ -36,11 +36,9 @@ public class CreateAnIngredient {
     public IngredientOutputVo execute(IngredientCreateInputVo inputVo) throws IngredientDuplicateException, RequiredException {
         LOG.info("Create an ingredient from <{}>", inputVo);
 
-        Ingredient ingredient = ingredientFactory
-            .create(inputVo)
-            .setId(UUID.randomUUID().toString());
+        Ingredient ingredient = ingredientFactory.create(inputVo);
 
-        Optional<Ingredient> found = ingredientRepository.findByNameAndType(ingredient.getName(), ingredient.getType());
+        Optional<? extends Ingredient> found = ingredientRepository.findByNameAndType(ingredient.getName(), ingredient.getType());
 
         if (found.isPresent()) {
             LOG.info("Ingredient already exists <{}>", ingredient);

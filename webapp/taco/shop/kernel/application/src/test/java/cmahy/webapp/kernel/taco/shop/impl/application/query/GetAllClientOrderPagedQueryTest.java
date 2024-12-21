@@ -5,6 +5,7 @@ import cmahy.common.helper.Generator;
 import cmahy.webapp.taco.shop.kernel.application.mapper.output.ClientOrderPageOutputMapper;
 import cmahy.webapp.taco.shop.kernel.application.query.GetAllClientOrderPagedQuery;
 import cmahy.webapp.taco.shop.kernel.application.repository.ClientOrderPagingRepository;
+import cmahy.webapp.taco.shop.kernel.domain.ClientOrder;
 import cmahy.webapp.taco.shop.kernel.domain.page.ClientOrderPage;
 import cmahy.webapp.taco.shop.kernel.vo.output.ClientOrderPageOutputVo;
 import cmahy.webapp.user.kernel.application.repository.UserRepository;
@@ -29,10 +30,10 @@ import static org.mockito.Mockito.when;
 class GetAllClientOrderPagedQueryTest {
 
     @Mock
-    private UserRepository userRepository;
+    private UserRepository<User> userRepository;
 
     @Mock
-    private ClientOrderPagingRepository clientOrderPagingRepository;
+    private ClientOrderPagingRepository<ClientOrder> clientOrderPagingRepository;
 
     @Mock
     private ClientOrderPageOutputMapper clientOrderPageOutputMapper;
@@ -46,7 +47,7 @@ class GetAllClientOrderPagedQueryTest {
             UserId userId = new UserId(Generator.randomLongEqualOrAboveZero());
             User user = mock(User.class);
             EntityPageable entityPageable = mock(EntityPageable.class);
-            ClientOrderPage clientOrderPage = mock(ClientOrderPage.class);
+            ClientOrderPage<ClientOrder> clientOrderPage = mock(ClientOrderPage.class);
             ClientOrderPageOutputVo clientOrderPageOutputVo = mock(ClientOrderPageOutputVo.class);
 
             when(userRepository.findById(userId)).thenReturn(Optional.of(user));

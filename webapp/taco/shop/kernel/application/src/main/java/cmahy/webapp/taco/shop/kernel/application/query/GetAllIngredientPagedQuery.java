@@ -4,6 +4,7 @@ import cmahy.common.annotation.Query;
 import cmahy.common.entity.page.EntityPageable;
 import cmahy.webapp.taco.shop.kernel.application.mapper.output.IngredientPageOutputMapper;
 import cmahy.webapp.taco.shop.kernel.application.repository.IngredientPagingRepository;
+import cmahy.webapp.taco.shop.kernel.domain.Ingredient;
 import cmahy.webapp.taco.shop.kernel.exception.RequiredException;
 import cmahy.webapp.taco.shop.kernel.vo.output.IngredientPageOutputVo;
 import jakarta.inject.Named;
@@ -12,7 +13,7 @@ import jakarta.inject.Named;
 @Named
 public class GetAllIngredientPagedQuery {
 
-    private final IngredientPagingRepository ingredientPagingRepository;
+    private final IngredientPagingRepository<Ingredient> ingredientPagingRepository;
     private final IngredientPageOutputMapper ingredientPageOutputMapper;
 
     public GetAllIngredientPagedQuery(

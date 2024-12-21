@@ -1,14 +1,17 @@
 package cmahy.webapp.kernel.taco.shop.impl.application.mapper.output;
 
+import cmahy.common.entity.id.EntityId;
 import cmahy.webapp.taco.shop.kernel.application.mapper.output.IngredientOutputMapper;
-import cmahy.webapp.taco.shop.kernel.domain.Ingredient;
-import cmahy.webapp.taco.shop.kernel.domain.IngredientType;
+import cmahy.webapp.taco.shop.kernel.domain.*;
 import cmahy.webapp.taco.shop.kernel.exception.RequiredException;
 import cmahy.webapp.taco.shop.kernel.vo.output.IngredientOutputVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.Objects;
+import java.util.function.BiPredicate;
 
 import static cmahy.common.helper.Generator.generateAString;
 import static cmahy.common.helper.Generator.randomEnum;
@@ -25,19 +28,21 @@ class IngredientOutputMapperTest {
     @Test
     void map() {
         assertDoesNotThrow(() -> {
-            Ingredient ingredient = new Ingredient();
-
-            ingredient.setId(generateAString());
-            ingredient.setName(generateAString());
-            ingredient.setType(randomEnum(IngredientType.class));
+            Ingredient ingredient = new IngredientStub()
+                .setId(generateAString())
+                .setName(generateAString())
+                .setType(randomEnum(IngredientType.class));
 
             IngredientOutputVo actual = ingredientOutputMapper.map(ingredient);
 
-            assertThat(actual).isNotNull();
-            assertThat(actual.id()).isNotNull();
-            assertThat(actual.id().value()).isEqualTo(ingredient.getId());
-            assertThat(actual.name()).isEqualTo(ingredient.getName());
-            assertThat(actual.type()).isEqualTo(ingredient.getType().name());
+            BiPredicate<EntityId<?>, ?> idPredicate = (entityId, id) -> (Objects.isNull(entityId) && Objects.isNull(id)) || (Objects.nonNull(entityId) && entityId.value().equals(id));
+
+            assertThat(actual)
+                .isNotNull()
+                .usingRecursiveComparison()
+                .withEqualsForFields(idPredicate, "id")
+                .withEnumStringComparison()
+                .isEqualTo(ingredient);
         });
     }
 

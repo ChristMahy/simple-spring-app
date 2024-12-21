@@ -1,6 +1,7 @@
 package cmahy.webapp.taco.shop.kernel.application.service;
 
 import cmahy.webapp.taco.shop.kernel.application.repository.IngredientRepository;
+import cmahy.webapp.taco.shop.kernel.domain.Ingredient;
 import cmahy.webapp.taco.shop.kernel.domain.id.IngredientId;
 import cmahy.webapp.taco.shop.kernel.exception.ingredient.IngredientUsageElementOnDeletionException;
 import jakarta.inject.Named;
@@ -15,7 +16,7 @@ public class DeleteAnIngredient {
 
     private static final Logger LOG = LoggerFactory.getLogger(DeleteAnIngredient.class);
 
-    private final IngredientRepository ingredientRepository;
+    private final IngredientRepository<Ingredient> ingredientRepository;
     private final VerifyIngredientUsage verifyIngredientUsage;
 
     public DeleteAnIngredient(

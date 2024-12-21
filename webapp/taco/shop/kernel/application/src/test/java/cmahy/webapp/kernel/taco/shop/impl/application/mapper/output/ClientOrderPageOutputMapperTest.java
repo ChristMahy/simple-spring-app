@@ -41,7 +41,7 @@ class ClientOrderPageOutputMapperTest {
 
             Collection<ClientOrderOutputVo> expectedClientOrderOutputs = new ArrayList<>(clientOrdersSize);
 
-            ClientOrderPage clientOrderPage = new ClientOrderPage(
+            ClientOrderPage<ClientOrder> clientOrderPage = new ClientOrderPage<>(
                 Stream.generate(() -> {
                         ClientOrder clientOrder = mock(ClientOrder.class);
 

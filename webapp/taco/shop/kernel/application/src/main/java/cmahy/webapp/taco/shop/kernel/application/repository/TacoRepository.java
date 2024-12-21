@@ -5,8 +5,8 @@ import cmahy.webapp.taco.shop.kernel.domain.id.IngredientId;
 
 import java.util.Set;
 
-public interface TacoRepository {
-    Taco save(Taco taco);
+public interface TacoRepository<T extends Taco> {
+    T save(T taco);
 
-    Set<Taco> findByIngredientId(IngredientId ingredientId);
+    Set<T> findByIngredientId(IngredientId ingredientId);
 }

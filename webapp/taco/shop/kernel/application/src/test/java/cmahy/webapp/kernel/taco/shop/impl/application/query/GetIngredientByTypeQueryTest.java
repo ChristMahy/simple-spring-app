@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
 class GetIngredientByTypeQueryTest {
 
     @Mock
-    private IngredientRepository ingredientRepository;
+    private IngredientRepository<Ingredient> ingredientRepository;
 
     @Mock
     private IngredientOutputMapper ingredientOutputMapper;

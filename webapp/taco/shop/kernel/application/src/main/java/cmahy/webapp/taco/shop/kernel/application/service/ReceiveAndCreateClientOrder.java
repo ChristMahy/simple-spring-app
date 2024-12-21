@@ -4,6 +4,8 @@ import cmahy.webapp.taco.shop.kernel.application.mapper.input.ClientOrderInputMa
 import cmahy.webapp.taco.shop.kernel.application.mapper.input.TacoInputMapper;
 import cmahy.webapp.taco.shop.kernel.application.mapper.output.ClientOrderOutputMapper;
 import cmahy.webapp.taco.shop.kernel.application.repository.*;
+import cmahy.webapp.taco.shop.kernel.domain.builder.factory.ClientOrderBuilderFactory;
+import cmahy.webapp.taco.shop.kernel.domain.builder.factory.TacoBuilderFactory;
 import cmahy.webapp.taco.shop.kernel.domain.id.IngredientId;
 import cmahy.webapp.taco.shop.kernel.exception.RequiredException;
 import cmahy.webapp.taco.shop.kernel.exception.ingredient.IngredientNotFoundException;
@@ -22,13 +24,15 @@ import java.util.*;
 @Named
 public class ReceiveAndCreateClientOrder {
 
-    private final UserRepository userRepository;
-    private final ClientOrderRepository clientOrderRepository;
+    private final UserRepository<User> userRepository;
+    private final ClientOrderRepository<ClientOrder> clientOrderRepository;
     private final ClientOrderInputMapper clientOrderInputMapper;
     private final TacoInputMapper tacoInputMapper;
-    private final IngredientRepository ingredientRepository;
-    private final TacoRepository tacoRepository;
+    private final IngredientRepository<Ingredient> ingredientRepository;
+    private final TacoRepository<Taco> tacoRepository;
     private final ClientOrderOutputMapper clientOrderOutputMapper;
+    private final TacoBuilderFactory<Taco> tacoBuilderFactory;
+    private final ClientOrderBuilderFactory<ClientOrder> clientOrderBuilderFactory;
 
     public ReceiveAndCreateClientOrder(
         UserRepository userRepository,
@@ -37,7 +41,9 @@ public class ReceiveAndCreateClientOrder {
         TacoInputMapper tacoInputMapper,
         IngredientRepository ingredientRepository,
         TacoRepository tacoRepository,
-        ClientOrderOutputMapper clientOrderOutputMapper
+        ClientOrderOutputMapper clientOrderOutputMapper,
+        TacoBuilderFactory tacoBuilderFactory,
+        ClientOrderBuilderFactory clientOrderBuilderFactory
     ) {
         this.userRepository = userRepository;
         this.clientOrderRepository = clientOrderRepository;
@@ -46,6 +52,8 @@ public class ReceiveAndCreateClientOrder {
         this.ingredientRepository = ingredientRepository;
         this.tacoRepository = tacoRepository;
         this.clientOrderOutputMapper = clientOrderOutputMapper;
+        this.tacoBuilderFactory = tacoBuilderFactory;
+        this.clientOrderBuilderFactory = clientOrderBuilderFactory;
     }
 
     public ClientOrderOutputVo execute(ClientOrderInputVo input, UserId clientId) throws RequiredException, UserNotFoundException, IngredientNotFoundException {
@@ -69,12 +77,16 @@ public class ReceiveAndCreateClientOrder {
                 );
             }
 
-            taco.setIngredients(ingredients.stream().distinct().toList());
+            taco = tacoBuilderFactory.create(taco)
+                .ingredients(ingredients.stream().distinct().toList())
+                .build();
 
             tacos.add(tacoRepository.save(taco));
         }
 
-        clientOrder.setTacos(Collections.unmodifiableList(tacos));
+        clientOrder = clientOrderBuilderFactory.create(clientOrder)
+            .tacos(Collections.unmodifiableList(tacos))
+            .build();
 
         return clientOrderOutputMapper.map(
             this.clientOrderRepository.save(

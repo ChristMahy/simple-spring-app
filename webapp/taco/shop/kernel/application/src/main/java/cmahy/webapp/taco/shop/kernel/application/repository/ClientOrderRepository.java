@@ -2,7 +2,7 @@ package cmahy.webapp.taco.shop.kernel.application.repository;
 
 import cmahy.webapp.taco.shop.kernel.domain.ClientOrder;
 
-public interface ClientOrderRepository {
+public interface ClientOrderRepository<CO extends ClientOrder> {
 
-    ClientOrder save(ClientOrder clientOrder);
+    CO save(CO clientOrder);
 }

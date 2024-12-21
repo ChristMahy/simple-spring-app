@@ -15,7 +15,7 @@ import java.util.*;
 @Named
 public class GetIngredientByTypeQuery {
 
-    private final IngredientRepository ingredientRepository;
+    private final IngredientRepository<Ingredient> ingredientRepository;
     private final IngredientOutputMapper ingredientOutputMapper;
 
     public GetIngredientByTypeQuery(

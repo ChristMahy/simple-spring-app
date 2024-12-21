@@ -6,6 +6,10 @@ import cmahy.webapp.taco.shop.kernel.application.mapper.input.TacoInputMapper;
 import cmahy.webapp.taco.shop.kernel.application.mapper.output.ClientOrderOutputMapper;
 import cmahy.webapp.taco.shop.kernel.application.repository.*;
 import cmahy.webapp.taco.shop.kernel.application.service.ReceiveAndCreateClientOrder;
+import cmahy.webapp.taco.shop.kernel.domain.builder.ClientOrderBuilder;
+import cmahy.webapp.taco.shop.kernel.domain.builder.TacoBuilder;
+import cmahy.webapp.taco.shop.kernel.domain.builder.factory.ClientOrderBuilderFactory;
+import cmahy.webapp.taco.shop.kernel.domain.builder.factory.TacoBuilderFactory;
 import cmahy.webapp.taco.shop.kernel.domain.id.IngredientId;
 import cmahy.webapp.taco.shop.kernel.exception.RequiredException;
 import cmahy.webapp.taco.shop.kernel.exception.ingredient.IngredientNotFoundException;
@@ -37,10 +41,10 @@ import static org.mockito.Mockito.*;
 class ReceiveAndCreateClientOrderTest {
 
     @Mock
-    private UserRepository userRepository;
+    private UserRepository<User> userRepository;
 
     @Mock
-    private ClientOrderRepository clientOrderRepository;
+    private ClientOrderRepository<ClientOrder> clientOrderRepository;
 
     @Mock
     private ClientOrderInputMapper clientOrderInputMapper;
@@ -49,13 +53,19 @@ class ReceiveAndCreateClientOrderTest {
     private TacoInputMapper tacoInputMapper;
 
     @Mock
-    private IngredientRepository ingredientRepository;
+    private IngredientRepository<Ingredient> ingredientRepository;
 
     @Mock
-    private TacoRepository tacoRepository;
+    private TacoRepository<Taco> tacoRepository;
 
     @Mock
     private ClientOrderOutputMapper clientOrderOutputMapper;
+
+    @Mock
+    private TacoBuilderFactory<Taco> tacoBuilderFactory;
+
+    @Mock
+    private ClientOrderBuilderFactory<ClientOrder> clientOrderBuilderFactory;
 
     @InjectMocks
     private ReceiveAndCreateClientOrder receiveAndCreateClientOrder;
@@ -89,9 +99,12 @@ class ReceiveAndCreateClientOrderTest {
                         );
 
                         Taco taco = mock(Taco.class);
+                        TacoBuilder<Taco> tacoBuilder = mock(TacoBuilder.class, RETURNS_SELF);
                         try {
                             when(tacoInputMapper.map(tacoInput)).thenAnswer(_ -> taco);
                         } catch (RequiredException ignored) {}
+                        when(tacoBuilderFactory.create(taco)).thenReturn(tacoBuilder);
+                        when(tacoBuilder.build()).thenReturn(taco);
                         when(tacoRepository.save(taco)).thenAnswer(_ -> taco);
 
                         return tacoInput;
@@ -102,9 +115,12 @@ class ReceiveAndCreateClientOrderTest {
 
             ClientOrder clientOrder = mock(ClientOrder.class);
             ClientOrderOutputVo clientOrderOutputVo = mock(ClientOrderOutputVo.class);
+            ClientOrderBuilder<ClientOrder> clientOrderBuilder = mock(ClientOrderBuilder.class, RETURNS_SELF);
 
             when(userRepository.findById(userId)).thenReturn(Optional.of(user));
             when(clientOrderInputMapper.map(clientOrderVo, user)).thenReturn(clientOrder);
+            when(clientOrderBuilderFactory.create(clientOrder)).thenReturn(clientOrderBuilder);
+            when(clientOrderBuilder.build()).thenReturn(clientOrder);
             when(clientOrderRepository.save(clientOrder)).thenReturn(clientOrder);
             when(clientOrderOutputMapper.map(clientOrder)).thenReturn(clientOrderOutputVo);
 

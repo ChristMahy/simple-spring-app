@@ -1,8 +1,7 @@
-package cmahy.webapp.kernel.taco.shop.impl.application.query;
+package cmahy.webapp.taco.shop.kernel.application.query;
 
 import cmahy.common.entity.page.EntityPageable;
 import cmahy.webapp.taco.shop.kernel.application.mapper.output.IngredientPageOutputMapper;
-import cmahy.webapp.taco.shop.kernel.application.query.GetAllIngredientPagedQuery;
 import cmahy.webapp.taco.shop.kernel.application.repository.IngredientPagingRepository;
 import cmahy.webapp.taco.shop.kernel.domain.Ingredient;
 import cmahy.webapp.taco.shop.kernel.domain.page.IngredientPage;
@@ -19,7 +18,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class GetAllIngredientPagedQueryTest {
+class GetAllRemoteIngredientPagedQueryTest {
 
     @Mock
     private IngredientPagingRepository<Ingredient> ingredientPagingRepository;
@@ -28,23 +27,23 @@ class GetAllIngredientPagedQueryTest {
     private IngredientPageOutputMapper ingredientPageOutputMapper;
 
     @InjectMocks
-    private GetAllIngredientPagedQuery getAllIngredientPagedQuery;
+    private GetAllRemoteIngredientPagedQuery getAllRemoteIngredientPagedQuery;
 
     @Test
     void execute() {
         assertDoesNotThrow(() -> {
-            EntityPageable entityPageable = mock(EntityPageable.class);
+            EntityPageable pageable = mock(EntityPageable.class);
             IngredientPage<Ingredient> ingredientPage = mock(IngredientPage.class);
             IngredientPageOutputVo ingredientPageOutputVo = mock(IngredientPageOutputVo.class);
 
-            when(ingredientPagingRepository.findAll(entityPageable)).thenReturn(ingredientPage);
+            when(ingredientPagingRepository.findAll(pageable)).thenReturn(ingredientPage);
             when(ingredientPageOutputMapper.map(ingredientPage)).thenReturn(ingredientPageOutputVo);
 
-            IngredientPageOutputVo actual = getAllIngredientPagedQuery.execute(entityPageable);
+            IngredientPageOutputVo actual = getAllRemoteIngredientPagedQuery.execute(pageable);
 
             assertThat(actual)
                 .isNotNull()
-                .isEqualTo(ingredientPageOutputVo);
+                .isSameAs(ingredientPageOutputVo);
         });
     }
 }

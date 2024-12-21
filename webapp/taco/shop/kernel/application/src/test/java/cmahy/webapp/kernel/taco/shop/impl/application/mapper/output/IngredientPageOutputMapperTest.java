@@ -40,18 +40,18 @@ class IngredientPageOutputMapperTest {
 
             Collection<IngredientOutputVo> expectedIngredientsOutput = new ArrayList<>(ingredientsSize);
 
-            IngredientPage ingredientPage = new IngredientPage(
+            IngredientPage<Ingredient> ingredientPage = new IngredientPage<>(
                 Stream.generate(() -> {
                     Ingredient ingredient = mock(Ingredient.class);
 
                     IngredientOutputVo ingredientOutputVo = mock(IngredientOutputVo.class);
                     expectedIngredientsOutput.add(ingredientOutputVo);
 
-                        try {
-                            when(ingredientOutputMapper.map(ingredient)).thenReturn(ingredientOutputVo);
-                        } catch (RequiredException ignored) {}
+                    try {
+                        when(ingredientOutputMapper.map(ingredient)).thenReturn(ingredientOutputVo);
+                    } catch (RequiredException ignored) {}
 
-                        return ingredient;
+                    return ingredient;
                 })
                     .limit(ingredientsSize)
                     .toList(),

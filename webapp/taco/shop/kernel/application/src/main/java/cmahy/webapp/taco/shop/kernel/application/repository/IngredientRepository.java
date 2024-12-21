@@ -7,15 +7,15 @@ import cmahy.webapp.taco.shop.kernel.domain.id.IngredientId;
 import java.util.Optional;
 import java.util.Set;
 
-public interface IngredientRepository {
+public interface IngredientRepository<I extends Ingredient> {
 
-    Optional<Ingredient> findById(IngredientId id);
+    Optional<I> findById(IngredientId id);
 
-    Set<Ingredient> findByType(IngredientType type);
+    Set<I> findByType(IngredientType type);
 
-    Optional<Ingredient> findByNameAndType(String name, IngredientType type);
+    Optional<I> findByNameAndType(String name, IngredientType type);
 
-    Ingredient save(Ingredient ingredient);
+    I save(I ingredient);
 
     void deleteById(IngredientId id);
 }

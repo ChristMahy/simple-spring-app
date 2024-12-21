@@ -4,8 +4,9 @@ import cmahy.common.helper.Generator;
 import cmahy.webapp.taco.shop.kernel.application.mapper.output.IngredientOutputMapper;
 import cmahy.webapp.taco.shop.kernel.application.repository.IngredientRepository;
 import cmahy.webapp.taco.shop.kernel.application.service.PartialUpdatingAnIngredient;
-import cmahy.webapp.taco.shop.kernel.domain.Ingredient;
-import cmahy.webapp.taco.shop.kernel.domain.IngredientType;
+import cmahy.webapp.taco.shop.kernel.domain.*;
+import cmahy.webapp.taco.shop.kernel.domain.builder.IngredientBuilderStub;
+import cmahy.webapp.taco.shop.kernel.domain.builder.factory.IngredientBuilderFactory;
 import cmahy.webapp.taco.shop.kernel.domain.id.IngredientId;
 import cmahy.webapp.taco.shop.kernel.exception.ingredient.IngredientNotFoundException;
 import cmahy.webapp.taco.shop.kernel.vo.input.IngredientUpdateInputVo;
@@ -27,10 +28,13 @@ import static org.mockito.Mockito.*;
 class PartialUpdatingAnIngredientTest {
 
     @Mock
-    private IngredientRepository ingredientRepository;
+    private IngredientRepository<Ingredient> ingredientRepository;
 
     @Mock
     private IngredientOutputMapper ingredientOutputMapper;
+
+    @Mock
+    private IngredientBuilderFactory<Ingredient> ingredientBuilderFactory;
 
     @InjectMocks
     private PartialUpdatingAnIngredient partialUpdatingAnIngredient;
@@ -50,11 +54,13 @@ class PartialUpdatingAnIngredientTest {
                 Optional.of(name),
                 Optional.of(type.name())
             );
-            Ingredient ingredient = new Ingredient()
+            Ingredient ingredient = new IngredientStub()
                 .setId(previousId)
                 .setName(previousName)
                 .setType(previousType);
             IngredientOutputVo ingredientOutputVo = mock(IngredientOutputVo.class);
+
+            when(ingredientBuilderFactory.create(ingredient)).thenAnswer(_ -> new IngredientBuilderStub((IngredientStub) ingredient));
 
             when(ingredientRepository.findById(ingredientId)).thenReturn(Optional.of(ingredient));
             when(ingredientRepository.save(ingredient)).thenReturn(ingredient);
@@ -62,7 +68,9 @@ class PartialUpdatingAnIngredientTest {
 
             IngredientOutputVo actual = partialUpdatingAnIngredient.execute(ingredientId, ingredientUpdateInputVo);
 
-            assertThat(actual).isEqualTo(ingredientOutputVo);
+            assertThat(actual)
+                .isNotNull()
+                .isEqualTo(ingredientOutputVo);
 
             assertThat(ingredient.getId()).isEqualTo(previousId);
             assertThat(ingredient.getName()).isEqualTo(name);
@@ -83,11 +91,13 @@ class PartialUpdatingAnIngredientTest {
                 Optional.empty(),
                 Optional.empty()
             );
-            Ingredient ingredient = new Ingredient()
+            Ingredient ingredient = new IngredientStub()
                 .setId(previousId)
                 .setName(previousName)
                 .setType(previousType);
             IngredientOutputVo ingredientOutputVo = mock(IngredientOutputVo.class);
+
+            when(ingredientBuilderFactory.create(ingredient)).thenAnswer(_ -> new IngredientBuilderStub((IngredientStub) ingredient));
 
             when(ingredientRepository.findById(ingredientId)).thenReturn(Optional.of(ingredient));
             when(ingredientRepository.save(ingredient)).thenReturn(ingredient);
@@ -115,18 +125,23 @@ class PartialUpdatingAnIngredientTest {
                 Optional.empty(),
                 Optional.of(Generator.generateAString(500))
             );
-            Ingredient ingredient = new Ingredient()
+            Ingredient ingredient = new IngredientStub()
                 .setId(previousId)
                 .setName(previousName)
                 .setType(previousType);
             IngredientOutputVo ingredientOutputVo = mock(IngredientOutputVo.class);
 
+            when(ingredientBuilderFactory.create(ingredient)).thenAnswer(_ -> new IngredientBuilderStub((IngredientStub) ingredient));
+
             when(ingredientRepository.findById(ingredientId)).thenReturn(Optional.of(ingredient));
             when(ingredientRepository.save(ingredient)).thenReturn(ingredient);
             when(ingredientOutputMapper.map(ingredient)).thenReturn(ingredientOutputVo);
 
-            partialUpdatingAnIngredient.execute(ingredientId, ingredientUpdateInputVo);
+            IngredientOutputVo actual = partialUpdatingAnIngredient.execute(ingredientId, ingredientUpdateInputVo);
 
+            assertThat(actual).isEqualTo(ingredientOutputVo);
+
+            assertThat(ingredient.getId()).isEqualTo(previousId);
             assertThat(ingredient.getName()).isEqualTo(previousName);
             assertThat(ingredient.getType()).isEqualTo(previousType);
         });
@@ -144,18 +159,23 @@ class PartialUpdatingAnIngredientTest {
                 Optional.of("      \t      "),
                 Optional.of("       \t     ")
             );
-            Ingredient ingredient = new Ingredient()
+            Ingredient ingredient = new IngredientStub()
                 .setId(previousId)
                 .setName(previousName)
                 .setType(previousType);
             IngredientOutputVo ingredientOutputVo = mock(IngredientOutputVo.class);
 
+            when(ingredientBuilderFactory.create(ingredient)).thenAnswer(_ -> new IngredientBuilderStub((IngredientStub) ingredient));
+
             when(ingredientRepository.findById(ingredientId)).thenReturn(Optional.of(ingredient));
             when(ingredientRepository.save(ingredient)).thenReturn(ingredient);
             when(ingredientOutputMapper.map(ingredient)).thenReturn(ingredientOutputVo);
 
-            partialUpdatingAnIngredient.execute(ingredientId, ingredientUpdateInputVo);
+            IngredientOutputVo actual = partialUpdatingAnIngredient.execute(ingredientId, ingredientUpdateInputVo);
 
+            assertThat(actual).isEqualTo(ingredientOutputVo);
+
+            assertThat(ingredient.getId()).isEqualTo(previousId);
             assertThat(ingredient.getName()).isEqualTo(previousName);
             assertThat(ingredient.getType()).isEqualTo(previousType);
         });
@@ -176,11 +196,13 @@ class PartialUpdatingAnIngredientTest {
                 Optional.of("       \t  " + name + "     \t     "),
                 Optional.of("       \t  " + type.name() + "     \t     ")
             );
-            Ingredient ingredient = new Ingredient()
+            Ingredient ingredient = new IngredientStub()
                 .setId(previousId)
                 .setName(previousName)
                 .setType(previousType);
             IngredientOutputVo ingredientOutputVo = mock(IngredientOutputVo.class);
+
+            when(ingredientBuilderFactory.create(ingredient)).thenAnswer(_ -> new IngredientBuilderStub((IngredientStub) ingredient));
 
             when(ingredientRepository.findById(ingredientId)).thenReturn(Optional.of(ingredient));
             when(ingredientRepository.save(ingredient)).thenReturn(ingredient);

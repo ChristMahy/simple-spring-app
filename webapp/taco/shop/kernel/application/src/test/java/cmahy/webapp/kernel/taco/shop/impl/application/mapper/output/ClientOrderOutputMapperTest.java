@@ -1,9 +1,9 @@
 package cmahy.webapp.kernel.taco.shop.impl.application.mapper.output;
 
+import cmahy.common.entity.id.EntityId;
 import cmahy.webapp.taco.shop.kernel.application.mapper.output.ClientOrderOutputMapper;
 import cmahy.webapp.taco.shop.kernel.application.mapper.output.TacoOutputMapper;
-import cmahy.webapp.taco.shop.kernel.domain.ClientOrder;
-import cmahy.webapp.taco.shop.kernel.domain.Taco;
+import cmahy.webapp.taco.shop.kernel.domain.*;
 import cmahy.webapp.taco.shop.kernel.exception.RequiredException;
 import cmahy.webapp.taco.shop.kernel.vo.output.ClientOrderOutputVo;
 import cmahy.webapp.taco.shop.kernel.vo.output.TacoOutputVo;
@@ -13,8 +13,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.function.BiPredicate;
 import java.util.stream.Stream;
 
 import static cmahy.common.helper.Generator.*;
@@ -36,7 +36,7 @@ class ClientOrderOutputMapperTest {
     @Test
     void map() {
         assertDoesNotThrow(() -> {
-            List<Taco> tacos = Stream.generate(() -> mock(Taco.class))
+            List<TacoStub> tacos = Stream.generate(() -> mock(TacoStub.class))
                 .limit(randomInt(10, 100))
                 .toList();
             List<TacoOutputVo> tacoOutputVos = tacos.stream()
@@ -51,35 +51,29 @@ class ClientOrderOutputMapperTest {
                 })
                 .toList();
 
-            ClientOrder order = new ClientOrder();
-
-            order.setId(randomLongEqualOrAboveZero());
-            order.setPlacedAt(new Date());
-            order.setDeliveryName(generateAString());
-            order.setDeliveryStreet(generateAString());
-            order.setDeliveryState(generateAString());
-            order.setDeliveryCity(generateAString());
-            order.setDeliveryZip(generateAString());
-            order.setCcNumber(generateAString());
-            order.setCcCVV(generateAString());
-            order.setCcExpiration(generateAString());
-            order.setTacos(tacos);
+            ClientOrder order = new ClientOrderStub()
+                .setId(randomLongEqualOrAboveZero())
+                .setPlacedAt(new Date())
+                .setDeliveryName(generateAString())
+                .setDeliveryStreet(generateAString())
+                .setDeliveryState(generateAString())
+                .setDeliveryCity(generateAString())
+                .setDeliveryZip(generateAString())
+                .setCcNumber(generateAString())
+                .setCcCVV(generateAString())
+                .setCcExpiration(generateAString())
+                .setTacos(tacos);
 
             ClientOrderOutputVo actual = clientOrderOutputMapper.map(order);
 
-            assertThat(actual).isNotNull();
-            assertThat(actual.id()).isNotNull();
-            assertThat(actual.id().value()).isEqualTo(order.getId());
-            assertThat(actual.placedAt()).isEqualTo(order.getPlacedAt());
-            assertThat(actual.deliveryName()).isEqualTo(order.getDeliveryName());
-            assertThat(actual.deliveryStreet()).isEqualTo(order.getDeliveryStreet());
-            assertThat(actual.deliveryCity()).isEqualTo(order.getDeliveryCity());
-            assertThat(actual.deliveryState()).isEqualTo(order.getDeliveryState());
-            assertThat(actual.deliveryZip()).isEqualTo(order.getDeliveryZip());
-            assertThat(actual.ccNumber()).isEqualTo(order.getCcNumber());
-            assertThat(actual.ccExpiration()).isEqualTo(order.getCcExpiration());
-            assertThat(actual.ccCVV()).isEqualTo(order.getCcCVV());
-            assertThat(actual.tacos()).containsExactlyElementsOf(tacoOutputVos);
+            BiPredicate<EntityId<?>, ?> idPredicate = (entityId, id) -> (Objects.isNull(entityId) && Objects.isNull(id)) || (Objects.nonNull(entityId) && entityId.value().equals(id));
+
+            assertThat(actual)
+                .isNotNull()
+                .usingRecursiveComparison()
+                .ignoringFields("tacos")
+                .withEqualsForFields(idPredicate, "id")
+                .isEqualTo(order);
         });
     }
 
