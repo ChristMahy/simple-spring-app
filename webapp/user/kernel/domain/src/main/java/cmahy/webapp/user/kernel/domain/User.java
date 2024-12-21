@@ -1,116 +1,26 @@
 package cmahy.webapp.user.kernel.domain;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import java.util.Collection;
 
-public class User {
+public interface User {
 
-    private Long id;
-    private String userName;
-    private byte[] password;
-    private String fullName;
-    private String street;
-    private String city;
-    private String state;
-    private String zip;
-    private String phoneNumber;
+    Long getId();
 
-    private Collection<Role> roles;
+    String getUserName();
 
-    public Long getId() {
-        return id;
-    }
+    byte[] getPassword();
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    String getFullName();
 
-    public String getUserName() {
-        return userName;
-    }
+    String getStreet();
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+    String getCity();
 
-    public byte[] getPassword() {
-        return password;
-    }
+    String getState();
 
-    public void setPassword(byte[] password) {
-        this.password = password;
-    }
+    String getZip();
 
-    public String getFullName() {
-        return fullName;
-    }
+    String getPhoneNumber();
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getZip() {
-        return zip;
-    }
-
-    public void setZip(String zip) {
-        this.zip = zip;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public Collection<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Collection<Role> roles) {
-        this.roles = roles;
-    }
-
-    @Override
-    public String toString() {
-        var builder = new ToStringBuilder(this, ToStringStyle.JSON_STYLE);
-
-        return builder
-            .append("userName", getUserName())
-            .append("fullName", getFullName())
-            .append("street", getStreet())
-            .append("city", getCity())
-            .append("state", getState())
-            .append("zip", getZip())
-            .append("phoneNumber", getPhoneNumber())
-            .build();
-    }
+    <R extends Role> Collection<R> getRoles();
 }
