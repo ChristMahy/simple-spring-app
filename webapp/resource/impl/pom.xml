@@ -82,6 +82,10 @@
                     <artifactId>spring-boot-starter-data-jpa</artifactId>
                 </dependency>
             </dependencies>
+
+            <properties>
+                <maven-failsafe-plugin.aditional.arg-line>-Dspring.profiles.active=jpa,h2,webclient</maven-failsafe-plugin.aditional.arg-line>
+            </properties>
         </profile>
 
         <profile>
