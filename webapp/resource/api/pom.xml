@@ -10,6 +10,8 @@
     <artifactId>api</artifactId>
     <version>DEV-SNAPSHOT</version>
 
+    <name>Taco - Resources - API</name>
+
     <packaging>jar</packaging>
 
     <parent>
