@@ -20,6 +20,8 @@
     </parent>
 
     <properties>
+        <cmahy.common>DEV-SNAPSHOT</cmahy.common>
+
         <cmahy.webapp.taco.shop.version>DEV-SNAPSHOT</cmahy.webapp.taco.shop.version>
         <cmahy.webapp.user.version>DEV-SNAPSHOT</cmahy.webapp.user.version>
     </properties>
@@ -40,6 +42,13 @@
         </dependency>
 
         <dependency>
+            <groupId>cmahy.webapp.user.adapter.repository</groupId>
+            <artifactId>jpa</artifactId>
+            <version>${cmahy.webapp.user.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
             <groupId>cmahy.webapp.user.kernel</groupId>
             <artifactId>domain</artifactId>
             <version>${cmahy.webapp.user.version}</version>
@@ -52,8 +61,45 @@
         </dependency>
 
         <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy</groupId>
+            <artifactId>common</artifactId>
+            <version>${cmahy.common}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -90,6 +136,20 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
             </plugin>
+
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <configuration>
+                    <includes>
+                        <include>**/jpa/entity/builder/**</include>
+                    </includes>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+
+    <reporting>
+        <outputDirectory>${project.build.directory}/${project.build.finalName}-reports</outputDirectory>
+    </reporting>
 </project>

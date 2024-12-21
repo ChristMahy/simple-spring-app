@@ -1,10 +1,11 @@
 package cmahy.webapp.taco.shop.adapter.jpa.repository;
 
 import cmahy.common.entity.page.EntityPageable;
+import cmahy.webapp.taco.shop.adapter.jpa.entity.JpaClientOrder;
 import cmahy.webapp.taco.shop.kernel.application.repository.ClientOrderPagingRepository;
 import cmahy.webapp.taco.shop.kernel.application.repository.ClientOrderRepository;
-import cmahy.webapp.taco.shop.kernel.domain.ClientOrder;
 import cmahy.webapp.taco.shop.kernel.domain.page.ClientOrderPage;
+import cmahy.webapp.user.adapter.jpa.entity.JpaUser;
 import cmahy.webapp.user.kernel.domain.User;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.*;
@@ -14,17 +15,17 @@ import org.springframework.stereotype.Repository;
 @Primary
 @Repository
 public interface ClientOrderRepositoryImpl extends
-    ClientOrderRepository,
-    ClientOrderPagingRepository,
-    JpaRepository<ClientOrder, Long> {
+    ClientOrderRepository<JpaClientOrder>,
+    ClientOrderPagingRepository<JpaClientOrder>,
+    JpaRepository<JpaClientOrder, Long> {
 
-    Page<ClientOrder> findByUser(User user, Pageable pageable);
+    Page<JpaClientOrder> findByUser(JpaUser user, Pageable pageable);
 
     @Override
-    default ClientOrderPage getByUser(User user, EntityPageable pageable) {
-        Page<ClientOrder> all = ClientOrderRepositoryImpl.this.findByUser(user, PageRequest.of(pageable.pageNumber(), pageable.pageSize()));
+    default ClientOrderPage<JpaClientOrder> getByUser(User user, EntityPageable pageable) {
+        Page<JpaClientOrder> all = ClientOrderRepositoryImpl.this.findByUser((JpaUser) user, PageRequest.of(pageable.pageNumber(), pageable.pageSize()));
 
-        return new ClientOrderPage(
+        return new ClientOrderPage<>(
             all.getContent(),
             all.getTotalElements()
         );
