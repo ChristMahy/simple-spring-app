@@ -234,6 +234,22 @@
         </dependency>
 
         <dependency>
+            <groupId>cmahy.webapp.taco.shop.kernel</groupId>
+            <artifactId>domain</artifactId>
+            <version>${cmahy.webapp.taco.shop.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy.webapp.user.kernel</groupId>
+            <artifactId>domain</artifactId>
+            <version>${cmahy.webapp.user.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
