@@ -2,6 +2,8 @@ package cmahy.webapp.resource.impl.adapter.startup.generator.taco;
 
 import cmahy.webapp.taco.shop.kernel.application.repository.*;
 import cmahy.webapp.taco.shop.kernel.domain.*;
+import cmahy.webapp.taco.shop.kernel.domain.builder.factory.ClientOrderBuilderFactory;
+import cmahy.webapp.taco.shop.kernel.domain.builder.factory.TacoBuilderFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,20 +24,26 @@ public class ClientOrderGenerator implements ApplicationRunner {
 
     private static final Logger LOG = LoggerFactory.getLogger(ClientOrderGenerator.class);
 
-    private final IngredientRepository ingredientRepository;
-    private final TacoRepository tacoRepository;
-    private final ClientOrderRepository clientOrderRepository;
+    private final IngredientRepository<Ingredient> ingredientRepository;
+    private final TacoRepository<Taco> tacoRepository;
+    private final ClientOrderRepository<ClientOrder> clientOrderRepository;
+    private final TacoBuilderFactory<Taco> tacoBuilderFactory;
+    private final ClientOrderBuilderFactory<ClientOrder> clientOrderBuilderFactory;
     private final Optional<Integer> initialClientOrderSize;
 
     public ClientOrderGenerator(
         IngredientRepository ingredientRepository,
         TacoRepository tacoRepository,
         ClientOrderRepository clientOrderRepository,
+        TacoBuilderFactory tacoBuilderFactory,
+        ClientOrderBuilderFactory clientOrderBuilderFactory,
         @Value("${application.start-up.order.initial-size:}") Optional<Integer> initialClientOrderSize
     ) {
         this.ingredientRepository = ingredientRepository;
         this.tacoRepository = tacoRepository;
         this.clientOrderRepository = clientOrderRepository;
+        this.tacoBuilderFactory = tacoBuilderFactory;
+        this.clientOrderBuilderFactory = clientOrderBuilderFactory;
         this.initialClientOrderSize = initialClientOrderSize;
     }
 
@@ -46,55 +54,51 @@ public class ClientOrderGenerator implements ApplicationRunner {
 
         IntStream.rangeClosed(1, initialClientOrderSize.orElse(1))
             .mapToObj(index -> {
-                Taco taco1 = new Taco();
-
-                taco1.setName("Taco " + index + ".1");
-                taco1 = applyAllIngredientsToTaco(taco1);
+                Taco taco1 = tacoBuilderFactory.create()
+                    .name("Taco " + index + ".1")
+                    .ingredients(generateIngredients())
+                    .build();
 
                 taco1 = tacoRepository.save(taco1);
 
-                Taco taco2 = new Taco();
-
-                taco2.setName("Taco " + index + ".2");
-                taco2 = applyAllIngredientsToTaco(taco2);
+                Taco taco2 = tacoBuilderFactory.create()
+                    .name("Taco " + index + ".2")
+                    .ingredients(generateIngredients())
+                    .build();
 
                 taco2 = tacoRepository.save(taco2);
 
-                ClientOrder clientOrder = new ClientOrder();
-
-                clientOrder.setDeliveryName("Taco order " + index);
-                clientOrder.setDeliveryStreet("Street " + index);
-                clientOrder.setDeliveryState("State " + index);
-                clientOrder.setDeliveryCity("City " + index);
-                clientOrder.setDeliveryZip("5000");
-                clientOrder.setCcNumber("1234123412341234");
-                clientOrder.setCcExpiration("08/24");
-                clientOrder.setCcCVV("123");
+                ClientOrder clientOrder = clientOrderBuilderFactory.create()
+                    .deliveryName("Taco order " + index)
+                    .deliveryStreet("Street " + index)
+                    .deliveryState("State " + index)
+                    .deliveryCity("City " + index)
+                    .deliveryZip("5000")
+                    .ccNumber("1234123412341234")
+                    .ccExpiration("08/24")
+                    .ccCVV("123")
+                    .build();
 
                 clientOrder.addTaco(taco1);
                 clientOrder.addTaco(taco2);
 
                 return clientOrder;
             })
-            .map(clientOrderRepository::save)
-            .forEach(clientOrder -> {});
+            .forEach(clientOrderRepository::save);
     }
 
-    private Taco applyAllIngredientsToTaco(Taco taco) {
+    private Collection<Ingredient> generateIngredients() {
         Set<Ingredient> allIngredients = new HashSet<>();
 
         for (IngredientType ingredientType : IngredientType.values()) {
             allIngredients.addAll(ingredientRepository.findByType(ingredientType));
         }
 
-        taco.setIngredients(
-            allIngredients.stream()
-                .sorted(Comparator
-                    .comparing(o -> ((Ingredient) o).getType().name())
-                    .thenComparing(o -> ((Ingredient) o).getName())
-                )
-                .toList());
-
-        return taco;
+        return allIngredients.stream()
+            .sorted(Comparator
+                .comparing(o -> ((Ingredient) o).getType().name())
+                .thenComparing(o -> ((Ingredient) o).getName())
+            )
+            .toList();
     }
 }

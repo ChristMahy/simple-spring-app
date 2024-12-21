@@ -3,9 +3,14 @@ package cmahy.webapp.resource.impl.adapter.startup.generator.taco;
 import cmahy.common.helper.Generator;
 import cmahy.webapp.taco.shop.kernel.application.repository.*;
 import cmahy.webapp.taco.shop.kernel.domain.*;
+import cmahy.webapp.taco.shop.kernel.domain.builder.ClientOrderBuilder;
+import cmahy.webapp.taco.shop.kernel.domain.builder.TacoBuilder;
+import cmahy.webapp.taco.shop.kernel.domain.builder.factory.ClientOrderBuilderFactory;
+import cmahy.webapp.taco.shop.kernel.domain.builder.factory.TacoBuilderFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Answers;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.ApplicationArguments;
@@ -15,24 +20,35 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ClientOrderGeneratorTest {
 
     @Mock
-    private IngredientRepository ingredientRepository;
+    private IngredientRepository<IngredientStub> ingredientRepository;
 
     @Mock
-    private TacoRepository tacoRepository;
+    private TacoRepository<TacoStub> tacoRepository;
 
     @Mock
-    private ClientOrderRepository clientOrderRepository;
+    private ClientOrderRepository<ClientOrderStub> clientOrderRepository;
+
+    @Mock
+    private TacoBuilderFactory<TacoStub> tacoBuilderFactory;
+
+    @Mock
+    private ClientOrderBuilderFactory<ClientOrderStub> clientOrderBuilderFactory;
 
     private ClientOrderGenerator clientOrderGenerator;
 
     private Integer initialClientOrderSize;
+
+    @Mock(answer = Answers.RETURNS_SELF)
+    private TacoBuilder<TacoStub> tacoBuilder;
+
+    @Mock(answer = Answers.RETURNS_SELF)
+    private ClientOrderBuilder<ClientOrderStub> clientOrderBuilder;
 
     @BeforeEach
     void setUp() {
@@ -43,6 +59,8 @@ class ClientOrderGeneratorTest {
                 ingredientRepository,
                 tacoRepository,
                 clientOrderRepository,
+                tacoBuilderFactory,
+                clientOrderBuilderFactory,
                 Optional.of(initialClientOrderSize)
             );
         });
@@ -51,31 +69,37 @@ class ClientOrderGeneratorTest {
     @Test
     void run() {
         assertDoesNotThrow(() -> {
+            TacoStub tacoStub = mock(TacoStub.class);
+            ClientOrderStub clientOrderStub = mock(ClientOrderStub.class);
+
             ApplicationArguments applicationArguments = mock(ApplicationArguments.class);
 
             Arrays.stream(IngredientType.values()).forEach(type -> {
-                Set<Ingredient> ingredients = Stream.generate(() -> {
-                        Ingredient ingredient = new Ingredient();
-
-                        ingredient.setName(Generator.generateAString());
-                        ingredient.setType(type);
-                        ingredient.setId(Generator.generateAString());
-
-                        return ingredient;
-                    })
+                Set<IngredientStub> ingredients = Stream
+                    .generate(() -> new IngredientStub()
+                        .setName(Generator.generateAString())
+                        .setType(type)
+                        .setId(Generator.generateAString())
+                    )
                     .limit(Generator.randomInt(3, 10))
                     .collect(Collectors.toSet());
 
                 when(ingredientRepository.findByType(type)).thenReturn(ingredients);
             });
 
-            when(tacoRepository.save(any(Taco.class))).thenAnswer(invocationOnMock -> Arrays.stream(invocationOnMock.getArguments()).findFirst().orElseThrow());
-            when(clientOrderRepository.save(any(ClientOrder.class))).thenAnswer(invocationOnMock -> Arrays.stream(invocationOnMock.getArguments()).findFirst().orElseThrow());
+            when(tacoBuilder.build()).thenReturn(tacoStub);
+            when(clientOrderBuilder.build()).thenReturn(clientOrderStub);
+
+            when(tacoBuilderFactory.create()).thenReturn(tacoBuilder);
+            when(clientOrderBuilderFactory.create()).thenReturn(clientOrderBuilder);
+
+            when(tacoRepository.save(tacoStub)).thenReturn(tacoStub);
+            when(clientOrderRepository.save(clientOrderStub)).thenReturn(clientOrderStub);
 
             clientOrderGenerator.run(applicationArguments);
 
-            verify(tacoRepository, times(initialClientOrderSize * 2)).save(any(Taco.class));
-            verify(clientOrderRepository, times(initialClientOrderSize)).save(any(ClientOrder.class));
+            verify(tacoRepository, times(initialClientOrderSize * 2)).save(tacoStub);
+            verify(clientOrderRepository, times(initialClientOrderSize)).save(clientOrderStub);
         });
     }
 }
