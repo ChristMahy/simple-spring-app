@@ -10,6 +10,7 @@
     <artifactId>impl</artifactId>
     <version>DEV-SNAPSHOT</version>
 
+    <name>Taco - Shell - Impl</name>
     <description>Shell project - Run requests with CLI</description>
 
     <packaging>jar</packaging>
