@@ -5,8 +5,8 @@ import cmahy.webapp.taco.shop.kernel.domain.ClientOrder;
 
 import java.util.Collection;
 
-public record ClientOrderPage(
-    Collection<ClientOrder> content,
+public record ClientOrderPage<CO extends ClientOrder>(
+    Collection<CO> content,
     Long totalElements
-) implements EntityPage<ClientOrder> {
+) implements EntityPage<CO> {
 }

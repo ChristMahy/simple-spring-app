@@ -2,165 +2,51 @@ package cmahy.webapp.taco.shop.kernel.domain;
 
 import cmahy.webapp.user.kernel.domain.User;
 import jakarta.validation.constraints.*;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
-public class ClientOrder {
-    private Long id;
+public interface ClientOrder {
 
-    private User user;
+    String I18N_KEY_DELIVERY_NAME_NOT_NULL = "validation.error.client-order.delivery-name.not-null";
+    String I18N_KEY_DELIVERY_STREET_NOT_NULL = "validation.error.client-order.delivery-street.not-null";
+    String I18N_KEY_DELIVERY_CITY_NOT_NULL = "validation.error.client-order.delivery-city.not-null";
+    String I18N_KEY_DELIVERY_STATE_NOT_NULL = "validation.error.client-order.delivery-state.not-null";
+    String I18N_KEY_DELIVERY_ZIP_NOT_NULL = "validation.error.client-order.delivery-zip.not-null";
 
-    private Date placedAt;
+    String I18N_KEY_CC_NUMBER_INVALID = "validation.error.client-order.credit-card.number.invalid";
+    String I18N_KEY_CC_EXPIRATION_FORMAT_INVALID = "validation.error.client-order.credit-card.expiration.format.invalid";
+    String I18N_KEY_CC_CVV_INVALID = "validation.error.client-order.credit-card.cvv.invalid";
 
-    @NotBlank(message = "Delivery name is required")
-    private String deliveryName;
+    Long getId();
 
-    @NotBlank(message = "Street is required")
-    private String deliveryStreet;
+    User getUser();
 
-    @NotBlank(message = "City is required")
-    private String deliveryCity;
+    Date getPlacedAt();
 
-    @NotBlank(message = "State is required")
-    private String deliveryState;
-
-    @NotBlank(message = "Zip code is required")
-    private String deliveryZip;
+    @NotBlank(message = I18N_KEY_DELIVERY_NAME_NOT_NULL)
+    String getDeliveryName();
+    @NotBlank(message = I18N_KEY_DELIVERY_STREET_NOT_NULL)
+    String getDeliveryStreet();
+    @NotBlank(message = I18N_KEY_DELIVERY_CITY_NOT_NULL)
+    String getDeliveryCity();
+    @NotBlank(message = I18N_KEY_DELIVERY_STATE_NOT_NULL)
+    String getDeliveryState();
+    @NotBlank(message = I18N_KEY_DELIVERY_ZIP_NOT_NULL)
+    String getDeliveryZip();
 
 //    @CreditCardNumber(message = "Not a valid credit card number")
-    @Digits(integer = 16, fraction = 0, message = "Not a valid credit card number")
-    private String ccNumber;
-
+    @Digits(integer = 16, fraction = 0, message = I18N_KEY_CC_NUMBER_INVALID)
+    String getCcNumber();
     @Pattern(
         regexp = "^(0[1-9]|1[0-2])/([2-9][0-9])$",
-        message = "Must be formatted MM/YY"
+        message = I18N_KEY_CC_EXPIRATION_FORMAT_INVALID
     )
-    private String ccExpiration;
+    String getCcExpiration();
+    @Digits(integer = 3, fraction = 0, message = I18N_KEY_CC_CVV_INVALID)
+    String getCcCVV();
 
-    @Digits(integer = 3, fraction = 0, message = "Invalid CVV")
-    private String ccCVV;
+    <T extends Taco> List<T> getTacos();
 
-    private List<Taco> tacos = new ArrayList<>();
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Date getPlacedAt() {
-        return placedAt;
-    }
-
-    public void setPlacedAt(Date placedAt) {
-        this.placedAt = placedAt;
-    }
-
-    public String getDeliveryName() {
-        return deliveryName;
-    }
-
-    public void setDeliveryName(String deliveryName) {
-        this.deliveryName = deliveryName;
-    }
-
-    public String getDeliveryStreet() {
-        return deliveryStreet;
-    }
-
-    public void setDeliveryStreet(String deliveryStreet) {
-        this.deliveryStreet = deliveryStreet;
-    }
-
-    public String getDeliveryCity() {
-        return deliveryCity;
-    }
-
-    public void setDeliveryCity(String deliveryCity) {
-        this.deliveryCity = deliveryCity;
-    }
-
-    public String getDeliveryState() {
-        return deliveryState;
-    }
-
-    public void setDeliveryState(String deliveryState) {
-        this.deliveryState = deliveryState;
-    }
-
-    public String getDeliveryZip() {
-        return deliveryZip;
-    }
-
-    public void setDeliveryZip(String deliveryZip) {
-        this.deliveryZip = deliveryZip;
-    }
-
-    public String getCcNumber() {
-        return ccNumber;
-    }
-
-    public void setCcNumber(String ccNumber) {
-        this.ccNumber = ccNumber;
-    }
-
-    public String getCcExpiration() {
-        return ccExpiration;
-    }
-
-    public void setCcExpiration(String ccExpiration) {
-        this.ccExpiration = ccExpiration;
-    }
-
-    public String getCcCVV() {
-        return ccCVV;
-    }
-
-    public void setCcCVV(String ccCVV) {
-        this.ccCVV = ccCVV;
-    }
-
-    public List<Taco> getTacos() {
-        return tacos;
-    }
-
-    public void setTacos(List<Taco> tacos) {
-        this.tacos = tacos;
-    }
-
-    public void addTaco(Taco taco) {
-        this.tacos.add(taco);
-    }
-
-    public void prePersist() {
-        if (Objects.isNull(placedAt)) {
-            this.placedAt = new Date();
-        }
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
-            .append("deliveryName", deliveryName)
-            .append("deliveryStreet", deliveryStreet)
-            .append("deliveryCity", deliveryCity)
-            .append("deliveryState", deliveryState)
-            .append("deliveryZip", deliveryZip)
-            .append("ccNumber", ccNumber)
-            .append("ccExpiration", ccExpiration)
-            .append("ccCVV", ccCVV)
-            .build();
-    }
+    void addTaco(Taco taco);
 }

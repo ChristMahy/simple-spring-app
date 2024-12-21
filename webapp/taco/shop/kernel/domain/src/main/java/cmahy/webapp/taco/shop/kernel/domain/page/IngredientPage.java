@@ -7,10 +7,10 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.Collection;
 
-public record IngredientPage(
-    Collection<Ingredient> content,
+public record IngredientPage<I extends Ingredient>(
+    Collection<I> content,
     Long totalElements
-) implements EntityPage<Ingredient> {
+) implements EntityPage<I> {
 
     @Override
     public String toString() {
