@@ -16,3 +16,6 @@ application:
   taco-shop:
     webclient:
       enabled: true
+  user:
+    webclient:
+      enabled: true

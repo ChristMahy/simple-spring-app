@@ -9,8 +9,15 @@ application:
       credentials:
         username: machine2machine
         password: machine2machine
+    user:
+      credentials:
+        username: machine2machine
+        password: machine2machine
   taco:
     ingredients:
       external-resource:
         base-url: 'http://localhost:8080/api/v1'
         page-size: 5
+  user:
+    external-resource:
+      base-url: 'http://localhost:8080/api/v1'

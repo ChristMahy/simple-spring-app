@@ -17,4 +17,7 @@ application:
         ssl:
           enabled: true
           bundle-name: taco-external-resource
-        base-url: https://localhost:8443/api/v1
+        base-url: 'https://localhost:8443/api/v1'
+  user:
+    external-resource:
+      base-url: 'http://localhost:8080/api/v1'
