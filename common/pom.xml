@@ -127,4 +127,8 @@
             </plugin>
         </plugins>
     </build>
+
+    <reporting>
+        <outputDirectory>${project.build.directory}/${project.build.finalName}-reports</outputDirectory>
+    </reporting>
 </project>
