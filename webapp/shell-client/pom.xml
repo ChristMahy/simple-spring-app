@@ -10,9 +10,9 @@
     <artifactId>shell-client</artifactId>
     <version>DEV-SNAPSHOT</version>
 
-    <packaging>pom</packaging>
-
     <name>Taco - Shell</name>
+
+    <packaging>pom</packaging>
 
     <modules>
         <module>api</module>
