@@ -12,8 +12,8 @@ public class BuildPropertyRepositoryImpl implements BuildPropertyRepository {
 
     private final Optional<BuildPropertyVo> buildPropertyVo;
 
-    public BuildPropertyRepositoryImpl(BuildProperties buildProperties) {
-        buildPropertyVo = Optional.ofNullable(buildProperties)
+    public BuildPropertyRepositoryImpl(Optional<BuildProperties> buildProperties) {
+        buildPropertyVo = buildProperties
             .map(bp -> new BuildPropertyVo(
                 bp.getGroup(),
                 bp.getArtifact(),

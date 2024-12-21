@@ -37,7 +37,7 @@ class BuildPropertyRepositoryImplTest {
             BuildProperties buildProperties = new BuildProperties(props);
 
             buildPropertyRepositoryImpl = new BuildPropertyRepositoryImpl(
-                buildProperties
+                Optional.of(buildProperties)
             );
 
             Optional<BuildPropertyVo> actual = buildPropertyRepositoryImpl.buildProperty();
@@ -58,7 +58,7 @@ class BuildPropertyRepositoryImplTest {
     @Test
     void buildProperty_whenGivenValueIsNull_thenResultHasToBeEmpty() {
         assertDoesNotThrow(() -> {
-            buildPropertyRepositoryImpl = new BuildPropertyRepositoryImpl(null);
+            buildPropertyRepositoryImpl = new BuildPropertyRepositoryImpl(Optional.empty());
 
             Optional<BuildPropertyVo> actual = buildPropertyRepositoryImpl.buildProperty();
 
