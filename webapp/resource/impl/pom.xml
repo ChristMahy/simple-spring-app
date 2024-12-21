@@ -300,6 +300,26 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
             </plugin>
+
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>**/adapter/**/config/**</exclude>
+                        <exclude>**/adapter/*Application.class</exclude>
+                        <exclude>**/adapter/security/vo/**</exclude>
+                        <exclude>**/adapter/**/userinfo/**/vo/input/**</exclude>
+                        <exclude>**/adapter/**/userinfo/**/vo/output/**</exclude>
+                        <exclude>**/adapter/api/security/PreAuthorizeScope.class</exclude>
+                        <exclude>**/adapter/**/*Properties.class</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+
+    <reporting>
+        <outputDirectory>${project.build.directory}/${project.build.finalName}-reports</outputDirectory>
+    </reporting>
 </project>
