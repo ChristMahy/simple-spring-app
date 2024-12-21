@@ -3,14 +3,17 @@ package cmahy.webapp.resource.impl.adapter.integration;
 import cmahy.common.helper.Generator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.*;
 import org.mockito.InjectMocks;
 import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.integration.dsl.IntegrationFlow;
-import org.springframework.integration.dsl.IntegrationFlowDefinition;
+import org.springframework.integration.dsl.*;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -31,10 +34,36 @@ class FileWriterIntegrationConfigurerTest {
 
             IntegrationFlow flow = fileWriterIntegrationConfigurer.fileWriterFlow(directoryLocationFactory);
 
-            IntegrationFlowDefinition<?> flowDefinition = mock(IntegrationFlowDefinition.class, RETURNS_DEEP_STUBS);
+            IntegrationFlowDefinition<?> flowDefinition = mock(IntegrationFlowDefinition.class, RETURNS_SELF);
 
             flow.configure(flowDefinition);
         });
+    }
+
+    @ParameterizedTest
+    @MethodSource("aBunchOfExceptions")
+    void fileWriterFlow_onIOException_thenLogErrorAndKeepThreadSafe(Throwable throwable) {
+        assertDoesNotThrow(() -> {
+            IntegrationFlowLogDirectoryLocationFactory directoryLocationFactory = mock(IntegrationFlowLogDirectoryLocationFactory.class);
+
+            IntegrationFlow flow = fileWriterIntegrationConfigurer.fileWriterFlow(directoryLocationFactory);
+
+            IntegrationFlowDefinition<?> flowDefinition = mock(IntegrationFlowDefinition.class, RETURNS_SELF);
+
+            when(flowDefinition.channel(any(DirectChannelSpec.class))).thenAnswer(_ -> {
+                throw throwable;
+            });
+
+            flow.configure(flowDefinition);
+        });
+    }
+
+    private static Stream<Throwable> aBunchOfExceptions() {
+        return Stream.of(
+            new IOException(Generator.generateAString()),
+            new RuntimeException(Generator.generateAString()),
+            new Exception(Generator.generateAString())
+        );
     }
 
     @Test
@@ -116,8 +145,10 @@ class FileWriterIntegrationConfigurerTest {
         });
     }
 
-    @Test
-    void directoryLocationFactory_whenDirectoryPropertyAndAppNameAreEmpty_thenUseTempDirectoryAndADefaultAppName() {
+    @ParameterizedTest
+    @NullAndEmptySource
+    @ValueSource(strings = {"\t", "         "})
+    void directoryLocationFactory_whenDirectoryPropertyAndAppNameAreEmpty_thenUseTempDirectoryAndADefaultAppName(String nullOrEmptyValue) {
         assertDoesNotThrow(() -> {
             try (MockedStatic<java.nio.file.Files> filesMocked = mockStatic(java.nio.file.Files.class)) {
                 Path tempDirectory = mock(Path.class);
@@ -126,7 +157,7 @@ class FileWriterIntegrationConfigurerTest {
 
                 IntegrationFlowLogDirectoryLocationFactory directoryLocation = fileWriterIntegrationConfigurer.directoryLocationFactory(
                     Optional.empty(),
-                    Optional.of("      \t\t\t     ")
+                    Optional.ofNullable(nullOrEmptyValue)
                 );
 
                 Path actual = directoryLocation.get();

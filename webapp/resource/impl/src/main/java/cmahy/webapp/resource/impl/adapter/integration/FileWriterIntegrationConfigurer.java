@@ -4,7 +4,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.MessageChannels;
 import org.springframework.integration.file.dsl.Files;
@@ -12,7 +13,6 @@ import org.springframework.integration.file.support.FileExistsMode;
 import org.springframework.integration.handler.LoggingHandler;
 import org.springframework.messaging.Message;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Optional;
 
@@ -39,8 +39,8 @@ public class FileWriterIntegrationConfigurer {
                             .fileExistsMode(FileExistsMode.APPEND)
                             .appendNewLine(true)
                     );
-            } catch (IOException ioException) {
-                LOG.error(ioException.getMessage(), ioException);
+            } catch (Exception any) {
+                LOG.error(any.getMessage(), any);
             }
         };
     }
