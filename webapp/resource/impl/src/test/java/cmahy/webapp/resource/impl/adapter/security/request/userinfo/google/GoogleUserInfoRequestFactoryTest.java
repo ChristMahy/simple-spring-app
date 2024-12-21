@@ -76,4 +76,29 @@ class GoogleUserInfoRequestFactoryTest {
             verify(request.getHeaders(), never()).add(anyString(), anyString());
         });
     }
+
+    @Test
+    void create_whenAccessTokenIsBlank_thenAddInterceptorWithoutAuthenticationWhichShouldThrowAnException() {
+        assertDoesNotThrow(() -> {
+            UserInfoRequestConfig configs = new UserInfoRequestConfig(
+                Optional.of("      \t       ")
+            );
+
+            RestTemplate actual = googleUserInfoRequestFactory.create(configs);
+
+            assertThat(actual).isNotNull();
+
+            assertThat(actual.getInterceptors()).hasSize(1);
+
+            HttpRequest request = mock(HttpRequest.class, RETURNS_DEEP_STUBS);
+            byte[] body = Generator.randomBytes(100);
+            ClientHttpRequestExecution execution = mock(ClientHttpRequestExecution.class);
+
+            assertThrows(IllegalArgumentException.class, () -> {
+                actual.getInterceptors().stream().findFirst().get().intercept(request, body, execution);
+            });
+
+            verify(request.getHeaders(), never()).add(anyString(), anyString());
+        });
+    }
 }

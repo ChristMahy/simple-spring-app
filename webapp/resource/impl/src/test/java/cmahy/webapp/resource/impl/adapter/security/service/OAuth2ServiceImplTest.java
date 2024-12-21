@@ -13,6 +13,9 @@ import cmahy.webapp.user.kernel.vo.input.UserSecurityInputAppVo;
 import cmahy.webapp.user.kernel.vo.output.UserSecurityOutputAppVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -147,15 +150,17 @@ class OAuth2ServiceImplTest {
         assertThat(oAuth2AuthenticationException.getCause().getMessage()).isEqualTo(errorMessage);
     }
 
-    @Test
-    void loadUser_onUserInfoMailIsBlank_thenThrowException() {
+    @ParameterizedTest
+    @NullAndEmptySource
+    @ValueSource(strings = {"           ", "\t"})
+    void loadUser_onUserInfoMailIsBlank_thenThrowException(String mail) {
         OAuth2AuthenticationException oAuth2AuthenticationException = assertThrows(OAuth2AuthenticationException.class, () -> {
             OAuth2UserRequest oAuth2UserRequest = mock(OAuth2UserRequest.class, RETURNS_DEEP_STUBS);
             OAuth2UserInfo oAuth2UserInfo = mock(OAuth2UserInfo.class);
 
             when(oAuth2UserRequest.getClientRegistration().getRegistrationId()).thenReturn("google");
 
-            when(oAuth2UserInfo.email()).thenReturn(Optional.of("                     "));
+            when(oAuth2UserInfo.email()).thenReturn(Optional.ofNullable(mail));
 
             when(oAuth2UserInfoFactory.create(oAuth2UserRequest)).thenReturn(Optional.of(oAuth2UserInfo));
 

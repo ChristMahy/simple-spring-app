@@ -21,6 +21,7 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -36,8 +37,6 @@ class IngredientSchedulerTest {
     @Test
     void runGetAllQuery() {
         assertDoesNotThrow(() -> {
-            EntityPageable pageable = mock(EntityPageable.class);
-
             List<IngredientOutputVo> ingredients = Stream
                 .generate(() -> new IngredientOutputVo(
                     new IngredientId(Generator.generateAString()),
@@ -52,7 +51,16 @@ class IngredientSchedulerTest {
                 Integer.valueOf(ingredients.size()).longValue()
             );
 
-            when(getAllRemoteIngredientQuery.execute(pageable)).thenReturn(page);
+            when(getAllRemoteIngredientQuery.execute(any(EntityPageable.class))).thenReturn(page);
+
+            ingredientScheduler.runGetAllQuery();
+        });
+    }
+
+    @Test
+    void runGetAllQuery_whenResultIsNull_thenSkip() {
+        assertDoesNotThrow(() -> {
+            when(getAllRemoteIngredientQuery.execute(any(EntityPageable.class))).thenReturn(null);
 
             ingredientScheduler.runGetAllQuery();
         });

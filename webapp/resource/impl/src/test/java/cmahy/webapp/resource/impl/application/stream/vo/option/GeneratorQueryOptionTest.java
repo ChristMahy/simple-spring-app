@@ -2,9 +2,6 @@ package cmahy.webapp.resource.impl.application.stream.vo.option;
 
 import cmahy.common.helper.Generator;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
@@ -14,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 class GeneratorQueryOptionTest {
 
     @Test
-    void elementsSizeOrDefaultAboveZero() {
+    void onInstantiation_withDefinedValues_thenReturnDefinedValues() {
         assertDoesNotThrow(() -> {
             var askFailure = Generator.randomBoolean();
             var stringSize = Generator.randomInt(1, Integer.MAX_VALUE);
@@ -33,7 +30,7 @@ class GeneratorQueryOptionTest {
     }
 
     @Test
-    void elementsSizeOrDefaultAboveZero_withDefinedDefaultValue_shouldReturnDefinedDefaultValue() {
+    void onInstantiationWithEmptyValue_withDefaultValue_shouldReturnDefaultValue() {
         assertDoesNotThrow(() -> {
             var askFailure = Generator.randomBoolean();
             var stringSize = Generator.randomInt(200000, Integer.MAX_VALUE);
@@ -51,7 +48,7 @@ class GeneratorQueryOptionTest {
     }
 
     @Test
-    void elementsSizeOrDefaultAboveZero_withNegativeDefinedDefaultValue_shouldReturnOptionValue() {
+    void onInstantiationWithNegativeValues_withNegativeDefinedDefaultValue_shouldReturnOptionValue() {
         assertDoesNotThrow(() -> {
             var askFailure = Generator.randomBoolean();
             var stringSize = Generator.randomInt(Integer.MIN_VALUE, 0);
@@ -65,6 +62,24 @@ class GeneratorQueryOptionTest {
 
             assertThat(options.stringSizeOrDefaultAboveZero(stringSize)).isEqualTo(5 * 1024);
             assertThat(options.elementsSizeOrDefaultAboveZero(elementsSize)).isEqualTo(1024);
+        });
+    }
+
+    @Test
+    void onInstantiationWithValues_withNullValues_shouldReturnInitialValues() {
+        assertDoesNotThrow(() -> {
+            var askFailure = Generator.randomBoolean();
+            var stringSize = Generator.randomInt(1, Integer.MAX_VALUE);
+            var elementsSize = Generator.randomInt(1, Integer.MAX_VALUE);
+
+            var options = new GeneratorQueryOption(
+                askFailure,
+                Optional.of(stringSize),
+                Optional.of(elementsSize)
+            );
+
+            assertThat(options.stringSizeOrDefaultAboveZero(null)).isEqualTo(stringSize);
+            assertThat(options.elementsSizeOrDefaultAboveZero(null)).isEqualTo(elementsSize);
         });
     }
 }
