@@ -1,8 +1,8 @@
 package cmahy.webapp.taco.shop.adapter.webclient.repository;
 
+import cmahy.webapp.taco.shop.adapter.webclient.entity.ExternalTaco;
 import cmahy.webapp.taco.shop.kernel.application.repository.TacoRepository;
 import cmahy.webapp.taco.shop.kernel.application.repository.annotation.RemoteRepository;
-import cmahy.webapp.taco.shop.kernel.domain.Taco;
 import cmahy.webapp.taco.shop.kernel.domain.id.IngredientId;
 import jakarta.inject.Named;
 
@@ -10,15 +10,15 @@ import java.util.Set;
 
 @Named
 @RemoteRepository
-public class ExternalTacoRepositoryImpl implements TacoRepository {
+public class ExternalTacoRepositoryImpl implements TacoRepository<ExternalTaco> {
 
     @Override
-    public Taco save(Taco taco) {
+    public ExternalTaco save(ExternalTaco taco) {
         throw new IllegalStateException("Not yet implemented !");
     }
 
     @Override
-    public Set<Taco> findByIngredientId(IngredientId ingredientId) {
+    public Set<ExternalTaco> findByIngredientId(IngredientId ingredientId) {
         throw new IllegalStateException("Not yet implemented !");
     }
 }

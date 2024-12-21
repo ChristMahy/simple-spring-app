@@ -2,16 +2,17 @@ package cmahy.webapp.taco.shop.adapter.webclient.config.primary;
 
 import cmahy.webapp.taco.shop.kernel.application.repository.IngredientPagingRepository;
 import cmahy.webapp.taco.shop.kernel.application.repository.annotation.RemoteRepository;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
-import org.springframework.boot.autoconfigure.condition.NoneNestedConditions;
+import cmahy.webapp.taco.shop.kernel.domain.Ingredient;
+import org.springframework.boot.autoconfigure.condition.*;
 import org.springframework.context.annotation.*;
+import org.springframework.core.type.AnnotatedTypeMetadata;
 
 @Configuration
 public class IngredientPagingRepositoryPrimaryConfigurer {
     @Bean
     @Primary
     @Conditional(IngredientPagingRepositoryNoPrimaryFound.class)
-    public IngredientPagingRepository ingredientPagingRepository(
+    public IngredientPagingRepository<Ingredient> ingredientPagingRepository(
         @RemoteRepository IngredientPagingRepository ingredientPagingRepository
     ) {
         return ingredientPagingRepository;

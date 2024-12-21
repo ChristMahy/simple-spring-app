@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: WebClient
+  main:
+    web-application-type: none
+  output:
+    ansi:
+      enabled: always
+
+application:
+  taco-shop:
+    webclient:
+      enabled: true
+  web-client:
+    common:
+      connect-timeout: 5s
+      response-timeout: 5s
+      read-timeout: 5s
+      write-timeout: 5s
+    taco:
+      credentials:
+        username: machine2machine
+        password: machine2machine
+  taco:
+    ingredients:
+      external-resource:
+        base-url: '${back-end-stub}/api/v1'
+        page-size: 5

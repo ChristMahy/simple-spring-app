@@ -1,1 +1,1 @@
-cmahy.webapp.taco.shop.adapter.webclient.config.WebClientConfigurer
+cmahy.webapp.taco.shop.adapter.webclient.config.TacoShopWebClientConfigurer

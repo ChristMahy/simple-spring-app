@@ -2,6 +2,7 @@ package cmahy.webapp.taco.shop.adapter.webclient.config.primary;
 
 import cmahy.webapp.taco.shop.kernel.application.repository.TacoRepository;
 import cmahy.webapp.taco.shop.kernel.application.repository.annotation.RemoteRepository;
+import cmahy.webapp.taco.shop.kernel.domain.Taco;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
 import org.springframework.boot.autoconfigure.condition.NoneNestedConditions;
 import org.springframework.context.annotation.*;
@@ -12,7 +13,7 @@ public class TacoRepositoryPrimaryConfigurer {
     @Bean
     @Primary
     @Conditional(TacoRepositoryNoPrimaryFound.class)
-    public TacoRepository tacoRepository(
+    public TacoRepository<Taco> tacoRepository(
         @RemoteRepository TacoRepository tacoRepository
     ) {
         return tacoRepository;

@@ -1,9 +1,9 @@
 package cmahy.webapp.taco.shop.adapter.webclient.config;
 
 import cmahy.webapp.taco.shop.adapter.webclient.config.primary.*;
-import cmahy.webapp.taco.shop.adapter.webclient.config.properties.webclient.WebClientProperties;
 import cmahy.webapp.taco.shop.adapter.webclient.config.properties.ingredient.IngredientProperties;
 import cmahy.webapp.taco.shop.adapter.webclient.config.properties.ingredient.SslOption;
+import cmahy.webapp.taco.shop.adapter.webclient.config.properties.webclient.WebClientProperties;
 import io.netty.channel.ChannelOption;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
@@ -31,10 +31,11 @@ import java.util.concurrent.TimeUnit;
 import static org.springframework.web.reactive.function.client.ExchangeFilterFunctions.basicAuthentication;
 
 @AutoConfiguration
-@ConditionalOnProperty(value = "application.taco-shop.webclient.enabled", havingValue = "true")
+@ConditionalOnProperty(value = TacoShopWebClientConfigurer.TACO_SHOP_WEBCLIENT_ACTIVE, havingValue = "true")
 @ConfigurationPropertiesScan(basePackageClasses = {WebClientProperties.class, IngredientProperties.class})
 @ComponentScan({
-    "cmahy.webapp.taco.shop.adapter.webclient.repository"
+    "cmahy.webapp.taco.shop.adapter.webclient.repository",
+    "cmahy.webapp.taco.shop.adapter.webclient.entity.builder.factory"
 })
 @Import({
     ClientOrderRepositoryPrimaryConfigurer.class,
@@ -43,11 +44,13 @@ import static org.springframework.web.reactive.function.client.ExchangeFilterFun
     IngredientPagingRepositoryPrimaryConfigurer.class,
     TacoRepositoryPrimaryConfigurer.class
 })
-public class WebClientConfigurer {
+public class TacoShopWebClientConfigurer {
+
+    protected static final String TACO_SHOP_WEBCLIENT_ACTIVE = "application.taco-shop.webclient.enabled";
     protected static final String SSL_ACTIVATION_PROPERTY_NAME = "application.taco.ingredients.external-resource.ssl.enabled";
 
-    @Bean
-    @ConditionalOnProperty(name = WebClientConfigurer.SSL_ACTIVATION_PROPERTY_NAME, havingValue = "false", matchIfMissing = true)
+    @Bean(name = "tacoResource")
+    @ConditionalOnProperty(name = TacoShopWebClientConfigurer.SSL_ACTIVATION_PROPERTY_NAME, havingValue = "false", matchIfMissing = true)
     public WebClient tacoResource(
         IngredientProperties ingredientProperties,
         WebClientProperties webClientProperties,
@@ -71,8 +74,8 @@ public class WebClientConfigurer {
             .build();
     }
 
-    @Bean
-    @ConditionalOnProperty(name = WebClientConfigurer.SSL_ACTIVATION_PROPERTY_NAME, havingValue = "true")
+    @Bean(name = "tacoResource")
+    @ConditionalOnProperty(name = TacoShopWebClientConfigurer.SSL_ACTIVATION_PROPERTY_NAME, havingValue = "true")
     public WebClient tacoResourceSsl(
         IngredientProperties ingredientProperties,
         WebClientProperties webClientProperties,
@@ -99,7 +102,7 @@ public class WebClientConfigurer {
     }
 
     @Bean
-    @ConditionalOnProperty(name = WebClientConfigurer.SSL_ACTIVATION_PROPERTY_NAME, havingValue = "true")
+    @ConditionalOnProperty(name = TacoShopWebClientConfigurer.SSL_ACTIVATION_PROPERTY_NAME, havingValue = "true")
     public SslContext tacoSslContext(
         SslBundles sslBundles,
         IngredientProperties ingredientProperties

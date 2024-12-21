@@ -2,6 +2,7 @@ package cmahy.webapp.taco.shop.adapter.webclient.config.primary;
 
 import cmahy.webapp.taco.shop.kernel.application.repository.ClientOrderRepository;
 import cmahy.webapp.taco.shop.kernel.application.repository.annotation.RemoteRepository;
+import cmahy.webapp.taco.shop.kernel.domain.ClientOrder;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
 import org.springframework.boot.autoconfigure.condition.NoneNestedConditions;
 import org.springframework.context.annotation.*;
@@ -12,7 +13,7 @@ public class ClientOrderRepositoryPrimaryConfigurer {
     @Bean
     @Primary
     @Conditional(ClientOrderRepositoryNoPrimaryFound.class)
-    public ClientOrderRepository clientOrderRepository(
+    public ClientOrderRepository<ClientOrder> clientOrderRepository(
         @RemoteRepository ClientOrderRepository clientOrderRepository
     ) {
         return clientOrderRepository;

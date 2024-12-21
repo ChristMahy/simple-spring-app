@@ -1,18 +1,23 @@
 package cmahy.webapp.taco.shop.adapter.webclient.repository;
 
 import cmahy.common.entity.page.EntityPageable;
+import cmahy.webapp.taco.shop.adapter.webclient.entity.ExternalIngredient;
+import cmahy.webapp.taco.shop.adapter.webclient.exception.IngredientExternalResourceException;
 import cmahy.webapp.taco.shop.kernel.application.repository.IngredientPagingRepository;
 import cmahy.webapp.taco.shop.kernel.application.repository.IngredientRepository;
 import cmahy.webapp.taco.shop.kernel.application.repository.annotation.RemoteRepository;
-import cmahy.webapp.taco.shop.kernel.domain.Ingredient;
 import cmahy.webapp.taco.shop.kernel.domain.IngredientType;
 import cmahy.webapp.taco.shop.kernel.domain.id.IngredientId;
 import cmahy.webapp.taco.shop.kernel.domain.page.IngredientPage;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
@@ -21,7 +26,7 @@ import java.util.*;
 
 @Named
 @RemoteRepository
-public class ExternalIngredientRepositoryImpl implements IngredientRepository, IngredientPagingRepository {
+public class ExternalIngredientRepositoryImpl implements IngredientRepository<ExternalIngredient>, IngredientPagingRepository<ExternalIngredient> {
 
     private static final Logger LOG = LoggerFactory.getLogger(ExternalIngredientRepositoryImpl.class);
 
@@ -34,22 +39,22 @@ public class ExternalIngredientRepositoryImpl implements IngredientRepository, I
     }
 
     @Override
-    public Optional<Ingredient> findById(IngredientId id) {
+    public Optional<ExternalIngredient> findById(IngredientId id) {
         throw new IllegalStateException("Not yet implemented !");
     }
 
     @Override
-    public Set<Ingredient> findByType(IngredientType type) {
+    public Set<ExternalIngredient> findByType(IngredientType type) {
         throw new IllegalStateException("Not yet implemented !");
     }
 
     @Override
-    public Optional<Ingredient> findByNameAndType(String name, IngredientType type) {
+    public Optional<ExternalIngredient> findByNameAndType(String name, IngredientType type) {
         throw new IllegalStateException("Not yet implemented !");
     }
 
     @Override
-    public Ingredient save(Ingredient ingredient) {
+    public ExternalIngredient save(ExternalIngredient ingredient) {
         throw new IllegalStateException("Not yet implemented !");
     }
 
@@ -59,26 +64,36 @@ public class ExternalIngredientRepositoryImpl implements IngredientRepository, I
     }
 
     @Override
-    public IngredientPage findAll(EntityPageable pageable) {
+    public IngredientPage<ExternalIngredient> findAll(EntityPageable pageable) {
         LOG.info("Process remote fetching ingredients");
 
-        return tacoResource.get()
-            .uri(uriBuilder -> uriBuilder
-                .path("/ingredient")
-                .queryParam("page-number", "{pageNumber}")
-                .queryParam("page-size", "{pageSize}")
-                .build(pageable.pageNumber(), pageable.pageSize())
-            )
-            .accept(MediaType.APPLICATION_JSON)
-            .acceptCharset(StandardCharsets.UTF_8)
-            .ifModifiedSince(ZonedDateTime.now())
-            .retrieve()
-            .bodyToMono(IngredientPage.class)
-            .onErrorResume(e -> {
-                LOG.error(e.getMessage(), e);
+        try {
+            return tacoResource.get()
+                .uri(
+                    "/ingredient",
+                    uriBuilder -> uriBuilder
+                        .queryParam("page-number", "{pageNumber}")
+                        .queryParam("page-size", "{pageSize}")
+                        .build(pageable.pageNumber(), pageable.pageSize())
+                )
+                .accept(MediaType.APPLICATION_JSON)
+                .acceptCharset(StandardCharsets.UTF_8)
+                .ifModifiedSince(ZonedDateTime.now())
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<IngredientPage<ExternalIngredient>>() {})
+                .block();
+        } catch (WebClientResponseException e) {
+            if (e.getStatusCode() == HttpStatus.NOT_FOUND) {
+                return new IngredientPage<>(Collections.emptyList(), 0L);
+            }
 
-                return Mono.just(new IngredientPage(Collections.emptyList(), 0L));
-            })
-            .block();
+            LOG.error("Remote fetching ingredients failed", e);
+
+            throw new IngredientExternalResourceException("Remote fetch all failed", e);
+        } catch (Exception others) {
+            LOG.error("Remote fetching ingredients failed", others);
+
+            throw new IngredientExternalResourceException("Remote fetch all failed", others);
+        }
     }
 }
