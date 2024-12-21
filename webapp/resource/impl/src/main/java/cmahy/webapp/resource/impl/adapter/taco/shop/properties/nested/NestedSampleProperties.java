@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-public record NestedPropertiesSample(
+public record NestedSampleProperties(
     @NotBlank
     @SampleConstraint
     String testIt

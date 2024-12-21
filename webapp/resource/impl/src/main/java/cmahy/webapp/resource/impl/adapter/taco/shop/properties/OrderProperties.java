@@ -1,6 +1,6 @@
 package cmahy.webapp.resource.impl.adapter.taco.shop.properties;
 
-import cmahy.webapp.resource.impl.adapter.taco.shop.properties.nested.NestedPropertiesSample;
+import cmahy.webapp.resource.impl.adapter.taco.shop.properties.nested.NestedSampleProperties;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -16,7 +16,7 @@ public record OrderProperties(
     @Max(value = 25, message = "Must be between 5 and 25")
     int pageSize,
     @Valid
-    NestedPropertiesSample subSamples
+    NestedSampleProperties subSamples
 ) {
 
     @Override
