@@ -4,6 +4,8 @@ import cmahy.common.helper.Generator;
 import cmahy.webapp.taco.shop.kernel.domain.*;
 import org.junit.jupiter.api.Test;
 
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -12,7 +14,7 @@ class IngredientStubTest {
     @Test
     void ingredientNewInstance_whenAllFieldsComplete_thenFieldsReturnValue() {
         assertDoesNotThrow(() -> {
-            String id = Generator.generateAString();
+            UUID id = Generator.randomUUID();
             String name = Generator.generateAString();
             IngredientType type = Generator.randomEnum(IngredientType.class);
 
@@ -49,7 +51,7 @@ class IngredientStubTest {
     @Test
     void ingredientNewInstance_whenUseSetterToOverrideValueToNull_thenFieldsReturnNull() {
         assertDoesNotThrow(() -> {
-            String id = Generator.generateAString();
+            UUID id = Generator.randomUUID();
             String name = Generator.generateAString();
             IngredientType type = Generator.randomEnum(IngredientType.class);
 

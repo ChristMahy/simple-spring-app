@@ -52,7 +52,7 @@ class ClientOrderOutputMapperTest {
                 .toList();
 
             ClientOrder order = new ClientOrderStub()
-                .setId(randomLongEqualOrAboveZero())
+                .setId(randomUUID())
                 .setPlacedAt(new Date())
                 .setDeliveryName(generateAString())
                 .setDeliveryStreet(generateAString())

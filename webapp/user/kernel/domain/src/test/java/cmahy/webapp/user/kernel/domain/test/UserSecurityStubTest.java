@@ -5,6 +5,7 @@ import cmahy.webapp.user.kernel.domain.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,7 +17,7 @@ class UserSecurityStubTest {
     @Test
     void userSecurityNewInstance_whenAllFieldsComplete_thenFieldsReturnValue() {
         assertDoesNotThrow(() -> {
-            Long id = Generator.randomLongEqualOrAboveZero();
+            UUID id = Generator.randomUUID();
             String userName = Generator.generateAString();
             byte[] password = Generator.randomBytes(300);
             String fullName = Generator.generateAString();
@@ -104,7 +105,7 @@ class UserSecurityStubTest {
     @Test
     void userSecurityNewInstance_whenUseSetterToOverrideValueToNull_thenFieldsReturnNull() {
         assertDoesNotThrow(() -> {
-            Long id = Generator.randomLongEqualOrAboveZero();
+            UUID id = Generator.randomUUID();
             String userName = Generator.generateAString();
             byte[] password = Generator.randomBytes(300);
             String fullName = Generator.generateAString();

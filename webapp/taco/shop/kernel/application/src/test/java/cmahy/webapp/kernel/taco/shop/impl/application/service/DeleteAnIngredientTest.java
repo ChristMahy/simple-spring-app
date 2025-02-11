@@ -32,7 +32,7 @@ class DeleteAnIngredientTest {
     @Test
     void execute() {
         assertDoesNotThrow(() -> {
-            IngredientId ingredientId = new IngredientId(Generator.generateAString());
+            IngredientId ingredientId = new IngredientId(Generator.randomUUID());
 
             when(verifyIngredientUsage.execute(ingredientId)).thenReturn(false);
 
@@ -46,7 +46,7 @@ class DeleteAnIngredientTest {
     @Test
     void execute_whenUsed_thenThrowsIngredientUsageException() {
         assertThrows(IngredientUsageElementOnDeletionException.class, () -> {
-            IngredientId ingredientId = new IngredientId(Generator.generateAString());
+            IngredientId ingredientId = new IngredientId(Generator.randomUUID());
 
             when(verifyIngredientUsage.execute(ingredientId)).thenReturn(true);
 
@@ -71,15 +71,6 @@ class DeleteAnIngredientTest {
     void execute_whenIdValueIsNull_shouldBeAcceptedAndProceed() {
         assertDoesNotThrow(() -> {
             deleteAnIngredient.execute(new IngredientId(null));
-
-            verifyNoInteractions(ingredientRepository, verifyIngredientUsage);
-        });
-    }
-
-    @Test
-    void execute_whenIdValueIsBlank_shouldBeAcceptedAndProceed() {
-        assertDoesNotThrow(() -> {
-            deleteAnIngredient.execute(new IngredientId("      \t       "));
 
             verifyNoInteractions(ingredientRepository, verifyIngredientUsage);
         });

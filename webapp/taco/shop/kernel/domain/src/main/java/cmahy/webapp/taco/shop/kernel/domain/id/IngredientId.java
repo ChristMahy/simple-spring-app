@@ -4,7 +4,9 @@ import cmahy.common.entity.id.EntityId;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-public record IngredientId(String value) implements EntityId<String> {
+import java.util.UUID;
+
+public record IngredientId(UUID value) implements EntityId<UUID> {
 
     @Override
     public String toString() {

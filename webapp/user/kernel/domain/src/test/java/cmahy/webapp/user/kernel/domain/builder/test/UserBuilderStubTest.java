@@ -83,7 +83,7 @@ class UserBuilderStubTest {
                 .toList();
 
             UserStub original = new UserStub()
-                .setId(Generator.randomLongEqualOrAboveZero())
+                .setId(Generator.randomUUID())
                 .setUserName(Generator.generateAString(30))
                 .setPassword(Generator.randomBytes(Generator.randomInt(20, 30)))
                 .setFullName(Generator.generateAString(30))

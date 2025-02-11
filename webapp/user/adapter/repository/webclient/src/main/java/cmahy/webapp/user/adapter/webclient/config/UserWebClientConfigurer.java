@@ -33,7 +33,8 @@ import static org.springframework.web.reactive.function.client.ExchangeFilterFun
 @ConditionalOnProperty(value = UserWebClientConfigurer.USER_WEBCLIENT_ACTIVE, havingValue = "true")
 @ConfigurationPropertiesScan(basePackageClasses = {WebClientProperties.class, UserProperties.class})
 @ComponentScan({
-    "cmahy.webapp.user.adapter.webclient.repository"
+    "cmahy.webapp.user.adapter.webclient.repository",
+    "cmahy.webapp.user.adapter.webclient.entity.id.factory"
 })
 public class UserWebClientConfigurer {
     protected static final String USER_WEBCLIENT_ACTIVE = "application.user.webclient.enabled";

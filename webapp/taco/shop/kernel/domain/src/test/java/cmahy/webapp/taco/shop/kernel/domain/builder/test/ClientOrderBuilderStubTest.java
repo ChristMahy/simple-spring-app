@@ -2,11 +2,9 @@ package cmahy.webapp.taco.shop.kernel.domain.builder.test;
 
 import cmahy.common.helper.Generator;
 import cmahy.webapp.taco.shop.kernel.domain.*;
-import cmahy.webapp.taco.shop.kernel.domain.builder.*;
+import cmahy.webapp.taco.shop.kernel.domain.builder.ClientOrderBuilderStub;
 import cmahy.webapp.user.kernel.domain.UserStub;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Date;
 import java.util.List;
@@ -22,8 +20,6 @@ class ClientOrderBuilderStubTest {
     void build() {
         assertDoesNotThrow(() -> {
             UserStub user = mock(UserStub.class);
-
-            Date placedAt = new Date();
 
             String deliveryName = Generator.generateAString();
             String deliveryStreet = Generator.generateAString();
@@ -42,7 +38,6 @@ class ClientOrderBuilderStubTest {
 
             ClientOrder actual = new ClientOrderBuilderStub()
                 .user(user)
-                .placedAt(placedAt)
                 .deliveryName(deliveryName)
                 .deliveryStreet(deliveryStreet)
                 .deliveryCity(deliveryCity)
@@ -59,10 +54,9 @@ class ClientOrderBuilderStubTest {
                 .isInstanceOf(ClientOrderStub.class);
 
             assertThat(actual.getId()).isNull();
+            assertThat(actual.getPlacedAt()).isNull();
 
             assertThat(actual.getUser()).isSameAs(user);
-
-            assertThat(actual.getPlacedAt()).isEqualTo(placedAt);
 
             assertThat(actual.getDeliveryName()).isEqualTo(deliveryName);
             assertThat(actual.getDeliveryStreet()).isEqualTo(deliveryStreet);
@@ -101,9 +95,9 @@ class ClientOrderBuilderStubTest {
                 .toList();
 
             ClientOrderStub original = new ClientOrderStub()
-                .setId(Generator.randomLongEqualOrAboveZero())
+                .setId(Generator.randomUUID())
                 .setUser(mock(UserStub.class))
-                .setPlacedAt(new Date())
+                .setPlacedAt(placedAt)
                 .setDeliveryName(Generator.generateAString(30))
                 .setDeliveryStreet(Generator.generateAString(30))
                 .setDeliveryCity(Generator.generateAString(30))
@@ -121,7 +115,6 @@ class ClientOrderBuilderStubTest {
 
             ClientOrder actual = new ClientOrderBuilderStub(original)
                 .user(user)
-                .placedAt(placedAt)
                 .deliveryName(deliveryName)
                 .deliveryStreet(deliveryStreet)
                 .deliveryCity(deliveryCity)
@@ -162,8 +155,6 @@ class ClientOrderBuilderStubTest {
         assertDoesNotThrow(() -> {
             UserStub user = mock(UserStub.class);
 
-            Date placedAt = new Date();
-
             String deliveryName = Generator.generateAString();
             String deliveryStreet = Generator.generateAString();
             String deliveryCity = Generator.generateAString();
@@ -181,7 +172,6 @@ class ClientOrderBuilderStubTest {
 
             ClientOrder actual = new ClientOrderBuilderStub(null)
                 .user(user)
-                .placedAt(placedAt)
                 .deliveryName(deliveryName)
                 .deliveryStreet(deliveryStreet)
                 .deliveryCity(deliveryCity)
@@ -196,10 +186,9 @@ class ClientOrderBuilderStubTest {
             assertThat(actual).isNotNull();
 
             assertThat(actual.getId()).isNull();
+            assertThat(actual.getPlacedAt()).isNull();
 
             assertThat(actual.getUser()).isSameAs(user);
-
-            assertThat(actual.getPlacedAt()).isEqualTo(placedAt);
 
             assertThat(actual.getDeliveryName()).isEqualTo(deliveryName);
             assertThat(actual.getDeliveryStreet()).isEqualTo(deliveryStreet);

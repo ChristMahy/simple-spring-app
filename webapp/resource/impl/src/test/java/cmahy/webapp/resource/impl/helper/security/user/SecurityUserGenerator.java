@@ -41,7 +41,7 @@ public final class SecurityUserGenerator {
 
     public static UserSecurityDetails generateRandomUserDetails(Set<RoleOutputAppVo> roles) {
         return new UserSecurityDetails(new UserSecurityOutputAppVo(
-            new UserId(randomLong()),
+            new UserId(randomUUID()),
             generateAString(),
             generateAString().getBytes(),
             generateAString(),
@@ -61,7 +61,7 @@ public final class SecurityUserGenerator {
 
     public static Set<RoleOutputAppVo> generateCommonAppRoles() {
         return IntStream.rangeClosed(0, COMMON_ROLES.size() - 1)
-            .mapToObj(index -> new RoleOutputAppVo(new RoleId(Integer.valueOf(index).longValue()), COMMON_ROLES.get(index)))
+            .mapToObj(index -> new RoleOutputAppVo(new RoleId(randomUUID()), COMMON_ROLES.get(index)))
             .collect(Collectors.toSet());
     }
 }

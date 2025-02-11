@@ -18,7 +18,7 @@ class ClientOrderStubTest {
     @Test
     void clientOrderNewInstance_whenAllFieldsComplete_thenFieldsReturnValue() {
         assertDoesNotThrow(() -> {
-            Long id = Generator.randomLongEqualOrAboveZero();
+            UUID id = Generator.randomUUID();
 
             User user = mock(UserStub.class);
 
@@ -109,7 +109,7 @@ class ClientOrderStubTest {
     @Test
     void clientOrderNewInstance_whenUseSetterToOverrideValueToNull_thenFieldsReturnNull() {
         assertDoesNotThrow(() -> {
-            Long id = Generator.randomLongEqualOrAboveZero();
+            UUID id = Generator.randomUUID();
 
             User user = mock(UserStub.class);
 
@@ -185,7 +185,7 @@ class ClientOrderStubTest {
     @Test
     void clientOrder_whenAddTaco_thenShouldBePresentInIngredientsList() {
         assertDoesNotThrow(() -> {
-            Long id = Generator.randomLongEqualOrAboveZero();
+            UUID id = Generator.randomUUID();
 
             User user = mock(UserStub.class);
 
@@ -255,7 +255,7 @@ class ClientOrderStubTest {
     @Test
     void clientOrder_whenAddNullTaco_thenShouldNotBePresentInIngredientsList() {
         assertDoesNotThrow(() -> {
-            Long id = Generator.randomLongEqualOrAboveZero();
+            UUID id = Generator.randomUUID();
 
             User user = mock(UserStub.class);
 

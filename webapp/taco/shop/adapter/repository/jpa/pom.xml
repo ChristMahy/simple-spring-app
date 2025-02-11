@@ -141,9 +141,11 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <configuration>
-                    <includes>
-                        <include>**/jpa/entity/builder/**</include>
-                    </includes>
+                    <excludes>
+                        <exclude>**/jpa/config/**</exclude>
+                        <exclude>**/jpa/entity/domain/**</exclude>
+                        <exclude>**/jpa/repository/**</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
         </plugins>

@@ -3,8 +3,7 @@ package cmahy.webapp.taco.shop.kernel.domain;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import java.util.Collection;
-import java.util.Date;
+import java.util.*;
 
 public interface Taco {
 
@@ -13,7 +12,7 @@ public interface Taco {
 
     String I18N_KEY_INGREDIENTS_MIN_SIZE = "validation.error.taco.ingredients.min-size";
 
-    Long getId();
+    UUID getId();
 
     Date getCreatedAt();
 

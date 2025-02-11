@@ -1,8 +1,8 @@
 package cmahy.webapp.user.adapter.jpa.entity.builder;
 
 import cmahy.common.helper.Generator;
-import cmahy.webapp.user.adapter.jpa.entity.JpaRole;
-import cmahy.webapp.user.adapter.jpa.entity.JpaUser;
+import cmahy.webapp.user.adapter.jpa.entity.domain.JpaRole;
+import cmahy.webapp.user.adapter.jpa.entity.domain.JpaUser;
 import cmahy.webapp.user.kernel.domain.Role;
 import org.junit.jupiter.api.Test;
 
@@ -49,7 +49,7 @@ class JpaRoleBuilderTest {
                 .toList();
 
             JpaRole originalRole = new JpaRole()
-                .setId(Generator.randomLongEqualOrAboveZero())
+                .setId(Generator.randomUUID())
                 .setName(Generator.generateAString(300))
                 .setUsers(
                     Stream

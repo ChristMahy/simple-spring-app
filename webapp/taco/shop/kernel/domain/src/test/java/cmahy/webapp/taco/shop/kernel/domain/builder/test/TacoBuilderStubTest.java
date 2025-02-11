@@ -53,7 +53,7 @@ class TacoBuilderStubTest {
                 .toList();
 
             TacoStub original = new TacoStub()
-                .setId(Generator.randomLongEqualOrAboveZero())
+                .setId(Generator.randomUUID())
                 .setName(Generator.generateAString(30))
                 .setCreatedAt(new Date())
                 .setIngredients(

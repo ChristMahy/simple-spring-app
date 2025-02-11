@@ -1,13 +1,10 @@
 package cmahy.webapp.taco.shop.adapter.jpa.entity.builder;
 
 import cmahy.common.helper.Generator;
-import cmahy.webapp.taco.shop.adapter.jpa.entity.JpaIngredient;
-import cmahy.webapp.taco.shop.adapter.jpa.entity.JpaTaco;
+import cmahy.webapp.taco.shop.adapter.jpa.entity.domain.JpaIngredient;
+import cmahy.webapp.taco.shop.adapter.jpa.entity.domain.JpaTaco;
 import cmahy.webapp.taco.shop.kernel.domain.Taco;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collection;
 import java.util.Date;
@@ -57,7 +54,7 @@ class JpaTacoBuilderTest {
                 .toList();
 
             JpaTaco original = new JpaTaco()
-                .setId(Generator.randomLongEqualOrAboveZero())
+                .setId(Generator.randomUUID())
                 .setName(Generator.generateAString(30))
                 .setCreatedAt(new Date())
                 .setIngredients(

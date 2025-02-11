@@ -2,8 +2,7 @@ package cmahy.webapp.taco.shop.adapter.webclient.repository;
 
 import cmahy.common.entity.page.EntityPageable;
 import cmahy.common.helper.Generator;
-import cmahy.webapp.taco.shop.adapter.webclient.entity.ExternalIngredient;
-import cmahy.webapp.taco.shop.adapter.webclient.entity.ExternalTaco;
+import cmahy.webapp.taco.shop.adapter.webclient.entity.domain.ExternalIngredient;
 import cmahy.webapp.taco.shop.adapter.webclient.exception.IngredientExternalResourceException;
 import cmahy.webapp.taco.shop.kernel.domain.IngredientType;
 import cmahy.webapp.taco.shop.kernel.domain.id.IngredientId;
@@ -17,7 +16,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import org.springframework.web.util.UriBuilder;

@@ -20,8 +20,7 @@ import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import picocli.CommandLine;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -87,7 +86,7 @@ class IngredientApiImplTest {
 
             IngredientOutputVo ingredientOutputVo = mock(IngredientOutputVo.class);
 
-            String id = Generator.generateAString();
+            UUID id = Generator.randomUUID();
             String name = Generator.generateAString();
             IngredientType type = Generator.randomEnum(IngredientType.class);
 
@@ -124,7 +123,7 @@ class IngredientApiImplTest {
 
             verify(printMessageQuery, times(totalElements.intValue()))
                 .execute(ArgumentMatchers.matches(Pattern.compile(
-                    "^(?=.*" + Pattern.quote(escapeJson(id)) + ")(?=.*" + Pattern.quote(escapeJson(name)) + ")(?=.*" + Pattern.quote(escapeJson(type.name())) + ").*$"
+                    "^(?=.*" + Pattern.quote(escapeJson(id.toString())) + ")(?=.*" + Pattern.quote(escapeJson(name)) + ")(?=.*" + Pattern.quote(escapeJson(type.name())) + ").*$"
                 )));
         });
     }

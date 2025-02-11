@@ -31,7 +31,7 @@ class UserSecurityDetailsMapperTest {
     void map() {
         assertDoesNotThrow(() -> {
             UserSecurityOutputAppVo user = new UserSecurityOutputAppVo(
-                new UserId(Generator.randomLongEqualOrAboveZero()),
+                new UserId(Generator.randomUUID()),
                 Generator.generateAString(),
                 Generator.generateAString().getBytes(),
                 Generator.generateAString(),

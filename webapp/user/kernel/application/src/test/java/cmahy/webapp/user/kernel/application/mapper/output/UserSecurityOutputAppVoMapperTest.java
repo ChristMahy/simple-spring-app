@@ -33,7 +33,7 @@ class UserSecurityOutputAppVoMapperTest {
     void map() {
         assertDoesNotThrow(() -> {
             UserSecurityStub userSecurity = new UserSecurityStub()
-                .setId(Generator.randomLongEqualOrAboveZero())
+                .setId(Generator.randomUUID())
                 .setUserName(Generator.generateAString())
                 .setFullName(Generator.generateAString())
                 .setPassword(Generator.randomBytes(20))

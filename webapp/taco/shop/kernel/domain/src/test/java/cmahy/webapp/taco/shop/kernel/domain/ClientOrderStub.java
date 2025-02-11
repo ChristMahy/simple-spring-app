@@ -8,7 +8,7 @@ import java.util.*;
 
 public class ClientOrderStub implements ClientOrder {
 
-    private Long id;
+    private UUID id;
 
     private User user;
 
@@ -27,11 +27,11 @@ public class ClientOrderStub implements ClientOrder {
     private List<TacoStub> tacos;
 
     @Override
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public ClientOrderStub setId(Long id) {
+    public ClientOrderStub setId(UUID id) {
         this.id = id;
         return this;
     }

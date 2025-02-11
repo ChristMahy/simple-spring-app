@@ -28,7 +28,7 @@ class UserOutputAppVoMapperTest {
     void map() {
         assertDoesNotThrow(() -> {
             UserStub user = new UserStub()
-                .setId(Generator.randomLongEqualOrAboveZero())
+                .setId(Generator.randomUUID())
                 .setUserName(Generator.generateAString())
                 .setPassword(Generator.randomBytes(20))
                 .setFullName(Generator.generateAString())
@@ -40,7 +40,7 @@ class UserOutputAppVoMapperTest {
 
             user.setRoles(
                 Stream.generate(() -> new RoleStub()
-                        .setId(Generator.randomLongEqualOrAboveZero())
+                        .setId(Generator.randomUUID())
                         .setName(Generator.generateAString())
                         .setUsers(Set.of(user))
                     )

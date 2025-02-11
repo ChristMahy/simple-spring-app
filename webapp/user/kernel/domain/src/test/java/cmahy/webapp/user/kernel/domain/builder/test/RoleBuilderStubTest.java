@@ -48,7 +48,7 @@ class RoleBuilderStubTest {
                 .toList();
 
             RoleStub originalRole = new RoleStub()
-                .setId(Generator.randomLongEqualOrAboveZero())
+                .setId(Generator.randomUUID())
                 .setName(Generator.generateAString(300))
                 .setUsers(
                     Stream

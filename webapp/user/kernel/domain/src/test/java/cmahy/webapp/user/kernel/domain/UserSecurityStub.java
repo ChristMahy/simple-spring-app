@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.Collection;
+import java.util.UUID;
 
 public class UserSecurityStub extends UserStub implements UserSecurity {
 
@@ -68,7 +69,7 @@ public class UserSecurityStub extends UserStub implements UserSecurity {
     }
 
     @Override
-    public UserSecurityStub setId(Long id) {
+    public UserSecurityStub setId(UUID id) {
         return (UserSecurityStub) super.setId(id);
     }
 

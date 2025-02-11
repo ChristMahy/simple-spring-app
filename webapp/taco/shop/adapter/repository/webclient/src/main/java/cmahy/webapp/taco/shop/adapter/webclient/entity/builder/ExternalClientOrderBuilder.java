@@ -1,10 +1,10 @@
 package cmahy.webapp.taco.shop.adapter.webclient.entity.builder;
 
-import cmahy.webapp.taco.shop.adapter.webclient.entity.ExternalClientOrder;
-import cmahy.webapp.taco.shop.adapter.webclient.entity.ExternalTaco;
+import cmahy.webapp.taco.shop.adapter.webclient.entity.domain.ExternalClientOrder;
+import cmahy.webapp.taco.shop.adapter.webclient.entity.domain.ExternalTaco;
 import cmahy.webapp.taco.shop.kernel.domain.Taco;
 import cmahy.webapp.taco.shop.kernel.domain.builder.ClientOrderBuilder;
-import cmahy.webapp.user.adapter.webclient.entity.ExternalUser;
+import cmahy.webapp.user.adapter.webclient.entity.domain.ExternalUser;
 import cmahy.webapp.user.kernel.domain.User;
 
 import java.util.*;
@@ -14,8 +14,6 @@ public class ExternalClientOrderBuilder implements ClientOrderBuilder<ExternalCl
     private Optional<ExternalClientOrder> originalClientOrder = Optional.empty();
 
     private ExternalUser user;
-
-    private Date placedAt;
 
     private String deliveryName;
     private String deliveryStreet;
@@ -38,13 +36,6 @@ public class ExternalClientOrderBuilder implements ClientOrderBuilder<ExternalCl
     @Override
     public ExternalClientOrderBuilder user(User user) {
         this.user = (ExternalUser) user;
-
-        return this;
-    }
-
-    @Override
-    public ExternalClientOrderBuilder placedAt(Date placedAt) {
-        this.placedAt = placedAt;
 
         return this;
     }
@@ -117,7 +108,6 @@ public class ExternalClientOrderBuilder implements ClientOrderBuilder<ExternalCl
         return originalClientOrder
             .orElseGet(ExternalClientOrder::new)
             .setUser(this.user)
-            .setPlacedAt(this.placedAt)
             .setDeliveryName(this.deliveryName)
             .setDeliveryStreet(this.deliveryStreet)
             .setDeliveryCity(this.deliveryCity)

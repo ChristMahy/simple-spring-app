@@ -19,6 +19,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -44,7 +45,8 @@ class GetAllClientOrderPagedQueryTest {
     @Test
     void execute() {
         assertDoesNotThrow(() -> {
-            UserId userId = new UserId(Generator.randomLongEqualOrAboveZero());
+            UserId userId = mock(UserId.class);
+
             User user = mock(User.class);
             EntityPageable entityPageable = mock(EntityPageable.class);
             ClientOrderPage<ClientOrder> clientOrderPage = mock(ClientOrderPage.class);
@@ -63,7 +65,8 @@ class GetAllClientOrderPagedQueryTest {
     @Test
     void execute_whenUserNotFound_thenThrowException() {
         assertThrows(UserNotFoundException.class, () -> {
-            UserId userId = new UserId(Generator.randomLongEqualOrAboveZero());
+            UserId userId = mock(UserId.class);
+
             EntityPageable entityPageable = mock(EntityPageable.class);
 
             when(userRepository.findById(userId)).thenReturn(Optional.empty());

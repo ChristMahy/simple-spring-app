@@ -1,6 +1,19 @@
 package cmahy.webapp.user.kernel.domain.id;
 
 import cmahy.common.entity.id.EntityId;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
-public record RoleId(Long value) implements EntityId<Long> {
+import java.util.UUID;
+
+public record RoleId(
+    UUID value
+) implements EntityId<UUID> {
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
+            .append("value", value)
+            .toString();
+    }
 }

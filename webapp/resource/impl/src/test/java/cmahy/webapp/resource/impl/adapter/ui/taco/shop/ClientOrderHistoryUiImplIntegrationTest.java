@@ -47,20 +47,12 @@ class ClientOrderHistoryUiImplIntegrationTest {
     }
 
     private List<IngredientOutputVo> generateSomeIngredients(int limit) {
-        Set<String> ingredientIds = new HashSet<>(limit);
-
         return Stream.generate(() -> {
-                String id;
-
-                do {
-                    id = generateAStringWithoutSpecialChars(5);
-                } while (ingredientIds.contains(id));
-
-                ingredientIds.add(id);
+                UUID id = randomUUID();
 
                 return new IngredientOutputVo(
-                    new IngredientId(id.toUpperCase()),
-                    id.toUpperCase(),
+                    new IngredientId(id),
+                    id.toString(),
                     randomEnum(IngredientType.class).name()
                 );
             })
@@ -125,8 +117,8 @@ class ClientOrderHistoryUiImplIntegrationTest {
 
     private List<ClientOrderOutputVo> generateSomeClientOrders(int limit) {
         return LongStream.rangeClosed(1, limit)
-            .mapToObj(index -> new ClientOrderOutputVo(
-                new ClientOrderId(index),
+            .mapToObj(_ -> new ClientOrderOutputVo(
+                new ClientOrderId(randomUUID()),
                 new Date(),
                 generateAString(100),
                 generateAString(100),
@@ -148,8 +140,8 @@ class ClientOrderHistoryUiImplIntegrationTest {
 
     private List<TacoOutputVo> generateSomeTacos(int limit) {
         return LongStream.rangeClosed(1, limit)
-            .mapToObj(index -> new TacoOutputVo(
-                new TacoId(index),
+            .mapToObj(_ -> new TacoOutputVo(
+                new TacoId(randomUUID()),
                 new Date(),
                 generateAString(100),
                 Stream.generate(() -> ingrediants.get(randomInt(0, ingrediants.size() - 1)))

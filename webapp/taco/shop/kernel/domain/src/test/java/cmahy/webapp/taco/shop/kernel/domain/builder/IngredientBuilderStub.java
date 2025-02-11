@@ -9,7 +9,6 @@ public class IngredientBuilderStub implements IngredientBuilder<IngredientStub> 
 
     private Optional<IngredientStub> originalIngredient = Optional.empty();
 
-    private String id;
     private String name;
     private IngredientType type;
 
@@ -19,17 +18,10 @@ public class IngredientBuilderStub implements IngredientBuilder<IngredientStub> 
         this.originalIngredient = Optional.ofNullable(ingredient);
 
         this.originalIngredient.ifPresent(originalIngredient -> {
-            this.id(originalIngredient.getId())
+            this
                 .name(originalIngredient.getName())
                 .type(originalIngredient.getType());
         });
-    }
-
-    @Override
-    public IngredientBuilderStub id(String id) {
-        this.id = id;
-
-        return this;
     }
 
     @Override
@@ -50,7 +42,6 @@ public class IngredientBuilderStub implements IngredientBuilder<IngredientStub> 
     public IngredientStub build() {
         return this.originalIngredient
             .orElseGet(IngredientStub::new)
-            .setId(this.id)
             .setName(this.name)
             .setType(this.type);
     }

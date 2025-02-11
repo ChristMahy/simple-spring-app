@@ -129,9 +129,10 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <configuration>
-                    <includes>
-                        <include>**/webclient/repository/**</include>
-                    </includes>
+                    <excludes>
+                        <exclude>**/webclient/config/**</exclude>
+                        <exclude>**/webclient/entity/domain/**</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
         </plugins>

@@ -3,7 +3,7 @@ package cmahy.webapp.taco.shop.adapter.webclient.repository;
 import cmahy.common.entity.page.DefaultEntityPageableImpl;
 import cmahy.common.helper.Generator;
 import cmahy.common.json.JsonMapperFactory;
-import cmahy.webapp.taco.shop.adapter.webclient.entity.ExternalIngredient;
+import cmahy.webapp.taco.shop.adapter.webclient.entity.domain.ExternalIngredient;
 import cmahy.webapp.taco.shop.adapter.webclient.exception.IngredientExternalResourceException;
 import cmahy.webapp.taco.shop.adapter.webclient.util.integration.test.BackEndStub;
 import cmahy.webapp.taco.shop.adapter.webclient.util.integration.test.TestWebClientApplicationStub;
@@ -12,6 +12,8 @@ import cmahy.webapp.taco.shop.kernel.domain.page.IngredientPage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.mockwebserver.MockResponse;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.*;
@@ -56,7 +58,7 @@ class ExternalIngredientRepositoryImplIntegrationTest {
         assertDoesNotThrow(() -> {
             List<ExternalIngredient> ingredients = Stream
                 .generate(() -> new ExternalIngredient()
-                    .setId(Generator.generateAString())
+                    .setId(Generator.randomUUID())
                     .setName(Generator.generateAString())
                     .setType(Generator.randomEnum(IngredientType.class))
                 )
@@ -86,21 +88,14 @@ class ExternalIngredientRepositoryImplIntegrationTest {
         });
     }
 
-    @Test
-    void findAll_onUnexpectedError_thenReturnEmptyIngredientPage() {
+    @ParameterizedTest
+    @MethodSource("onlyErrors")
+    void findAll_onUnexpectedError_thenReturnEmptyIngredientPage(ProblemDetail error) {
         assertThrows(IngredientExternalResourceException.class, () -> {
-            List<HttpStatus> onlyErrors = Arrays.stream(HttpStatus.values())
-                .filter(status -> (status.is4xxClientError() && !status.isSameCodeAs(HttpStatus.NOT_FOUND)) || status.is5xxServerError())
-                .toList();
-
-            int randomError = Generator.randomInt(0, onlyErrors.size() - 1);
-
-            ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(onlyErrors.get(randomError), onlyErrors.get(randomError).name());
-
             BackEndStub.INSTANCE.getMockBackEnd().enqueue(
                 new MockResponse()
-                    .setResponseCode(onlyErrors.get(randomError).value())
-                    .setBody(jsonMapper.writeValueAsString(problemDetail))
+                    .setResponseCode(error.getStatus())
+                    .setBody(jsonMapper.writeValueAsString(error))
                     .addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PROBLEM_JSON_VALUE)
             );
 
@@ -109,6 +104,12 @@ class ExternalIngredientRepositoryImplIntegrationTest {
                 Generator.randomIntEqualOrAboveZero()
             ));
         });
+    }
+
+    private static Stream<ProblemDetail> onlyErrors() {
+        return Arrays.stream(HttpStatus.values())
+            .filter(status -> (status.is4xxClientError() && !status.isSameCodeAs(HttpStatus.NOT_FOUND)) || status.is5xxServerError())
+            .map(status -> ProblemDetail.forStatusAndDetail(status, status.name()));
     }
 
     @Test

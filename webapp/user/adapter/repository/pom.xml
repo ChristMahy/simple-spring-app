@@ -16,6 +16,7 @@
 
     <modules>
         <module>jpa</module>
+        <module>cassandra</module>
         <module>webclient</module>
     </modules>
 </project>

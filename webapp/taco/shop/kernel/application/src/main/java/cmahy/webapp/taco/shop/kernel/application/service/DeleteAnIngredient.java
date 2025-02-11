@@ -30,7 +30,7 @@ public class DeleteAnIngredient {
     public void execute(IngredientId id) throws IngredientUsageElementOnDeletionException {
         LOG.info("Delete an ingredient <{}>", id);
 
-        if (Objects.nonNull(id) && StringUtils.isNotBlank(id.value())) {
+        if (Objects.nonNull(id) && Objects.nonNull(id.value())) {
             if (verifyIngredientUsage.execute(id)) {
                 throw new IngredientUsageElementOnDeletionException(id);
             }

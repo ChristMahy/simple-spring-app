@@ -1,0 +1,4 @@
+#spring:
+#  cassandra:
+#    keyspace-name: taco_cloud
+#    local-datacenter: datacenter1

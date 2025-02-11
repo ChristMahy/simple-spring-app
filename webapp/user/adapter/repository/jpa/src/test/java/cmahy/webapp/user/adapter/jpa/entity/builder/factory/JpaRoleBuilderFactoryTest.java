@@ -1,6 +1,6 @@
 package cmahy.webapp.user.adapter.jpa.entity.builder.factory;
 
-import cmahy.webapp.user.adapter.jpa.entity.JpaRole;
+import cmahy.webapp.user.adapter.jpa.entity.domain.JpaRole;
 import cmahy.webapp.user.adapter.jpa.entity.builder.JpaRoleBuilder;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,6 +26,10 @@ class JpaRoleBuilderFactoryTest {
             assertThat(actual)
                 .isNotNull()
                 .isInstanceOf(JpaRoleBuilder.class);
+
+            JpaRole actualBuilt = actual.build();
+
+            assertThat(actualBuilt).isNotNull();
         });
     }
 

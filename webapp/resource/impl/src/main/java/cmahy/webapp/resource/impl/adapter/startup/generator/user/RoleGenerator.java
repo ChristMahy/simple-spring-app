@@ -35,13 +35,15 @@ public class RoleGenerator implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         Stream.of("Guest", "Admin")
             .forEach(name -> {
-                Role role = roleBuilderFactory.create()
-                    .name(name)
-                    .build();
+                if (roleRepository.findByName(name).isEmpty()) {
+                    Role role = roleBuilderFactory.create()
+                        .name(name)
+                        .build();
 
-                role = roleRepository.save(role);
+                    role = roleRepository.save(role);
 
-                LOG.info("Role saved <{}>", role);
+                    LOG.info("Role saved <{}>", role);
+                }
             });
     }
 }

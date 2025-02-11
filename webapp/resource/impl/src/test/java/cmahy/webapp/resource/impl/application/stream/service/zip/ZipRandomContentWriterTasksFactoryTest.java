@@ -9,10 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.io.OutputStream;
 import java.util.Optional;
 import java.util.Random;
 
@@ -24,8 +21,6 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ZipRandomContentWriterTasksFactoryTest {
-
-    private static final Logger LOG = LoggerFactory.getLogger(ZipRandomContentWriterTasksFactoryTest.class);
 
     @Mock
     private StringGeneratorService stringGeneratorService;
@@ -72,7 +67,7 @@ class ZipRandomContentWriterTasksFactoryTest {
             var elementsSize = Generator.randomInt(100, 2000);
             var stringSize = Generator.randomInt(5, 1000);
 
-            var failAtPosition = Generator.randomInt(0, elementsSize + 1);
+            var failAtPosition = Generator.randomInt(0, elementsSize - 1);
 
             var options = new GeneratorQueryOption(
                 Boolean.TRUE,

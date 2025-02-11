@@ -1,6 +1,6 @@
 package cmahy.webapp.user.adapter.jpa.entity.builder.factory;
 
-import cmahy.webapp.user.adapter.jpa.entity.JpaRole;
+import cmahy.webapp.user.adapter.jpa.entity.domain.JpaRole;
 import cmahy.webapp.user.adapter.jpa.entity.builder.JpaRoleBuilder;
 import cmahy.webapp.user.kernel.domain.builder.factory.RoleBuilderFactory;
 import jakarta.inject.Named;

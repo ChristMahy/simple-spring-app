@@ -24,7 +24,6 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.never;
 
 @ExtendWith(MockitoExtension.class)
 class CreateAnIngredientTest {
@@ -44,7 +43,7 @@ class CreateAnIngredientTest {
     @Test
     void execute() {
         assertDoesNotThrow(() -> {
-            String id = UUID.randomUUID().toString();
+            UUID id = Generator.randomUUID();
             String name = Generator.generateAString();
             IngredientType type = Generator.randomEnum(IngredientType.class);
 
@@ -71,7 +70,7 @@ class CreateAnIngredientTest {
     @Test
     void execute_onIngredientExistsWithSameNameAndType_thenThrowDuplicateException() {
         assertThrows(IngredientDuplicateException.class, () -> {
-            String id = UUID.randomUUID().toString();
+            UUID id = Generator.randomUUID();
             String name = Generator.generateAString();
             IngredientType type = Generator.randomEnum(IngredientType.class);
 

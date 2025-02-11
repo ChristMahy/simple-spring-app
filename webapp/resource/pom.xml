@@ -18,5 +18,6 @@
         <module>api</module>
         <module>ui</module>
         <module>impl</module>
+        <module>integration-test-persistence</module>
     </modules>
 </project>

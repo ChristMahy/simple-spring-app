@@ -1,6 +1,6 @@
 package cmahy.webapp.taco.shop.adapter.webclient.entity.builder;
 
-import cmahy.webapp.taco.shop.adapter.webclient.entity.ExternalIngredient;
+import cmahy.webapp.taco.shop.adapter.webclient.entity.domain.ExternalIngredient;
 import cmahy.webapp.taco.shop.kernel.domain.IngredientType;
 import cmahy.webapp.taco.shop.kernel.domain.builder.IngredientBuilder;
 
@@ -10,7 +10,6 @@ public class ExternalIngredientBuilder implements IngredientBuilder<ExternalIngr
     
     private Optional<ExternalIngredient> originalIngredient = Optional.empty();
 
-    private String id;
     private String name;
     private IngredientType type;
 
@@ -20,17 +19,10 @@ public class ExternalIngredientBuilder implements IngredientBuilder<ExternalIngr
         this.originalIngredient = Optional.ofNullable(ingredient);
 
         this.originalIngredient.ifPresent(originalIngredient -> {
-            this.id(originalIngredient.getId())
+            this
                 .name(originalIngredient.getName())
                 .type(originalIngredient.getType());
         });
-    }
-
-    @Override
-    public ExternalIngredientBuilder id(String id) {
-        this.id = id;
-
-        return this;
     }
 
     @Override
@@ -51,7 +43,6 @@ public class ExternalIngredientBuilder implements IngredientBuilder<ExternalIngr
     public ExternalIngredient build() {
         return this.originalIngredient
             .orElseGet(ExternalIngredient::new)
-            .setId(this.id)
             .setName(this.name)
             .setType(this.type);
     }

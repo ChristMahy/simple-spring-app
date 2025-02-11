@@ -3,18 +3,20 @@ package cmahy.webapp.taco.shop.kernel.domain;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import java.util.UUID;
+
 public class IngredientStub implements Ingredient {
 
-    private String id;
+    private UUID id;
     private String name;
     private IngredientType type;
 
     @Override
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public IngredientStub setId(String id) {
+    public IngredientStub setId(UUID id) {
         this.id = id;
         return this;
     }

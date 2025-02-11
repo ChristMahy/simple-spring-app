@@ -1,6 +1,6 @@
 package cmahy.webapp.user.adapter.jpa.entity.builder.factory;
 
-import cmahy.webapp.user.adapter.jpa.entity.JpaUser;
+import cmahy.webapp.user.adapter.jpa.entity.domain.JpaUser;
 import cmahy.webapp.user.adapter.jpa.entity.builder.JpaUserBuilder;
 import cmahy.webapp.user.kernel.domain.builder.factory.UserBuilderFactory;
 import jakarta.inject.Named;

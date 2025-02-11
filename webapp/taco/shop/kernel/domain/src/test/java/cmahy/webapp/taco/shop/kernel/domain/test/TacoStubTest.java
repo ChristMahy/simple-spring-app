@@ -16,7 +16,7 @@ class TacoStubTest {
     @Test
     void tacoNewInstance_whenAllFieldsComplete_thenFieldsReturnValue() {
         assertDoesNotThrow(() -> {
-            Long id = Generator.randomLongEqualOrAboveZero();
+            UUID id = Generator.randomUUID();
             Date createdAt = new Date();
             String name = Generator.generateAString();
             Collection<IngredientStub> ingredients = Stream
@@ -60,7 +60,7 @@ class TacoStubTest {
     @Test
     void tacoNewInstance_whenUseSetterToOverrideValueToNull_thenFieldsReturnNull() {
         assertDoesNotThrow(() -> {
-            Long id = Generator.randomLongEqualOrAboveZero();
+            UUID id = Generator.randomUUID();
             Date createdAt = new Date();
             String name = Generator.generateAString();
             Collection<IngredientStub> ingredients = Stream
@@ -94,7 +94,7 @@ class TacoStubTest {
     @Test
     void taco_whenAddIngredient_thenShouldBePresentInIngredientsList() {
         assertDoesNotThrow(() -> {
-            Long id = Generator.randomLongEqualOrAboveZero();
+            UUID id = Generator.randomUUID();
             Date createdAt = new Date();
             String name = Generator.generateAString();
             Collection<IngredientStub> ingredients = Stream
@@ -132,7 +132,7 @@ class TacoStubTest {
     @Test
     void taco_whenAddNullIngredient_thenShouldNotBePresentInIngredientsList() {
         assertDoesNotThrow(() -> {
-            Long id = Generator.randomLongEqualOrAboveZero();
+            UUID id = Generator.randomUUID();
             Date createdAt = new Date();
             String name = Generator.generateAString();
             Collection<IngredientStub> ingredients = Stream

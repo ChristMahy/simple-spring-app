@@ -1,6 +1,6 @@
 package cmahy.webapp.taco.shop.adapter.webclient.repository;
 
-import cmahy.webapp.taco.shop.adapter.webclient.entity.ExternalTaco;
+import cmahy.webapp.taco.shop.adapter.webclient.entity.domain.ExternalTaco;
 import cmahy.webapp.taco.shop.kernel.application.repository.TacoRepository;
 import cmahy.webapp.taco.shop.kernel.application.repository.annotation.RemoteRepository;
 import cmahy.webapp.taco.shop.kernel.domain.id.IngredientId;

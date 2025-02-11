@@ -28,6 +28,10 @@ class UserBuilderFactoryStubTest {
             assertThat(actual)
                 .isNotNull()
                 .isInstanceOf(UserBuilderStub.class);
+
+            UserStub actualBuilt = actual.build();
+
+            assertThat(actualBuilt).isNotNull();
         });
     }
 

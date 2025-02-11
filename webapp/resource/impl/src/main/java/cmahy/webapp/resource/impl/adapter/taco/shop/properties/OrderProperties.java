@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Min;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.validation.annotation.Validated;
 
 @Validated
@@ -16,6 +17,7 @@ public record OrderProperties(
     @Max(value = 25, message = "Must be between 5 and 25")
     int pageSize,
     @Valid
+    @NestedConfigurationProperty
     NestedSampleProperties subSamples
 ) {
 

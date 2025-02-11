@@ -1,6 +1,6 @@
 package cmahy.webapp.taco.shop.adapter.jpa.entity.builder;
 
-import cmahy.webapp.taco.shop.adapter.jpa.entity.JpaIngredient;
+import cmahy.webapp.taco.shop.adapter.jpa.entity.domain.JpaIngredient;
 import cmahy.webapp.taco.shop.kernel.domain.IngredientType;
 import cmahy.webapp.taco.shop.kernel.domain.builder.IngredientBuilder;
 
@@ -10,7 +10,6 @@ public class JpaIngredientBuilder implements IngredientBuilder<JpaIngredient> {
 
     private Optional<JpaIngredient> originalIngredient = Optional.empty();
 
-    private String id;
     private String name;
     private IngredientType type;
 
@@ -20,17 +19,10 @@ public class JpaIngredientBuilder implements IngredientBuilder<JpaIngredient> {
         this.originalIngredient = Optional.ofNullable(ingredient);
 
         this.originalIngredient.ifPresent(originalIngredient -> {
-            this.id(originalIngredient.getId())
+            this
                 .name(originalIngredient.getName())
                 .type(originalIngredient.getType());
         });
-    }
-
-    @Override
-    public JpaIngredientBuilder id(String id) {
-        this.id = id;
-
-        return this;
     }
 
     @Override
@@ -51,7 +43,6 @@ public class JpaIngredientBuilder implements IngredientBuilder<JpaIngredient> {
     public JpaIngredient build() {
         return this.originalIngredient
             .orElseGet(JpaIngredient::new)
-            .setId(this.id)
             .setName(this.name)
             .setType(this.type);
     }

@@ -1,7 +1,7 @@
 package cmahy.webapp.taco.shop.adapter.webclient.repository;
 
 import cmahy.common.entity.page.EntityPageable;
-import cmahy.webapp.taco.shop.adapter.webclient.entity.ExternalIngredient;
+import cmahy.webapp.taco.shop.adapter.webclient.entity.domain.ExternalIngredient;
 import cmahy.webapp.taco.shop.adapter.webclient.exception.IngredientExternalResourceException;
 import cmahy.webapp.taco.shop.kernel.application.repository.IngredientPagingRepository;
 import cmahy.webapp.taco.shop.kernel.application.repository.IngredientRepository;
@@ -9,7 +9,6 @@ import cmahy.webapp.taco.shop.kernel.application.repository.annotation.RemoteRep
 import cmahy.webapp.taco.shop.kernel.domain.IngredientType;
 import cmahy.webapp.taco.shop.kernel.domain.id.IngredientId;
 import cmahy.webapp.taco.shop.kernel.domain.page.IngredientPage;
-import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
-import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;

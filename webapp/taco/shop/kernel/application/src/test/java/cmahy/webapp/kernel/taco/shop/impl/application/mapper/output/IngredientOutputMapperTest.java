@@ -13,8 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Objects;
 import java.util.function.BiPredicate;
 
-import static cmahy.common.helper.Generator.generateAString;
-import static cmahy.common.helper.Generator.randomEnum;
+import static cmahy.common.helper.Generator.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -29,7 +28,7 @@ class IngredientOutputMapperTest {
     void map() {
         assertDoesNotThrow(() -> {
             Ingredient ingredient = new IngredientStub()
-                .setId(generateAString())
+                .setId(randomUUID())
                 .setName(generateAString())
                 .setType(randomEnum(IngredientType.class));
 

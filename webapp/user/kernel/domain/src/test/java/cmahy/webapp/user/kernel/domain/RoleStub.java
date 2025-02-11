@@ -4,18 +4,18 @@ import java.util.*;
 
 public class RoleStub implements Role {
 
-    private Long id;
+    private UUID id;
 
     private String name;
 
     private Collection<UserStub> users;
 
     @Override
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public RoleStub setId(Long id) {
+    public RoleStub setId(UUID id) {
         this.id = id;
         return this;
     }

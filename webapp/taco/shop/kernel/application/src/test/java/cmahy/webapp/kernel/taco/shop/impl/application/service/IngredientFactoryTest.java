@@ -50,7 +50,7 @@ class IngredientFactoryTest {
 
             assertThat(actual).isNotNull();
 
-            assertThat(actual.getId()).containsPattern("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}");
+            assertThat(actual.getId()).isNull();
             assertThat(actual.getName()).isEqualTo(createInputVo.name());
             assertThat(actual.getType().name()).isEqualTo(createInputVo.type());
         });
@@ -73,7 +73,7 @@ class IngredientFactoryTest {
 
             assertThat(actual).isNotNull();
 
-            assertThat(actual.getId()).containsPattern("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}");
+            assertThat(actual.getId()).isNull();
             assertThat(actual.getName()).isEqualTo(name.trim());
             assertThat(actual.getType()).isEqualTo(type);
         });

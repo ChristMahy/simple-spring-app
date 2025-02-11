@@ -1,6 +1,6 @@
 package cmahy.webapp.user.adapter.jpa.entity.builder.factory;
 
-import cmahy.webapp.user.adapter.jpa.entity.JpaUser;
+import cmahy.webapp.user.adapter.jpa.entity.domain.JpaUser;
 import cmahy.webapp.user.adapter.jpa.entity.builder.JpaUserBuilder;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,6 +26,10 @@ class JpaUserBuilderFactoryTest {
             assertThat(actual)
                 .isNotNull()
                 .isInstanceOf(JpaUserBuilder.class);
+
+            JpaUser actualBuilt = actual.build();
+
+            assertThat(actualBuilt).isNotNull();
         });
     }
 

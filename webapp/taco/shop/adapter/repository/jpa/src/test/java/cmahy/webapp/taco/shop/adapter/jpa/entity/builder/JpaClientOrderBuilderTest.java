@@ -1,10 +1,10 @@
 package cmahy.webapp.taco.shop.adapter.jpa.entity.builder;
 
 import cmahy.common.helper.Generator;
-import cmahy.webapp.taco.shop.adapter.jpa.entity.JpaClientOrder;
-import cmahy.webapp.taco.shop.adapter.jpa.entity.JpaTaco;
+import cmahy.webapp.taco.shop.adapter.jpa.entity.domain.JpaClientOrder;
+import cmahy.webapp.taco.shop.adapter.jpa.entity.domain.JpaTaco;
 import cmahy.webapp.taco.shop.kernel.domain.ClientOrder;
-import cmahy.webapp.user.adapter.jpa.entity.JpaUser;
+import cmahy.webapp.user.adapter.jpa.entity.domain.JpaUser;
 import cmahy.webapp.user.kernel.domain.User;
 import org.junit.jupiter.api.Test;
 
@@ -42,7 +42,6 @@ class JpaClientOrderBuilderTest {
 
             ClientOrder actual = new JpaClientOrderBuilder()
                 .user(user)
-                .placedAt(placedAt)
                 .deliveryName(deliveryName)
                 .deliveryStreet(deliveryStreet)
                 .deliveryCity(deliveryCity)
@@ -59,10 +58,9 @@ class JpaClientOrderBuilderTest {
                 .isInstanceOf(JpaClientOrder.class);
 
             assertThat(actual.getId()).isNull();
+            assertThat(actual.getPlacedAt()).isNull();
 
             assertThat(actual.getUser()).isSameAs(user);
-
-            assertThat(actual.getPlacedAt()).isEqualTo(placedAt);
 
             assertThat(actual.getDeliveryName()).isEqualTo(deliveryName);
             assertThat(actual.getDeliveryStreet()).isEqualTo(deliveryStreet);
@@ -101,9 +99,9 @@ class JpaClientOrderBuilderTest {
                 .toList();
 
             JpaClientOrder original = new JpaClientOrder()
-                .setId(Generator.randomLongEqualOrAboveZero())
+                .setId(Generator.randomUUID())
                 .setUser(mock(JpaUser.class))
-                .setPlacedAt(new Date())
+                .setPlacedAt(placedAt)
                 .setDeliveryName(Generator.generateAString(30))
                 .setDeliveryStreet(Generator.generateAString(30))
                 .setDeliveryCity(Generator.generateAString(30))
@@ -121,7 +119,6 @@ class JpaClientOrderBuilderTest {
 
             ClientOrder actual = new JpaClientOrderBuilder(original)
                 .user(user)
-                .placedAt(placedAt)
                 .deliveryName(deliveryName)
                 .deliveryStreet(deliveryStreet)
                 .deliveryCity(deliveryCity)
@@ -162,8 +159,6 @@ class JpaClientOrderBuilderTest {
         assertDoesNotThrow(() -> {
             User user = mock(JpaUser.class);
 
-            Date placedAt = new Date();
-
             String deliveryName = Generator.generateAString();
             String deliveryStreet = Generator.generateAString();
             String deliveryCity = Generator.generateAString();
@@ -181,7 +176,6 @@ class JpaClientOrderBuilderTest {
 
             ClientOrder actual = new JpaClientOrderBuilder(null)
                 .user(user)
-                .placedAt(placedAt)
                 .deliveryName(deliveryName)
                 .deliveryStreet(deliveryStreet)
                 .deliveryCity(deliveryCity)
@@ -196,10 +190,9 @@ class JpaClientOrderBuilderTest {
             assertThat(actual).isNotNull();
 
             assertThat(actual.getId()).isNull();
+            assertThat(actual.getPlacedAt()).isNull();
 
             assertThat(actual.getUser()).isSameAs(user);
-
-            assertThat(actual.getPlacedAt()).isEqualTo(placedAt);
 
             assertThat(actual.getDeliveryName()).isEqualTo(deliveryName);
             assertThat(actual.getDeliveryStreet()).isEqualTo(deliveryStreet);

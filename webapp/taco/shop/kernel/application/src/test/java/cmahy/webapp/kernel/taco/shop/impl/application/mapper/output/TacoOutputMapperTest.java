@@ -13,11 +13,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static cmahy.common.helper.Generator.generateAString;
-import static cmahy.common.helper.Generator.randomLongEqualOrAboveZero;
+import static cmahy.common.helper.Generator.randomUUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -51,7 +52,7 @@ class TacoOutputMapperTest {
                 })
                 .toList();
             Taco taco = new TacoStub()
-                .setId(randomLongEqualOrAboveZero())
+                .setId(randomUUID())
                 .setName(generateAString())
                 .setCreatedAt(new Date())
                 .setIngredients(ingredients);

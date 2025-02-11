@@ -79,7 +79,7 @@ class ClientOrderGeneratorTest {
                     .generate(() -> new IngredientStub()
                         .setName(Generator.generateAString())
                         .setType(type)
-                        .setId(Generator.generateAString())
+                        .setId(Generator.randomUUID())
                     )
                     .limit(Generator.randomInt(3, 10))
                     .collect(Collectors.toSet());

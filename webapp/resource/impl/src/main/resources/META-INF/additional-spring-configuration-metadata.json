@@ -1,10 +1,9 @@
 {
   "properties": [
     {
-      "name": "application.taco.orders.page-size",
-      "type": "java.lang.Integer",
-      "defaultValue": "20",
-      "description": "Sets the maximum number of orders to display in a list."
+      "name": "application.taco.orders",
+      "type": "cmahy.webapp.resource.impl.adapter.taco.shop.properties.OrderProperties",
+      "sourceType": "cmahy.webapp.resource.impl.adapter.taco.shop.properties.OrderProperties"
     }
   ]
 }

@@ -11,8 +11,6 @@ public interface ClientOrderBuilder<CO extends ClientOrder> {
 
     ClientOrderBuilder<CO> user(User user);
 
-    ClientOrderBuilder<CO> placedAt(Date placedAt);
-
     ClientOrderBuilder<CO> deliveryName(String deliveryName);
     ClientOrderBuilder<CO> deliveryStreet(String deliveryStreet);
     ClientOrderBuilder<CO> deliveryCity(String deliveryCity);

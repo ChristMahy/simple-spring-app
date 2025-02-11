@@ -1,6 +1,6 @@
 package cmahy.webapp.taco.shop.adapter.jpa.entity.builder.factory;
 
-import cmahy.webapp.taco.shop.adapter.jpa.entity.JpaTaco;
+import cmahy.webapp.taco.shop.adapter.jpa.entity.domain.JpaTaco;
 import cmahy.webapp.taco.shop.adapter.jpa.entity.builder.JpaTacoBuilder;
 import cmahy.webapp.taco.shop.kernel.domain.Taco;
 import org.junit.jupiter.api.Test;

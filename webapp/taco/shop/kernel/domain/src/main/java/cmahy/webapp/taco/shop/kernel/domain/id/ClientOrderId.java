@@ -4,7 +4,9 @@ import cmahy.common.entity.id.EntityId;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-public record ClientOrderId(Long value) implements EntityId<Long> {
+import java.util.UUID;
+
+public record ClientOrderId(UUID value) implements EntityId<UUID> {
 
     @Override
     public String toString() {

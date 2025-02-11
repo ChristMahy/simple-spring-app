@@ -1,10 +1,11 @@
 package cmahy.webapp.user.kernel.domain;
 
 import java.util.Collection;
+import java.util.UUID;
 
 public interface Role {
 
-    Long getId();
+    UUID getId();
 
     String getName();
 

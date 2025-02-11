@@ -5,11 +5,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 public class StringToIngredientIdConvertor implements Converter<String, IngredientId> {
 
     @Override
     public IngredientId convert(String source) {
-        return StringUtils.isNotBlank(source) ? new IngredientId(source) : null;
+        return StringUtils.isNotBlank(source) ? new IngredientId(UUID.fromString(source)) : null;
     }
 }

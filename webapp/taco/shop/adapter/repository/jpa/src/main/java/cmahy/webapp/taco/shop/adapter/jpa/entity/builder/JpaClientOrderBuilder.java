@@ -1,10 +1,10 @@
 package cmahy.webapp.taco.shop.adapter.jpa.entity.builder;
 
-import cmahy.webapp.taco.shop.adapter.jpa.entity.JpaClientOrder;
-import cmahy.webapp.taco.shop.adapter.jpa.entity.JpaTaco;
+import cmahy.webapp.taco.shop.adapter.jpa.entity.domain.JpaClientOrder;
+import cmahy.webapp.taco.shop.adapter.jpa.entity.domain.JpaTaco;
 import cmahy.webapp.taco.shop.kernel.domain.Taco;
 import cmahy.webapp.taco.shop.kernel.domain.builder.ClientOrderBuilder;
-import cmahy.webapp.user.adapter.jpa.entity.JpaUser;
+import cmahy.webapp.user.adapter.jpa.entity.domain.JpaUser;
 import cmahy.webapp.user.kernel.domain.User;
 
 import java.util.*;
@@ -14,8 +14,6 @@ public class JpaClientOrderBuilder implements ClientOrderBuilder<JpaClientOrder>
     private Optional<JpaClientOrder> originalClientOrder = Optional.empty();
 
     private JpaUser user;
-
-    private Date placedAt;
 
     private String deliveryName;
     private String deliveryStreet;
@@ -38,13 +36,6 @@ public class JpaClientOrderBuilder implements ClientOrderBuilder<JpaClientOrder>
     @Override
     public JpaClientOrderBuilder user(User user) {
         this.user = (JpaUser) user;
-
-        return this;
-    }
-
-    @Override
-    public JpaClientOrderBuilder placedAt(Date placedAt) {
-        this.placedAt = placedAt;
 
         return this;
     }
@@ -117,7 +108,6 @@ public class JpaClientOrderBuilder implements ClientOrderBuilder<JpaClientOrder>
         return originalClientOrder
             .orElseGet(JpaClientOrder::new)
             .setUser(this.user)
-            .setPlacedAt(this.placedAt)
             .setDeliveryName(this.deliveryName)
             .setDeliveryStreet(this.deliveryStreet)
             .setDeliveryCity(this.deliveryCity)

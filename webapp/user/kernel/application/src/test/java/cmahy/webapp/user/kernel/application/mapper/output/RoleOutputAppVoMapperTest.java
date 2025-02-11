@@ -3,12 +3,15 @@ package cmahy.webapp.user.kernel.application.mapper.output;
 import cmahy.common.helper.Generator;
 import cmahy.webapp.user.kernel.domain.Role;
 import cmahy.webapp.user.kernel.domain.RoleStub;
+import cmahy.webapp.user.kernel.domain.id.RoleId;
 import cmahy.webapp.user.kernel.exception.RequiredException;
 import cmahy.webapp.user.kernel.vo.output.RoleOutputAppVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -26,7 +29,7 @@ class RoleOutputAppVoMapperTest {
     void map() {
         assertDoesNotThrow(() -> {
             Role role = new RoleStub()
-                .setId(Generator.randomLongEqualOrAboveZero())
+                .setId(Generator.randomUUID())
                 .setName(Generator.generateAString());
 
             RoleOutputAppVo actual = roleOutputAppVoMapper.map(role);

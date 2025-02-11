@@ -12,8 +12,6 @@ public class ClientOrderBuilderStub implements ClientOrderBuilder<ClientOrderStu
 
     private UserStub user;
 
-    private Date placedAt;
-
     private String deliveryName;
     private String deliveryStreet;
     private String deliveryCity;
@@ -35,13 +33,6 @@ public class ClientOrderBuilderStub implements ClientOrderBuilder<ClientOrderStu
     @Override
     public ClientOrderBuilderStub user(User user) {
         this.user = (UserStub) user;
-
-        return this;
-    }
-
-    @Override
-    public ClientOrderBuilderStub placedAt(Date placedAt) {
-        this.placedAt = placedAt;
 
         return this;
     }
@@ -114,7 +105,6 @@ public class ClientOrderBuilderStub implements ClientOrderBuilder<ClientOrderStu
         return originalClientOrder
             .orElseGet(ClientOrderStub::new)
             .setUser(this.user)
-            .setPlacedAt(this.placedAt)
             .setDeliveryName(this.deliveryName)
             .setDeliveryStreet(this.deliveryStreet)
             .setDeliveryCity(this.deliveryCity)

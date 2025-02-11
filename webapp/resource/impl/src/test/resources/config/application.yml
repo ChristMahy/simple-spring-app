@@ -9,6 +9,10 @@ spring:
         max-size: 20
         queue-capacity: 10000
 
+logging:
+  level:
+    org.springframework.test.context.cache: DEBUG
+
 application:
   web-client:
     common:
@@ -18,8 +22,8 @@ application:
       write-timeout: 5s
     taco:
       credentials:
-        username: test2test
-        password: test2test
+        username: machine2machine
+        password: machine2machine
   start-up:
     order:
       generate: false

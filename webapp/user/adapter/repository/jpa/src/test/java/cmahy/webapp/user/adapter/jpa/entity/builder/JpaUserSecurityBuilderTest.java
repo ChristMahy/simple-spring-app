@@ -1,8 +1,8 @@
 package cmahy.webapp.user.adapter.jpa.entity.builder;
 
 import cmahy.common.helper.Generator;
-import cmahy.webapp.user.adapter.jpa.entity.JpaRole;
-import cmahy.webapp.user.adapter.jpa.entity.JpaUserSecurity;
+import cmahy.webapp.user.adapter.jpa.entity.domain.JpaRole;
+import cmahy.webapp.user.adapter.jpa.entity.domain.JpaUserSecurity;
 import cmahy.webapp.user.kernel.domain.AuthProvider;
 import cmahy.webapp.user.kernel.domain.UserSecurity;
 import org.junit.jupiter.api.Test;
@@ -110,7 +110,7 @@ class JpaUserSecurityBuilderTest {
             Boolean newIsCredentialsExpired = Generator.randomBoolean();
 
             JpaUserSecurity original = new JpaUserSecurity()
-                .setId(Generator.randomLongEqualOrAboveZero())
+                .setId(Generator.randomUUID())
                 .setUserName(Generator.generateAString(30))
                 .setPassword(Generator.randomBytes(Generator.randomInt(20, 30)))
                 .setFullName(Generator.generateAString(30))

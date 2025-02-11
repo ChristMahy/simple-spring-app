@@ -22,8 +22,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class IngredientSchedulerTest {
@@ -39,7 +38,7 @@ class IngredientSchedulerTest {
         assertDoesNotThrow(() -> {
             List<IngredientOutputVo> ingredients = Stream
                 .generate(() -> new IngredientOutputVo(
-                    new IngredientId(Generator.generateAString()),
+                    new IngredientId(Generator.randomUUID()),
                     Generator.generateAString(),
                     Generator.randomEnum(IngredientType.class).name()
                 ))
@@ -70,9 +69,8 @@ class IngredientSchedulerTest {
     @MethodSource({ "exceptions" })
     void runGetAllQuery_isRunningThreadSafe(Throwable exception) {
         assertDoesNotThrow(() -> {
-            EntityPageable pageable = mock(EntityPageable.class);
 
-            when(getAllRemoteIngredientQuery.execute(pageable)).thenAnswer(_ -> { throw exception; });
+            when(getAllRemoteIngredientQuery.execute(any(EntityPageable.class))).thenAnswer(_ -> { throw exception; });
 
             ingredientScheduler.runGetAllQuery();
         });

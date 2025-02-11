@@ -51,7 +51,7 @@ class DesignUiImplIntegrationTest {
             for (IngredientType value : IngredientType.values()) {
                 when(ingredientByTypeQuery.execute(value)).thenReturn(
                     Stream.generate(() -> new IngredientOutputVo(
-                            new IngredientId(generateAStringWithoutSpecialChars(5)),
+                            new IngredientId(randomUUID()),
                             generateAStringWithoutSpecialChars(),
                             value.name()
                         ))
@@ -135,7 +135,7 @@ class DesignUiImplIntegrationTest {
         assertDoesNotThrow(() -> {
             List<TacoInputVo> tacos = Stream.generate(() -> new TacoInputVo(
                     generateAString(),
-                    Stream.generate(() -> new IngredientId(generateAStringWithoutSpecialChars(10)))
+                    Stream.generate(() -> new IngredientId(randomUUID()))
                         .limit(randomInt(2, 5))
                         .collect(Collectors.toSet())
                 ))
@@ -145,7 +145,7 @@ class DesignUiImplIntegrationTest {
             TacoInputVo TacoInputVo = new TacoInputVo(
                 generateAString(),
                 Stream.generate(() -> new IngredientId(
-                        generateAStringWithoutSpecialChars(10)
+                        randomUUID()
                     ))
                     .limit(randomInt(2, 10))
                     .collect(Collectors.toSet())
@@ -162,7 +162,7 @@ class DesignUiImplIntegrationTest {
                         .param("name", TacoInputVo.name())
                         .param(
                             "ingredientIds",
-                            TacoInputVo.ingredientIds().stream().map(IngredientId::value).toArray(String[]::new)
+                            TacoInputVo.ingredientIds().stream().map(IngredientId::value).map(UUID::toString).toArray(String[]::new)
                         )
                 )
                 .andExpect(status().isOk())
@@ -191,7 +191,7 @@ class DesignUiImplIntegrationTest {
         assertDoesNotThrow(() -> {
             List<TacoInputVo> tacos = Stream.generate(() -> new TacoInputVo(
                     generateAString(),
-                    Stream.generate(() -> new IngredientId(generateAStringWithoutSpecialChars(10)))
+                    Stream.generate(() -> new IngredientId(randomUUID()))
                         .limit(randomInt(2, 5))
                         .collect(Collectors.toSet())
                 ))
@@ -229,7 +229,7 @@ class DesignUiImplIntegrationTest {
         assertDoesNotThrow(() -> {
             List<TacoInputVo> tacos = Stream.generate(() -> new TacoInputVo(
                     generateAString(),
-                    Stream.generate(() -> new IngredientId(generateAStringWithoutSpecialChars(10)))
+                    Stream.generate(() -> new IngredientId(randomUUID()))
                         .limit(randomInt(2, 5))
                         .collect(Collectors.toSet())
                 ))
@@ -239,7 +239,7 @@ class DesignUiImplIntegrationTest {
             TacoInputVo TacoInputVo = new TacoInputVo(
                 generateAString(),
                 Stream.generate(() -> new IngredientId(
-                        generateAStringWithoutSpecialChars(10)
+                        randomUUID()
                     ))
                     .limit(randomInt(2, 10))
                     .collect(Collectors.toSet())
@@ -256,7 +256,7 @@ class DesignUiImplIntegrationTest {
                         .param("name", TacoInputVo.name())
                         .param(
                             "ingredientIds",
-                            TacoInputVo.ingredientIds().stream().map(IngredientId::value).toArray(String[]::new)
+                            TacoInputVo.ingredientIds().stream().map(IngredientId::value).map(UUID::toString).toArray(String[]::new)
                         )
                 )
                 .andExpect(status().is3xxRedirection())
@@ -303,7 +303,7 @@ class DesignUiImplIntegrationTest {
 
             List<TacoInputVo> tacos = Stream.generate(() -> new TacoInputVo(
                     generateAString(),
-                    Stream.generate(() -> new IngredientId(generateAStringWithoutSpecialChars(10)))
+                    Stream.generate(() -> new IngredientId(randomUUID()))
                         .limit(randomInt(2, 5))
                         .collect(Collectors.toSet())
                 ))

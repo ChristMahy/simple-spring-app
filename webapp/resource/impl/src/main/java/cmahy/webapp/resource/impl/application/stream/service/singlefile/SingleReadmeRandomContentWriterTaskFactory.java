@@ -27,7 +27,7 @@ public class SingleReadmeRandomContentWriterTaskFactory {
 
     public List<SingleFileReadmeTaskExecutor> execute(GeneratorQueryOption options) {
         var elementsSize = options.elementsSizeOrDefaultAboveZero();
-        var failAtPosition = randomizer.nextInt(0, elementsSize);
+        var failAtPosition = randomizer.nextInt(1, elementsSize);
 
         return IntStream.rangeClosed(1, elementsSize)
             .mapToObj(index -> {

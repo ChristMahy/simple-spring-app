@@ -13,6 +13,8 @@ import cmahy.webapp.user.kernel.domain.id.UserId;
 import cmahy.webapp.user.kernel.exception.UserNotFoundException;
 import jakarta.inject.Named;
 
+import java.util.Optional;
+
 @Query
 @Named
 public class GetAllClientOrderPagedQuery {
@@ -32,9 +34,11 @@ public class GetAllClientOrderPagedQuery {
     }
 
     public ClientOrderPageOutputVo execute(UserId userId, EntityPageable pageable) throws UserNotFoundException, RequiredException {
+        Optional<User> user = userRepository.findById(userId);
+
         return clientOrderPageOutputMapper.map(
             clientOrderPagingRepository.getByUser(
-                userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId)),
+                user.orElseThrow(() -> new UserNotFoundException(userId)),
                 pageable
             )
         );

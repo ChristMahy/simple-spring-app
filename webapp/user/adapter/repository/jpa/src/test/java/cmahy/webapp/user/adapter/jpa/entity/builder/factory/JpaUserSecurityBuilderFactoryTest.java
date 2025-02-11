@@ -1,6 +1,6 @@
 package cmahy.webapp.user.adapter.jpa.entity.builder.factory;
 
-import cmahy.webapp.user.adapter.jpa.entity.JpaUserSecurity;
+import cmahy.webapp.user.adapter.jpa.entity.domain.JpaUserSecurity;
 import cmahy.webapp.user.adapter.jpa.entity.builder.JpaUserSecurityBuilder;
 import cmahy.webapp.user.kernel.domain.UserSecurity;
 import org.junit.jupiter.api.Test;
@@ -27,6 +27,10 @@ class JpaUserSecurityBuilderFactoryTest {
             assertThat(actual)
                 .isNotNull()
                 .isInstanceOf(JpaUserSecurityBuilder.class);
+
+            JpaUserSecurity actualBuilt = actual.build();
+
+            assertThat(actualBuilt).isNotNull();
         });
     }
 

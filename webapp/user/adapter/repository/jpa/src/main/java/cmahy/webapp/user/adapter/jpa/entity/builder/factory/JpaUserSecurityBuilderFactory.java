@@ -1,6 +1,6 @@
 package cmahy.webapp.user.adapter.jpa.entity.builder.factory;
 
-import cmahy.webapp.user.adapter.jpa.entity.JpaUserSecurity;
+import cmahy.webapp.user.adapter.jpa.entity.domain.JpaUserSecurity;
 import cmahy.webapp.user.adapter.jpa.entity.builder.JpaUserSecurityBuilder;
 import cmahy.webapp.user.kernel.domain.builder.factory.UserSecurityBuilderFactory;
 import jakarta.inject.Named;

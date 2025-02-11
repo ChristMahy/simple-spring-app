@@ -37,7 +37,7 @@ class VerifyIngredientUsageTest {
     @Test
     void execute_whenNoUsageFound_thenReturnFalse() {
         assertDoesNotThrow(() -> {
-            IngredientId ingredientId = new IngredientId(Generator.generateAString());
+            IngredientId ingredientId = new IngredientId(Generator.randomUUID());
             Ingredient ingredient = mock(Ingredient.class);
             Set<Taco> tacos = Collections.emptySet();
 
@@ -53,7 +53,7 @@ class VerifyIngredientUsageTest {
     @Test
     void execute_whenIngredientNotFound_thenReturnFalse() {
         assertDoesNotThrow(() -> {
-            IngredientId ingredientId = new IngredientId(Generator.generateAString());
+            IngredientId ingredientId = new IngredientId(Generator.randomUUID());
 
             when(ingredientRepository.findById(ingredientId)).thenReturn(Optional.empty());
 
@@ -66,7 +66,7 @@ class VerifyIngredientUsageTest {
     @Test
     void execute_whenIngredientIsUsedByAnyTaco_thenReturnTrue() {
         assertDoesNotThrow(() -> {
-            IngredientId ingredientId = new IngredientId(Generator.generateAString());
+            IngredientId ingredientId = new IngredientId(Generator.randomUUID());
             Ingredient ingredient = mock(Ingredient.class);
             Set<Taco> tacos = Stream.generate(() -> mock(Taco.class))
                 .limit(Generator.randomInt(10, 5000))

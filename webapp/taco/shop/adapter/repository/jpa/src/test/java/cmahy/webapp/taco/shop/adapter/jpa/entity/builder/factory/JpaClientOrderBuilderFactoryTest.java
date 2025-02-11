@@ -1,6 +1,6 @@
 package cmahy.webapp.taco.shop.adapter.jpa.entity.builder.factory;
 
-import cmahy.webapp.taco.shop.adapter.jpa.entity.JpaClientOrder;
+import cmahy.webapp.taco.shop.adapter.jpa.entity.domain.JpaClientOrder;
 import cmahy.webapp.taco.shop.adapter.jpa.entity.builder.JpaClientOrderBuilder;
 import cmahy.webapp.taco.shop.kernel.domain.ClientOrder;
 import org.junit.jupiter.api.Test;

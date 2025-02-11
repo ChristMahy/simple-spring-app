@@ -1,6 +1,7 @@
 package cmahy.common.helper;
 
 import java.util.Random;
+import java.util.UUID;
 
 public final class Generator {
 
@@ -50,6 +51,10 @@ public final class Generator {
         return stringBuilder.toString();
     }
 
+    public static UUID randomUUID() {
+        return UUID.randomUUID();
+    }
+
     public static int randomInt() {
         return randomInt(null, null);
     }
@@ -61,7 +66,6 @@ public final class Generator {
     public static int randomInt(Integer min, Integer max) {
         return new Random().nextInt(min == null ? Integer.MIN_VALUE : min, max == null || max == Integer.MAX_VALUE ? Integer.MAX_VALUE : (max + 1));
     }
-
 
     public static Long randomLongEqualOrAboveZero() {
         return randomLong(0L, Long.MAX_VALUE);

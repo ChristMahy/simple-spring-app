@@ -7,7 +7,7 @@ import java.util.*;
 
 public class TacoStub implements Taco {
 
-    private Long id;
+    private UUID id;
 
     private Date createdAt;
 
@@ -16,11 +16,11 @@ public class TacoStub implements Taco {
     private Collection<IngredientStub> ingredients;
 
     @Override
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public TacoStub setId(Long id) {
+    public TacoStub setId(UUID id) {
         this.id = id;
         return this;
     }

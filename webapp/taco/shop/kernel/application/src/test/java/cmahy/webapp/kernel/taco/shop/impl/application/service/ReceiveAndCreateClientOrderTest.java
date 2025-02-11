@@ -73,7 +73,7 @@ class ReceiveAndCreateClientOrderTest {
     @Test
     void execute() {
         assertDoesNotThrow(() -> {
-            UserId userId = new UserId(Generator.randomLongEqualOrAboveZero());
+            UserId userId = new UserId(Generator.randomUUID());
             User user = mock(User.class);
             ClientOrderInputVo clientOrderVo = new ClientOrderInputVo(
                 Generator.generateAString(),
@@ -88,7 +88,7 @@ class ReceiveAndCreateClientOrderTest {
                         TacoInputVo tacoInput = new TacoInputVo(
                             Generator.generateAString(),
                             Stream.generate(() -> {
-                                    IngredientId id = new IngredientId(Generator.generateAString());
+                                    IngredientId id = new IngredientId(Generator.randomUUID());
 
                                     when(ingredientRepository.findById(id)).thenAnswer(_ -> Optional.of(mock(Ingredient.class)));
 
@@ -132,10 +132,10 @@ class ReceiveAndCreateClientOrderTest {
 
     @Test
     void execute_onIngredientNotFound_thenThrowNotFoundException() {
-        IngredientId id = new IngredientId(Generator.generateAString());
+        IngredientId id = new IngredientId(Generator.randomUUID());
 
         IngredientNotFoundException notFoundException = assertThrows(IngredientNotFoundException.class, () -> {
-            UserId userId = new UserId(Generator.randomLongEqualOrAboveZero());
+            UserId userId = new UserId(Generator.randomUUID());
             User user = mock(User.class);
             ClientOrderInputVo clientOrderVo = new ClientOrderInputVo(
                 Generator.generateAString(),
@@ -175,7 +175,7 @@ class ReceiveAndCreateClientOrderTest {
         });
 
         assertThat(notFoundException).isNotNull();
-        assertThat(notFoundException.getMessage()).contains(Ingredient.class.getSimpleName(), id.value());
+        assertThat(notFoundException.getMessage()).contains(Ingredient.class.getSimpleName(), id.value().toString());
 
         verify(tacoRepository, never()).save(any());
         verify(clientOrderRepository, never()).save(any());
@@ -184,7 +184,7 @@ class ReceiveAndCreateClientOrderTest {
     @Test
     void execute_whenUserNotFound_thenThrowUserNotFound() {
         assertThrows(UserNotFoundException.class, () -> {
-            UserId userId = new UserId(Generator.randomLongEqualOrAboveZero());
+            UserId userId = new UserId(Generator.randomUUID());
             ClientOrderInputVo clientOrderVo = mock(ClientOrderInputVo.class);
 
             when(userRepository.findById(userId)).thenReturn(Optional.empty());

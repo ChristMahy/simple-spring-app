@@ -1,10 +1,10 @@
 package cmahy.webapp.taco.shop.adapter.webclient.entity.builder;
 
 import cmahy.common.helper.Generator;
-import cmahy.webapp.taco.shop.adapter.webclient.entity.ExternalClientOrder;
-import cmahy.webapp.taco.shop.adapter.webclient.entity.ExternalTaco;
+import cmahy.webapp.taco.shop.adapter.webclient.entity.domain.ExternalClientOrder;
+import cmahy.webapp.taco.shop.adapter.webclient.entity.domain.ExternalTaco;
 import cmahy.webapp.taco.shop.kernel.domain.ClientOrder;
-import cmahy.webapp.user.adapter.webclient.entity.ExternalUser;
+import cmahy.webapp.user.adapter.webclient.entity.domain.ExternalUser;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
@@ -41,7 +41,6 @@ class ExternalClientOrderBuilderTest {
 
             ClientOrder actual = new ExternalClientOrderBuilder()
                 .user(user)
-                .placedAt(placedAt)
                 .deliveryName(deliveryName)
                 .deliveryStreet(deliveryStreet)
                 .deliveryCity(deliveryCity)
@@ -58,10 +57,9 @@ class ExternalClientOrderBuilderTest {
                 .isInstanceOf(ExternalClientOrder.class);
 
             assertThat(actual.getId()).isNull();
+            assertThat(actual.getPlacedAt()).isNull();
 
             assertThat(actual.getUser()).isSameAs(user);
-
-            assertThat(actual.getPlacedAt()).isEqualTo(placedAt);
 
             assertThat(actual.getDeliveryName()).isEqualTo(deliveryName);
             assertThat(actual.getDeliveryStreet()).isEqualTo(deliveryStreet);
@@ -100,9 +98,9 @@ class ExternalClientOrderBuilderTest {
                 .toList();
 
             ExternalClientOrder original = new ExternalClientOrder()
-                .setId(Generator.randomLongEqualOrAboveZero())
+                .setId(Generator.randomUUID())
                 .setUser(mock(ExternalUser.class))
-                .setPlacedAt(new Date())
+                .setPlacedAt(placedAt)
                 .setDeliveryName(Generator.generateAString(30))
                 .setDeliveryStreet(Generator.generateAString(30))
                 .setDeliveryCity(Generator.generateAString(30))
@@ -120,7 +118,6 @@ class ExternalClientOrderBuilderTest {
 
             ClientOrder actual = new ExternalClientOrderBuilder(original)
                 .user(user)
-                .placedAt(placedAt)
                 .deliveryName(deliveryName)
                 .deliveryStreet(deliveryStreet)
                 .deliveryCity(deliveryCity)
@@ -161,8 +158,6 @@ class ExternalClientOrderBuilderTest {
         assertDoesNotThrow(() -> {
             ExternalUser user = mock(ExternalUser.class);
 
-            Date placedAt = new Date();
-
             String deliveryName = Generator.generateAString();
             String deliveryStreet = Generator.generateAString();
             String deliveryCity = Generator.generateAString();
@@ -180,7 +175,6 @@ class ExternalClientOrderBuilderTest {
 
             ClientOrder actual = new ExternalClientOrderBuilder(null)
                 .user(user)
-                .placedAt(placedAt)
                 .deliveryName(deliveryName)
                 .deliveryStreet(deliveryStreet)
                 .deliveryCity(deliveryCity)
@@ -195,10 +189,9 @@ class ExternalClientOrderBuilderTest {
             assertThat(actual).isNotNull();
 
             assertThat(actual.getId()).isNull();
+            assertThat(actual.getPlacedAt()).isNull();
 
             assertThat(actual.getUser()).isSameAs(user);
-
-            assertThat(actual.getPlacedAt()).isEqualTo(placedAt);
 
             assertThat(actual.getDeliveryName()).isEqualTo(deliveryName);
             assertThat(actual.getDeliveryStreet()).isEqualTo(deliveryStreet);

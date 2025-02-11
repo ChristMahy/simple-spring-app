@@ -1,8 +1,8 @@
 package cmahy.webapp.user.adapter.jpa.entity.builder;
 
 import cmahy.common.helper.Generator;
-import cmahy.webapp.user.adapter.jpa.entity.JpaRole;
-import cmahy.webapp.user.adapter.jpa.entity.JpaUser;
+import cmahy.webapp.user.adapter.jpa.entity.domain.JpaRole;
+import cmahy.webapp.user.adapter.jpa.entity.domain.JpaUser;
 import cmahy.webapp.user.kernel.domain.User;
 import org.junit.jupiter.api.Test;
 
@@ -84,7 +84,7 @@ class JpaUserBuilderTest {
                 .toList();
 
             JpaUser original = new JpaUser()
-                .setId(Generator.randomLongEqualOrAboveZero())
+                .setId(Generator.randomUUID())
                 .setUserName(Generator.generateAString(30))
                 .setPassword(Generator.randomBytes(Generator.randomInt(20, 30)))
                 .setFullName(Generator.generateAString(30))

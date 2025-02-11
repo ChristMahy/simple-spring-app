@@ -7,6 +7,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -19,9 +21,9 @@ class StringToIngredientIdConvertorTest {
     @Test
     void convert() {
         assertDoesNotThrow(() -> {
-            String id = Generator.generateAString();
+            UUID id = Generator.randomUUID();
 
-            IngredientId actual = stringToIngredientIdConvertor.convert(id);
+            IngredientId actual = stringToIngredientIdConvertor.convert(id.toString());
 
             assertThat(actual).isNotNull();
             assertThat(actual.value()).isEqualTo(id);

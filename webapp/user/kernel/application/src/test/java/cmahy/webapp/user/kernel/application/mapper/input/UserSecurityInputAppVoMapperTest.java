@@ -26,7 +26,7 @@ import static org.mockito.Mockito.when;
 class UserSecurityInputAppVoMapperTest {
 
     @Mock
-    private UserSecurityBuilderFactory<? extends UserSecurity> builderFactory;
+    private UserSecurityBuilderFactory<UserSecurity> builderFactory;
 
     @InjectMocks
     private UserSecurityInputAppVoMapper userSecurityInputAppVoMapper;

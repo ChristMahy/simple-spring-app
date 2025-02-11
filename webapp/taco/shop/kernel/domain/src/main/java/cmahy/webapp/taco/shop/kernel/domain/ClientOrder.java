@@ -3,8 +3,7 @@ package cmahy.webapp.taco.shop.kernel.domain;
 import cmahy.webapp.user.kernel.domain.User;
 import jakarta.validation.constraints.*;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public interface ClientOrder {
 
@@ -18,7 +17,7 @@ public interface ClientOrder {
     String I18N_KEY_CC_EXPIRATION_FORMAT_INVALID = "validation.error.client-order.credit-card.expiration.format.invalid";
     String I18N_KEY_CC_CVV_INVALID = "validation.error.client-order.credit-card.cvv.invalid";
 
-    Long getId();
+    UUID getId();
 
     User getUser();
 

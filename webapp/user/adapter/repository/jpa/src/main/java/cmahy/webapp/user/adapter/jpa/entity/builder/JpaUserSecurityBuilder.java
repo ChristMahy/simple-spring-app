@@ -1,7 +1,7 @@
 package cmahy.webapp.user.adapter.jpa.entity.builder;
 
-import cmahy.webapp.user.adapter.jpa.entity.JpaRole;
-import cmahy.webapp.user.adapter.jpa.entity.JpaUserSecurity;
+import cmahy.webapp.user.adapter.jpa.entity.domain.JpaRole;
+import cmahy.webapp.user.adapter.jpa.entity.domain.JpaUserSecurity;
 import cmahy.webapp.user.kernel.domain.AuthProvider;
 import cmahy.webapp.user.kernel.domain.Role;
 import cmahy.webapp.user.kernel.domain.builder.UserSecurityBuilder;

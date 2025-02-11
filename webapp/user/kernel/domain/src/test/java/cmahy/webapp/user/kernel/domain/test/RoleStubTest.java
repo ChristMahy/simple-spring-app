@@ -5,6 +5,7 @@ import cmahy.webapp.user.kernel.domain.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,7 +17,7 @@ class RoleStubTest {
     @Test
     void roleNewInstance_whenAllFieldsComplete_thenFieldsReturnValue() {
         assertDoesNotThrow(() -> {
-            Long id = Generator.randomLongEqualOrAboveZero();
+            UUID id = Generator.randomUUID();
             String name = Generator.generateAString();
             Collection<UserStub> users = Stream
                 .generate(() -> mock(UserStub.class))
@@ -56,7 +57,7 @@ class RoleStubTest {
     @Test
     void roleNewInstance_whenUseSetterToOverrideValueToNull_thenFieldsReturnNull() {
         assertDoesNotThrow(() -> {
-            Long id = Generator.randomLongEqualOrAboveZero();
+            UUID id = Generator.randomUUID();
             String name = Generator.generateAString();
             Collection<UserStub> users = Stream
                 .generate(() -> mock(UserStub.class))

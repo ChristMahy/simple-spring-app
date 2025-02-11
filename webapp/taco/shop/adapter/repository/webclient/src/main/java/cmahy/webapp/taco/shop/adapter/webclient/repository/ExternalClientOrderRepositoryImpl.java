@@ -1,7 +1,7 @@
 package cmahy.webapp.taco.shop.adapter.webclient.repository;
 
 import cmahy.common.entity.page.EntityPageable;
-import cmahy.webapp.taco.shop.adapter.webclient.entity.ExternalClientOrder;
+import cmahy.webapp.taco.shop.adapter.webclient.entity.domain.ExternalClientOrder;
 import cmahy.webapp.taco.shop.kernel.application.repository.ClientOrderPagingRepository;
 import cmahy.webapp.taco.shop.kernel.application.repository.ClientOrderRepository;
 import cmahy.webapp.taco.shop.kernel.application.repository.annotation.RemoteRepository;

@@ -27,6 +27,10 @@ class RoleBuilderFactoryStubTest {
             assertThat(actual)
                 .isNotNull()
                 .isInstanceOf(RoleBuilderStub.class);
+
+            RoleStub actualBuilt = actual.build();
+
+            assertThat(actualBuilt).isNotNull();
         });
     }
 

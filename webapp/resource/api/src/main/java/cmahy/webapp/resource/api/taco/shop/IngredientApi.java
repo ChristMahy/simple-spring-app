@@ -26,6 +26,7 @@ public interface IngredientApi {
     // TODO !!!!!!
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
     IngredientOutputVo create(@Valid @RequestBody IngredientCreateInputVo input) throws Exception;
     // TODO !!!!!!
 

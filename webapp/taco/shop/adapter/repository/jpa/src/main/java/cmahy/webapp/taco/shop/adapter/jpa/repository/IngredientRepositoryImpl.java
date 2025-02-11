@@ -1,7 +1,7 @@
 package cmahy.webapp.taco.shop.adapter.jpa.repository;
 
 import cmahy.common.entity.page.EntityPageable;
-import cmahy.webapp.taco.shop.adapter.jpa.entity.JpaIngredient;
+import cmahy.webapp.taco.shop.adapter.jpa.entity.domain.JpaIngredient;
 import cmahy.webapp.taco.shop.kernel.application.repository.IngredientPagingRepository;
 import cmahy.webapp.taco.shop.kernel.application.repository.IngredientRepository;
 import cmahy.webapp.taco.shop.kernel.domain.id.IngredientId;
@@ -13,13 +13,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Primary
 @Repository
 public interface IngredientRepositoryImpl extends
     IngredientRepository<JpaIngredient>,
     IngredientPagingRepository<JpaIngredient>,
-    JpaRepository<JpaIngredient, String> {
+    JpaRepository<JpaIngredient, UUID> {
 
     @Override
     default IngredientPage<JpaIngredient> findAll(EntityPageable pageable) {

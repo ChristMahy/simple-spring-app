@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collection;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,7 +20,7 @@ class UserStubTest {
     @Test
     void userNewInstance_whenAllFieldsComplete_thenFieldsReturnValue() {
         assertDoesNotThrow(() -> {
-            Long id = Generator.randomLongEqualOrAboveZero();
+            UUID id = Generator.randomUUID();
             String userName = Generator.generateAString();
             byte[] password = Generator.randomBytes(300);
             String fullName = Generator.generateAString();
@@ -65,7 +66,7 @@ class UserStubTest {
     @Test
     void userNewInstance_whenAllFieldsEmpty_thenFieldsReturnNull() {
         assertDoesNotThrow(() -> {
-            Long id = Generator.randomLongEqualOrAboveZero();
+            UUID id = Generator.randomUUID();
             String userName = Generator.generateAString();
             byte[] password = Generator.randomBytes(300);
             String fullName = Generator.generateAString();

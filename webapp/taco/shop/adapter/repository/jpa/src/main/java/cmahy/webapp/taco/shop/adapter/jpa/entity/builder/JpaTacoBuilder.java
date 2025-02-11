@@ -1,7 +1,7 @@
 package cmahy.webapp.taco.shop.adapter.jpa.entity.builder;
 
-import cmahy.webapp.taco.shop.adapter.jpa.entity.JpaIngredient;
-import cmahy.webapp.taco.shop.adapter.jpa.entity.JpaTaco;
+import cmahy.webapp.taco.shop.adapter.jpa.entity.domain.JpaIngredient;
+import cmahy.webapp.taco.shop.adapter.jpa.entity.domain.JpaTaco;
 import cmahy.webapp.taco.shop.kernel.domain.Ingredient;
 import cmahy.webapp.taco.shop.kernel.domain.builder.TacoBuilder;
 

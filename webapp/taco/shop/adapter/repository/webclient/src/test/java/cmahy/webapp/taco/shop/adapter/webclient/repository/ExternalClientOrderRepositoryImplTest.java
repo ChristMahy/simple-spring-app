@@ -1,8 +1,8 @@
 package cmahy.webapp.taco.shop.adapter.webclient.repository;
 
 import cmahy.common.entity.page.EntityPageable;
-import cmahy.webapp.taco.shop.adapter.webclient.entity.ExternalClientOrder;
-import cmahy.webapp.user.adapter.webclient.entity.ExternalUser;
+import cmahy.webapp.taco.shop.adapter.webclient.entity.domain.ExternalClientOrder;
+import cmahy.webapp.user.adapter.webclient.entity.domain.ExternalUser;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

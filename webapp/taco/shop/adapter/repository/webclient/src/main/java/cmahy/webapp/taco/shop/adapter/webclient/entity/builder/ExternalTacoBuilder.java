@@ -1,7 +1,7 @@
 package cmahy.webapp.taco.shop.adapter.webclient.entity.builder;
 
-import cmahy.webapp.taco.shop.adapter.webclient.entity.ExternalIngredient;
-import cmahy.webapp.taco.shop.adapter.webclient.entity.ExternalTaco;
+import cmahy.webapp.taco.shop.adapter.webclient.entity.domain.ExternalIngredient;
+import cmahy.webapp.taco.shop.adapter.webclient.entity.domain.ExternalTaco;
 import cmahy.webapp.taco.shop.kernel.domain.Ingredient;
 import cmahy.webapp.taco.shop.kernel.domain.builder.TacoBuilder;
 

@@ -27,7 +27,6 @@ public class IngredientFactory {
         }
 
         return ingredientBuilderFactory.create()
-            .id(UUID.randomUUID().toString())
             .name(
                 Optional.ofNullable(ingredientCreateInputVo.name())
                     .map(String::trim)

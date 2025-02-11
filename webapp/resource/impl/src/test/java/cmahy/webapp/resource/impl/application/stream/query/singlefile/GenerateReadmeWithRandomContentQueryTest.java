@@ -69,7 +69,7 @@ class GenerateReadmeWithRandomContentQueryTest {
     void execute_whenFailureAsked_thenShouldNotFireIOExceptionUntilTheResultOfBuildIsExecutedAndShouldKeepWriteToOutputStream() {
         assertDoesNotThrow(() -> {
             var elementsSize = Generator.randomInt(100, 2000);
-            var failAtPosition = Generator.randomInt(0, elementsSize + 1);
+            var failAtPosition = Generator.randomInt(0, elementsSize);
 
             var visitor = new StreamVisitorTestImpl();
             var options = new GeneratorQueryOption(

@@ -15,7 +15,9 @@ public class UserSecurityOutputAppVoMapper {
 
     private final RoleOutputAppVoMapper roleOutputAppVoMapper;
 
-    public UserSecurityOutputAppVoMapper(RoleOutputAppVoMapper roleOutputAppVoMapper) {
+    public UserSecurityOutputAppVoMapper(
+        RoleOutputAppVoMapper roleOutputAppVoMapper
+    ) {
         this.roleOutputAppVoMapper = roleOutputAppVoMapper;
     }
 

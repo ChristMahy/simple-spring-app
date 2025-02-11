@@ -13,12 +13,10 @@ class IngredientBuilderStubTest {
     @Test
     void build() {
         assertDoesNotThrow(() -> {
-            String id = Generator.generateAString();
             String name = Generator.generateAString();
             IngredientType type = Generator.randomEnum(IngredientType.class);
 
             Ingredient actual = new IngredientBuilderStub()
-                .id(id)
                 .name(name)
                 .type(type)
                 .build();
@@ -27,7 +25,7 @@ class IngredientBuilderStubTest {
                 .isNotNull()
                 .isInstanceOf(IngredientStub.class);
 
-            assertThat(actual.getId()).isEqualTo(id);
+            assertThat(actual.getId()).isNull();
             assertThat(actual.getName()).isEqualTo(name);
             assertThat(actual.getType()).isEqualTo(type);
         });
@@ -40,7 +38,7 @@ class IngredientBuilderStubTest {
             IngredientType type = Generator.randomEnum(IngredientType.class);
 
             IngredientStub original = new IngredientStub()
-                .setId(Generator.generateAString(30))
+                .setId(Generator.randomUUID())
                 .setName(Generator.generateAString(30))
                 .setType(Generator.randomEnum(IngredientType.class));
 
@@ -62,12 +60,10 @@ class IngredientBuilderStubTest {
     @Test
     void buildWithNullAsOriginal_thenBuildNewOne() {
         assertDoesNotThrow(() -> {
-            String id = Generator.generateAString();
             String name = Generator.generateAString();
             IngredientType type = Generator.randomEnum(IngredientType.class);
 
             Ingredient actual = new IngredientBuilderStub(null)
-                .id(id)
                 .name(name)
                 .type(type)
                 .build();
@@ -76,7 +72,7 @@ class IngredientBuilderStubTest {
                 .isNotNull()
                 .isInstanceOf(IngredientStub.class);
 
-            assertThat(actual.getId()).isEqualTo(id);
+            assertThat(actual.getId()).isNull();
             assertThat(actual.getName()).isEqualTo(name);
             assertThat(actual.getType()).isEqualTo(type);
         });

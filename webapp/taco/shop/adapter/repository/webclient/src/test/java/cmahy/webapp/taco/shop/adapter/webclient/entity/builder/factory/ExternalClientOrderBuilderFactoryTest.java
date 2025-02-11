@@ -1,6 +1,6 @@
 package cmahy.webapp.taco.shop.adapter.webclient.entity.builder.factory;
 
-import cmahy.webapp.taco.shop.adapter.webclient.entity.ExternalClientOrder;
+import cmahy.webapp.taco.shop.adapter.webclient.entity.domain.ExternalClientOrder;
 import cmahy.webapp.taco.shop.adapter.webclient.entity.builder.ExternalClientOrderBuilder;
 import cmahy.webapp.taco.shop.kernel.domain.ClientOrder;
 import org.junit.jupiter.api.Test;

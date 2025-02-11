@@ -108,7 +108,7 @@ class UserSecurityBuilderStubTest {
             Boolean newIsCredentialsExpired = Generator.randomBoolean();
 
             UserSecurityStub original = new UserSecurityStub()
-                .setId(Generator.randomLongEqualOrAboveZero())
+                .setId(Generator.randomUUID())
                 .setUserName(Generator.generateAString(30))
                 .setPassword(Generator.randomBytes(Generator.randomInt(20, 30)))
                 .setFullName(Generator.generateAString(30))

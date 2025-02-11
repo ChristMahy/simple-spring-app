@@ -29,6 +29,10 @@ class UserSecurityBuilderFactoryStubTest {
             assertThat(actual)
                 .isNotNull()
                 .isInstanceOf(UserSecurityBuilderStub.class);
+
+            UserSecurityStub actualBuilt = actual.build();
+
+            assertThat(actualBuilt).isNotNull();
         });
     }
 

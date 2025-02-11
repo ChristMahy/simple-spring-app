@@ -1,6 +1,6 @@
 package cmahy.webapp.taco.shop.adapter.webclient.entity.builder.factory;
 
-import cmahy.webapp.taco.shop.adapter.webclient.entity.ExternalTaco;
+import cmahy.webapp.taco.shop.adapter.webclient.entity.domain.ExternalTaco;
 import cmahy.webapp.taco.shop.adapter.webclient.entity.builder.ExternalTacoBuilder;
 import cmahy.webapp.taco.shop.kernel.domain.builder.factory.TacoBuilderFactory;
 import jakarta.inject.Named;

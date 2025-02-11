@@ -1,10 +1,11 @@
 package cmahy.webapp.user.kernel.domain;
 
 import java.util.Collection;
+import java.util.UUID;
 
 public class UserStub implements User {
 
-    private Long id;
+    private UUID id;
 
     private String userName;
 
@@ -25,11 +26,11 @@ public class UserStub implements User {
     private Collection<RoleStub> roles;
 
     @Override
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public UserStub setId(Long id) {
+    public UserStub setId(UUID id) {
         this.id = id;
         return this;
     }
