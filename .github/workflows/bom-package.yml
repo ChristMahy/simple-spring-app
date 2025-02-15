@@ -1,4 +1,4 @@
-name: Publish package to GitHub Packages
+name: Publish bom package to ChristMahy GitHub Packages
 
 on:
   push:
