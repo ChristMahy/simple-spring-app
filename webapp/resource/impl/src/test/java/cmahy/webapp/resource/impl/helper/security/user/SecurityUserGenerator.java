@@ -14,8 +14,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static cmahy.common.helper.Generator.*;
-
 public final class SecurityUserGenerator {
 
     private static final List<String> COMMON_ROLES = List.of("Guest");

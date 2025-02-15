@@ -24,7 +24,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static cmahy.common.helper.Generator.*;
 import static cmahy.webapp.resource.ui.taco.shop.DesignUi.TACO;
 import static cmahy.webapp.resource.ui.taco.shop.DesignUi.TACOS;
 import static org.assertj.core.api.Assertions.assertThat;

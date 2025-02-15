@@ -17,7 +17,6 @@ import java.util.*;
 import java.util.function.BiPredicate;
 import java.util.stream.Stream;
 
-import static cmahy.common.helper.Generator.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
