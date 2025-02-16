@@ -1,4 +1,4 @@
-name: Publish broker consumer API package to ChristMahy GitHub Packages
+name: Publish broker consumer JMS package to ChristMahy GitHub Packages
 
 on:
   push:
