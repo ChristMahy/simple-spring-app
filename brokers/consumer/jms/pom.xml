@@ -29,8 +29,8 @@
     </parent>
 
     <properties>
-        <cmahy.simple.spring.common.version>DEV-SNAPSHOT</cmahy.simple.spring.common.version>
-        <consumer.api.version>DEV-SNAPSHOT</consumer.api.version>
+        <cmahy.simple.spring.common.version>1.0.0</cmahy.simple.spring.common.version>
+        <consumer.api.version>1.0.0</consumer.api.version>
     </properties>
 
     <dependencies>
