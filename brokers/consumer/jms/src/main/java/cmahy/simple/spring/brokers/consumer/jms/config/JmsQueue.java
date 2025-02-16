@@ -1,4 +1,4 @@
-package cmahy.brokers.consumer.jms.config;
+package cmahy.simple.spring.brokers.consumer.jms.config;
 
 public final class JmsQueue {
 

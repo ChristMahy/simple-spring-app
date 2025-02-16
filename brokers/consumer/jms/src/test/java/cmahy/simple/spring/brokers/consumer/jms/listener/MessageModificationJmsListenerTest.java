@@ -1,13 +1,13 @@
-package cmahy.brokers.consumer.jms.listener;
+package cmahy.simple.spring.brokers.consumer.jms.listener;
 
-import cmahy.brokers.consumer.message.event.ModificationMessageListener;
-import cmahy.brokers.consumer.message.event.vo.input.MessageInputEventVo;
+import cmahy.simple.spring.brokers.consumer.message.event.ModificationMessageListener;
+import cmahy.simple.spring.brokers.consumer.message.event.vo.input.MessageInputEventVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static cmahy.common.helper.Generator.generateAString;
+import static cmahy.simple.spring.common.helper.Generator.generateAString;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.Mockito.*;
 

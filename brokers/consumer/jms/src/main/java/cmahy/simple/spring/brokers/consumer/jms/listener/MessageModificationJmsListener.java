@@ -1,8 +1,8 @@
-package cmahy.brokers.consumer.jms.listener;
+package cmahy.simple.spring.brokers.consumer.jms.listener;
 
-import cmahy.brokers.consumer.message.event.ModificationMessageListener;
-import cmahy.brokers.consumer.message.event.vo.input.MessageInputEventVo;
-import cmahy.brokers.consumer.jms.config.JmsQueue;
+import cmahy.simple.spring.brokers.consumer.message.event.ModificationMessageListener;
+import cmahy.simple.spring.brokers.consumer.message.event.vo.input.MessageInputEventVo;
+import cmahy.simple.spring.brokers.consumer.jms.config.JmsQueue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jms.annotation.JmsListener;
