@@ -1,6 +1,6 @@
-package cmahy.brokers.consumer.message.api.vo.output;
+package cmahy.simple.spring.brokers.consumer.message.api.vo.output;
 
-import cmahy.brokers.consumer.message.api.vo.id.MessageApiId;
+import cmahy.simple.spring.brokers.consumer.message.api.vo.id.MessageApiId;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.time.LocalDateTime;

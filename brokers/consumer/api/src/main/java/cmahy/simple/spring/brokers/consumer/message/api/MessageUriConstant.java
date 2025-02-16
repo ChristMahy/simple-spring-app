@@ -1,4 +1,4 @@
-package cmahy.brokers.consumer.message.api;
+package cmahy.simple.spring.brokers.consumer.message.api;
 
 public final class MessageUriConstant {
     private MessageUriConstant() {}

@@ -12,14 +12,14 @@
     <packaging>jar</packaging>
 
     <parent>
-        <groupId>cmahy</groupId>
+        <groupId>cmahy.simple.spring</groupId>
         <artifactId>bom</artifactId>
-        <version>DEV-SNAPSHOT</version>
+        <version>1.0.0</version>
         <relativePath/>
     </parent>
 
     <properties>
-        <cmahy.common.version>DEV-SNAPSHOT</cmahy.common.version>
+        <cmahy.simple.spring.common.version>1.0.0</cmahy.simple.spring.common.version>
     </properties>
 
     <dependencies>
@@ -34,9 +34,9 @@
         </dependency>
 
         <dependency>
-            <groupId>cmahy</groupId>
+            <groupId>cmahy.simple.spring</groupId>
             <artifactId>common</artifactId>
-            <version>${cmahy.common.version}</version>
+            <version>${cmahy.simple.spring.common.version}</version>
         </dependency>
 
         <dependency>
