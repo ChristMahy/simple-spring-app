@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.aop.interceptor.SimpleAsyncUncaughtExceptionHandler;
 import org.springframework.boot.autoconfigure.task.TaskExecutionProperties;
-import org.springframework.boot.task.TaskExecutorBuilder;
+import org.springframework.boot.task.ThreadPoolTaskExecutorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.*;
@@ -22,11 +22,11 @@ public class AppAsyncConfigurer implements AsyncConfigurer {
     private static final Logger LOG = LoggerFactory.getLogger(AppAsyncConfigurer.class);
 
     private final TaskExecutionProperties taskExecutionProperties;
-    private final TaskExecutorBuilder taskExecutorBuilder;
+    private final ThreadPoolTaskExecutorBuilder taskExecutorBuilder;
 
     public AppAsyncConfigurer(
         TaskExecutionProperties taskExecutionProperties,
-        TaskExecutorBuilder taskExecutorBuilder
+        ThreadPoolTaskExecutorBuilder taskExecutorBuilder
     ) {
         this.taskExecutionProperties = taskExecutionProperties;
         this.taskExecutorBuilder = taskExecutorBuilder;
