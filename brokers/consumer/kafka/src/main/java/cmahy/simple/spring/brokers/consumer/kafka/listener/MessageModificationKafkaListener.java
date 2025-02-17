@@ -1,7 +1,7 @@
-package cmahy.brokers.consumer.kafka.listener;
+package cmahy.simple.spring.brokers.consumer.kafka.listener;
 
-import cmahy.brokers.consumer.message.event.ModificationMessageListener;
-import cmahy.brokers.consumer.message.event.vo.input.MessageInputEventVo;
+import cmahy.simple.spring.brokers.consumer.message.event.ModificationMessageListener;
+import cmahy.simple.spring.brokers.consumer.message.event.vo.input.MessageInputEventVo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;

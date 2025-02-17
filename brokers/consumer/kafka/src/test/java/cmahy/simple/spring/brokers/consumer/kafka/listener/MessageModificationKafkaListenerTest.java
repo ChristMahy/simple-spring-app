@@ -1,7 +1,7 @@
-package cmahy.brokers.consumer.kafka.listener;
+package cmahy.simple.spring.brokers.consumer.kafka.listener;
 
-import cmahy.brokers.consumer.message.event.DeletionMessageListener;
-import cmahy.brokers.consumer.message.event.vo.id.MessageEventId;
+import cmahy.simple.spring.brokers.consumer.message.event.ModificationMessageListener;
+import cmahy.simple.spring.brokers.consumer.message.event.vo.input.MessageInputEventVo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.junit.jupiter.api.Test;
@@ -10,34 +10,35 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static cmahy.simple.spring.common.helper.Generator.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class MessageDeleteKafkaListenerTest {
+class MessageModificationKafkaListenerTest {
 
     @Mock
-    private DeletionMessageListener listener;
+    private ModificationMessageListener listener;
 
     @Mock
     private ObjectMapper jsonMapper;
 
     @InjectMocks
-    private MessageDeleteKafkaListener kafkaListener;
+    private MessageModificationKafkaListener kafkaListener;
 
     @Test
     void receiveMessage() {
         assertDoesNotThrow(() -> {
             final byte[] bytes = randomBytes(randomInt(10, 500));
             final ConsumerRecord<String, byte[]> record = mock(ConsumerRecord.class);
-            final MessageEventId id = mock(MessageEventId.class);
+            final MessageInputEventVo input = mock(MessageInputEventVo.class);
 
-            when(jsonMapper.readValue(bytes, MessageEventId.class)).thenReturn(id);
+            when(jsonMapper.readValue(bytes, MessageInputEventVo.class)).thenReturn(input);
 
             kafkaListener.receiveMessage(bytes, record);
 
-            verify(jsonMapper).readValue(bytes, MessageEventId.class);
-            verify(listener).execute(id);
+            verify(jsonMapper).readValue(bytes, MessageInputEventVo.class);
+            verify(listener).execute(input);
             verifyNoMoreInteractions(jsonMapper, listener);
         });
     }
@@ -49,10 +50,10 @@ class MessageDeleteKafkaListenerTest {
 
             final byte[] bytes = randomBytes(randomInt(10, 500));
             final ConsumerRecord<String, byte[]> record = mock(ConsumerRecord.class);
-            final MessageEventId id = mock(MessageEventId.class);
+            final MessageInputEventVo input = mock(MessageInputEventVo.class);
 
-            when(jsonMapper.readValue(bytes, MessageEventId.class)).thenReturn(id);
-            doThrow(expectedException).when(listener).execute(id);
+            when(jsonMapper.readValue(bytes, MessageInputEventVo.class)).thenReturn(input);
+            doThrow(expectedException).when(listener).execute(input);
 
             kafkaListener.receiveMessage(bytes, record);
         });
