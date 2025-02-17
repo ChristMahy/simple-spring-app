@@ -1,8 +1,8 @@
-package cmahy.brokers.consumer.rabbitmq.pull.listener;
+package cmahy.simple.spring.brokers.consumer.rabbitmq.pull.listener;
 
-import cmahy.brokers.consumer.message.event.DeletionMessageListener;
-import cmahy.brokers.consumer.message.event.vo.id.MessageEventId;
-import cmahy.brokers.consumer.rabbitmq.config.RabbitMQQueue;
+import cmahy.simple.spring.brokers.consumer.message.event.ModificationMessageListener;
+import cmahy.simple.spring.brokers.consumer.message.event.vo.input.MessageInputEventVo;
+import cmahy.simple.spring.brokers.consumer.rabbitmq.config.RabbitMQQueue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -13,16 +13,17 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class MessageDeleteRabbitMQPullListener {
+public class MessageModificationRabbitMQPullListener {
 
-    private static final Logger LOG = LoggerFactory.getLogger(MessageDeleteRabbitMQPullListener.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MessageModificationRabbitMQPullListener.class);
 
     private final RabbitTemplate rabbit;
-    private final DeletionMessageListener listener;
+    private final ModificationMessageListener listener;
 
-    public MessageDeleteRabbitMQPullListener(
+
+    public MessageModificationRabbitMQPullListener(
         RabbitTemplate rabbit,
-        DeletionMessageListener listener
+        ModificationMessageListener listener
     ) {
         this.rabbit = rabbit;
         this.listener = listener;
@@ -31,8 +32,8 @@ public class MessageDeleteRabbitMQPullListener {
     @Scheduled(initialDelay = 2, fixedDelay = 5, timeUnit = TimeUnit.SECONDS)
     public void execute() {
         try {
-            final MessageEventId message = rabbit.receiveAndConvert(
-                RabbitMQQueue.MESSAGE_QUEUE_NAME + ".delete",
+            final MessageInputEventVo message = rabbit.receiveAndConvert(
+                RabbitMQQueue.MESSAGE_QUEUE_NAME + ".modify",
                 new ParameterizedTypeReference<>() {
                 }
             );

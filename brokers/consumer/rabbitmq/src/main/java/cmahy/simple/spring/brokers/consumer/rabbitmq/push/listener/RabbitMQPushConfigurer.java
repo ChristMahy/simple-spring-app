@@ -1,6 +1,6 @@
-package cmahy.brokers.consumer.rabbitmq.push.listener;
+package cmahy.simple.spring.brokers.consumer.rabbitmq.push.listener;
 
-import cmahy.brokers.consumer.rabbitmq.config.RabbitMQConfigurer;
+import cmahy.simple.spring.brokers.consumer.rabbitmq.config.RabbitMQConfigurer;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 

@@ -1,4 +1,4 @@
-package cmahy.brokers.consumer.rabbitmq.config;
+package cmahy.simple.spring.brokers.consumer.rabbitmq.config;
 
 public final class RabbitMQQueue {
 

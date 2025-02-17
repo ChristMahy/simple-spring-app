@@ -1,8 +1,8 @@
-package cmahy.brokers.consumer.rabbitmq.pull.listener;
+package cmahy.simple.spring.brokers.consumer.rabbitmq.pull.listener;
 
-import cmahy.brokers.consumer.message.event.DeletionMessageListener;
-import cmahy.brokers.consumer.message.event.vo.id.MessageEventId;
-import cmahy.brokers.consumer.rabbitmq.config.RabbitMQQueue;
+import cmahy.simple.spring.brokers.consumer.message.event.ModificationMessageListener;
+import cmahy.simple.spring.brokers.consumer.message.event.vo.input.MessageInputEventVo;
+import cmahy.simple.spring.brokers.consumer.rabbitmq.config.RabbitMQQueue;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,39 +11,37 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 
-import static cmahy.common.helper.Generator.generateAString;
-import static org.assertj.core.api.Assertions.assertThat;
+import static cmahy.simple.spring.common.helper.Generator.generateAString;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class MessageDeleteRabbitMQPullListenerTest {
+class MessageModificationRabbitMQPullListenerTest {
 
     @Mock
     private RabbitTemplate rabbit;
 
     @Mock
-    private DeletionMessageListener listener;
+    private ModificationMessageListener listener;
 
     @InjectMocks
-    private MessageDeleteRabbitMQPullListener rabbitMQPullListener;
+    private MessageModificationRabbitMQPullListener rabbitMQPullListener;
 
     @Test
     void execute() {
         assertDoesNotThrow(() -> {
-            var messageEventId = mock(MessageEventId.class);
+            var messageEventInput = mock(MessageInputEventVo.class);
 
             when(rabbit.receiveAndConvert(
-                eq(RabbitMQQueue.MESSAGE_QUEUE_NAME + ".delete"), any(ParameterizedTypeReference.class)
-            )).thenReturn(messageEventId);
+                eq(RabbitMQQueue.MESSAGE_QUEUE_NAME + ".modify"), any(ParameterizedTypeReference.class)
+            )).thenReturn(messageEventInput);
 
             rabbitMQPullListener.execute();
 
             verify(rabbit).receiveAndConvert(any(), any());
-            verify(listener).execute(messageEventId);
+            verify(listener).execute(messageEventInput);
 
             verifyNoMoreInteractions(rabbit, listener);
         });
@@ -51,11 +49,11 @@ class MessageDeleteRabbitMQPullListenerTest {
 
     @Test
     void execute_whenAnyError_thenKeepSafeProcess() {
-        assertDoesNotThrow(() -> {
-            var exception = new RuntimeException(generateAString());
+        var exception = new RuntimeException(generateAString());
 
+        assertDoesNotThrow(() -> {
             when(rabbit.receiveAndConvert(
-                eq(RabbitMQQueue.MESSAGE_QUEUE_NAME + ".delete"), any(ParameterizedTypeReference.class)
+                eq(RabbitMQQueue.MESSAGE_QUEUE_NAME + ".modify"), any(ParameterizedTypeReference.class)
             )).thenThrow(exception);
 
             rabbitMQPullListener.execute();

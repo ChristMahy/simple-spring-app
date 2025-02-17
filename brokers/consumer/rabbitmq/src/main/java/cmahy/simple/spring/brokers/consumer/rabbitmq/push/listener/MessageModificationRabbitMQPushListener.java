@@ -1,8 +1,8 @@
-package cmahy.brokers.consumer.rabbitmq.push.listener;
+package cmahy.simple.spring.brokers.consumer.rabbitmq.push.listener;
 
-import cmahy.brokers.consumer.message.event.ModificationMessageListener;
-import cmahy.brokers.consumer.message.event.vo.input.MessageInputEventVo;
-import cmahy.brokers.consumer.rabbitmq.config.RabbitMQQueue;
+import cmahy.simple.spring.brokers.consumer.message.event.ModificationMessageListener;
+import cmahy.simple.spring.brokers.consumer.message.event.vo.input.MessageInputEventVo;
+import cmahy.simple.spring.brokers.consumer.rabbitmq.config.RabbitMQQueue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;

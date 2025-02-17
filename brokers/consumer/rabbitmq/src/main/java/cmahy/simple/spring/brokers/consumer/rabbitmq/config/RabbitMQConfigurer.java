@@ -1,4 +1,4 @@
-package cmahy.brokers.consumer.rabbitmq.config;
+package cmahy.simple.spring.brokers.consumer.rabbitmq.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.core.Queue;
