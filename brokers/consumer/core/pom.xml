@@ -32,7 +32,7 @@
         <cmahy.common.version>1.0.0</cmahy.common.version>
         <cmahy.consumer.version>1.0.0</cmahy.consumer.version>
 
-        <start-class>cmahy.brokers.consumer.core.adapter.ConsumerApplication</start-class>
+        <start-class>cmahy.simple.spring.brokers.consumer.core.adapter.ConsumerApplication</start-class>
     </properties>
 
     <profiles>

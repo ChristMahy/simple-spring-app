@@ -1,5 +1,5 @@
 <configuration>
-    <logger name="cmahy.brokers.consumer" level="DEBUG" />
+    <logger name="cmahy.simple.spring.brokers.consumer" level="DEBUG" />
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
