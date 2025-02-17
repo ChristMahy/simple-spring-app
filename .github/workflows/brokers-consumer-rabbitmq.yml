@@ -1,0 +1,23 @@
+name: Publish broker consumer RabbitMQ package to ChristMahy GitHub Packages
+
+on:
+  push:
+    tags:
+      - 'brokers-consumer-rabbitmq-\d+\.\d+\.\d+'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '23'
+          distribution: 'temurin'
+      - name: Publish package
+        run: cd brokers/consumer/rabbitmq && mvn --batch-mode deploy -f pom.xml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
