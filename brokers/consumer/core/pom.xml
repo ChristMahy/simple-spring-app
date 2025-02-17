@@ -6,21 +6,31 @@
 >
     <modelVersion>4.0.0</modelVersion>
 
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+    
     <artifactId>consumer-core</artifactId>
     <version>DEV-SNAPSHOT</version>
 
+    <name>spring-brokers-consumer-core</name>
+    <description>Broker consumer core project</description>
+    
     <packaging>jar</packaging>
 
     <parent>
-        <groupId>cmahy</groupId>
+        <groupId>cmahy.simple.spring</groupId>
         <artifactId>bom</artifactId>
-        <version>DEV-SNAPSHOT</version>
+        <version>1.0.0</version>
         <relativePath/>
     </parent>
 
     <properties>
-        <cmahy.common.version>DEV-SNAPSHOT</cmahy.common.version>
-        <cmahy.consumer.version>DEV-SNAPSHOT</cmahy.consumer.version>
+        <cmahy.common.version>1.0.0</cmahy.common.version>
+        <cmahy.consumer.version>1.0.0</cmahy.consumer.version>
 
         <start-class>cmahy.brokers.consumer.core.adapter.ConsumerApplication</start-class>
     </properties>
@@ -44,33 +54,33 @@
 
     <dependencies>
         <dependency>
-            <groupId>cmahy</groupId>
+            <groupId>cmahy.simple.spring</groupId>
             <artifactId>common</artifactId>
             <version>${cmahy.common.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>cmahy</groupId>
+            <groupId>cmahy.simple.spring</groupId>
             <artifactId>consumer-api</artifactId>
             <version>${cmahy.consumer.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>cmahy</groupId>
+            <groupId>cmahy.simple.spring</groupId>
             <artifactId>consumer-jms</artifactId>
             <version>${cmahy.consumer.version}</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
-            <groupId>cmahy</groupId>
+            <groupId>cmahy.simple.spring</groupId>
             <artifactId>consumer-kafka</artifactId>
             <version>${cmahy.consumer.version}</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
-            <groupId>cmahy</groupId>
+            <groupId>cmahy.simple.spring</groupId>
             <artifactId>consumer-rabbitmq</artifactId>
             <version>${cmahy.consumer.version}</version>
             <scope>runtime</scope>
@@ -97,7 +107,7 @@
         </dependency>
 
         <dependency>
-            <groupId>cmahy</groupId>
+            <groupId>cmahy.simple.spring</groupId>
             <artifactId>common</artifactId>
             <version>${cmahy.common.version}</version>
             <type>test-jar</type>
@@ -149,4 +159,25 @@
             </plugin>
         </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+
+            <name>ChristMahy</name>
+            <url>https://maven.pkg.github.com/ChristMahy/simple-spring-app</url>
+        </repository>
+    </distributionManagement>
+
+    <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://repo1.maven.org/maven2</url>
+        </repository>
+
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/ChristMahy/simple-spring-app</url>
+        </repository>
+    </repositories>
 </project>
