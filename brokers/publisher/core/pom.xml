@@ -22,7 +22,7 @@
         <cmahy.common.version>DEV-SNAPSHOT</cmahy.common.version>
         <cmahy.publisher.version>DEV-SNAPSHOT</cmahy.publisher.version>
 
-        <start-class>cmahy.brokers.publisher.core.adapter.PublisherApplication</start-class>
+        <start-class>cmahy.simple.spring.brokers.publisher.core.adapter.PublisherApplication</start-class>
     </properties>
 
     <dependencies>
