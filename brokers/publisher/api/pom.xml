@@ -6,20 +6,30 @@
 >
     <modelVersion>4.0.0</modelVersion>
 
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+
     <artifactId>publisher-api</artifactId>
     <version>DEV-SNAPSHOT</version>
+
+    <name>spring-brokers-publisher-api</name>
+    <description>Broker publisher API project</description>
 
     <packaging>jar</packaging>
 
     <parent>
-        <groupId>cmahy</groupId>
+        <groupId>cmahy.simple.spring</groupId>
         <artifactId>bom</artifactId>
-        <version>DEV-SNAPSHOT</version>
+        <version>1.0.0</version>
         <relativePath/>
     </parent>
 
     <properties>
-        <cmahy.common.version>DEV-SNAPSHOT</cmahy.common.version>
+        <cmahy.common.version>1.0.0</cmahy.common.version>
     </properties>
 
     <dependencies>
@@ -29,7 +39,7 @@
         </dependency>
 
         <dependency>
-            <groupId>cmahy</groupId>
+            <groupId>cmahy.simple.spring</groupId>
             <artifactId>common</artifactId>
             <version>${cmahy.common.version}</version>
         </dependency>
@@ -48,4 +58,25 @@
             </plugin>
         </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+
+            <name>ChristMahy</name>
+            <url>https://maven.pkg.github.com/ChristMahy/simple-spring-app</url>
+        </repository>
+    </distributionManagement>
+
+    <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://repo1.maven.org/maven2</url>
+        </repository>
+
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/ChristMahy/simple-spring-app</url>
+        </repository>
+    </repositories>
 </project>
