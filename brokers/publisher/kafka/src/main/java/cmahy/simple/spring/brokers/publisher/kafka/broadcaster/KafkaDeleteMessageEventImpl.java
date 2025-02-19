@@ -1,7 +1,7 @@
 package cmahy.simple.spring.brokers.publisher.kafka.broadcaster;
 
-import cmahy.brokers.publisher.event.message.DeleteMessageEvent;
-import cmahy.brokers.publisher.event.vo.id.MessageEventId;
+import cmahy.simple.spring.brokers.publisher.event.message.DeleteMessageEvent;
+import cmahy.simple.spring.brokers.publisher.event.vo.id.MessageEventId;
 import cmahy.simple.spring.brokers.publisher.kafka.config.KafkaTopic;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

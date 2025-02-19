@@ -1,7 +1,7 @@
 package cmahy.simple.spring.brokers.publisher.kafka.broadcaster;
 
-import cmahy.brokers.publisher.event.message.ModificationMessageEvent;
-import cmahy.brokers.publisher.event.vo.output.MessageOutputEventVo;
+import cmahy.simple.spring.brokers.publisher.event.message.ModificationMessageEvent;
+import cmahy.simple.spring.brokers.publisher.event.vo.output.MessageOutputEventVo;
 import cmahy.simple.spring.brokers.publisher.kafka.config.KafkaTopic;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
