@@ -6,6 +6,6 @@ import org.springframework.context.annotation.*;
 @Profile("rabbitmq")
 @Configuration
 @Import({RabbitAutoConfiguration.class})
-@ComponentScan("cmahy.brokers.publisher.rabbitmq")
+@ComponentScan("cmahy.simple.spring.brokers.publisher.rabbitmq")
 public class RabbitMQProfileConfigurer {
 }

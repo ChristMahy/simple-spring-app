@@ -3,7 +3,7 @@ package cmahy.simple.spring.brokers.publisher.core.adapter.service.message;
 import cmahy.simple.spring.brokers.publisher.core.adapter.mapper.message.MessageAdapterMapper;
 import cmahy.simple.spring.brokers.publisher.core.application.service.message.event.BroadcastMessageModification;
 import cmahy.simple.spring.brokers.publisher.core.application.vo.output.MessageOutputAppVo;
-import cmahy.brokers.publisher.event.message.ModificationMessageEvent;
+import cmahy.simple.spring.brokers.publisher.event.message.ModificationMessageEvent;
 import jakarta.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

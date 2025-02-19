@@ -3,7 +3,7 @@ package cmahy.simple.spring.brokers.publisher.core.application.command.message;
 import cmahy.simple.spring.brokers.publisher.core.application.service.message.CreateMessageService;
 import cmahy.simple.spring.brokers.publisher.core.application.vo.input.MessageInputAppVo;
 import cmahy.simple.spring.brokers.publisher.core.application.vo.output.MessageOutputAppVo;
-import cmahy.common.annotation.Command;
+import cmahy.simple.spring.common.annotation.Command;
 import jakarta.inject.Named;
 
 @Named

@@ -4,7 +4,7 @@ import cmahy.simple.spring.brokers.publisher.core.application.service.message.Up
 import cmahy.simple.spring.brokers.publisher.core.application.vo.id.MessageAppId;
 import cmahy.simple.spring.brokers.publisher.core.application.vo.input.MessageInputAppVo;
 import cmahy.simple.spring.brokers.publisher.core.application.vo.output.MessageOutputAppVo;
-import cmahy.common.annotation.Command;
+import cmahy.simple.spring.common.annotation.Command;
 import jakarta.inject.Named;
 
 @Named

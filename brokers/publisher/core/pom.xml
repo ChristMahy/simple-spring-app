@@ -29,7 +29,7 @@
     </parent>
 
     <properties>
-        <cmahy.common.version>1.0.0</cmahy.common.version>
+        <cmahy.simple.spring.common.version>1.0.0</cmahy.simple.spring.common.version>
         <cmahy.publisher.version>1.0.0</cmahy.publisher.version>
 
         <start-class>cmahy.simple.spring.brokers.publisher.core.adapter.PublisherApplication</start-class>
@@ -39,7 +39,7 @@
         <dependency>
             <groupId>cmahy.simple.spring</groupId>
             <artifactId>common</artifactId>
-            <version>${cmahy.common.version}</version>
+            <version>${cmahy.simple.spring.common.version}</version>
         </dependency>
 
         <dependency>

@@ -2,8 +2,8 @@ package cmahy.simple.spring.brokers.publisher.core.adapter.service.message;
 
 import cmahy.simple.spring.brokers.publisher.core.application.service.message.event.BroadcastMessageDeletion;
 import cmahy.simple.spring.brokers.publisher.core.application.vo.id.MessageAppId;
-import cmahy.brokers.publisher.event.message.DeleteMessageEvent;
-import cmahy.brokers.publisher.event.vo.id.MessageEventId;
+import cmahy.simple.spring.brokers.publisher.event.message.DeleteMessageEvent;
+import cmahy.simple.spring.brokers.publisher.event.vo.id.MessageEventId;
 import jakarta.inject.Named;
 
 import java.util.List;

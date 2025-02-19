@@ -4,6 +4,6 @@ import org.springframework.context.annotation.*;
 
 @Profile("kafka")
 @Configuration
-@ComponentScan("cmahy.brokers.publisher.kafka")
+@ComponentScan("cmahy.simple.spring.brokers.publisher.kafka")
 public class KafkaProfileConfigurer {
 }

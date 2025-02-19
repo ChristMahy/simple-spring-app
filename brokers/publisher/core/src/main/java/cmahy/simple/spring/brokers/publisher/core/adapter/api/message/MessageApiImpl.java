@@ -1,14 +1,12 @@
 package cmahy.simple.spring.brokers.publisher.core.adapter.api.message;
 
-import cmahy.brokers.publisher.api.message.MessageApi;
-import cmahy.brokers.publisher.api.vo.id.MessageApiId;
-import cmahy.brokers.publisher.api.vo.input.MessageInputApiVo;
-import cmahy.brokers.publisher.api.vo.output.MessageOutputApiVo;
+import cmahy.simple.spring.brokers.publisher.api.message.MessageApi;
+import cmahy.simple.spring.brokers.publisher.api.vo.id.MessageApiId;
+import cmahy.simple.spring.brokers.publisher.api.vo.input.MessageInputApiVo;
+import cmahy.simple.spring.brokers.publisher.api.vo.output.MessageOutputApiVo;
 import cmahy.simple.spring.brokers.publisher.core.adapter.mapper.message.MessageAdapterMapper;
 import cmahy.simple.spring.brokers.publisher.core.adapter.mapper.message.MessageInputAdapterMapper;
-import cmahy.simple.spring.brokers.publisher.core.application.command.message.CreateMessageCommand;
-import cmahy.simple.spring.brokers.publisher.core.application.command.message.DeleteMessageCommand;
-import cmahy.simple.spring.brokers.publisher.core.application.command.message.UpdateMessageCommand;
+import cmahy.simple.spring.brokers.publisher.core.application.command.message.*;
 import cmahy.simple.spring.brokers.publisher.core.application.query.message.GetAllMessageQuery;
 import cmahy.simple.spring.brokers.publisher.core.application.vo.id.MessageAppId;
 import org.springframework.web.bind.annotation.RestController;

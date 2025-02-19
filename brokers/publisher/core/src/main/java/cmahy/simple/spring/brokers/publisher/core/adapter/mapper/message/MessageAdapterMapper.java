@@ -1,8 +1,8 @@
 package cmahy.simple.spring.brokers.publisher.core.adapter.mapper.message;
 
-import cmahy.brokers.publisher.api.vo.output.MessageOutputApiVo;
+import cmahy.simple.spring.brokers.publisher.api.vo.output.MessageOutputApiVo;
 import cmahy.simple.spring.brokers.publisher.core.application.vo.output.MessageOutputAppVo;
-import cmahy.brokers.publisher.event.vo.output.MessageOutputEventVo;
+import cmahy.simple.spring.brokers.publisher.event.vo.output.MessageOutputEventVo;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 

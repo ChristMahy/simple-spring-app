@@ -5,7 +5,7 @@ import org.springframework.context.annotation.*;
 
 @Profile("jms")
 @Configuration
-@ComponentScan("cmahy.brokers.publisher.jms")
+@ComponentScan("cmahy.simple.spring.brokers.publisher.jms")
 @Import({ ArtemisAutoConfiguration.class })
 public class JmsProfileConfigurer {
 }
