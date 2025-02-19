@@ -1,8 +1,8 @@
 package cmahy.simple.spring.brokers.publisher.rabbitmq.broadcaster;
 
+import cmahy.simple.spring.brokers.publisher.event.message.ModificationMessageEvent;
+import cmahy.simple.spring.brokers.publisher.event.vo.output.MessageOutputEventVo;
 import cmahy.simple.spring.brokers.publisher.rabbitmq.config.RabbitMQQueue;
-import cmahy.brokers.publisher.event.message.ModificationMessageEvent;
-import cmahy.brokers.publisher.event.vo.output.MessageOutputEventVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
