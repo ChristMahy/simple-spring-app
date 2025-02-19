@@ -1,6 +1,6 @@
 package cmahy.simple.spring.brokers.publisher.jms.config;
 
-import cmahy.brokers.publisher.event.vo.output.MessageOutputEventVo;
+import cmahy.simple.spring.brokers.publisher.event.vo.output.MessageOutputEventVo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
