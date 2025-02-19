@@ -14,7 +14,7 @@
     </licenses>
 
     <artifactId>publisher-core</artifactId>
-    <version>DEV-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <name>spring-brokers-publisher-core</name>
     <description>Broker publisher core project</description>
