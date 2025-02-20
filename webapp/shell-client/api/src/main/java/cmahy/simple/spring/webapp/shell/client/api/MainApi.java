@@ -1,6 +1,6 @@
-package cmahy.webapp.shell.client.api;
+package cmahy.simple.spring.webapp.shell.client.api;
 
-import cmahy.webapp.shell.client.api.taco.shop.ingredient.IngredientApi;
+import cmahy.simple.spring.webapp.shell.client.api.taco.shop.ingredient.IngredientApi;
 import picocli.CommandLine;
 
 import java.util.concurrent.Callable;

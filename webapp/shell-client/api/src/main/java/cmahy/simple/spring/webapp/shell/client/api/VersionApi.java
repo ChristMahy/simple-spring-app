@@ -1,4 +1,4 @@
-package cmahy.webapp.shell.client.api;
+package cmahy.simple.spring.webapp.shell.client.api;
 
 import picocli.CommandLine;
 

@@ -1,6 +1,6 @@
 package cmahy.webapp.shell.client.impl.adapter.api;
 
-import cmahy.webapp.shell.client.api.MainApi;
+import cmahy.simple.spring.webapp.shell.client.api.MainApi;
 import cmahy.webapp.shell.client.impl.application.query.PrintMessageQuery;
 import cmahy.webapp.shell.client.impl.application.repository.property.ConsolePropertyRepository;
 import jakarta.inject.Named;

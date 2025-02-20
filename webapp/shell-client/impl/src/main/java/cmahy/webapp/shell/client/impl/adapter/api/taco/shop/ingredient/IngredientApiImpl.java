@@ -1,7 +1,7 @@
 package cmahy.webapp.shell.client.impl.adapter.api.taco.shop.ingredient;
 
 import cmahy.common.entity.page.DefaultEntityPageableImpl;
-import cmahy.webapp.shell.client.api.taco.shop.ingredient.IngredientApi;
+import cmahy.simple.spring.webapp.shell.client.api.taco.shop.ingredient.IngredientApi;
 import cmahy.webapp.shell.client.impl.adapter.config.properties.ingredient.IngredientProperties;
 import cmahy.webapp.shell.client.impl.application.query.PrintMessageQuery;
 import cmahy.webapp.shell.client.impl.application.repository.property.ConsolePropertyRepository;

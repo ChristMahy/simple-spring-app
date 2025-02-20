@@ -1,6 +1,6 @@
 package cmahy.webapp.shell.client.impl.adapter.service;
 
-import cmahy.webapp.shell.client.api.MainApi;
+import cmahy.simple.spring.webapp.shell.client.api.MainApi;
 import jakarta.inject.Named;
 import picocli.CommandLine;
 

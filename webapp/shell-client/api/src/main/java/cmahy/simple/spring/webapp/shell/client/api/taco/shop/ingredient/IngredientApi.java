@@ -1,4 +1,4 @@
-package cmahy.webapp.shell.client.api.taco.shop.ingredient;
+package cmahy.simple.spring.webapp.shell.client.api.taco.shop.ingredient;
 
 import picocli.CommandLine;
 
