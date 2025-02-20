@@ -102,7 +102,7 @@
     </dependencies>
 
     <build>
-        <finalName>user-adapter-repository-${project.artifactId}-${project.version}</finalName>
+        <finalName>user-adapter-repository-webclient-${project.version}</finalName>
 
         <plugins>
             <plugin>

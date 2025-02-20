@@ -13,8 +13,8 @@
         </license>
     </licenses>
 
-    <groupId>cmahy.simple.spring.webapp.user.kernel</groupId>
-    <artifactId>vo</artifactId>
+    <groupId>cmahy.simple.spring.webapp</groupId>
+    <artifactId>user.kernel.vo</artifactId>
     <version>DEV-SNAPSHOT</version>
 
     <name>spring-user-kernel-vo</name>
@@ -65,7 +65,7 @@
     </dependencies>
 
     <build>
-        <finalName>user-${project.artifactId}-${project.version}</finalName>
+        <finalName>user-kernel-vo-${project.version}</finalName>
 
         <plugins>
             <plugin>

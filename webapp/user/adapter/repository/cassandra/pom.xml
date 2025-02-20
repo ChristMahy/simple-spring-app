@@ -95,7 +95,7 @@
     </dependencies>
 
     <build>
-        <finalName>user-adapter-repository-${project.artifactId}-${project.version}</finalName>
+        <finalName>user-adapter-repository-cassandra-${project.version}</finalName>
 
         <plugins>
             <plugin>

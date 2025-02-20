@@ -13,8 +13,8 @@
         </license>
     </licenses>
     
-    <groupId>cmahy.simple.spring.webapp.user.kernel</groupId>
-    <artifactId>application</artifactId>
+    <groupId>cmahy.simple.spring.webapp</groupId>
+    <artifactId>user.kernel.application</artifactId>
     <version>DEV-SNAPSHOT</version>
 
     <name>spring-user-kernel-application</name>
@@ -107,7 +107,7 @@
     </dependencies>
 
     <build>
-        <finalName>user-${project.artifactId}-${project.version}</finalName>
+        <finalName>user-kernel-application-${project.version}</finalName>
 
         <plugins>
             <plugin>
