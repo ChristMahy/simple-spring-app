@@ -7,7 +7,7 @@ import cmahy.webapp.taco.shop.adapter.cassandra.entity.proxy.CassandraClientOrde
 import cmahy.webapp.taco.shop.adapter.cassandra.entity.proxy.CassandraTacoProxy;
 import cmahy.webapp.taco.shop.adapter.cassandra.entity.proxy.factory.CassandraClientOrderProxyFactory;
 import cmahy.webapp.taco.shop.kernel.domain.ClientOrder;
-import cmahy.webapp.user.adapter.cassandra.entity.proxy.CassandraUserProxy;
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.CassandraUserProxy;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;

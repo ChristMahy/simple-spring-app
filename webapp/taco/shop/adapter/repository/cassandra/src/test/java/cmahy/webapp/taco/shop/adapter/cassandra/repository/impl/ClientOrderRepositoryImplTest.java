@@ -6,11 +6,8 @@ import cmahy.webapp.taco.shop.adapter.cassandra.entity.domain.CassandraClientOrd
 import cmahy.webapp.taco.shop.adapter.cassandra.entity.proxy.CassandraClientOrderProxy;
 import cmahy.webapp.taco.shop.adapter.cassandra.entity.proxy.factory.CassandraClientOrderProxyFactory;
 import cmahy.webapp.taco.shop.adapter.cassandra.repository.cassandra.CassandraClientOrderRepository;
-import cmahy.webapp.taco.shop.kernel.domain.ClientOrder;
-import cmahy.webapp.taco.shop.kernel.domain.id.ClientOrderId;
 import cmahy.webapp.taco.shop.kernel.domain.page.ClientOrderPage;
-import cmahy.webapp.user.adapter.cassandra.entity.domain.CassandraUser;
-import cmahy.webapp.user.adapter.cassandra.entity.proxy.CassandraUserProxy;
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.CassandraUserProxy;
 import cmahy.webapp.user.kernel.domain.id.UserId;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,7 +18,6 @@ import org.springframework.data.domain.Slice;
 
 import java.util.*;
 import java.util.function.Function;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;

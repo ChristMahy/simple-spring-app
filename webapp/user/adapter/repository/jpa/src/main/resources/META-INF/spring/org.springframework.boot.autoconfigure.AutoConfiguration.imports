@@ -1,1 +1,1 @@
-cmahy.webapp.user.adapter.jpa.config.UserJpaAutoConfiguration
+cmahy.simple.spring.webapp.user.adapter.jpa.config.UserJpaAutoConfiguration

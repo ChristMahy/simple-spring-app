@@ -1,1 +1,1 @@
-cmahy.webapp.user.adapter.cassandra.config.UserCassandraAutoConfiguration
+cmahy.simple.spring.webapp.user.adapter.cassandra.config.UserCassandraAutoConfiguration

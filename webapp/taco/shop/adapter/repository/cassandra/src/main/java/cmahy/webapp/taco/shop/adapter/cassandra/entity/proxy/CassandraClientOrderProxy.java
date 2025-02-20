@@ -5,7 +5,7 @@ import cmahy.webapp.taco.shop.adapter.cassandra.entity.loader.ClientOrderLoader;
 import cmahy.webapp.taco.shop.kernel.domain.ClientOrder;
 import cmahy.webapp.taco.shop.kernel.domain.Taco;
 import cmahy.webapp.taco.shop.kernel.domain.id.TacoId;
-import cmahy.webapp.user.adapter.cassandra.entity.proxy.CassandraUserProxy;
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.CassandraUserProxy;
 import cmahy.webapp.user.kernel.domain.User;
 import cmahy.webapp.user.kernel.domain.id.UserId;
 
