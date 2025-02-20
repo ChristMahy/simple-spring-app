@@ -18,7 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.*;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -44,12 +45,6 @@ class ExternalIngredientRepositoryImplIntegrationTest {
     static void afterAll() {
         assertDoesNotThrow(() -> {
             BackEndStub.INSTANCE.getMockBackEnd().shutdown();
-        });
-    }
-
-    @BeforeEach
-    void setUp() {
-        assertDoesNotThrow(() -> {
         });
     }
 
