@@ -1,0 +1,40 @@
+name: Run Taco Shop Adapter package publisher
+
+on:
+  push:
+    tags:
+      - 'taco-shop-adapter-repository-jpa-\d+\.\d+\.\d+'
+      - 'taco-shop-adapter-repository-cassandra-\d+\.\d+\.\d+'
+      - 'taco-shop-adapter-repository-webclient-\d+\.\d+\.\d+'
+
+jobs:
+  publish:
+    name: Publish Taco Shop Adapter (${{github.ref_name}})
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout commit ${{github.sha}}
+        uses: actions/checkout@v4
+
+      - name: Publish JPA repository package
+        if: startsWith(github.ref, 'refs/tags/taco-shop-adapter-repository-jpa')
+        uses: ./.github/workflows/publish
+        with:
+          working-directory: webapp/taco/shop/adapter/repository/jpa
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish Cassandra repository package
+        if: startsWith(github.ref, 'refs/tags/taco-shop-adapter-repository-cassandra')
+        uses: ./.github/workflows/publish
+        with:
+          working-directory: webapp/taco/shop/adapter/repository/cassandra
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish WebClient repository package
+        if: startsWith(github.ref, 'refs/tags/taco-shop-adapter-repository-webclient')
+        uses: ./.github/workflows/publish
+        with:
+          working-directory: webapp/taco/shop/adapter/repository/webclient
+          github-token: ${{ secrets.GITHUB_TOKEN }}
