@@ -1,13 +1,13 @@
 package cmahy.simple.spring.webapp.taco.shop.kernel.application.service;
 
 import cmahy.simple.spring.common.helper.Generator;
-import cmahy.simple.spring.webapp.taco.shop.kernel.helper.ValidatorHelper;
-import cmahy.simple.spring.webapp.taco.shop.kernel.helper.ValidatorHelperExtension;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.Ingredient;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.IngredientType;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.builder.IngredientBuilderStub;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.builder.factory.IngredientBuilderFactory;
 import cmahy.simple.spring.webapp.taco.shop.kernel.exception.RequiredException;
+import cmahy.simple.spring.webapp.taco.shop.kernel.helper.ValidatorHelper;
+import cmahy.simple.spring.webapp.taco.shop.kernel.helper.ValidatorHelperExtension;
 import cmahy.simple.spring.webapp.taco.shop.kernel.vo.input.IngredientCreateInputVo;
 import jakarta.validation.ConstraintViolation;
 import org.junit.jupiter.api.Test;
@@ -19,6 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Set;
 
+import static cmahy.simple.spring.webapp.taco.shop.kernel.domain.Ingredient.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;

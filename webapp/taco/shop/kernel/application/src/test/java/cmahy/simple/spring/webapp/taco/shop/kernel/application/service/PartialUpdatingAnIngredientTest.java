@@ -3,7 +3,7 @@ package cmahy.simple.spring.webapp.taco.shop.kernel.application.service;
 import cmahy.simple.spring.common.helper.Generator;
 import cmahy.simple.spring.webapp.taco.shop.kernel.application.mapper.output.IngredientOutputMapper;
 import cmahy.simple.spring.webapp.taco.shop.kernel.application.repository.IngredientRepository;
-import cmahy.simple.spring.webapp.taco.shop.kernel.application.service.PartialUpdatingAnIngredient;
+import cmahy.simple.spring.webapp.taco.shop.kernel.domain.*;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.builder.IngredientBuilderStub;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.builder.factory.IngredientBuilderFactory;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.id.IngredientId;

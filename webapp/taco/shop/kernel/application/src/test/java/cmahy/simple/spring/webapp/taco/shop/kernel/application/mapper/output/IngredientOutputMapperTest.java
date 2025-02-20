@@ -1,7 +1,7 @@
 package cmahy.simple.spring.webapp.taco.shop.kernel.application.mapper.output;
 
 import cmahy.simple.spring.common.entity.id.EntityId;
-import cmahy.simple.spring.webapp.taco.shop.kernel.application.mapper.output.IngredientOutputMapper;
+import cmahy.simple.spring.webapp.taco.shop.kernel.domain.*;
 import cmahy.simple.spring.webapp.taco.shop.kernel.exception.RequiredException;
 import cmahy.simple.spring.webapp.taco.shop.kernel.vo.output.IngredientOutputVo;
 import org.junit.jupiter.api.Test;
@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Objects;
 import java.util.function.BiPredicate;
 
+import static cmahy.simple.spring.common.helper.Generator.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
