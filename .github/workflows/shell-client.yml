@@ -8,7 +8,7 @@ on:
 
 jobs:
   publish:
-    name: Publish Taco Shop Adapter (${{github.ref_name}})
+    name: Publish Taco Shop Shell Client (${{github.ref_name}})
 
     runs-on: ubuntu-latest
 
