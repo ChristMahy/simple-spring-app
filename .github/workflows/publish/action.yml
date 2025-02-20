@@ -1,0 +1,29 @@
+name: Run package publisher
+description: 'Publish your package to Github Packages'
+
+inputs:
+  working-directory:
+    description: 'Your target project to publish within the repository'
+    required: true
+  github-token:
+    description: 'Your github token granting access to your repository'
+    required: true
+
+
+runs:
+  using: 'composite'
+  steps:
+
+    - name: Setup JDK 23
+      uses: actions/setup-java@v4
+      with:
+        java-version: '23'
+        distribution: 'temurin'
+        cache: 'maven'
+
+    - name: Run the Maven deploy phase
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: mvn --batch-mode deploy --file pom.xml
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
