@@ -1,6 +1,6 @@
-package cmahy.webapp.user.kernel.vo.input;
+package cmahy.simple.spring.webapp.user.kernel.vo.input;
 
-import cmahy.webapp.user.kernel.domain.AuthProvider;
+import cmahy.simple.spring.webapp.user.kernel.domain.AuthProvider;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 

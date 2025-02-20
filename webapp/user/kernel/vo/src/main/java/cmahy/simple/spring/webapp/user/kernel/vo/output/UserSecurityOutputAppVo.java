@@ -1,7 +1,7 @@
-package cmahy.webapp.user.kernel.vo.output;
+package cmahy.simple.spring.webapp.user.kernel.vo.output;
 
-import cmahy.webapp.user.kernel.domain.AuthProvider;
-import cmahy.webapp.user.kernel.domain.id.UserId;
+import cmahy.simple.spring.webapp.user.kernel.domain.AuthProvider;
+import cmahy.simple.spring.webapp.user.kernel.domain.id.UserId;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
