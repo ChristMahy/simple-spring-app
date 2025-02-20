@@ -1,0 +1,32 @@
+name: Run Shell Client package publisher
+
+on:
+  push:
+    tags:
+      - 'shell-client-api-\d+\.\d+\.\d+'
+      - 'shell-client-impl-\d+\.\d+\.\d+'
+
+jobs:
+  publish:
+    name: Publish Taco Shop Adapter (${{github.ref_name}})
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout commit ${{github.sha}}
+        uses: actions/checkout@v4
+
+      - name: Publish API package
+        if: startsWith(github.ref, 'refs/tags/shell-client-api')
+        uses: ./.github/workflows/publish
+        with:
+          working-directory: webapp/shell-client/api
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish Impl package
+        if: startsWith(github.ref, 'refs/tags/shell-client-impl')
+        uses: ./.github/workflows/publish
+        with:
+          working-directory: webapp/shell-client/impl
+          github-token: ${{ secrets.GITHUB_TOKEN }}
