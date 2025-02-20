@@ -152,7 +152,7 @@
     </dependencies>
 
     <build>
-        <finalName>taco-shop-${project.artifactId}-${project.version}</finalName>
+        <finalName>taco-shop-kernel-application-${project.version}</finalName>
 
         <plugins>
             <plugin>

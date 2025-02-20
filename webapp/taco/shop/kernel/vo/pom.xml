@@ -65,7 +65,7 @@
     </dependencies>
 
     <build>
-        <finalName>taco-shop-${project.artifactId}-${project.version}</finalName>
+        <finalName>taco-shop-kernel-vo-${project.version}</finalName>
 
         <plugins>
             <plugin>

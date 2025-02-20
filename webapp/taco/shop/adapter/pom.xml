@@ -6,8 +6,8 @@
 >
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>cmahy.webapp.taco.shop</groupId>
-    <artifactId>adapter</artifactId>
+    <groupId>cmahy.simple.spring.webapp</groupId>
+    <artifactId>taco.shop.adapter</artifactId>
     <version>DEV-SNAPSHOT</version>
 
     <name>Taco shop adapters</name>
