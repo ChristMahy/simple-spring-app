@@ -310,15 +310,6 @@
             <artifactId>slf4j-simple</artifactId>
             <scope>test</scope>
         </dependency>
-
-        <!-- TODO ... -->
-<!--        <dependency>-->
-<!--            <groupId>cmahy.webapp.resource.integration.test.persistence</groupId>-->
-<!--            <artifactId>api</artifactId>-->
-<!--            <version>${project.version}</version>-->
-<!--            <type>test-jar</type>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
     </dependencies>
 
     <build>

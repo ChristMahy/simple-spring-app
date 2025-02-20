@@ -15,7 +15,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>api</module>
         <module>cassandra</module>
         <module>h2</module>
         <module>mysql</module>
