@@ -6,44 +6,52 @@
 >
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>cmahy.webapp.user.kernel</groupId>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+    
+    <groupId>cmahy.simple.spring.webapp.user.kernel</groupId>
     <artifactId>application</artifactId>
     <version>DEV-SNAPSHOT</version>
 
+    <name>spring-user-kernel-application</name>
+    <description>Webapp User Kernel Application project</description>
+
     <packaging>jar</packaging>
 
-    <name>User application</name>
-
     <parent>
-        <groupId>cmahy</groupId>
+        <groupId>cmahy.simple.spring</groupId>
         <artifactId>bom</artifactId>
-        <version>DEV-SNAPSHOT</version>
+        <version>1.0.0</version>
         <relativePath/>
     </parent>
 
     <properties>
-        <cmahy.common.version>DEV-SNAPSHOT</cmahy.common.version>
-        <cmahy.webapp.user.kernel.domain>DEV-SNAPSHOT</cmahy.webapp.user.kernel.domain>
+        <cmahy.common.version>1.0.0</cmahy.common.version>
+        <cmahy.simple.spring.webapp.user.kernel.domain>1.0.0</cmahy.simple.spring.webapp.user.kernel.domain>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>cmahy</groupId>
+            <groupId>cmahy.simple.spring</groupId>
             <artifactId>common</artifactId>
             <version>${cmahy.common.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>cmahy.webapp.user.kernel</groupId>
+            <groupId>cmahy.simple.spring.webapp.user.kernel</groupId>
             <artifactId>domain</artifactId>
-            <version>${cmahy.webapp.user.kernel.domain}</version>
+            <version>${cmahy.simple.spring.webapp.user.kernel.domain}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
-            <groupId>cmahy.webapp.user.kernel</groupId>
+            <groupId>cmahy.simple.spring.webapp.user.kernel</groupId>
             <artifactId>vo</artifactId>
-            <version>${cmahy.webapp.user.kernel.domain}</version>
+            <version>${cmahy.simple.spring.webapp.user.kernel.domain}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -58,7 +66,7 @@
         </dependency>
 
         <dependency>
-            <groupId>cmahy</groupId>
+            <groupId>cmahy.simple.spring</groupId>
             <artifactId>common</artifactId>
             <version>${cmahy.common.version}</version>
             <type>test-jar</type>
@@ -66,9 +74,9 @@
         </dependency>
 
         <dependency>
-            <groupId>cmahy.webapp.user.kernel</groupId>
+            <groupId>cmahy.simple.spring.webapp.user.kernel</groupId>
             <artifactId>domain</artifactId>
-            <version>${cmahy.webapp.user.kernel.domain}</version>
+            <version>${cmahy.simple.spring.webapp.user.kernel.domain}</version>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
@@ -152,4 +160,25 @@
     <reporting>
         <outputDirectory>${project.build.directory}/${project.build.finalName}-reports</outputDirectory>
     </reporting>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+
+            <name>ChristMahy</name>
+            <url>https://maven.pkg.github.com/ChristMahy/simple-spring-app</url>
+        </repository>
+    </distributionManagement>
+
+    <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://repo1.maven.org/maven2</url>
+        </repository>
+
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/ChristMahy/simple-spring-app</url>
+        </repository>
+    </repositories>
 </project>
