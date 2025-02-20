@@ -1,7 +1,7 @@
-package cmahy.webapp.user.kernel.application.repository;
+package cmahy.simple.spring.webapp.user.kernel.application.repository;
 
-import cmahy.webapp.user.kernel.domain.AuthProvider;
-import cmahy.webapp.user.kernel.domain.UserSecurity;
+import cmahy.simple.spring.webapp.user.kernel.domain.AuthProvider;
+import cmahy.simple.spring.webapp.user.kernel.domain.UserSecurity;
 
 import java.util.Optional;
 

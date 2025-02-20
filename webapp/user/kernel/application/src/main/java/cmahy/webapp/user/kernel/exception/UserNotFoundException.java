@@ -1,7 +1,7 @@
-package cmahy.webapp.user.kernel.exception;
+package cmahy.simple.spring.webapp.user.kernel.exception;
 
-import cmahy.webapp.user.kernel.domain.User;
-import cmahy.webapp.user.kernel.domain.id.UserId;
+import cmahy.simple.spring.webapp.user.kernel.domain.User;
+import cmahy.simple.spring.webapp.user.kernel.domain.id.UserId;
 
 public class UserNotFoundException extends NotFoundException {
 

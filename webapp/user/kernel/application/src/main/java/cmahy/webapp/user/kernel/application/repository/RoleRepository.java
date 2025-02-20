@@ -1,6 +1,6 @@
-package cmahy.webapp.user.kernel.application.repository;
+package cmahy.simple.spring.webapp.user.kernel.application.repository;
 
-import cmahy.webapp.user.kernel.domain.Role;
+import cmahy.simple.spring.webapp.user.kernel.domain.Role;
 
 import java.util.Optional;
 

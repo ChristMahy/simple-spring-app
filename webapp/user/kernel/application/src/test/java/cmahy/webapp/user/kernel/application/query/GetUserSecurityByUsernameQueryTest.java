@@ -1,12 +1,12 @@
-package cmahy.webapp.user.kernel.application.query;
+package cmahy.simple.spring.webapp.user.kernel.application.query;
 
-import cmahy.common.helper.Generator;
-import cmahy.webapp.user.kernel.application.mapper.output.UserSecurityOutputAppVoMapper;
-import cmahy.webapp.user.kernel.application.repository.UserSecurityRepository;
-import cmahy.webapp.user.kernel.domain.AuthProvider;
-import cmahy.webapp.user.kernel.domain.UserSecurity;
-import cmahy.webapp.user.kernel.exception.UserNotFoundException;
-import cmahy.webapp.user.kernel.vo.output.UserSecurityOutputAppVo;
+import cmahy.simple.spring.common.helper.Generator;
+import cmahy.simple.spring.webapp.user.kernel.application.mapper.output.UserSecurityOutputAppVoMapper;
+import cmahy.simple.spring.webapp.user.kernel.application.repository.UserSecurityRepository;
+import cmahy.simple.spring.webapp.user.kernel.domain.AuthProvider;
+import cmahy.simple.spring.webapp.user.kernel.domain.UserSecurity;
+import cmahy.simple.spring.webapp.user.kernel.exception.UserNotFoundException;
+import cmahy.simple.spring.webapp.user.kernel.vo.output.UserSecurityOutputAppVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

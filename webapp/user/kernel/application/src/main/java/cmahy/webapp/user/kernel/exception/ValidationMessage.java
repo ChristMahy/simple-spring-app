@@ -1,4 +1,4 @@
-package cmahy.webapp.user.kernel.exception;
+package cmahy.simple.spring.webapp.user.kernel.exception;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;

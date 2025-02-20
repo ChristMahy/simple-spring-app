@@ -1,4 +1,4 @@
-package cmahy.webapp.user.kernel.exception;
+package cmahy.simple.spring.webapp.user.kernel.exception;
 
 public class UserRuntimeException extends RuntimeException {
 

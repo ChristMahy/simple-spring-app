@@ -1,10 +1,10 @@
-package cmahy.webapp.user.kernel.application.mapper.input;
+package cmahy.simple.spring.webapp.user.kernel.application.mapper.input;
 
-import cmahy.webapp.user.kernel.domain.UserSecurity;
-import cmahy.webapp.user.kernel.domain.builder.UserSecurityBuilder;
-import cmahy.webapp.user.kernel.domain.builder.factory.UserSecurityBuilderFactory;
-import cmahy.webapp.user.kernel.exception.RequiredException;
-import cmahy.webapp.user.kernel.vo.input.UserSecurityInputAppVo;
+import cmahy.simple.spring.webapp.user.kernel.domain.UserSecurity;
+import cmahy.simple.spring.webapp.user.kernel.domain.builder.UserSecurityBuilder;
+import cmahy.simple.spring.webapp.user.kernel.domain.builder.factory.UserSecurityBuilderFactory;
+import cmahy.simple.spring.webapp.user.kernel.exception.RequiredException;
+import cmahy.simple.spring.webapp.user.kernel.vo.input.UserSecurityInputAppVo;
 import jakarta.inject.Named;
 
 import java.util.Objects;

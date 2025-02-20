@@ -1,9 +1,9 @@
-package cmahy.webapp.user.kernel.application.mapper.output;
+package cmahy.simple.spring.webapp.user.kernel.application.mapper.output;
 
-import cmahy.webapp.user.kernel.domain.User;
-import cmahy.webapp.user.kernel.domain.id.UserId;
-import cmahy.webapp.user.kernel.exception.RequiredException;
-import cmahy.webapp.user.kernel.vo.output.UserOutputAppVo;
+import cmahy.simple.spring.webapp.user.kernel.domain.User;
+import cmahy.simple.spring.webapp.user.kernel.domain.id.UserId;
+import cmahy.simple.spring.webapp.user.kernel.exception.RequiredException;
+import cmahy.simple.spring.webapp.user.kernel.vo.output.UserOutputAppVo;
 import jakarta.inject.Named;
 
 import java.util.Objects;

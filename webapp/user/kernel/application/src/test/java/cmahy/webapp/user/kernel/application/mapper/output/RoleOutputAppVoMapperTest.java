@@ -1,11 +1,11 @@
-package cmahy.webapp.user.kernel.application.mapper.output;
+package cmahy.simple.spring.webapp.user.kernel.application.mapper.output;
 
-import cmahy.common.helper.Generator;
-import cmahy.webapp.user.kernel.domain.Role;
-import cmahy.webapp.user.kernel.domain.RoleStub;
-import cmahy.webapp.user.kernel.domain.id.RoleId;
-import cmahy.webapp.user.kernel.exception.RequiredException;
-import cmahy.webapp.user.kernel.vo.output.RoleOutputAppVo;
+import cmahy.simple.spring.common.helper.Generator;
+import cmahy.simple.spring.webapp.user.kernel.domain.Role;
+import cmahy.simple.spring.webapp.user.kernel.domain.RoleStub;
+import cmahy.simple.spring.webapp.user.kernel.domain.id.RoleId;
+import cmahy.simple.spring.webapp.user.kernel.exception.RequiredException;
+import cmahy.simple.spring.webapp.user.kernel.vo.output.RoleOutputAppVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

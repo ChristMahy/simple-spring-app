@@ -1,7 +1,7 @@
-package cmahy.webapp.user.kernel.exception;
+package cmahy.simple.spring.webapp.user.kernel.exception;
 
-import cmahy.webapp.user.kernel.domain.Role;
-import cmahy.webapp.user.kernel.domain.id.RoleId;
+import cmahy.simple.spring.webapp.user.kernel.domain.Role;
+import cmahy.simple.spring.webapp.user.kernel.domain.id.RoleId;
 
 public class RoleNotFoundException extends NotFoundException {
 

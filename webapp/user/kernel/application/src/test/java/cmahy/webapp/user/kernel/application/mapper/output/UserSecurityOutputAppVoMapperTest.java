@@ -1,10 +1,10 @@
-package cmahy.webapp.user.kernel.application.mapper.output;
+package cmahy.simple.spring.webapp.user.kernel.application.mapper.output;
 
-import cmahy.common.helper.Generator;
-import cmahy.webapp.user.kernel.domain.*;
-import cmahy.webapp.user.kernel.exception.RequiredException;
-import cmahy.webapp.user.kernel.vo.output.RoleOutputAppVo;
-import cmahy.webapp.user.kernel.vo.output.UserSecurityOutputAppVo;
+import cmahy.simple.spring.common.helper.Generator;
+import cmahy.simple.spring.webapp.user.kernel.domain.*;
+import cmahy.simple.spring.webapp.user.kernel.exception.RequiredException;
+import cmahy.simple.spring.webapp.user.kernel.vo.output.RoleOutputAppVo;
+import cmahy.simple.spring.webapp.user.kernel.vo.output.UserSecurityOutputAppVo;
 import org.assertj.core.api.recursive.comparison.RecursiveComparisonConfiguration;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

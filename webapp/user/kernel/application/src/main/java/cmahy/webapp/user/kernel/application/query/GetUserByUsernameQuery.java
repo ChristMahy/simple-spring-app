@@ -1,11 +1,11 @@
-package cmahy.webapp.user.kernel.application.query;
+package cmahy.simple.spring.webapp.user.kernel.application.query;
 
-import cmahy.common.annotation.Query;
-import cmahy.webapp.user.kernel.application.mapper.output.UserOutputAppVoMapper;
-import cmahy.webapp.user.kernel.application.repository.UserRepository;
-import cmahy.webapp.user.kernel.domain.User;
-import cmahy.webapp.user.kernel.exception.UserNotFoundException;
-import cmahy.webapp.user.kernel.vo.output.UserOutputAppVo;
+import cmahy.simple.spring.common.annotation.Query;
+import cmahy.simple.spring.webapp.user.kernel.application.mapper.output.UserOutputAppVoMapper;
+import cmahy.simple.spring.webapp.user.kernel.application.repository.UserRepository;
+import cmahy.simple.spring.webapp.user.kernel.domain.User;
+import cmahy.simple.spring.webapp.user.kernel.exception.UserNotFoundException;
+import cmahy.simple.spring.webapp.user.kernel.vo.output.UserOutputAppVo;
 import jakarta.inject.Named;
 
 import java.util.Optional;

@@ -1,17 +1,17 @@
-package cmahy.webapp.user.kernel.application.command;
+package cmahy.simple.spring.webapp.user.kernel.application.command;
 
-import cmahy.common.annotation.Command;
-import cmahy.webapp.user.kernel.application.mapper.input.UserSecurityInputAppVoMapper;
-import cmahy.webapp.user.kernel.application.mapper.output.UserSecurityOutputAppVoMapper;
-import cmahy.webapp.user.kernel.application.repository.RoleRepository;
-import cmahy.webapp.user.kernel.application.repository.UserSecurityRepository;
-import cmahy.webapp.user.kernel.domain.Role;
-import cmahy.webapp.user.kernel.domain.UserSecurity;
-import cmahy.webapp.user.kernel.domain.builder.factory.UserSecurityBuilderFactory;
-import cmahy.webapp.user.kernel.exception.RoleNotFoundException;
-import cmahy.webapp.user.kernel.exception.UserExistsException;
-import cmahy.webapp.user.kernel.vo.input.UserSecurityInputAppVo;
-import cmahy.webapp.user.kernel.vo.output.UserSecurityOutputAppVo;
+import cmahy.simple.spring.common.annotation.Command;
+import cmahy.simple.spring.webapp.user.kernel.application.mapper.input.UserSecurityInputAppVoMapper;
+import cmahy.simple.spring.webapp.user.kernel.application.mapper.output.UserSecurityOutputAppVoMapper;
+import cmahy.simple.spring.webapp.user.kernel.application.repository.RoleRepository;
+import cmahy.simple.spring.webapp.user.kernel.application.repository.UserSecurityRepository;
+import cmahy.simple.spring.webapp.user.kernel.domain.Role;
+import cmahy.simple.spring.webapp.user.kernel.domain.UserSecurity;
+import cmahy.simple.spring.webapp.user.kernel.domain.builder.factory.UserSecurityBuilderFactory;
+import cmahy.simple.spring.webapp.user.kernel.exception.RoleNotFoundException;
+import cmahy.simple.spring.webapp.user.kernel.exception.UserExistsException;
+import cmahy.simple.spring.webapp.user.kernel.vo.input.UserSecurityInputAppVo;
+import cmahy.simple.spring.webapp.user.kernel.vo.output.UserSecurityOutputAppVo;
 import jakarta.inject.Named;
 
 import java.util.HashSet;
