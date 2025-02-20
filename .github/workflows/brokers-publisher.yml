@@ -1,0 +1,56 @@
+name: Run Brokers Publisher package publisher
+
+on:
+  push:
+    tags:
+      - 'brokers-publisher-api-\d+\.\d+\.\d+'
+      - 'brokers-publisher-jms-\d+\.\d+\.\d+'
+      - 'brokers-publisher-kafka-\d+\.\d+\.\d+'
+      - 'brokers-publisher-rabbitmq-\d+\.\d+\.\d+'
+      - 'brokers-publisher-core-\d+\.\d+\.\d+'
+
+jobs:
+  publish:
+    name: Publish Brokers Publisher (${{github.ref_name}})
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout commit ${{github.sha}}
+        uses: actions/checkout@v4
+
+      - name: Publish API package
+        if: startsWith(github.ref, 'refs/tags/brokers-publisher-api')
+        uses: ./.github/workflows/publish
+        with:
+          working-directory: brokers/publisher/api
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish JMS package
+        if: startsWith(github.ref, 'refs/tags/brokers-publisher-jms')
+        uses: ./.github/workflows/publish
+        with:
+          working-directory: brokers/publisher/jms
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish Kafka package
+        if: startsWith(github.ref, 'refs/tags/brokers-publisher-kafka')
+        uses: ./.github/workflows/publish
+        with:
+          working-directory: brokers/publisher/kafka
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish RabbitMQ package
+        if: startsWith(github.ref, 'refs/tags/brokers-publisher-rabbitmq')
+        uses: ./.github/workflows/publish
+        with:
+          working-directory: brokers/publisher/rabbitmq
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish core package
+        if: startsWith(github.ref, 'refs/tags/brokers-publisher-core')
+        uses: ./.github/workflows/publish
+        with:
+          working-directory: brokers/publisher/core
+          github-token: ${{ secrets.GITHUB_TOKEN }}

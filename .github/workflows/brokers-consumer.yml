@@ -1,0 +1,56 @@
+name: Run Brokers Consumer package publisher
+
+on:
+  push:
+    tags:
+      - 'brokers-consumer-api-\d+\.\d+\.\d+'
+      - 'brokers-consumer-jms-\d+\.\d+\.\d+'
+      - 'brokers-consumer-kafka-\d+\.\d+\.\d+'
+      - 'brokers-consumer-rabbitmq-\d+\.\d+\.\d+'
+      - 'brokers-consumer-core-\d+\.\d+\.\d+'
+
+jobs:
+  publish:
+    name: Publish Brokers Consumer (${{github.ref_name}})
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout commit ${{github.sha}}
+        uses: actions/checkout@v4
+
+      - name: Publish API package
+        if: startsWith(github.ref, 'refs/tags/brokers-consumer-api')
+        uses: ./.github/workflows/publish
+        with:
+          working-directory: brokers/consumer/api
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish JMS package
+        if: startsWith(github.ref, 'refs/tags/brokers-consumer-jms')
+        uses: ./.github/workflows/publish
+        with:
+          working-directory: brokers/consumer/jms
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish Kafka package
+        if: startsWith(github.ref, 'refs/tags/brokers-consumer-kafka')
+        uses: ./.github/workflows/publish
+        with:
+          working-directory: brokers/consumer/kafka
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish RabbitMQ package
+        if: startsWith(github.ref, 'refs/tags/brokers-consumer-rabbitmq')
+        uses: ./.github/workflows/publish
+        with:
+          working-directory: brokers/consumer/rabbitmq
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish core package
+        if: startsWith(github.ref, 'refs/tags/brokers-consumer-core')
+        uses: ./.github/workflows/publish
+        with:
+          working-directory: brokers/consumer/core
+          github-token: ${{ secrets.GITHUB_TOKEN }}
