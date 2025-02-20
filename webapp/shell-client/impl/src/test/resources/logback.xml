@@ -1,5 +1,5 @@
 <configuration>
-    <logger name="cmahy.webapp.shell.client" level="DEBUG" />
+    <logger name="cmahy.simple.spring.webapp.shell.client" level="DEBUG" />
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
