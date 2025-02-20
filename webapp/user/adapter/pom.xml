@@ -6,7 +6,7 @@
 >
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>cmahy.webapp.user</groupId>
+    <groupId>cmahy.simple.spring.webapp.user</groupId>
     <artifactId>adapter</artifactId>
     <version>DEV-SNAPSHOT</version>
 
