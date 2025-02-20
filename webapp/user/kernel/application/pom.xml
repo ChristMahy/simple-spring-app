@@ -15,7 +15,7 @@
     
     <groupId>cmahy.simple.spring.webapp.user.kernel</groupId>
     <artifactId>application</artifactId>
-    <version>DEV-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <name>spring-user-kernel-application</name>
     <description>Webapp User Kernel Application project</description>
