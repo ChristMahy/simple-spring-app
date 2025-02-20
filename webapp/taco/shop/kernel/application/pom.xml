@@ -57,15 +57,15 @@
         </dependency>
 
         <dependency>
-            <groupId>cmahy.simple.spring.webapp.taco.shop.kernel</groupId>
-            <artifactId>vo</artifactId>
+            <groupId>cmahy.simple.spring.webapp</groupId>
+            <artifactId>taco.shop.kernel.vo</artifactId>
             <version>${cmahy.simple.spring.webapp.taco.shop.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
-            <groupId>cmahy.simple.spring.webapp.taco.shop.kernel</groupId>
-            <artifactId>domain</artifactId>
+            <groupId>cmahy.simple.spring.webapp</groupId>
+            <artifactId>taco.shop.kernel.domain</artifactId>
             <version>${cmahy.simple.spring.webapp.taco.shop.version}</version>
             <scope>provided</scope>
         </dependency>
@@ -99,8 +99,8 @@
         </dependency>
 
         <dependency>
-            <groupId>cmahy.simple.spring.webapp.taco.shop.kernel</groupId>
-            <artifactId>domain</artifactId>
+            <groupId>cmahy.simple.spring.webapp</groupId>
+            <artifactId>taco.shop.kernel.domain</artifactId>
             <version>${cmahy.simple.spring.webapp.taco.shop.version}</version>
             <type>test-jar</type>
             <scope>test</scope>
