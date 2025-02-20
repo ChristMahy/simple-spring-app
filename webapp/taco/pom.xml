@@ -6,7 +6,7 @@
 >
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>cmahy.webapp</groupId>
+    <groupId>cmahy.simple.spring.webapp</groupId>
     <artifactId>taco</artifactId>
     <version>DEV-SNAPSHOT</version>
 
