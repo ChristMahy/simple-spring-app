@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm" version="3.1">
-    <entity class="cmahy.webapp.taco.shop.kernel.domain.Ingredient">
+    <entity class="domain.cmahy.simple.spring.webapp.taco.shop.kernel.Ingredient">
         <attributes>
             <id name="id" access="PROPERTY" />
         </attributes>
     </entity>
 
-    <entity class="cmahy.webapp.taco.shop.kernel.domain.Taco">
+    <entity class="domain.cmahy.simple.spring.webapp.taco.shop.kernel.Taco">
         <pre-persist method-name="prePersist" />
 
         <attributes>
@@ -17,12 +17,12 @@
                 name="ingredients"
                 access="PROPERTY"
                 fetch="LAZY"
-                target-entity="cmahy.webapp.taco.shop.kernel.domain.Ingredient"
+                target-entity="domain.cmahy.simple.spring.webapp.taco.shop.kernel.Ingredient"
             />
         </attributes>
     </entity>
 
-    <entity class="cmahy.webapp.taco.shop.kernel.domain.ClientOrder">
+    <entity class="domain.cmahy.simple.spring.webapp.taco.shop.kernel.ClientOrder">
         <attributes>
             <id name="id" access="PROPERTY" >
                 <generated-value strategy="AUTO" />
@@ -30,7 +30,7 @@
 
             <many-to-one name="user" target-entity="cmahy.webapp.user.kernel.domain.User"/>
 
-            <one-to-many name="tacos" target-entity="cmahy.webapp.taco.shop.kernel.domain.Taco">
+            <one-to-many name="tacos" target-entity="domain.cmahy.simple.spring.webapp.taco.shop.kernel.Taco">
                 <cascade>
                     <cascade-all/>
                 </cascade>

@@ -1,8 +1,6 @@
 package cmahy.webapp.resource.impl.adapter.startup.generator.taco;
 
 import cmahy.common.helper.Generator;
-import cmahy.webapp.taco.shop.kernel.application.repository.*;
-import cmahy.webapp.taco.shop.kernel.domain.*;
 import cmahy.webapp.taco.shop.kernel.domain.builder.ClientOrderBuilder;
 import cmahy.webapp.taco.shop.kernel.domain.builder.TacoBuilder;
 import cmahy.webapp.taco.shop.kernel.domain.builder.factory.ClientOrderBuilderFactory;

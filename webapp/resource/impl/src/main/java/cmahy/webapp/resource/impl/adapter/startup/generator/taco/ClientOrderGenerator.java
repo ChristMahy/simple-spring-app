@@ -1,7 +1,5 @@
 package cmahy.webapp.resource.impl.adapter.startup.generator.taco;
 
-import cmahy.webapp.taco.shop.kernel.application.repository.*;
-import cmahy.webapp.taco.shop.kernel.domain.*;
 import cmahy.webapp.taco.shop.kernel.domain.builder.factory.ClientOrderBuilderFactory;
 import cmahy.webapp.taco.shop.kernel.domain.builder.factory.TacoBuilderFactory;
 import org.slf4j.Logger;
