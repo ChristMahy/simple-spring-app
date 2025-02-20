@@ -1,2 +1,2 @@
 org.springframework.context.ApplicationListener=\
-  cmahy.webapp.taco.shop.adapter.webclient.util.integration.test.PropertyOverriderApplicationListener
+  cmahy.simple.spring.webapp.taco.shop.adapter.webclient.util.integration.test.PropertyOverriderApplicationListener

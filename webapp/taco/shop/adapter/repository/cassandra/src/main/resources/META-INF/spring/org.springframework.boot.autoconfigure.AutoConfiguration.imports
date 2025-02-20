@@ -1,1 +1,1 @@
-cmahy.webapp.taco.shop.adapter.cassandra.config.TacoShopCassandraConfigurer
+cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.config.TacoShopCassandraConfigurer
