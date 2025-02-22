@@ -1,7 +1,7 @@
 package cmahy.webapp.resource.impl.adapter.ui;
 
 import cmahy.webapp.resource.impl.adapter.ui.theme.ThemeModeResolver;
-import cmahy.webapp.resource.ui.IndexUi;
+import cmahy.simple.spring.webapp.resource.ui.IndexUi;
 import jakarta.servlet.http.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

@@ -1,4 +1,4 @@
-package cmahy.webapp.resource.ui;
+package cmahy.simple.spring.webapp.resource.ui;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

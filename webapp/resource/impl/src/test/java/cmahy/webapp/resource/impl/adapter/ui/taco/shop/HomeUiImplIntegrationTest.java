@@ -1,7 +1,7 @@
 package cmahy.webapp.resource.impl.adapter.ui.taco.shop;
 
 import cmahy.webapp.resource.impl.helper.security.user.SecurityUserGenerator;
-import cmahy.webapp.resource.ui.taco.TacoUriConstant;
+import cmahy.simple.spring.webapp.resource.ui.taco.TacoUriConstant;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

@@ -3,7 +3,7 @@ package cmahy.webapp.resource.impl.adapter.api.taco.shop;
 import cmahy.common.helper.Generator;
 import cmahy.simple.spring.webapp.resource.api.taco.shop.IngredientApi;
 import cmahy.webapp.resource.impl.helper.security.user.SecurityUserGenerator;
-import cmahy.webapp.resource.ui.vo.output.UserSecurityDetails;
+import cmahy.simple.spring.webapp.resource.ui.vo.output.UserSecurityDetails;
 import cmahy.webapp.taco.shop.kernel.application.repository.IngredientRepository;
 import cmahy.webapp.taco.shop.kernel.domain.Ingredient;
 import cmahy.webapp.taco.shop.kernel.domain.IngredientType;

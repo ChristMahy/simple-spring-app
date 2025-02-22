@@ -2,7 +2,7 @@ package cmahy.webapp.resource.impl.adapter.security.service;
 
 import cmahy.common.helper.Generator;
 import cmahy.webapp.resource.impl.adapter.security.mapper.output.UserSecurityDetailsMapper;
-import cmahy.webapp.resource.ui.vo.output.UserSecurityDetails;
+import cmahy.simple.spring.webapp.resource.ui.vo.output.UserSecurityDetails;
 import cmahy.webapp.user.kernel.application.query.GetUserSecurityByUsernameQuery;
 import cmahy.webapp.user.kernel.domain.AuthProvider;
 import cmahy.webapp.user.kernel.exception.UserNotFoundException;

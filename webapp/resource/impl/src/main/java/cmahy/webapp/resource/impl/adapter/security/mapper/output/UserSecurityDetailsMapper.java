@@ -1,6 +1,6 @@
 package cmahy.webapp.resource.impl.adapter.security.mapper.output;
 
-import cmahy.webapp.resource.ui.vo.output.UserSecurityDetails;
+import cmahy.simple.spring.webapp.resource.ui.vo.output.UserSecurityDetails;
 import cmahy.webapp.user.kernel.exception.RequiredException;
 import cmahy.webapp.user.kernel.vo.output.UserOutputAppVo;
 import cmahy.webapp.user.kernel.vo.output.UserSecurityOutputAppVo;

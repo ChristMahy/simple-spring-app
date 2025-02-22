@@ -1,7 +1,7 @@
-package cmahy.webapp.resource.ui.taco.shop;
+package cmahy.simple.spring.webapp.resource.ui.taco.shop;
 
-import cmahy.webapp.resource.ui.taco.TacoUriConstant;
-import cmahy.webapp.taco.shop.kernel.vo.input.TacoInputVo;
+import cmahy.simple.spring.webapp.resource.ui.taco.TacoUriConstant;
+import cmahy.simple.spring.webapp.taco.shop.kernel.vo.input.TacoInputVo;
 import jakarta.validation.Valid;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;

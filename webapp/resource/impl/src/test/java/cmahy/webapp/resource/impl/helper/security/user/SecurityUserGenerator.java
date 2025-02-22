@@ -1,6 +1,6 @@
 package cmahy.webapp.resource.impl.helper.security.user;
 
-import cmahy.webapp.resource.ui.vo.output.UserSecurityDetails;
+import cmahy.simple.spring.webapp.resource.ui.vo.output.UserSecurityDetails;
 import cmahy.webapp.user.kernel.domain.AuthProvider;
 import cmahy.webapp.user.kernel.domain.id.RoleId;
 import cmahy.webapp.user.kernel.domain.id.UserId;

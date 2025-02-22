@@ -1,7 +1,7 @@
 package cmahy.webapp.resource.impl.adapter.ui.taco.shop;
 
-import cmahy.webapp.resource.ui.taco.TacoUriConstant;
-import cmahy.webapp.resource.ui.taco.shop.DesignUi;
+import cmahy.simple.spring.webapp.resource.ui.taco.TacoUriConstant;
+import cmahy.simple.spring.webapp.resource.ui.taco.shop.DesignUi;
 import cmahy.webapp.taco.shop.kernel.application.query.GetIngredientByTypeQuery;
 import cmahy.webapp.taco.shop.kernel.domain.IngredientType;
 import cmahy.webapp.taco.shop.kernel.exception.RequiredException;

@@ -1,7 +1,7 @@
-package cmahy.webapp.resource.ui.taco.shop;
+package cmahy.simple.spring.webapp.resource.ui.taco.shop;
 
-import cmahy.webapp.resource.ui.taco.TacoUriConstant;
-import cmahy.webapp.resource.ui.vo.output.UserSecurityDetails;
+import cmahy.simple.spring.webapp.resource.ui.taco.TacoUriConstant;
+import cmahy.simple.spring.webapp.resource.ui.vo.output.UserSecurityDetails;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

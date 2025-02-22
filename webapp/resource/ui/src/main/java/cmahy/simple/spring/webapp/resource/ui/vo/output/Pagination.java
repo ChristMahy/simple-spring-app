@@ -1,4 +1,4 @@
-package cmahy.webapp.resource.ui.vo.output;
+package cmahy.simple.spring.webapp.resource.ui.vo.output;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;

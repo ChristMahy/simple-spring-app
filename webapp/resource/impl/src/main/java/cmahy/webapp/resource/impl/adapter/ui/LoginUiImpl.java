@@ -1,6 +1,6 @@
 package cmahy.webapp.resource.impl.adapter.ui;
 
-import cmahy.webapp.resource.ui.LoginUi;
+import cmahy.simple.spring.webapp.resource.ui.LoginUi;
 import org.springframework.stereotype.Controller;
 
 @Controller

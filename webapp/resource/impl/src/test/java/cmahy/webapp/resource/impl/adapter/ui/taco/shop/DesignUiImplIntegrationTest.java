@@ -1,7 +1,7 @@
 package cmahy.webapp.resource.impl.adapter.ui.taco.shop;
 
 import cmahy.webapp.resource.impl.helper.security.user.SecurityUserGenerator;
-import cmahy.webapp.resource.ui.taco.TacoUriConstant;
+import cmahy.simple.spring.webapp.resource.ui.taco.TacoUriConstant;
 import cmahy.webapp.taco.shop.kernel.application.query.GetIngredientByTypeQuery;
 import cmahy.webapp.taco.shop.kernel.domain.IngredientType;
 import cmahy.webapp.taco.shop.kernel.domain.id.IngredientId;
@@ -24,8 +24,8 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static cmahy.webapp.resource.ui.taco.shop.DesignUi.TACO;
-import static cmahy.webapp.resource.ui.taco.shop.DesignUi.TACOS;
+import static cmahy.simple.spring.webapp.resource.ui.taco.shop.DesignUi.TACO;
+import static cmahy.simple.spring.webapp.resource.ui.taco.shop.DesignUi.TACOS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.Mockito.when;

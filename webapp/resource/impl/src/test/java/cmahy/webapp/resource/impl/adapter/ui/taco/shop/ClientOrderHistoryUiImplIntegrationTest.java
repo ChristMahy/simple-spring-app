@@ -2,7 +2,7 @@ package cmahy.webapp.resource.impl.adapter.ui.taco.shop;
 
 import cmahy.common.entity.page.EntityPageable;
 import cmahy.webapp.resource.impl.helper.security.user.SecurityUserGenerator;
-import cmahy.webapp.resource.ui.taco.TacoUriConstant;
+import cmahy.simple.spring.webapp.resource.ui.taco.TacoUriConstant;
 import cmahy.webapp.taco.shop.kernel.application.query.GetAllClientOrderPagedQuery;
 import cmahy.webapp.taco.shop.kernel.domain.IngredientType;
 import cmahy.webapp.user.kernel.domain.id.UserId;

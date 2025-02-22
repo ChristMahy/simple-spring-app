@@ -1,7 +1,7 @@
-package cmahy.webapp.resource.ui.vo.input;
+package cmahy.simple.spring.webapp.resource.ui.vo.input;
 
-import cmahy.common.validation.StringEqualityField;
-import cmahy.common.validation.StringEquality;
+import cmahy.simple.spring.common.validation.StringEqualityField;
+import cmahy.simple.spring.common.validation.StringEquality;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import org.apache.commons.lang3.builder.ToStringBuilder;

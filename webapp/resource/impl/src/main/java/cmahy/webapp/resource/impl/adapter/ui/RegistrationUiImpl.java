@@ -1,8 +1,8 @@
 package cmahy.webapp.resource.impl.adapter.ui;
 
 import cmahy.webapp.resource.impl.adapter.ui.user.mapper.LocalWithDefaultValueRegistrationInputApiVoMapper;
-import cmahy.webapp.resource.ui.RegistrationUi;
-import cmahy.webapp.resource.ui.vo.input.RegistrationInputUiVo;
+import cmahy.simple.spring.webapp.resource.ui.RegistrationUi;
+import cmahy.simple.spring.webapp.resource.ui.vo.input.RegistrationInputUiVo;
 import cmahy.webapp.user.kernel.application.command.RegisterUserSecurityCommand;
 import cmahy.webapp.user.kernel.exception.RoleNotFoundException;
 import cmahy.webapp.user.kernel.exception.UserExistsException;

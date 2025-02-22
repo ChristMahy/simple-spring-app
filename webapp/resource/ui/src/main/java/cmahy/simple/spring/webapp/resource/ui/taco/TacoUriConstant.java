@@ -1,4 +1,4 @@
-package cmahy.webapp.resource.ui.taco;
+package cmahy.simple.spring.webapp.resource.ui.taco;
 
 public final class TacoUriConstant {
 

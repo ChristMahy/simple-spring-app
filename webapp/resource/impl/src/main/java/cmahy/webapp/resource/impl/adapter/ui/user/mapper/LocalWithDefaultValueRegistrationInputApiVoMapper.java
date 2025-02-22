@@ -1,6 +1,6 @@
 package cmahy.webapp.resource.impl.adapter.ui.user.mapper;
 
-import cmahy.webapp.resource.ui.vo.input.RegistrationInputUiVo;
+import cmahy.simple.spring.webapp.resource.ui.vo.input.RegistrationInputUiVo;
 import cmahy.webapp.user.kernel.domain.AuthProvider;
 import cmahy.webapp.user.kernel.exception.RequiredException;
 import cmahy.webapp.user.kernel.vo.input.UserSecurityInputAppVo;

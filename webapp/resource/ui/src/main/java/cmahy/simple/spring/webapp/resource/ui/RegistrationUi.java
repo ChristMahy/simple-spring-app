@@ -1,6 +1,6 @@
-package cmahy.webapp.resource.ui;
+package cmahy.simple.spring.webapp.resource.ui;
 
-import cmahy.webapp.resource.ui.vo.input.RegistrationInputUiVo;
+import cmahy.simple.spring.webapp.resource.ui.vo.input.RegistrationInputUiVo;
 import jakarta.validation.Valid;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

@@ -1,9 +1,9 @@
-package cmahy.webapp.resource.ui.taco.shop;
+package cmahy.simple.spring.webapp.resource.ui.taco.shop;
 
-import cmahy.webapp.resource.ui.taco.TacoUriConstant.ClientOrder;
-import cmahy.webapp.resource.ui.vo.output.UserSecurityDetails;
-import cmahy.webapp.taco.shop.kernel.vo.input.ClientOrderInputVo;
-import cmahy.webapp.taco.shop.kernel.vo.input.TacoInputVo;
+import cmahy.simple.spring.webapp.resource.ui.taco.TacoUriConstant.ClientOrder;
+import cmahy.simple.spring.webapp.resource.ui.vo.output.UserSecurityDetails;
+import cmahy.simple.spring.webapp.taco.shop.kernel.vo.input.ClientOrderInputVo;
+import cmahy.simple.spring.webapp.taco.shop.kernel.vo.input.TacoInputVo;
 import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;

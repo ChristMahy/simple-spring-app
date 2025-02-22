@@ -2,7 +2,7 @@ package cmahy.webapp.resource.impl.adapter.security.mapper.output;
 
 import cmahy.common.helper.Generator;
 import cmahy.webapp.resource.impl.helper.security.user.SecurityUserGenerator;
-import cmahy.webapp.resource.ui.vo.output.UserSecurityDetails;
+import cmahy.simple.spring.webapp.resource.ui.vo.output.UserSecurityDetails;
 import cmahy.webapp.user.kernel.domain.AuthProvider;
 import cmahy.webapp.user.kernel.domain.id.UserId;
 import cmahy.webapp.user.kernel.exception.RequiredException;
@@ -10,7 +10,6 @@ import cmahy.webapp.user.kernel.vo.output.UserSecurityOutputAppVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.nio.charset.StandardCharsets;
@@ -19,7 +18,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class UserSecurityDetailsMapperTest {

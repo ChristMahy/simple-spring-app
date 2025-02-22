@@ -1,4 +1,4 @@
-package cmahy.webapp.resource.ui;
+package cmahy.simple.spring.webapp.resource.ui;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,8 +1,8 @@
 package cmahy.webapp.resource.impl.adapter.ui.taco.shop;
 
 import cmahy.webapp.resource.impl.helper.security.user.SecurityUserGenerator;
-import cmahy.webapp.resource.ui.taco.TacoUriConstant;
-import cmahy.webapp.resource.ui.vo.output.UserSecurityDetails;
+import cmahy.simple.spring.webapp.resource.ui.taco.TacoUriConstant;
+import cmahy.simple.spring.webapp.resource.ui.vo.output.UserSecurityDetails;
 import cmahy.webapp.taco.shop.kernel.application.command.ReceiveNewClientOrderCommand;
 import cmahy.webapp.taco.shop.kernel.vo.input.ClientOrderInputVo;
 import cmahy.webapp.taco.shop.kernel.vo.input.TacoInputVo;
@@ -25,8 +25,8 @@ import java.util.stream.Stream;
 
 import static cmahy.common.helper.Generator.generateAString;
 import static cmahy.common.helper.Generator.randomInt;
-import static cmahy.webapp.resource.ui.taco.shop.ClientOrderUi.TACOS;
-import static cmahy.webapp.resource.ui.taco.shop.ClientOrderUi.TACO_ORDER_SESSION;
+import static cmahy.simple.spring.webapp.resource.ui.taco.shop.ClientOrderUi.TACOS;
+import static cmahy.simple.spring.webapp.resource.ui.taco.shop.ClientOrderUi.TACO_ORDER_SESSION;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.ArgumentMatchers.any;

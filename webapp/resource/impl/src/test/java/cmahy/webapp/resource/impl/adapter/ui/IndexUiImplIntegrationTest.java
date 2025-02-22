@@ -1,7 +1,7 @@
 package cmahy.webapp.resource.impl.adapter.ui;
 
 import cmahy.webapp.resource.impl.helper.security.user.SecurityUserGenerator;
-import cmahy.webapp.resource.ui.IndexUi;
+import cmahy.simple.spring.webapp.resource.ui.IndexUi;
 import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

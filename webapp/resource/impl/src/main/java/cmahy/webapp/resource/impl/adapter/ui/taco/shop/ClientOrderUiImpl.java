@@ -1,8 +1,8 @@
 package cmahy.webapp.resource.impl.adapter.ui.taco.shop;
 
-import cmahy.webapp.resource.ui.taco.TacoUriConstant;
-import cmahy.webapp.resource.ui.taco.shop.ClientOrderUi;
-import cmahy.webapp.resource.ui.vo.output.UserSecurityDetails;
+import cmahy.simple.spring.webapp.resource.ui.taco.TacoUriConstant;
+import cmahy.simple.spring.webapp.resource.ui.taco.shop.ClientOrderUi;
+import cmahy.simple.spring.webapp.resource.ui.vo.output.UserSecurityDetails;
 import cmahy.webapp.taco.shop.kernel.application.command.ReceiveNewClientOrderCommand;
 import cmahy.webapp.taco.shop.kernel.exception.RequiredException;
 import cmahy.webapp.taco.shop.kernel.exception.ingredient.IngredientNotFoundException;

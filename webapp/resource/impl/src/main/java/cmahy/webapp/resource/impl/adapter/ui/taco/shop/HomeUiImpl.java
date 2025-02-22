@@ -1,6 +1,6 @@
 package cmahy.webapp.resource.impl.adapter.ui.taco.shop;
 
-import cmahy.webapp.resource.ui.taco.shop.HomeUi;
+import cmahy.simple.spring.webapp.resource.ui.taco.shop.HomeUi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
