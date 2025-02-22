@@ -6,28 +6,30 @@
 >
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>cmahy.webapp.resource.integration.test.persistence</groupId>
-    <artifactId>cassandra</artifactId>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+
+    <groupId>cmahy.simple.spring.webapp</groupId>
+    <artifactId>resource.integration.test.persistence.cassandra</artifactId>
     <version>DEV-SNAPSHOT</version>
 
-    <name>Taco - Resources - Integration Test Persistence - Cassandra</name>
+    <name>spring-taco-resource-it-cassaandra</name>
+    <description>Webapp Taco Resource Integration Test Persistence Helper - Cassandra</description>
 
     <packaging>jar</packaging>
 
     <parent>
-        <groupId>cmahy</groupId>
+        <groupId>cmahy.simple.spring</groupId>
         <artifactId>bom</artifactId>
-        <version>DEV-SNAPSHOT</version>
+        <version>1.0.1</version>
         <relativePath/>
     </parent>
 
     <dependencies>
-        <dependency>
-            <groupId>cmahy.webapp.resource.integration.test.persistence</groupId>
-            <artifactId>api</artifactId>
-            <version>${project.version}</version>
-            <type>test-jar</type>
-        </dependency>
 
         <dependency>
             <groupId>org.testcontainers</groupId>
@@ -48,25 +50,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-test</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework</groupId>-->
-<!--            <artifactId>spring-test</artifactId>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>org.testcontainers</groupId>-->
-<!--            <artifactId>junit-jupiter</artifactId>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>org.junit.jupiter</groupId>-->
-<!--            <artifactId>junit-jupiter-api</artifactId>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.data</groupId>-->
-<!--            <artifactId>spring-data-cassandra</artifactId>-->
-<!--        </dependency>-->
     </dependencies>
 
     <build>
@@ -111,4 +94,25 @@
             </plugin>
         </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+
+            <name>ChristMahy</name>
+            <url>https://maven.pkg.github.com/ChristMahy/simple-spring-app</url>
+        </repository>
+    </distributionManagement>
+
+    <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://repo1.maven.org/maven2</url>
+        </repository>
+
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/ChristMahy/simple-spring-app</url>
+        </repository>
+    </repositories>
 </project>
