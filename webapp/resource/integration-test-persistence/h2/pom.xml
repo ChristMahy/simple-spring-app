@@ -37,7 +37,7 @@
     </dependencies>
 
     <build>
-        <finalName>taco-resource-it-helper-h2-${project.version}</finalName>
+        <finalName>spring-taco-resource-it-helper-h2-${project.version}</finalName>
 
         <plugins>
             <plugin>

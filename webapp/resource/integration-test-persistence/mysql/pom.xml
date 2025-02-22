@@ -17,7 +17,7 @@
     <artifactId>resource.integration.test.persistence.mysql</artifactId>
     <version>DEV-SNAPSHOT</version>
 
-    <name>spring-taco-resource-it-mysql</name>
+    <name>spring-taco-resource-it-helper-mysql</name>
     <description>Webapp Taco Resource Integration Test Persistence Helper - MySql</description>
 
     <packaging>jar</packaging>

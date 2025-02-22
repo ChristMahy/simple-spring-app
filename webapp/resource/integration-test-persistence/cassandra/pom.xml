@@ -17,7 +17,7 @@
     <artifactId>resource.integration.test.persistence.cassandra</artifactId>
     <version>DEV-SNAPSHOT</version>
 
-    <name>spring-taco-resource-it-cassaandra</name>
+    <name>spring-taco-resource-it-helper-cassaandra</name>
     <description>Webapp Taco Resource Integration Test Persistence Helper - Cassandra</description>
 
     <packaging>jar</packaging>
@@ -53,7 +53,7 @@
     </dependencies>
 
     <build>
-        <finalName>resource-test-${project.artifactId}-${project.version}</finalName>
+        <finalName>taco-resource-it-helper-cassandra-${project.version}</finalName>
 
         <plugins>
             <plugin>
