@@ -1,6 +1,6 @@
 package cmahy.webapp.resource.impl.adapter.api.file;
 
-import cmahy.webapp.resource.api.file.LoggerApi;
+import cmahy.simple.spring.webapp.resource.api.file.LoggerApi;
 import cmahy.webapp.resource.impl.application.file.command.LogTextWithLoggerCommand;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RestController;

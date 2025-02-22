@@ -1,16 +1,16 @@
-package cmahy.webapp.resource.api.taco.shop;
+package cmahy.simple.spring.webapp.resource.api.taco.shop;
 
-import cmahy.common.entity.page.EntityPage;
-import cmahy.webapp.taco.shop.kernel.domain.id.IngredientId;
-import cmahy.webapp.taco.shop.kernel.vo.input.IngredientCreateInputVo;
-import cmahy.webapp.taco.shop.kernel.vo.input.IngredientUpdateInputVo;
-import cmahy.webapp.taco.shop.kernel.vo.output.IngredientOutputVo;
+import cmahy.simple.spring.common.entity.page.EntityPage;
+import cmahy.simple.spring.webapp.taco.shop.kernel.domain.id.IngredientId;
+import cmahy.simple.spring.webapp.taco.shop.kernel.vo.input.IngredientCreateInputVo;
+import cmahy.simple.spring.webapp.taco.shop.kernel.vo.input.IngredientUpdateInputVo;
+import cmahy.simple.spring.webapp.taco.shop.kernel.vo.output.IngredientOutputVo;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import static cmahy.webapp.resource.api.UriConstant.BASE_V1;
+import static cmahy.simple.spring.webapp.resource.api.UriConstant.BASE_V1;
 
 @RequestMapping(path = IngredientApi.BASE_URL)
 public interface IngredientApi {

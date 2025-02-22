@@ -1,4 +1,4 @@
-package cmahy.webapp.resource.api;
+package cmahy.simple.spring.webapp.resource.api;
 
 public final class UriConstant {
 

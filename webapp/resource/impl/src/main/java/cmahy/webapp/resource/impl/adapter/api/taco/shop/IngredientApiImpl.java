@@ -2,7 +2,7 @@ package cmahy.webapp.resource.impl.adapter.api.taco.shop;
 
 import cmahy.common.entity.page.DefaultEntityPageableImpl;
 import cmahy.common.entity.page.EntityPageableBuilder;
-import cmahy.webapp.resource.api.taco.shop.IngredientApi;
+import cmahy.simple.spring.webapp.resource.api.taco.shop.IngredientApi;
 import cmahy.webapp.resource.impl.adapter.config.properties.PaginationProperties;
 import cmahy.webapp.taco.shop.kernel.application.query.GetAllIngredientPagedQuery;
 import cmahy.webapp.taco.shop.kernel.domain.id.IngredientId;

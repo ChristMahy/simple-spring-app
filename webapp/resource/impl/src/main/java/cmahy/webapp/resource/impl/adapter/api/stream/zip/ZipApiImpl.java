@@ -1,6 +1,6 @@
 package cmahy.webapp.resource.impl.adapter.api.stream.zip;
 
-import cmahy.webapp.resource.api.stream.zip.ZipApi;
+import cmahy.simple.spring.webapp.resource.api.stream.zip.ZipApi;
 import cmahy.webapp.resource.impl.adapter.api.stream.factory.GeneratorOptionsFactory;
 import cmahy.webapp.resource.impl.adapter.api.stream.visitor.StreamVisitorFactory;
 import cmahy.webapp.resource.impl.application.stream.query.zip.GenerateZipWithRandomContentQuery;

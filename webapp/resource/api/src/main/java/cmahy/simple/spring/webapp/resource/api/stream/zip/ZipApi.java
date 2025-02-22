@@ -1,6 +1,6 @@
-package cmahy.webapp.resource.api.stream.zip;
+package cmahy.simple.spring.webapp.resource.api.stream.zip;
 
-import cmahy.webapp.resource.api.UriConstant;
+import cmahy.simple.spring.webapp.resource.api.UriConstant;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
