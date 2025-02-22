@@ -2,8 +2,8 @@
   "properties": [
     {
       "name": "application.taco.orders",
-      "type": "cmahy.webapp.resource.impl.adapter.taco.shop.properties.OrderProperties",
-      "sourceType": "cmahy.webapp.resource.impl.adapter.taco.shop.properties.OrderProperties"
+      "type": "cmahy.simple.spring.webapp.resource.impl.adapter.taco.shop.properties.OrderProperties",
+      "sourceType": "cmahy.simple.spring.webapp.resource.impl.adapter.taco.shop.properties.OrderProperties"
     }
   ]
 }
