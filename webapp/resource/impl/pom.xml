@@ -6,28 +6,37 @@
 >
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>cmahy.webapp.resource</groupId>
-    <artifactId>impl</artifactId>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+
+    <groupId>cmahy.simple.spring.webapp</groupId>
+    <artifactId>resource.impl</artifactId>
     <version>DEV-SNAPSHOT</version>
 
-    <name>Taco - Resources - Impl</name>
+    <name>spring-taco-resource-impl</name>
+    <description>Webapp Taco Resource</description>
 
     <packaging>jar</packaging>
 
     <parent>
-        <groupId>cmahy</groupId>
+        <groupId>cmahy.simple.spring</groupId>
         <artifactId>bom</artifactId>
-        <version>DEV-SNAPSHOT</version>
+        <version>1.0.1</version>
         <relativePath/>
     </parent>
 
     <properties>
-        <cmahy.common.version>DEV-SNAPSHOT</cmahy.common.version>
-        <cmahy.webapp.resource.version>DEV-SNAPSHOT</cmahy.webapp.resource.version>
-        <cmahy.webapp.taco.shop.version>DEV-SNAPSHOT</cmahy.webapp.taco.shop.version>
-        <cmahy.webapp.user.version>DEV-SNAPSHOT</cmahy.webapp.user.version>
+        <cmahy.simple.spring.common.version>1.0.0</cmahy.simple.spring.common.version>
+        <cmahy.simple.spring.webapp.resource.version>1.0.0</cmahy.simple.spring.webapp.resource.version>
+        <cmahy.simple.spring.webapp.resource.api.version>1.0.1</cmahy.simple.spring.webapp.resource.api.version>
+        <cmahy.simple.spring.webapp.taco.shop.version>1.0.0</cmahy.simple.spring.webapp.taco.shop.version>
+        <cmahy.simple.spring.webapp.user.version>1.0.0</cmahy.simple.spring.webapp.user.version>
 
-        <start-class>cmahy.webapp.resource.impl.adapter.ResourceApplication</start-class>
+        <start-class>cmahy.simple.spring.webapp.resource.impl.adapter.ResourceApplication</start-class>
     </properties>
 
     <profiles>
@@ -58,14 +67,6 @@
                     <artifactId>h2</artifactId>
                     <scope>runtime</scope>
                 </dependency>
-
-                <dependency>
-                    <groupId>cmahy.webapp.resource.integration.test.persistence</groupId>
-                    <artifactId>h2</artifactId>
-                    <version>${project.version}</version>
-                    <type>test-jar</type>
-                    <scope>test</scope>
-                </dependency>
             </dependencies>
         </profile>
 
@@ -74,15 +75,15 @@
 
             <dependencies>
                 <dependency>
-                    <groupId>cmahy.webapp.taco.shop.adapter.repository</groupId>
-                    <artifactId>jpa</artifactId>
-                    <version>${project.version}</version>
+                    <groupId>cmahy.simple.spring.webapp</groupId>
+                    <artifactId>taco.shop.adapter.repository.jpa</artifactId>
+                    <version>${cmahy.simple.spring.webapp.taco.shop.version}</version>
                 </dependency>
 
                 <dependency>
-                    <groupId>cmahy.webapp.user.adapter.repository</groupId>
-                    <artifactId>jpa</artifactId>
-                    <version>${cmahy.webapp.user.version}</version>
+                    <groupId>cmahy.simple.spring.webapp.user</groupId>
+                    <artifactId>adapter.repository.jpa</artifactId>
+                    <version>${cmahy.simple.spring.webapp.user.version}</version>
                 </dependency>
 
                 <dependency>
@@ -97,43 +98,19 @@
         </profile>
 
         <profile>
-            <id>mysql</id>
-
-            <dependencies>
-                <dependency>
-                    <groupId>com.mysql</groupId>
-                    <artifactId>mysql-connector-j</artifactId>
-                    <scope>runtime</scope>
-                </dependency>
-
-                <dependency>
-                    <groupId>cmahy.webapp.resource.integration.test.persistence</groupId>
-                    <artifactId>mysql</artifactId>
-                    <version>${project.version}</version>
-                    <type>test-jar</type>
-                    <scope>test</scope>
-                </dependency>
-            </dependencies>
-
-            <properties>
-                <maven-failsafe-plugin.aditional.arg-line>-Dspring.profiles.active=cassandra,webclient</maven-failsafe-plugin.aditional.arg-line>
-            </properties>
-        </profile>
-
-        <profile>
             <id>cassandra</id>
 
             <dependencies>
                 <dependency>
-                    <groupId>cmahy.webapp.taco.shop.adapter.repository</groupId>
-                    <artifactId>cassandra</artifactId>
-                    <version>${cmahy.webapp.taco.shop.version}</version>
+                    <groupId>cmahy.simple.spring.webapp</groupId>
+                    <artifactId>taco.shop.adapter.repository.cassandra</artifactId>
+                    <version>${cmahy.simple.spring.webapp.taco.shop.version}</version>
                 </dependency>
 
                 <dependency>
-                    <groupId>cmahy.webapp.user.adapter.repository</groupId>
-                    <artifactId>cassandra</artifactId>
-                    <version>${cmahy.webapp.user.version}</version>
+                    <groupId>cmahy.simple.spring.webapp.user</groupId>
+                    <artifactId>adapter.repository.cassandra</artifactId>
+                    <version>${cmahy.simple.spring.webapp.user.version}</version>
                 </dependency>
 
                 <dependency>
@@ -142,9 +119,9 @@
                 </dependency>
 
                 <dependency>
-                    <groupId>cmahy.webapp.resource.integration.test.persistence</groupId>
-                    <artifactId>cassandra</artifactId>
-                    <version>${cmahy.webapp.taco.shop.version}</version>
+                    <groupId>cmahy.simple.spring.webapp</groupId>
+                    <artifactId>resource.integration.test.persistence.cassandra</artifactId>
+                    <version>${cmahy.simple.spring.webapp.taco.shop.version}</version>
                     <type>test-jar</type>
                     <scope>test</scope>
                 </dependency>
@@ -158,63 +135,63 @@
 
     <dependencies>
         <dependency>
-            <groupId>cmahy</groupId>
+            <groupId>cmahy.simple.spring</groupId>
             <artifactId>common</artifactId>
-            <version>${cmahy.common.version}</version>
+            <version>${cmahy.simple.spring.common.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>cmahy.webapp.taco.shop.kernel</groupId>
-            <artifactId>vo</artifactId>
-            <version>${cmahy.webapp.taco.shop.version}</version>
+            <groupId>cmahy.simple.spring.webapp</groupId>
+            <artifactId>taco.shop.kernel.vo</artifactId>
+            <version>${cmahy.simple.spring.webapp.taco.shop.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>cmahy.webapp.taco.shop.kernel</groupId>
-            <artifactId>domain</artifactId>
-            <version>${cmahy.webapp.taco.shop.version}</version>
+            <groupId>cmahy.simple.spring.webapp</groupId>
+            <artifactId>taco.shop.kernel.domain</artifactId>
+            <version>${cmahy.simple.spring.webapp.taco.shop.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>cmahy.webapp.taco.shop.kernel</groupId>
+            <groupId>cmahy.simple.spring.webapp</groupId>
+            <artifactId>taco.shop.kernel.application</artifactId>
+            <version>${cmahy.simple.spring.webapp.taco.shop.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy.simple.spring.webapp</groupId>
+            <artifactId>taco.shop.adapter.repository.webclient</artifactId>
+            <version>${cmahy.simple.spring.webapp.taco.shop.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy.simple.spring.webapp</groupId>
+            <artifactId>resource.api</artifactId>
+            <version>${cmahy.simple.spring.webapp.resource.api.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy.simple.spring.webapp</groupId>
+            <artifactId>resource.ui</artifactId>
+            <version>${cmahy.simple.spring.webapp.resource.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy.simple.spring.webapp.user.kernel</groupId>
             <artifactId>application</artifactId>
-            <version>${cmahy.webapp.taco.shop.version}</version>
+            <version>${cmahy.simple.spring.webapp.user.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>cmahy.webapp.taco.shop.adapter.repository</groupId>
-            <artifactId>webclient</artifactId>
-            <version>${cmahy.webapp.taco.shop.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>cmahy.webapp.resource</groupId>
-            <artifactId>api</artifactId>
-            <version>${cmahy.webapp.resource.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>cmahy.webapp.resource</groupId>
-            <artifactId>ui</artifactId>
-            <version>${cmahy.webapp.resource.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>cmahy.webapp.user.kernel</groupId>
-            <artifactId>application</artifactId>
-            <version>${cmahy.webapp.user.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>cmahy.webapp.user.kernel</groupId>
+            <groupId>cmahy.simple.spring.webapp.user.kernel</groupId>
             <artifactId>domain</artifactId>
-            <version>${cmahy.webapp.user.version}</version>
+            <version>${cmahy.simple.spring.webapp.user.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>cmahy.webapp.user.kernel</groupId>
+            <groupId>cmahy.simple.spring.webapp.user.kernel</groupId>
             <artifactId>vo</artifactId>
-            <version>${cmahy.webapp.user.version}</version>
+            <version>${cmahy.simple.spring.webapp.user.version}</version>
         </dependency>
 
         <dependency>
@@ -270,25 +247,25 @@
         </dependency>
 
         <dependency>
-            <groupId>cmahy</groupId>
+            <groupId>cmahy.simple.spring</groupId>
             <artifactId>common</artifactId>
-            <version>${cmahy.common.version}</version>
+            <version>${cmahy.simple.spring.common.version}</version>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
 
         <dependency>
-            <groupId>cmahy.webapp.taco.shop.kernel</groupId>
-            <artifactId>domain</artifactId>
-            <version>${cmahy.webapp.taco.shop.version}</version>
+            <groupId>cmahy.simple.spring.webapp</groupId>
+            <artifactId>taco.shop.kernel.domain</artifactId>
+            <version>${cmahy.simple.spring.webapp.taco.shop.version}</version>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
 
         <dependency>
-            <groupId>cmahy.webapp.user.kernel</groupId>
+            <groupId>cmahy.simple.spring.webapp.user.kernel</groupId>
             <artifactId>domain</artifactId>
-            <version>${cmahy.webapp.user.version}</version>
+            <version>${cmahy.simple.spring.webapp.user.version}</version>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
@@ -370,4 +347,25 @@
     <reporting>
         <outputDirectory>${project.build.directory}/${project.build.finalName}-reports</outputDirectory>
     </reporting>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+
+            <name>ChristMahy</name>
+            <url>https://maven.pkg.github.com/ChristMahy/simple-spring-app</url>
+        </repository>
+    </distributionManagement>
+
+    <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://repo1.maven.org/maven2</url>
+        </repository>
+
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/ChristMahy/simple-spring-app</url>
+        </repository>
+    </repositories>
 </project>
