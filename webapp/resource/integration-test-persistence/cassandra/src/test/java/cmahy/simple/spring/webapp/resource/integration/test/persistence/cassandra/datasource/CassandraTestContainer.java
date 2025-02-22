@@ -1,6 +1,6 @@
-package cmahy.webapp.resource.integration.test.persistence.cassandra.datasource;
+package cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.datasource;
 
-import cmahy.webapp.resource.integration.test.persistence.cassandra.datasource.exception.CassandraTestContainerException;
+import cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.datasource.exception.CassandraTestContainerException;
 
 import java.util.Optional;
 

@@ -1,6 +1,6 @@
-package cmahy.webapp.resource.integration.test.persistence.cassandra;
+package cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra;
 
-import cmahy.webapp.resource.integration.test.persistence.cassandra.datasource.CassandraTestContainerInstance;
+import cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.datasource.CassandraTestContainerInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationStartingEvent;

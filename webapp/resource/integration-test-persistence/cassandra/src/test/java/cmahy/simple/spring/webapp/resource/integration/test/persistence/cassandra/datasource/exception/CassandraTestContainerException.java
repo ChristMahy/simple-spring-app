@@ -1,4 +1,4 @@
-package cmahy.webapp.resource.integration.test.persistence.cassandra.datasource.exception;
+package cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.datasource.exception;
 
 public class CassandraTestContainerException extends Exception {
 

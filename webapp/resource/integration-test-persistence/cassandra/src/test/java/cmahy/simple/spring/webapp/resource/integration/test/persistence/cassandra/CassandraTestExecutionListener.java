@@ -1,4 +1,4 @@
-package cmahy.webapp.resource.integration.test.persistence.cassandra;
+package cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

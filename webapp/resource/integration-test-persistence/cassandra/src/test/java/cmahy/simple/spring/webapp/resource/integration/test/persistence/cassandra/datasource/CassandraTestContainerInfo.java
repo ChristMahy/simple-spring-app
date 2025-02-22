@@ -1,4 +1,4 @@
-package cmahy.webapp.resource.integration.test.persistence.cassandra.datasource;
+package cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.datasource;
 
 import java.util.Optional;
 
