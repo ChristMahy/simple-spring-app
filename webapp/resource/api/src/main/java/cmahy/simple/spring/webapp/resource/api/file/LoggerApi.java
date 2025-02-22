@@ -1,10 +1,10 @@
-package cmahy.webapp.resource.api.file;
+package cmahy.simple.spring.webapp.resource.api.file;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import static cmahy.webapp.resource.api.UriConstant.BASE_V1;
+import static cmahy.simple.spring.webapp.resource.api.UriConstant.BASE_V1;
 
 @RequestMapping(path = LoggerApi.BASE_URL)
 public interface LoggerApi {

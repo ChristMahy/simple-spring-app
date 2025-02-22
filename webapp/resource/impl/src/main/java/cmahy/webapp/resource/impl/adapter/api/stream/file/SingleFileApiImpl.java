@@ -1,6 +1,6 @@
 package cmahy.webapp.resource.impl.adapter.api.stream.file;
 
-import cmahy.webapp.resource.api.stream.file.SingleFileApi;
+import cmahy.simple.spring.webapp.resource.api.stream.file.SingleFileApi;
 import cmahy.webapp.resource.impl.adapter.api.stream.factory.GeneratorOptionsFactory;
 import cmahy.webapp.resource.impl.adapter.api.stream.visitor.StreamVisitorFactory;
 import cmahy.webapp.resource.impl.application.stream.query.singlefile.GenerateReadmeWithRandomContentQuery;

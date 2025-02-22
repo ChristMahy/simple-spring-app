@@ -1,7 +1,7 @@
 package cmahy.webapp.resource.impl.adapter.api.file;
 
 import cmahy.common.helper.Generator;
-import cmahy.webapp.resource.api.file.LoggerApi;
+import cmahy.simple.spring.webapp.resource.api.file.LoggerApi;
 import cmahy.webapp.resource.impl.application.file.repository.LoggerRepository;
 import cmahy.webapp.resource.impl.helper.security.user.SecurityUserGenerator;
 import org.junit.jupiter.api.Test;
