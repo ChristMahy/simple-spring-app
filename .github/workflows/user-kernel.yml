@@ -3,9 +3,9 @@ name: Run User Kernel package publisher
 on:
   push:
     tags:
-      - 'user-kernel-domain-\d+\.\d+\.\d+'
-      - 'user-kernel-vo-\d+\.\d+\.\d+'
-      - 'user-kernel-application-\d+\.\d+\.\d+'
+      - 'user/kernel/\d+/domain-\d+\.\d+\.\d+'
+      - 'user/kernel/\d+/vo-\d+\.\d+\.\d+'
+      - 'user/kernel/\d+/application-\d+\.\d+\.\d+'
 
 jobs:
   publish:
@@ -19,21 +19,21 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Publish Domain package
-        if: startsWith(github.ref, 'refs/tags/user-kernel-domain')
+        if: startsWith(github.ref, 'refs/tags/user/kernel') && contains(github.ref, 'domain')
         uses: ./.github/workflows/publish
         with:
           working-directory: webapp/user/kernel/domain
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish VO package
-        if: startsWith(github.ref, 'refs/tags/user-kernel-vo')
+        if: startsWith(github.ref, 'refs/tags/user/kernel') && contains(github.ref, 'vo')
         uses: ./.github/workflows/publish
         with:
           working-directory: webapp/user/kernel/vo
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish Application package
-        if: startsWith(github.ref, 'refs/tags/user-kernel-application')
+        if: startsWith(github.ref, 'refs/tags/user/kernel') && contains(github.ref, 'application')
         uses: ./.github/workflows/publish
         with:
           working-directory: webapp/user/kernel/application

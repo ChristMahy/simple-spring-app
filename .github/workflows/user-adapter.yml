@@ -3,9 +3,9 @@ name: Run User Adapter package publisher
 on:
   push:
     tags:
-      - 'user-adapter-repository-jpa-\d+\.\d+\.\d+'
-      - 'user-adapter-repository-cassandra-\d+\.\d+\.\d+'
-      - 'user-adapter-repository-webclient-\d+\.\d+\.\d+'
+      - 'user/adapter/repository/\d+/jpa-\d+\.\d+\.\d+'
+      - 'user/adapter/repository/\d+/cassandra-\d+\.\d+\.\d+'
+      - 'user/adapter/repository/\d+/webclient-\d+\.\d+\.\d+'
 
 jobs:
   publish:
@@ -19,21 +19,21 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Publish JPA repository package
-        if: startsWith(github.ref, 'refs/tags/user-adapter-repository-jpa')
+        if: startsWith(github.ref, 'refs/tags/user/adapter/repository') && contains(github.ref, 'jpa')
         uses: ./.github/workflows/publish
         with:
           working-directory: webapp/user/adapter/repository/jpa
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish Cassandra repository package
-        if: startsWith(github.ref, 'refs/tags/user-adapter-repository-cassandra')
+        if: startsWith(github.ref, 'refs/tags/user/adapter/repository') && contains(github.ref, 'cassandra')
         uses: ./.github/workflows/publish
         with:
           working-directory: webapp/user/adapter/repository/cassandra
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish WebClient repository package
-        if: startsWith(github.ref, 'refs/tags/user-adapter-repository-webclient')
+        if: startsWith(github.ref, 'refs/tags/user/adapter/repository') && contains(github.ref, 'webclient')
         uses: ./.github/workflows/publish
         with:
           working-directory: webapp/user/adapter/repository/webclient

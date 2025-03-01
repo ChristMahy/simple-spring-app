@@ -3,11 +3,11 @@ name: Run Brokers Publisher package publisher
 on:
   push:
     tags:
-      - 'brokers-publisher-api-\d+\.\d+\.\d+'
-      - 'brokers-publisher-jms-\d+\.\d+\.\d+'
-      - 'brokers-publisher-kafka-\d+\.\d+\.\d+'
-      - 'brokers-publisher-rabbitmq-\d+\.\d+\.\d+'
-      - 'brokers-publisher-core-\d+\.\d+\.\d+'
+      - 'brokers/publisher/\d+/api-\d+\.\d+\.\d+'
+      - 'brokers/publisher/\d+/jms-\d+\.\d+\.\d+'
+      - 'brokers/publisher/\d+/kafka-\d+\.\d+\.\d+'
+      - 'brokers/publisher/\d+/rabbitmq-\d+\.\d+\.\d+'
+      - 'brokers/publisher/\d+/core-\d+\.\d+\.\d+'
 
 jobs:
   publish:
@@ -21,35 +21,35 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Publish API package
-        if: startsWith(github.ref, 'refs/tags/brokers-publisher-api')
+        if: startsWith(github.ref, 'refs/tags/brokers/publisher') && contains(github.ref, 'api')
         uses: ./.github/workflows/publish
         with:
           working-directory: brokers/publisher/api
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish JMS package
-        if: startsWith(github.ref, 'refs/tags/brokers-publisher-jms')
+        if: startsWith(github.ref, 'refs/tags/brokers/publisher') && contains(github.ref, 'jms')
         uses: ./.github/workflows/publish
         with:
           working-directory: brokers/publisher/jms
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish Kafka package
-        if: startsWith(github.ref, 'refs/tags/brokers-publisher-kafka')
+        if: startsWith(github.ref, 'refs/tags/brokers/publisher') && contains(github.ref, 'kafka')
         uses: ./.github/workflows/publish
         with:
           working-directory: brokers/publisher/kafka
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish RabbitMQ package
-        if: startsWith(github.ref, 'refs/tags/brokers-publisher-rabbitmq')
+        if: startsWith(github.ref, 'refs/tags/brokers/publisher') && contains(github.ref, 'rabbitmq')
         uses: ./.github/workflows/publish
         with:
           working-directory: brokers/publisher/rabbitmq
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish core package
-        if: startsWith(github.ref, 'refs/tags/brokers-publisher-core')
+        if: startsWith(github.ref, 'refs/tags/brokers/publisher') && contains(github.ref, 'core')
         uses: ./.github/workflows/publish
         with:
           working-directory: brokers/publisher/core

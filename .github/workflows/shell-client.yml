@@ -3,8 +3,8 @@ name: Run Shell Client package publisher
 on:
   push:
     tags:
-      - 'shell-client-api-\d+\.\d+\.\d+'
-      - 'shell-client-impl-\d+\.\d+\.\d+'
+      - 'shell-client/\d+/api-\d+\.\d+\.\d+'
+      - 'shell-client/\d+/impl-\d+\.\d+\.\d+'
 
 jobs:
   publish:
@@ -18,14 +18,14 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Publish API package
-        if: startsWith(github.ref, 'refs/tags/shell-client-api')
+        if: startsWith(github.ref, 'refs/tags/shell-client') && contains(github.ref, 'api')
         uses: ./.github/workflows/publish
         with:
           working-directory: webapp/shell-client/api
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish Impl package
-        if: startsWith(github.ref, 'refs/tags/shell-client-impl')
+        if: startsWith(github.ref, 'refs/tags/shell-client') && contains(github.ref, 'impl')
         uses: ./.github/workflows/publish
         with:
           working-directory: webapp/shell-client/impl

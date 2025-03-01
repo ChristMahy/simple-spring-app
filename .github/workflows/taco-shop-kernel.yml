@@ -3,9 +3,9 @@ name: Run Taco Shop Kernel package publisher
 on:
   push:
     tags:
-      - 'taco-shop-kernel-domain-\d+\.\d+\.\d+'
-      - 'taco-shop-kernel-vo-\d+\.\d+\.\d+'
-      - 'taco-shop-kernel-application-\d+\.\d+\.\d+'
+      - 'taco-shop/kernel/\d+/domain-\d+\.\d+\.\d+'
+      - 'taco-shop/kernel/\d+/vo-\d+\.\d+\.\d+'
+      - 'taco-shop/kernel/\d+/application-\d+\.\d+\.\d+'
 
 jobs:
   publish:
@@ -19,21 +19,21 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Publish Domain package
-        if: startsWith(github.ref, 'refs/tags/taco-shop-kernel-domain')
+        if: startsWith(github.ref, 'refs/tags/taco-shop/kernel') && contains(github.ref, 'domain')
         uses: ./.github/workflows/publish
         with:
           working-directory: webapp/taco/shop/kernel/domain
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish VO package
-        if: startsWith(github.ref, 'refs/tags/taco-shop-kernel-vo')
+        if: startsWith(github.ref, 'refs/tags/taco-shop/kernel') && contains(github.ref, 'vo')
         uses: ./.github/workflows/publish
         with:
           working-directory: webapp/taco/shop/kernel/vo
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish Application package
-        if: startsWith(github.ref, 'refs/tags/taco-shop-kernel-application')
+        if: startsWith(github.ref, 'refs/tags/taco-shop/kernel') && contains(github.ref, 'application')
         uses: ./.github/workflows/publish
         with:
           working-directory: webapp/taco/shop/kernel/application
