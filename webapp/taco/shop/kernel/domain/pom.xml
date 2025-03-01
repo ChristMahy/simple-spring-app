@@ -42,8 +42,8 @@
         </dependency>
 
         <dependency>
-            <groupId>cmahy.simple.spring.webapp.user.kernel</groupId>
-            <artifactId>domain</artifactId>
+            <groupId>cmahy.simple.spring.webapp</groupId>
+            <artifactId>user.kernel.domain</artifactId>
             <version>${cmahy.simple.spring.webapp.user.version}</version>
             <scope>provided</scope>
         </dependency>
@@ -72,8 +72,8 @@
         </dependency>
 
         <dependency>
-            <groupId>cmahy.simple.spring.webapp.user.kernel</groupId>
-            <artifactId>domain</artifactId>
+            <groupId>cmahy.simple.spring.webapp</groupId>
+            <artifactId>user.kernel.domain</artifactId>
             <version>${cmahy.simple.spring.webapp.user.version}</version>
             <type>test-jar</type>
             <scope>test</scope>
