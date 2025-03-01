@@ -10,13 +10,14 @@ import java.util.Collection;
 import java.util.UUID;
 
 @Entity
-@Table(
-    name = "user_app",
-    uniqueConstraints = @UniqueConstraint(
-        name = "u_us_username_provider",
-        columnNames = {"userName", "authProvider"}
-    )
-)
+// TODO: Fix it later, Entity 'cmahy.simple.spring.webapp.user.adapter.jpa.entity.domain.JpaUserSecurity' is a subclass in a 'SINGLE_TABLE' hierarchy and may not be annotated '@Table' (the root class declares the table mapping for the hierarchy)
+//@Table(
+//    name = "user_app",
+//    uniqueConstraints = @UniqueConstraint(
+//        name = "u_us_username_provider",
+//        columnNames = {"userName", "authProvider"}
+//    )
+//)
 @DiscriminatorValue("1")
 public class JpaUserSecurity extends JpaUser implements UserSecurity {
 
