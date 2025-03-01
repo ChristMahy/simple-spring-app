@@ -37,28 +37,28 @@ jobs:
           working-directory: webapp/resource/ui
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Publish IT Cassandra package
+      - name: Publish IT <Cassandra> package
         if: startsWith(github.ref, 'refs/tags/taco-resource-it-cassandra')
         uses: ./.github/workflows/publish
         with:
           working-directory: webapp/resource/integration-test-persistence/cassandra
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Publish IT H2 package
+      - name: Publish IT <H2> package
         if: startsWith(github.ref, 'refs/tags/taco-resource-it-h2')
         uses: ./.github/workflows/publish
         with:
           working-directory: webapp/resource/integration-test-persistence/h2
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Publish IT MySql package
+      - name: Publish IT <MySql> package
         if: startsWith(github.ref, 'refs/tags/taco-resource-it-mysql')
         uses: ./.github/workflows/publish
         with:
           working-directory: webapp/resource/integration-test-persistence/mysql
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Publish Impl package
+      - name: Publish Impl <Cassandra> package
         if: startsWith(github.ref, 'refs/tags/taco-resource-impl-cassandra')
         uses: ./.github/workflows/publish
         with:
@@ -66,7 +66,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           maven-profile: cassandra
 
-      - name: Publish Impl package
+      - name: Publish Impl <H2> package
         if: startsWith(github.ref, 'refs/tags/taco-resource-impl-h2')
         uses: ./.github/workflows/publish
         with:
@@ -74,7 +74,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           maven-profile: jpa,h2
 
-      - name: Publish Impl package
+      - name: Publish Impl <MySql> package
         if: startsWith(github.ref, 'refs/tags/taco-resource-impl-mysql')
         uses: ./.github/workflows/publish
         with:
