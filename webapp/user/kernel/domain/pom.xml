@@ -15,7 +15,7 @@
 
     <groupId>cmahy.simple.spring.webapp</groupId>
     <artifactId>user.kernel.domain</artifactId>
-    <version>DEV-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <name>spring-user-kernel-domain</name>
     <description>Webapp User Kernel Domain project</description>
