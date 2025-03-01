@@ -31,7 +31,7 @@
 
     <properties>
         <cmahy.common.version>1.0.0</cmahy.common.version>
-        <cmahy.simple.spring.webapp.user.kernel.domain>1.0.0</cmahy.simple.spring.webapp.user.kernel.domain>
+        <cmahy.simple.spring.webapp.user.kernel>1.0.0</cmahy.simple.spring.webapp.user.kernel>
     </properties>
 
     <dependencies>
@@ -42,16 +42,16 @@
         </dependency>
 
         <dependency>
-            <groupId>cmahy.simple.spring.webapp.user.kernel</groupId>
-            <artifactId>domain</artifactId>
-            <version>${cmahy.simple.spring.webapp.user.kernel.domain}</version>
+            <groupId>cmahy.simple.spring.webapp</groupId>
+            <artifactId>user.kernel.domain</artifactId>
+            <version>${cmahy.simple.spring.webapp.user.kernel}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
-            <groupId>cmahy.simple.spring.webapp.user.kernel</groupId>
-            <artifactId>vo</artifactId>
-            <version>${cmahy.simple.spring.webapp.user.kernel.domain}</version>
+            <groupId>cmahy.simple.spring.webapp</groupId>
+            <artifactId>user.kernel.vo</artifactId>
+            <version>${cmahy.simple.spring.webapp.user.kernel}</version>
             <scope>provided</scope>
         </dependency>
 
