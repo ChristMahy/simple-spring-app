@@ -14,7 +14,7 @@
     </licenses>
 
     <groupId>cmahy.simple.spring.webapp</groupId>
-    <artifactId>resource.impl</artifactId>
+    <artifactId>${packaging.artifact-id}</artifactId>
     <version>DEV-SNAPSHOT</version>
 
     <name>spring-taco-resource-impl</name>
@@ -36,6 +36,8 @@
         <cmahy.simple.spring.webapp.taco.shop.version>1.0.0</cmahy.simple.spring.webapp.taco.shop.version>
         <cmahy.simple.spring.webapp.user.version>1.0.0</cmahy.simple.spring.webapp.user.version>
         <cmahy.simple.spring.webapp.user.adapter.jpa.version>1.0.1</cmahy.simple.spring.webapp.user.adapter.jpa.version>
+
+        <packaging.artifact-id>resource.impl</packaging.artifact-id>
 
         <start-class>cmahy.simple.spring.webapp.resource.impl.adapter.ResourceApplication</start-class>
     </properties>
@@ -69,6 +71,10 @@
                     <scope>runtime</scope>
                 </dependency>
             </dependencies>
+
+            <properties>
+                <packaging.artifact-id>resource.impl.h2</packaging.artifact-id>
+            </properties>
 
             <build>
                 <finalName>spring-taco-resource-impl-h2-${project.version}</finalName>
@@ -134,6 +140,8 @@
 
             <properties>
                 <maven-failsafe-plugin.aditional.arg-line>-Dspring.profiles.active=cassandra,webclient</maven-failsafe-plugin.aditional.arg-line>
+
+                <packaging.artifact-id>resource.impl.cassandra</packaging.artifact-id>
             </properties>
 
             <build>
