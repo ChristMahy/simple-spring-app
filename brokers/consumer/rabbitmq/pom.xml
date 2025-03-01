@@ -14,7 +14,7 @@
     </licenses>
     
     <artifactId>consumer-rabbitmq</artifactId>
-    <version>DEV-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <name>spring-brokers-consumer-rabbitmq</name>
     <description>Broker consumer RabbitMQ project</description>
