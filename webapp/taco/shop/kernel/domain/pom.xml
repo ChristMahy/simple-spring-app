@@ -15,7 +15,7 @@
 
     <groupId>cmahy.simple.spring.webapp</groupId>
     <artifactId>taco.shop.kernel.domain</artifactId>
-    <version>DEV-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <name>spring-taco-shop-kernel-domain</name>
     <description>Webapp Taco Shop Kernel Domain project</description>
