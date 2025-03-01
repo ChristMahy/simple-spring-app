@@ -58,20 +58,20 @@
         </dependency>
 
         <dependency>
-            <groupId>cmahy.simple.spring.webapp.user.kernel</groupId>
-            <artifactId>domain</artifactId>
+            <groupId>cmahy.simple.spring.webapp</groupId>
+            <artifactId>user.kernel.domain</artifactId>
             <version>${cmahy.simple.spring.webapp.user.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>cmahy.simple.spring.webapp.user.kernel</groupId>
-            <artifactId>vo</artifactId>
+            <groupId>cmahy.simple.spring.webapp</groupId>
+            <artifactId>user.kernel.vo</artifactId>
             <version>${cmahy.simple.spring.webapp.user.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>cmahy.simple.spring.webapp.user.kernel</groupId>
-            <artifactId>application</artifactId>
+            <groupId>cmahy.simple.spring.webapp</groupId>
+            <artifactId>user.kernel.application</artifactId>
             <version>${cmahy.simple.spring.webapp.user.version}</version>
         </dependency>
 
