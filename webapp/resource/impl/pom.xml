@@ -35,6 +35,7 @@
         <cmahy.simple.spring.webapp.resource.api.version>1.0.1</cmahy.simple.spring.webapp.resource.api.version>
         <cmahy.simple.spring.webapp.taco.shop.version>1.0.0</cmahy.simple.spring.webapp.taco.shop.version>
         <cmahy.simple.spring.webapp.user.version>1.0.0</cmahy.simple.spring.webapp.user.version>
+        <cmahy.simple.spring.webapp.user.adapter.jpa.version>1.0.1</cmahy.simple.spring.webapp.user.adapter.jpa.version>
 
         <start-class>cmahy.simple.spring.webapp.resource.impl.adapter.ResourceApplication</start-class>
     </properties>
@@ -87,7 +88,7 @@
                 <dependency>
                     <groupId>cmahy.simple.spring.webapp.user</groupId>
                     <artifactId>adapter.repository.jpa</artifactId>
-                    <version>${cmahy.simple.spring.webapp.user.version}</version>
+                    <version>${cmahy.simple.spring.webapp.user.adapter.jpa.version}</version>
                 </dependency>
 
                 <dependency>
