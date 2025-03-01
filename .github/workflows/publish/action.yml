@@ -8,6 +8,9 @@ inputs:
   github-token:
     description: 'Your github token granting access to your repository'
     required: true
+  maven-profile:
+    description: 'Maven profile'
+    default: ''
 
 
 runs:
@@ -19,11 +22,19 @@ runs:
       with:
         java-version: '23'
         distribution: 'temurin'
-        cache: 'maven'
 
     - name: Run the Maven deploy phase
+      if: ${{ inputs.maven-profile == '' }}
       shell: bash
       working-directory: ${{ inputs.working-directory }}
       run: mvn --batch-mode deploy --file pom.xml
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+
+    - name: Run the Maven deploy phase with profile <${{ inputs.maven-profile }}>
+      if: ${{ inputs.maven-profile != '' }}
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: mvn --batch-mode deploy --file pom.xml -P ${{ inputs.maven-profile }}
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
