@@ -25,17 +25,17 @@
     <parent>
         <groupId>cmahy.simple.spring</groupId>
         <artifactId>bom</artifactId>
-        <version>1.0.1</version>
+        <version>1.0.0</version>
         <relativePath/>
     </parent>
 
     <properties>
         <cmahy.simple.spring.common.version>1.0.0</cmahy.simple.spring.common.version>
         <cmahy.simple.spring.webapp.resource.version>1.0.0</cmahy.simple.spring.webapp.resource.version>
-        <cmahy.simple.spring.webapp.resource.api.version>1.0.1</cmahy.simple.spring.webapp.resource.api.version>
+        <cmahy.simple.spring.webapp.resource.api.version>1.0.0</cmahy.simple.spring.webapp.resource.api.version>
         <cmahy.simple.spring.webapp.taco.shop.version>1.0.0</cmahy.simple.spring.webapp.taco.shop.version>
         <cmahy.simple.spring.webapp.user.version>1.0.0</cmahy.simple.spring.webapp.user.version>
-        <cmahy.simple.spring.webapp.user.adapter.jpa.version>1.0.1</cmahy.simple.spring.webapp.user.adapter.jpa.version>
+        <cmahy.simple.spring.webapp.user.adapter.jpa.version>1.0.0</cmahy.simple.spring.webapp.user.adapter.jpa.version>
 
         <packaging.artifact-id>resource.impl</packaging.artifact-id>
 
