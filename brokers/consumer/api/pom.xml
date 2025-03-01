@@ -14,7 +14,7 @@
     </licenses>
 
     <artifactId>consumer-api</artifactId>
-    <version>DEV-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <name>spring-brokers-consumer-api</name>
     <description>Broker consumer API project</description>
