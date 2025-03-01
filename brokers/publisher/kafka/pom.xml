@@ -13,7 +13,7 @@
     </licenses>
 
     <artifactId>publisher-kafka</artifactId>
-    <version>DEV-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <name>spring-brokers-publisher-kafka</name>
     <description>Broker publisher Kafka project</description>
