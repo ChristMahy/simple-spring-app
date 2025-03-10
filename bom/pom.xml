@@ -32,21 +32,22 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <spring-boot.version>3.4.3</spring-boot.version>
-        <mapstruct.version>1.5.5.Final</mapstruct.version>
+        <mapstruct.version>1.6.3</mapstruct.version>
         <jakarta.inject.version>2.0.1</jakarta.inject.version>
-        <jackson.version>2.17.1</jackson.version>
-        <logback.version>1.5.6</logback.version>
-        <slf4j.version>2.0.13</slf4j.version>
-        <archunit-junit5.version>1.3.0</archunit-junit5.version>
-        <apache.commons.lang.version>3.14.0</apache.commons.lang.version>
+        <jackson.version>2.18.3</jackson.version>
+        <logback.version>1.5.17</logback.version>
+        <slf4j.version>2.0.17</slf4j.version>
+        <archunit-junit5.version>1.4.0</archunit-junit5.version>
+        <apache.commons.lang.version>3.17.0</apache.commons.lang.version>
 
-        <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
-        <maven-clean-plugin.version>3.4.0</maven-clean-plugin.version>
+        <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
+        <maven-clean-plugin.version>3.4.1</maven-clean-plugin.version>
         <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
         <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
         <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
-        <maven-surefire-plugin.version>3.3.0</maven-surefire-plugin.version>
-        <maven-failsafe-plugin.version>3.3.0</maven-failsafe-plugin.version>
+        <maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
+        <maven-failsafe-plugin.version>3.5.2</maven-failsafe-plugin.version>
+        <jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
 
         <surefire.jacoco.args />
         <failsafe.jacoco.args />
@@ -276,7 +277,7 @@
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.8.12</version>
+                    <version>${jacoco-maven-plugin.version}</version>
                     <executions>
                         <execution>
                             <id>before-unit-test-execution</id>
@@ -405,4 +406,16 @@
             <url>https://maven.pkg.github.com/ChristMahy/simple-spring-app</url>
         </repository>
     </distributionManagement>
+
+    <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://repo1.maven.org/maven2</url>
+        </repository>
+
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/ChristMahy/simple-spring-app</url>
+        </repository>
+    </repositories>
 </project>
