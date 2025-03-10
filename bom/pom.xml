@@ -15,7 +15,7 @@
 
     <groupId>cmahy.simple.spring</groupId>
     <artifactId>bom</artifactId>
-    <version>DEV-SNAPSHOT</version>
+    <version>1.0.1</version>
 
     <name>spring-bom</name>
     <description>Spring BOM project</description>
