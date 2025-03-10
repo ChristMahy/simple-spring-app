@@ -3,7 +3,6 @@ package cmahy.simple.spring.webapp.user.kernel.application.mapper.output;
 import cmahy.simple.spring.common.helper.Generator;
 import cmahy.simple.spring.webapp.user.kernel.domain.Role;
 import cmahy.simple.spring.webapp.user.kernel.domain.RoleStub;
-import cmahy.simple.spring.webapp.user.kernel.domain.id.RoleId;
 import cmahy.simple.spring.webapp.user.kernel.exception.RequiredException;
 import cmahy.simple.spring.webapp.user.kernel.vo.output.RoleOutputAppVo;
 import org.junit.jupiter.api.Test;
@@ -11,13 +10,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.UUID;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class RoleOutputAppVoMapperTest {
