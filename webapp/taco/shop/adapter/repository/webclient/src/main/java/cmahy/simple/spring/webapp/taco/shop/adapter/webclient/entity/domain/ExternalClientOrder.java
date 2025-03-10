@@ -2,6 +2,7 @@ package cmahy.simple.spring.webapp.taco.shop.adapter.webclient.entity.domain;
 
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.ClientOrder;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.Taco;
+import cmahy.simple.spring.webapp.user.adapter.webclient.entity.domain.ExternalUser;
 import cmahy.simple.spring.webapp.user.kernel.domain.User;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -12,7 +13,7 @@ public class ExternalClientOrder implements ClientOrder {
 
     private UUID id;
 
-    private User user;
+    private ExternalUser user;
 
     private Date placedAt;
 
@@ -39,11 +40,11 @@ public class ExternalClientOrder implements ClientOrder {
     }
 
     @Override
-    public User getUser() {
+    public ExternalUser getUser() {
         return user;
     }
 
-    public ExternalClientOrder setUser(User user) {
+    public ExternalClientOrder setUser(ExternalUser user) {
         this.user = user;
         return this;
     }

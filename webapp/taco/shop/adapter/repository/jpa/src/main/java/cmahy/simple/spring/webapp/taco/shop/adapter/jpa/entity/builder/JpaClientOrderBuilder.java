@@ -31,6 +31,22 @@ public class JpaClientOrderBuilder implements ClientOrderBuilder<JpaClientOrder>
 
     public JpaClientOrderBuilder(JpaClientOrder clientOrder) {
         this.originalClientOrder = Optional.ofNullable(clientOrder);
+
+        this.originalClientOrder.ifPresent(co -> {
+            this.user = co.getUser();
+
+            this.deliveryName = co.getDeliveryName();
+            this.deliveryStreet = co.getDeliveryStreet();
+            this.deliveryCity = co.getDeliveryCity();
+            this.deliveryState = co.getDeliveryState();
+            this.deliveryZip = co.getDeliveryZip();
+
+            this.ccNumber = co.getCcNumber();
+            this.ccExpiration = co.getCcExpiration();
+            this.ccCVV = co.getCcCVV();
+
+            this.tacos = co.getTacos();
+        });
     }
 
     @Override

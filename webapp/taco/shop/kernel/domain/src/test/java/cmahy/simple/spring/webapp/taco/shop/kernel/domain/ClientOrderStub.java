@@ -1,6 +1,7 @@
 package cmahy.simple.spring.webapp.taco.shop.kernel.domain;
 
 import cmahy.simple.spring.webapp.user.kernel.domain.User;
+import cmahy.simple.spring.webapp.user.kernel.domain.UserStub;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -10,7 +11,7 @@ public class ClientOrderStub implements ClientOrder {
 
     private UUID id;
 
-    private User user;
+    private UserStub user;
 
     private Date placedAt;
 
@@ -37,11 +38,11 @@ public class ClientOrderStub implements ClientOrder {
     }
 
     @Override
-    public User getUser() {
+    public UserStub getUser() {
         return user;
     }
 
-    public ClientOrderStub setUser(User user) {
+    public ClientOrderStub setUser(UserStub user) {
         this.user = user;
         return this;
     }

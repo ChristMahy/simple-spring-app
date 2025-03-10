@@ -151,6 +151,57 @@ class ClientOrderBuilderStubTest {
     }
 
     @Test
+    void buildWithOriginal_thenReturnOriginalWithoutModifiedValuesAndKeepingSameValue() {
+        assertDoesNotThrow(() -> {
+
+            Date placedAt = new Date();
+
+            ClientOrderStub original = new ClientOrderStub()
+                .setId(Generator.randomUUID())
+                .setUser(mock(UserStub.class))
+                .setPlacedAt(placedAt)
+                .setDeliveryName(Generator.generateAString(30))
+                .setDeliveryStreet(Generator.generateAString(30))
+                .setDeliveryCity(Generator.generateAString(30))
+                .setDeliveryState(Generator.generateAString(30))
+                .setDeliveryZip(Generator.generateAString(30))
+                .setCcNumber(Generator.generateAString(30))
+                .setCcExpiration(Generator.generateAString(30))
+                .setCcCVV(Generator.generateAString(30))
+                .setTacos(
+                    Stream
+                        .generate(() -> mock(TacoStub.class))
+                        .limit(30)
+                        .toList()
+                );
+
+            ClientOrder actual = new ClientOrderBuilderStub(original).build();
+
+            assertThat(actual)
+                .isNotNull()
+                .isSameAs(original);
+
+            assertThat(actual.getId()).isEqualTo(original.getId());
+
+            assertThat(actual.getUser()).isSameAs(original.getUser());
+
+            assertThat(actual.getPlacedAt()).isEqualTo(placedAt);
+
+            assertThat(actual.getDeliveryName()).isEqualTo(original.getDeliveryName());
+            assertThat(actual.getDeliveryStreet()).isEqualTo(original.getDeliveryStreet());
+            assertThat(actual.getDeliveryCity()).isEqualTo(original.getDeliveryCity());
+            assertThat(actual.getDeliveryState()).isEqualTo(original.getDeliveryState());
+            assertThat(actual.getDeliveryZip()).isEqualTo(original.getDeliveryZip());
+
+            assertThat(actual.getCcNumber()).isEqualTo(original.getCcNumber());
+            assertThat(actual.getCcExpiration()).isEqualTo(original.getCcExpiration());
+            assertThat(actual.getCcCVV()).isEqualTo(original.getCcCVV());
+
+            assertThat(actual.getTacos()).containsExactlyElementsOf(original.getTacos());
+        });
+    }
+
+    @Test
     void buildWithNullAsOriginal_thenBuildNewOne() {
         assertDoesNotThrow(() -> {
             UserStub user = mock(UserStub.class);

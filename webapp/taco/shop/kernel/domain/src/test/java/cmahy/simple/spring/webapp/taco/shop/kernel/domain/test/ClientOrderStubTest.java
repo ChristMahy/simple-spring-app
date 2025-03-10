@@ -2,7 +2,6 @@ package cmahy.simple.spring.webapp.taco.shop.kernel.domain.test;
 
 import cmahy.simple.spring.common.helper.Generator;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.*;
-import cmahy.simple.spring.webapp.user.kernel.domain.User;
 import cmahy.simple.spring.webapp.user.kernel.domain.UserStub;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +19,7 @@ class ClientOrderStubTest {
         assertDoesNotThrow(() -> {
             UUID id = Generator.randomUUID();
 
-            User user = mock(UserStub.class);
+            UserStub user = mock(UserStub.class);
 
             Date placedAt = new Date();
 
@@ -111,7 +110,7 @@ class ClientOrderStubTest {
         assertDoesNotThrow(() -> {
             UUID id = Generator.randomUUID();
 
-            User user = mock(UserStub.class);
+            UserStub user = mock(UserStub.class);
 
             Date placedAt = new Date();
 
@@ -187,7 +186,7 @@ class ClientOrderStubTest {
         assertDoesNotThrow(() -> {
             UUID id = Generator.randomUUID();
 
-            User user = mock(UserStub.class);
+            UserStub user = mock(UserStub.class);
 
             Date placedAt = new Date();
 
@@ -257,7 +256,7 @@ class ClientOrderStubTest {
         assertDoesNotThrow(() -> {
             UUID id = Generator.randomUUID();
 
-            User user = mock(UserStub.class);
+            UserStub user = mock(UserStub.class);
 
             Date placedAt = new Date();
 

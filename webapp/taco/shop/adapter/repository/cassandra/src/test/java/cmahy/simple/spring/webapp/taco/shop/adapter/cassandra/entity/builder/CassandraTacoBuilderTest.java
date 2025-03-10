@@ -107,6 +107,35 @@ class CassandraTacoBuilderTest {
     }
 
     @Test
+    void buildWithOriginal_thenReturnOriginalWithoutModifiedValuesAndKeepingSameValues() {
+        assertDoesNotThrow(() -> {
+
+            CassandraTacoProxy original = new CassandraTacoProxy(
+                new CassandraTaco().setId(Generator.randomUUID()),
+                tacoLoader
+            )
+                .setName(Generator.generateAString(30))
+                .setCreatedAt(new Date())
+                .setIngredients(
+                    Stream.generate(() -> mock(CassandraIngredientProxy.class))
+                        .limit(30)
+                        .toList()
+                );
+
+            Taco actual = new CassandraTacoBuilder(proxyFactory, original).build();
+
+            assertThat(actual)
+                .isNotNull()
+                .isSameAs(original);
+
+            assertThat(actual.getId()).isEqualTo(original.getId());
+            assertThat(actual.getName()).isEqualTo(original.getName());
+            assertThat(actual.getCreatedAt()).isAfterOrEqualTo(original.getCreatedAt());
+            assertThat(actual.getIngredients()).containsExactlyElementsOf(original.getIngredients());
+        });
+    }
+
+    @Test
     void buildWithNullAsOriginal_thenBuildNewOne() {
         assertDoesNotThrow(() -> {
             Date createdAt = new Date();

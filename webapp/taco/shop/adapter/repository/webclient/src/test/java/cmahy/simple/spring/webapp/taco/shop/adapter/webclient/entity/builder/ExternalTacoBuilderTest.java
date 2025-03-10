@@ -81,6 +81,33 @@ class ExternalTacoBuilderTest {
     }
 
     @Test
+    void buildWithOriginal_thenReturnOriginalWithoutModifiedValuesAndKeepingSameValues() {
+        assertDoesNotThrow(() -> {
+
+            ExternalTaco original = new ExternalTaco()
+                .setId(Generator.randomUUID())
+                .setName(Generator.generateAString(30))
+                .setCreatedAt(new Date())
+                .setIngredients(
+                    Stream.generate(() -> mock(ExternalIngredient.class))
+                        .limit(30)
+                        .toList()
+                );
+
+            Taco actual = new ExternalTacoBuilder(original).build();
+
+            assertThat(actual)
+                .isNotNull()
+                .isSameAs(original);
+
+            assertThat(actual.getId()).isEqualTo(original.getId());
+            assertThat(actual.getName()).isEqualTo(original.getName());
+            assertThat(actual.getCreatedAt()).isEqualTo(original.getCreatedAt());
+            assertThat(actual.getIngredients()).containsExactlyElementsOf(original.getIngredients());
+        });
+    }
+
+    @Test
     void buildWithNullAsOriginal_thenBuildNewOne() {
         assertDoesNotThrow(() -> {
             Date createdAt = new Date();

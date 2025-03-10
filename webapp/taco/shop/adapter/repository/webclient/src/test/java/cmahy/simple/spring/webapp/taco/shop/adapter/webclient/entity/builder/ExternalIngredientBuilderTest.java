@@ -59,6 +59,27 @@ class ExternalIngredientBuilderTest {
     }
 
     @Test
+    void buildWithOriginal_thenReturnOriginalWithoutModifiedValuesAndKeepingSameValues() {
+        assertDoesNotThrow(() -> {
+
+            ExternalIngredient original = new ExternalIngredient()
+                .setId(Generator.randomUUID())
+                .setName(Generator.generateAString(30))
+                .setType(Generator.randomEnum(IngredientType.class));
+
+            Ingredient actual = new ExternalIngredientBuilder(original).build();
+
+            assertThat(actual)
+                .isNotNull()
+                .isSameAs(original);
+
+            assertThat(actual.getId()).isEqualTo(original.getId());
+            assertThat(actual.getName()).isEqualTo(original.getName());
+            assertThat(actual.getType()).isEqualTo(original.getType());
+        });
+    }
+
+    @Test
     void buildWithNullAsOriginal_thenBuildNewOne() {
         assertDoesNotThrow(() -> {
             String name = Generator.generateAString();

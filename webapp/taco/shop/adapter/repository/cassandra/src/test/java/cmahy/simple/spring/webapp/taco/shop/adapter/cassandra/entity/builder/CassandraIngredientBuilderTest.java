@@ -81,6 +81,29 @@ class CassandraIngredientBuilderTest {
     }
 
     @Test
+    void buildWithOriginal_thenReturnOriginalWithoutModifiedValuesAndKeepingSameValues() {
+        assertDoesNotThrow(() -> {
+
+            CassandraIngredientProxy original = new CassandraIngredientProxy(
+                new CassandraIngredient().setId(Generator.randomUUID())
+            )
+                .setId(Generator.randomUUID())
+                .setName(Generator.generateAString(30))
+                .setType(Generator.randomEnum(IngredientType.class));
+
+            Ingredient actual = new CassandraIngredientBuilder(ingredientProxyFactory, original).build();
+
+            assertThat(actual)
+                .isNotNull()
+                .isSameAs(original);
+
+            assertThat(actual.getId()).isEqualTo(original.getId());
+            assertThat(actual.getName()).isEqualTo(original.getName());
+            assertThat(actual.getType()).isEqualTo(original.getType());
+        });
+    }
+
+    @Test
     void buildWithNullAsOriginal_thenBuildNewOne() {
         assertDoesNotThrow(() -> {
             String name = Generator.generateAString();

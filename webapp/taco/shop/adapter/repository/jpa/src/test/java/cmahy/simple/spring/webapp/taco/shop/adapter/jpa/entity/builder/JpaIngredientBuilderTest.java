@@ -59,6 +59,32 @@ class JpaIngredientBuilderTest {
     }
 
     @Test
+    void buildWithOriginal_thenReturnOriginalWithoutModifiedValuesAndKeepingSameValues() {
+        assertDoesNotThrow(() -> {
+            String name = Generator.generateAString();
+            IngredientType type = Generator.randomEnum(IngredientType.class);
+
+            JpaIngredient original = new JpaIngredient()
+                .setId(Generator.randomUUID())
+                .setName(Generator.generateAString(30))
+                .setType(Generator.randomEnum(IngredientType.class));
+
+            Ingredient actual = new JpaIngredientBuilder(original)
+                .name(name)
+                .type(type)
+                .build();
+
+            assertThat(actual)
+                .isNotNull()
+                .isSameAs(original);
+
+            assertThat(actual.getId()).isEqualTo(original.getId());
+            assertThat(actual.getName()).isEqualTo(name);
+            assertThat(actual.getType()).isEqualTo(type);
+        });
+    }
+
+    @Test
     void buildWithNullAsOriginal_thenBuildNewOne() {
         assertDoesNotThrow(() -> {
             String name = Generator.generateAString();
