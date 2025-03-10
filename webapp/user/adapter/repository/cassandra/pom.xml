@@ -25,12 +25,12 @@
     <parent>
         <groupId>cmahy.simple.spring</groupId>
         <artifactId>bom</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.2</version>
         <relativePath/>
     </parent>
 
     <properties>
-        <cmahy.common>1.0.0</cmahy.common>
+        <cmahy.common>1.0.1</cmahy.common>
 
         <cmahy.simple.spring.webapp.taco.shop.version>1.0.0</cmahy.simple.spring.webapp.taco.shop.version>
         <cmahy.simple.spring.webapp.user.version>1.0.0</cmahy.simple.spring.webapp.user.version>
@@ -145,15 +145,6 @@
     <reporting>
         <outputDirectory>${project.build.directory}/${project.build.finalName}-reports</outputDirectory>
     </reporting>
-
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-
-            <name>ChristMahy</name>
-            <url>https://maven.pkg.github.com/ChristMahy/simple-spring-app</url>
-        </repository>
-    </distributionManagement>
 
     <repositories>
         <repository>

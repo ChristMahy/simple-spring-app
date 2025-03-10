@@ -24,12 +24,12 @@
     <parent>
         <groupId>cmahy.simple.spring</groupId>
         <artifactId>bom</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.2</version>
         <relativePath/>
     </parent>
 
     <properties>
-        <common.version>1.0.0</common.version>
+        <common.version>1.0.1</common.version>
         <consumer.api.version>1.0.0</consumer.api.version>
     </properties>
 
@@ -99,15 +99,6 @@
             </plugin>
         </plugins>
     </build>
-
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-
-            <name>ChristMahy</name>
-            <url>https://maven.pkg.github.com/ChristMahy/simple-spring-app</url>
-        </repository>
-    </distributionManagement>
 
     <repositories>
         <repository>
