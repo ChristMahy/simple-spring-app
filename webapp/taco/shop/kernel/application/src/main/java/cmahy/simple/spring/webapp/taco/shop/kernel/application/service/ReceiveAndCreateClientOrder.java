@@ -68,7 +68,7 @@ public class ReceiveAndCreateClientOrder {
         for (TacoInputVo tacoInputVo : input.tacos()) {
             Taco taco = tacoInputMapper.map(tacoInputVo);
 
-            List<Ingredient> ingredients = new ArrayList<>(taco.getIngredients().size());
+            List<Ingredient> ingredients = new ArrayList<>(tacoInputVo.ingredientIds().size());
 
             for (IngredientId ingredientId : tacoInputVo.ingredientIds()) {
                 ingredients.add(
