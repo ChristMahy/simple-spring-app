@@ -1,8 +1,9 @@
 package cmahy.simple.spring.webapp.resource.impl.adapter.security.service;
 
 import cmahy.simple.spring.common.helper.Generator;
-import cmahy.simple.spring.webapp.resource.impl.adapter.security.mapper.output.UserSecurityDetailsMapper;
-import cmahy.simple.spring.webapp.resource.ui.vo.output.UserSecurityDetails;
+import cmahy.simple.spring.webapp.resource.impl.adapter.security.local.mapper.input.UserSecurityDetailsMapper;
+import cmahy.simple.spring.webapp.resource.impl.adapter.security.local.service.UserDetailsServiceImpl;
+import cmahy.simple.spring.webapp.resource.impl.adapter.security.local.vo.input.TacoResourceUserDetailsInputVo;
 import cmahy.simple.spring.webapp.user.kernel.application.query.GetUserSecurityByUsernameQuery;
 import cmahy.simple.spring.webapp.user.kernel.domain.AuthProvider;
 import cmahy.simple.spring.webapp.user.kernel.exception.UserNotFoundException;
@@ -39,7 +40,7 @@ class UserDetailsServiceImplTest {
             String username = Generator.generateAString();
 
             UserSecurityOutputAppVo userSecurityOutputAppVo = mock(UserSecurityOutputAppVo.class);
-            UserSecurityDetails userDetails = mock(UserSecurityDetails.class);
+            TacoResourceUserDetailsInputVo userDetails = mock(TacoResourceUserDetailsInputVo.class);
 
             when(getUserSecurityByUsernameQuery.execute(username, AuthProvider.LOCAL)).thenReturn(userSecurityOutputAppVo);
 

@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    generate-unique-name: false
+    name: authorization-cloud
+  h2:
+    console:
+      enabled: false
+
+server:
+  port: 9000

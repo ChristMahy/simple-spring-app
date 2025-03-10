@@ -7,10 +7,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
 @Validated
-@ConfigurationProperties(prefix = "application.google")
+@ConfigurationProperties(prefix = GoogleProperties.GOOGLE_PROPERTY_PREFIX)
 public record GoogleProperties(
     @NotBlank String apiUrl
 ) {
+
+    public static final String GOOGLE_PROPERTY_PREFIX = "application.google";
 
     @Override
     public String toString() {

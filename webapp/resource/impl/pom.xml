@@ -33,9 +33,13 @@
         <cmahy.simple.spring.common.version>1.0.0</cmahy.simple.spring.common.version>
         <cmahy.simple.spring.webapp.resource.version>1.0.0</cmahy.simple.spring.webapp.resource.version>
         <cmahy.simple.spring.webapp.resource.api.version>1.0.0</cmahy.simple.spring.webapp.resource.api.version>
+        <cmahy.simple.spring.webapp.resource.ui.version>DEV-SNAPSHOT</cmahy.simple.spring.webapp.resource.ui.version>
         <cmahy.simple.spring.webapp.taco.shop.version>1.0.0</cmahy.simple.spring.webapp.taco.shop.version>
+        <cmahy.simple.spring.webapp.taco.shop.adapter.repository.jpa.version>DEV-SNAPSHOT</cmahy.simple.spring.webapp.taco.shop.adapter.repository.jpa.version>
+        <cmahy.simple.spring.webapp.taco.shop.kernel.application.version>DEV-SNAPSHOT</cmahy.simple.spring.webapp.taco.shop.kernel.application.version>
         <cmahy.simple.spring.webapp.user.version>1.0.0</cmahy.simple.spring.webapp.user.version>
-        <cmahy.simple.spring.webapp.user.adapter.jpa.version>1.0.0</cmahy.simple.spring.webapp.user.adapter.jpa.version>
+        <cmahy.simple.spring.webapp.user.kernel.domain.version>DEV-SNAPSHOT</cmahy.simple.spring.webapp.user.kernel.domain.version>
+        <cmahy.simple.spring.webapp.user.adapter.jpa.version>DEV-SNAPSHOT</cmahy.simple.spring.webapp.user.adapter.jpa.version>
 
         <packaging.artifact-id>resource.impl</packaging.artifact-id>
 
@@ -88,7 +92,7 @@
                 <dependency>
                     <groupId>cmahy.simple.spring.webapp</groupId>
                     <artifactId>taco.shop.adapter.repository.jpa</artifactId>
-                    <version>${cmahy.simple.spring.webapp.taco.shop.version}</version>
+                    <version>${cmahy.simple.spring.webapp.taco.shop.adapter.repository.jpa.version}</version>
                 </dependency>
 
                 <dependency>
@@ -172,7 +176,7 @@
         <dependency>
             <groupId>cmahy.simple.spring.webapp</groupId>
             <artifactId>taco.shop.kernel.application</artifactId>
-            <version>${cmahy.simple.spring.webapp.taco.shop.version}</version>
+            <version>${cmahy.simple.spring.webapp.taco.shop.kernel.application.version}</version>
         </dependency>
 
         <dependency>
@@ -190,7 +194,7 @@
         <dependency>
             <groupId>cmahy.simple.spring.webapp</groupId>
             <artifactId>resource.ui</artifactId>
-            <version>${cmahy.simple.spring.webapp.resource.version}</version>
+            <version>${cmahy.simple.spring.webapp.resource.ui.version}</version>
         </dependency>
 
         <dependency>
@@ -202,7 +206,7 @@
         <dependency>
             <groupId>cmahy.simple.spring.webapp</groupId>
             <artifactId>user.kernel.domain</artifactId>
-            <version>${cmahy.simple.spring.webapp.user.version}</version>
+            <version>${cmahy.simple.spring.webapp.user.kernel.domain.version}</version>
         </dependency>
 
         <dependency>
@@ -232,7 +236,6 @@
             <artifactId>thymeleaf-layout-dialect</artifactId>
         </dependency>
 
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
@@ -251,6 +254,11 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-oauth2-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-jose</artifactId>
         </dependency>
 
         <dependency>

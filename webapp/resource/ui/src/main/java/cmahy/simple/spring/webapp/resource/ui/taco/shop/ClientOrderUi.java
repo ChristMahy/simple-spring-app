@@ -1,7 +1,7 @@
 package cmahy.simple.spring.webapp.resource.ui.taco.shop;
 
 import cmahy.simple.spring.webapp.resource.ui.taco.TacoUriConstant.ClientOrder;
-import cmahy.simple.spring.webapp.resource.ui.vo.output.UserSecurityDetails;
+import cmahy.simple.spring.webapp.resource.ui.vo.input.TacoResourceUserSecurityInputVo;
 import cmahy.simple.spring.webapp.taco.shop.kernel.vo.input.ClientOrderInputVo;
 import cmahy.simple.spring.webapp.taco.shop.kernel.vo.input.TacoInputVo;
 import jakarta.validation.Valid;
@@ -31,7 +31,7 @@ public interface ClientOrderUi {
         Errors errors,
         @ModelAttribute(name = TACOS) List<TacoInputVo> tacos,
         SessionStatus sessionStatus,
-        @AuthenticationPrincipal(errorOnInvalidType = true) UserSecurityDetails currentUser
+        @AuthenticationPrincipal(errorOnInvalidType = true) TacoResourceUserSecurityInputVo currentUser
     ) throws Exception;
     // TODO: Better exception as signature... (More specific ???)
 

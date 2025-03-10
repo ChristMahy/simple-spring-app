@@ -2,8 +2,8 @@ package cmahy.simple.spring.webapp.resource.impl.adapter.api.taco.shop;
 
 import cmahy.simple.spring.common.helper.Generator;
 import cmahy.simple.spring.webapp.resource.api.taco.shop.IngredientApi;
+import cmahy.simple.spring.webapp.resource.impl.adapter.security.local.vo.input.TacoResourceUserDetailsInputVo;
 import cmahy.simple.spring.webapp.resource.impl.helper.security.user.SecurityUserGenerator;
-import cmahy.simple.spring.webapp.resource.ui.vo.output.UserSecurityDetails;
 import cmahy.simple.spring.webapp.taco.shop.kernel.application.repository.IngredientRepository;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.Ingredient;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.IngredientType;
@@ -137,7 +137,7 @@ class IngredientApiImplIntegrationTest {
     private RequestPostProcessor getUser() {
         UserSecurity machine2machine = userSecurityRepository.findByUserNameAndAuthProvider("machine2machine", AuthProvider.LOCAL).orElseThrow();
 
-        return SecurityUserGenerator.generateWithSpecificUser(new UserSecurityDetails(
+        return SecurityUserGenerator.generateWithSpecificUser(new TacoResourceUserDetailsInputVo(
             new UserSecurityOutputAppVo(
                 new UserId(machine2machine.getId()),
                 machine2machine.getUserName(),

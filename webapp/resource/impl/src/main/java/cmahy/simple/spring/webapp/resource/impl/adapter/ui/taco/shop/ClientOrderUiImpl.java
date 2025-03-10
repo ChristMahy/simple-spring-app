@@ -2,7 +2,7 @@ package cmahy.simple.spring.webapp.resource.impl.adapter.ui.taco.shop;
 
 import cmahy.simple.spring.webapp.resource.ui.taco.TacoUriConstant;
 import cmahy.simple.spring.webapp.resource.ui.taco.shop.ClientOrderUi;
-import cmahy.simple.spring.webapp.resource.ui.vo.output.UserSecurityDetails;
+import cmahy.simple.spring.webapp.resource.ui.vo.input.TacoResourceUserSecurityInputVo;
 import cmahy.simple.spring.webapp.taco.shop.kernel.application.command.ReceiveNewClientOrderCommand;
 import cmahy.simple.spring.webapp.taco.shop.kernel.exception.RequiredException;
 import cmahy.simple.spring.webapp.taco.shop.kernel.exception.ingredient.IngredientNotFoundException;
@@ -69,7 +69,7 @@ public class ClientOrderUiImpl implements ClientOrderUi {
         Errors errors,
         List<TacoInputVo> tacos,
         SessionStatus sessionStatus,
-        UserSecurityDetails currentUserSecurityInputApiVo
+        TacoResourceUserSecurityInputVo userSecurityInputVo
     ) throws UserNotFoundException, IngredientNotFoundException, RequiredException {
         if (errors.hasErrors()) {
             return "taco-shop/client-order-form";
@@ -89,7 +89,7 @@ public class ClientOrderUiImpl implements ClientOrderUi {
                 tacoOrder.ccCVV(),
                 tacos
             ),
-            currentUserSecurityInputApiVo.userSecurity().id()
+            userSecurityInputVo.userSecurity().id()
         );
 
         sessionStatus.setComplete();

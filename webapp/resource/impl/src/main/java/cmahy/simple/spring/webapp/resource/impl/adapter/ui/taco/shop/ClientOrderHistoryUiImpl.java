@@ -4,8 +4,8 @@ import cmahy.simple.spring.common.entity.page.DefaultEntityPageableImpl;
 import cmahy.simple.spring.common.entity.page.EntityPageableBuilder;
 import cmahy.simple.spring.webapp.resource.impl.adapter.taco.shop.properties.OrderProperties;
 import cmahy.simple.spring.webapp.resource.ui.taco.shop.ClientOrderHistoryUi;
+import cmahy.simple.spring.webapp.resource.ui.vo.input.TacoResourceUserSecurityInputVo;
 import cmahy.simple.spring.webapp.resource.ui.vo.output.Pagination;
-import cmahy.simple.spring.webapp.resource.ui.vo.output.UserSecurityDetails;
 import cmahy.simple.spring.webapp.taco.shop.kernel.application.query.GetAllClientOrderPagedQuery;
 import cmahy.simple.spring.webapp.taco.shop.kernel.exception.RequiredException;
 import cmahy.simple.spring.webapp.taco.shop.kernel.vo.output.ClientOrderPageOutputVo;
@@ -39,7 +39,7 @@ public class ClientOrderHistoryUiImpl implements ClientOrderHistoryUi {
         Optional<Integer> pageSize,
         Optional<Integer> pageNumber,
         Model model,
-        UserSecurityDetails userSecurityDetails
+        TacoResourceUserSecurityInputVo userSecurityInputVo
     ) throws UserNotFoundException, RequiredException {
         DefaultEntityPageableImpl pageable = EntityPageableBuilder.<DefaultEntityPageableImpl>instance(orderProperties.pageSize())
             .withPageSize(pageSize.orElse(null))
@@ -47,7 +47,7 @@ public class ClientOrderHistoryUiImpl implements ClientOrderHistoryUi {
             .build(DefaultEntityPageableImpl.class);
 
         ClientOrderPageOutputVo orders =
-            getAllClientOrderPagedQuery.execute(userSecurityDetails.userSecurity().id(), pageable);
+            getAllClientOrderPagedQuery.execute(userSecurityInputVo.userSecurity().id(), pageable);
 
         model.addAttribute("orders", orders);
         model.addAttribute(

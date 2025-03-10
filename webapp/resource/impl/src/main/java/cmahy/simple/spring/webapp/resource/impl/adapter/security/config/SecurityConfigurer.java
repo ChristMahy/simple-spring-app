@@ -1,5 +1,7 @@
 package cmahy.simple.spring.webapp.resource.impl.adapter.security.config;
 
+import cmahy.simple.spring.webapp.resource.impl.adapter.security.oauth2.TacoResourceOAuth2Service;
+import cmahy.simple.spring.webapp.resource.impl.adapter.security.oidc.TacoResourceOidcService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,9 +19,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.*;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.*;
 import org.springframework.security.web.authentication.*;
@@ -85,7 +89,8 @@ public class SecurityConfigurer {
     public SecurityFilterChain securityFilterChainWithOAuth2(
         HttpSecurity http,
         MvcRequestMatcher.Builder mvcMatcherBuilder,
-        OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService
+        TacoResourceOAuth2Service tacoResourceOAuth2Service,
+        TacoResourceOidcService tacoResourceOidcService
     ) throws Exception {
 
         LOG.info("OAuth2 Security Configurer active");
@@ -98,9 +103,11 @@ public class SecurityConfigurer {
                     .loginPage("/login").permitAll()
                     .failureHandler(authenticationFailureHandler())
                     .userInfoEndpoint(userInfoEndpoint -> {
-                        userInfoEndpoint.userService(oAuth2UserService);
+                        userInfoEndpoint.userService(tacoResourceOAuth2Service);
+                        userInfoEndpoint.oidcUserService(tacoResourceOidcService);
                     });
             })
+            .oauth2Client(Customizer.withDefaults())
             .build();
     }
 

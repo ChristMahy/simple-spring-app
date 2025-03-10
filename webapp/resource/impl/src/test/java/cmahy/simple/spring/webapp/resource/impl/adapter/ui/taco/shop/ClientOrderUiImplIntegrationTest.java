@@ -1,8 +1,8 @@
 package cmahy.simple.spring.webapp.resource.impl.adapter.ui.taco.shop;
 
+import cmahy.simple.spring.webapp.resource.impl.adapter.security.local.vo.input.TacoResourceUserDetailsInputVo;
 import cmahy.simple.spring.webapp.resource.impl.helper.security.user.SecurityUserGenerator;
 import cmahy.simple.spring.webapp.resource.ui.taco.TacoUriConstant;
-import cmahy.simple.spring.webapp.resource.ui.vo.output.UserSecurityDetails;
 import cmahy.simple.spring.webapp.taco.shop.kernel.application.command.ReceiveNewClientOrderCommand;
 import cmahy.simple.spring.webapp.taco.shop.kernel.vo.input.ClientOrderInputVo;
 import cmahy.simple.spring.webapp.taco.shop.kernel.vo.input.TacoInputVo;
@@ -264,7 +264,7 @@ class ClientOrderUiImplIntegrationTest {
     @Test
     void saveOrder_completeOrder() {
         assertDoesNotThrow(() -> {
-            UserSecurityDetails userSecurityDetails = SecurityUserGenerator.generateRandomUserDetails();
+            TacoResourceUserDetailsInputVo userSecurityDetails = SecurityUserGenerator.generateRandomUserDetails();
 
             List<TacoInputVo> tacoInputs = Stream.generate(() -> new TacoInputVo(
                     generateAString(), Collections.emptySet()

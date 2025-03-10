@@ -1,8 +1,9 @@
 package cmahy.simple.spring.webapp.resource.impl.adapter.security.mapper.output;
 
 import cmahy.simple.spring.common.helper.Generator;
+import cmahy.simple.spring.webapp.resource.impl.adapter.security.local.mapper.input.UserSecurityDetailsMapper;
+import cmahy.simple.spring.webapp.resource.impl.adapter.security.local.vo.input.TacoResourceUserDetailsInputVo;
 import cmahy.simple.spring.webapp.resource.impl.helper.security.user.SecurityUserGenerator;
-import cmahy.simple.spring.webapp.resource.ui.vo.output.UserSecurityDetails;
 import cmahy.simple.spring.webapp.user.kernel.domain.AuthProvider;
 import cmahy.simple.spring.webapp.user.kernel.domain.id.UserId;
 import cmahy.simple.spring.webapp.user.kernel.exception.RequiredException;
@@ -46,7 +47,7 @@ class UserSecurityDetailsMapperTest {
                 SecurityUserGenerator.generateCommonAppRoles()
             );
 
-            UserSecurityDetails actual = userSecurityDetailsMapper.map(user);
+            TacoResourceUserDetailsInputVo actual = userSecurityDetailsMapper.map(user);
 
             assertThat(actual).isNotNull();
 

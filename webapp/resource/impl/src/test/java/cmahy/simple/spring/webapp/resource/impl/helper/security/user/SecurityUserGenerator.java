@@ -1,6 +1,6 @@
 package cmahy.simple.spring.webapp.resource.impl.helper.security.user;
 
-import cmahy.simple.spring.webapp.resource.ui.vo.output.UserSecurityDetails;
+import cmahy.simple.spring.webapp.resource.impl.adapter.security.local.vo.input.TacoResourceUserDetailsInputVo;
 import cmahy.simple.spring.webapp.user.kernel.domain.AuthProvider;
 import cmahy.simple.spring.webapp.user.kernel.domain.id.RoleId;
 import cmahy.simple.spring.webapp.user.kernel.domain.id.UserId;
@@ -31,16 +31,16 @@ public final class SecurityUserGenerator {
             .user(generateRandomUserDetails(roles));
     }
 
-    public static RequestPostProcessor generateWithSpecificUser(UserSecurityDetails userDetails) {
+    public static RequestPostProcessor generateWithSpecificUser(TacoResourceUserDetailsInputVo userDetails) {
         return SecurityMockMvcRequestPostProcessors.user(userDetails);
     }
 
-    public static UserSecurityDetails generateRandomUserDetails() {
+    public static TacoResourceUserDetailsInputVo generateRandomUserDetails() {
         return generateRandomUserDetails(generateCommonAppRoles());
     }
 
-    public static UserSecurityDetails generateRandomUserDetails(Set<RoleOutputAppVo> roles) {
-        return new UserSecurityDetails(new UserSecurityOutputAppVo(
+    public static TacoResourceUserDetailsInputVo generateRandomUserDetails(Set<RoleOutputAppVo> roles) {
+        return new TacoResourceUserDetailsInputVo(new UserSecurityOutputAppVo(
             new UserId(randomUUID()),
             generateAString(),
             generateAString().getBytes(),
