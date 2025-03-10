@@ -14,7 +14,7 @@
     </licenses>
 
     <artifactId>common</artifactId>
-    <version>DEV-SNAPSHOT</version>
+    <version>1.0.1</version>
 
     <name>spring-common</name>
     <description>Spring common project</description>
