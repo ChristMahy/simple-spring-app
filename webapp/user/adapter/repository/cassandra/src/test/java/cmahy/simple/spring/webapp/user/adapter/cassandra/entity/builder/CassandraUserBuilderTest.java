@@ -157,6 +157,48 @@ class CassandraUserBuilderTest {
     }
 
     @Test
+    void buildWithOriginal_thenReturnOriginalWithoutModifiedValuesAndKeepingSameValues() {
+        assertDoesNotThrow(() -> {
+
+            CassandraUserProxy original = new CassandraUserProxy(new CassandraUserImpl(), userLoader)
+                .setUserName(Generator.generateAString(30))
+                .setPassword(Generator.randomBytes(Generator.randomInt(20, 30)))
+                .setFullName(Generator.generateAString(30))
+                .setStreet(Generator.generateAString(30))
+                .setCity(Generator.generateAString(30))
+                .setState(Generator.generateAString(30))
+                .setZip(Generator.generateAString(30))
+                .setPhoneNumber(Generator.generateAString(30))
+                .setRoles(
+                    Stream
+                        .generate(() -> mock(CassandraRoleProxy.class))
+                        .limit(Generator.randomInt(10, 20))
+                        .collect(Collectors.toSet())
+                );
+
+            User actual = new CassandraUserBuilder(userProxyFactory, original).build();
+
+            assertThat(actual)
+                .isNotNull()
+                .isSameAs(original);
+
+            assertThat(actual.getId()).isEqualTo(original.getId());
+
+            assertThat(actual.getUserName()).isEqualTo(original.getUserName());
+            assertThat(actual.getPassword()).isEqualTo(original.getPassword());
+            assertThat(actual.getFullName()).isEqualTo(original.getFullName());
+
+            assertThat(actual.getStreet()).isEqualTo(original.getStreet());
+            assertThat(actual.getCity()).isEqualTo(original.getCity());
+            assertThat(actual.getState()).isEqualTo(original.getState());
+            assertThat(actual.getZip()).isEqualTo(original.getZip());
+            assertThat(actual.getPhoneNumber()).isEqualTo(original.getPhoneNumber());
+
+            assertThat(actual.getRoles()).isEqualTo(original.getRoles());
+        });
+    }
+
+    @Test
     void buildWithNullAsOriginal_thenBuildNewOne() {
         assertDoesNotThrow(() -> {
             String userName = Generator.generateAString();

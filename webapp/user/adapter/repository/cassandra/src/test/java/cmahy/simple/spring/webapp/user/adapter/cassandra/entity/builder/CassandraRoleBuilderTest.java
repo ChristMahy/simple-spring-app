@@ -100,6 +100,34 @@ class CassandraRoleBuilderTest {
     }
 
     @Test
+    void buildWithOriginal_thenReturnOriginalWithoutModifiedValuesAndKeepingSameValues() {
+        assertDoesNotThrow(() -> {
+
+            CassandraRoleProxy originalRole = new CassandraRoleProxy(
+                new CassandraRole().setId(Generator.randomUUID()),
+                roleLoader
+            )
+                .setName(Generator.generateAString(300))
+                .setUsers(
+                    Stream
+                        .generate(() -> mock(CassandraUserProxy.class))
+                        .limit(40)
+                        .toList()
+                );
+
+            Role actual = new CassandraRoleBuilder(roleProxyFactory, originalRole).build();
+
+            assertThat(actual)
+                .isNotNull()
+                .isSameAs(originalRole);
+
+            assertThat(actual.getId()).isEqualTo(originalRole.getId());
+            assertThat(actual.getName()).isEqualTo(originalRole.getName());
+            assertThat(actual.getUsers()).containsExactlyElementsOf(originalRole.getUsers());
+        });
+    }
+
+    @Test
     void buildWithNullAsOriginal_thenBuildNewOne() {
         assertDoesNotThrow(() -> {
             String newName = Generator.generateAString();

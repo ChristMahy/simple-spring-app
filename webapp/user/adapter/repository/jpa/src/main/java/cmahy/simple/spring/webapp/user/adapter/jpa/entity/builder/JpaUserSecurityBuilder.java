@@ -47,7 +47,12 @@ public class JpaUserSecurityBuilder implements UserSecurityBuilder<JpaUserSecuri
                 .state(user.getState())
                 .zip(user.getZip())
                 .phoneNumber(user.getPhoneNumber())
-                .roles(user.getRoles());
+                .roles(user.getRoles())
+                .authProvider(user.getAuthProvider())
+                .enabled(user.getEnabled())
+                .expired(user.getExpired())
+                .locked(user.getLocked())
+                .credentialsExpired(user.getCredentialsExpired());
         });
     }
 

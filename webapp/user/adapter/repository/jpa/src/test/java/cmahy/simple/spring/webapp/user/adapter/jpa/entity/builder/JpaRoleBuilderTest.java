@@ -74,6 +74,32 @@ class JpaRoleBuilderTest {
     }
 
     @Test
+    void buildWithOriginal_thenReturnOriginalWithoutModifiedValuesAndKeepingAllSameValues() {
+        assertDoesNotThrow(() -> {
+
+            JpaRole originalRole = new JpaRole()
+                .setId(Generator.randomUUID())
+                .setName(Generator.generateAString(300))
+                .setUsers(
+                    Stream
+                        .generate(() -> mock(JpaUser.class))
+                        .limit(40)
+                        .toList()
+                );
+
+            Role actual = new JpaRoleBuilder(originalRole).build();
+
+            assertThat(actual)
+                .isNotNull()
+                .isSameAs(originalRole);
+
+            assertThat(actual.getId()).isEqualTo(originalRole.getId());
+            assertThat(actual.getName()).isEqualTo(originalRole.getName());
+            assertThat(actual.getUsers()).containsExactlyElementsOf(originalRole.getUsers());
+        });
+    }
+
+    @Test
     void buildWithNullAsOriginal_thenBuildNewOne() {
         assertDoesNotThrow(() -> {
             String newName = Generator.generateAString();

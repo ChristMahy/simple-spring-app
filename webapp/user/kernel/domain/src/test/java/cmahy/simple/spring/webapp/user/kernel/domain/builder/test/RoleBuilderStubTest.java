@@ -73,6 +73,34 @@ class RoleBuilderStubTest {
     }
 
     @Test
+    void buildWithOriginal_thenReturnOriginalWithoutModifiedValuesAndKeepingAllSameValues() {
+        assertDoesNotThrow(() -> {
+
+            RoleStub originalRole = new RoleStub()
+                .setId(Generator.randomUUID())
+                .setName(Generator.generateAString(300))
+                .setUsers(
+                    Stream
+                        .generate(() -> mock(UserStub.class))
+                        .limit(40)
+                        .toList()
+                );
+
+
+            Role actual = new RoleBuilderStub(originalRole).build();
+
+
+            assertThat(actual)
+                .isNotNull()
+                .isSameAs(originalRole);
+
+            assertThat(actual.getId()).isEqualTo(originalRole.getId());
+            assertThat(actual.getName()).isEqualTo(originalRole.getName());
+            assertThat(actual.getUsers()).containsExactlyElementsOf(originalRole.getUsers());
+        });
+    }
+
+    @Test
     void buildWithNullAsOriginal_thenBuildNewOne() {
         assertDoesNotThrow(() -> {
             String newName = Generator.generateAString();
