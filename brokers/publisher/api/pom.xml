@@ -14,7 +14,7 @@
     </licenses>
 
     <artifactId>publisher-api</artifactId>
-    <version>DEV-SNAPSHOT</version>
+    <version>1.0.1</version>
 
     <name>spring-brokers-publisher-api</name>
     <description>Broker publisher API project</description>
