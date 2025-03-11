@@ -30,7 +30,7 @@
 
     <properties>
         <cmahy.simple.spring.common.version>1.0.1</cmahy.simple.spring.common.version>
-        <consumer.api.version>1.0.0</consumer.api.version>
+        <consumer.api.version>1.0.1</consumer.api.version>
     </properties>
 
     <dependencies>
