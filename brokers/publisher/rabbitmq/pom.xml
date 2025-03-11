@@ -14,7 +14,7 @@
     </licenses>
 
     <artifactId>publisher-rabbitmq</artifactId>
-    <version>DEV-SNAPSHOT</version>
+    <version>1.0.1</version>
 
     <name>spring-brokers-publisher-rabbitmq</name>
     <description>Broker publisher RabbitMQ project</description>
