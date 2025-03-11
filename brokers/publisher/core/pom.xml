@@ -30,7 +30,13 @@
 
     <properties>
         <cmahy.simple.spring.common.version>1.0.1</cmahy.simple.spring.common.version>
-        <cmahy.publisher.version>1.0.0</cmahy.publisher.version>
+
+        <cmahy.publisher.version>1.0.1</cmahy.publisher.version>
+
+        <cmahy.publisher.api.version>${cmahy.publisher.version}</cmahy.publisher.api.version>
+        <cmahy.publisher.kafka.version>${cmahy.publisher.version}</cmahy.publisher.kafka.version>
+        <cmahy.publisher.rabbitmq.version>${cmahy.publisher.version}</cmahy.publisher.rabbitmq.version>
+        <cmahy.publisher.jms.version>${cmahy.publisher.version}</cmahy.publisher.jms.version>
 
         <start-class>cmahy.simple.spring.brokers.publisher.core.adapter.PublisherApplication</start-class>
     </properties>
@@ -45,27 +51,27 @@
         <dependency>
             <groupId>cmahy.simple.spring</groupId>
             <artifactId>publisher-api</artifactId>
-            <version>${cmahy.publisher.version}</version>
+            <version>${cmahy.publisher.api.version}</version>
         </dependency>
 
         <dependency>
             <groupId>cmahy.simple.spring</groupId>
             <artifactId>publisher-jms</artifactId>
-            <version>${cmahy.publisher.version}</version>
+            <version>${cmahy.publisher.jms.version}</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>cmahy.simple.spring</groupId>
             <artifactId>publisher-kafka</artifactId>
-            <version>${cmahy.publisher.version}</version>
+            <version>${cmahy.publisher.kafka.version}</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>cmahy.simple.spring</groupId>
             <artifactId>publisher-rabbitmq</artifactId>
-            <version>${cmahy.publisher.version}</version>
+            <version>${cmahy.publisher.rabbitmq.version}</version>
             <scope>runtime</scope>
         </dependency>
 
