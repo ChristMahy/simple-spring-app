@@ -15,7 +15,7 @@
 
     <groupId>cmahy.simple.spring.webapp</groupId>
     <artifactId>taco.shop.adapter.repository.cassandra</artifactId>
-    <version>DEV-SNAPSHOT</version>
+    <version>1.0.1</version>
 
     <name>spring-taco-shop-adapter-repository-cassandra</name>
     <description>Webapp Taco Shop Adapter Repository Cassandra project</description>
