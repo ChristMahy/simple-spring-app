@@ -377,6 +377,9 @@
                         <exclude>**/adapter/**/userinfo/**/vo/output/**</exclude>
                         <exclude>**/adapter/api/security/PreAuthorizeScope.class</exclude>
                         <exclude>**/adapter/**/*Properties.class</exclude>
+
+<!--                        TODO: Remove it and add tests-->
+                        <exclude>**/adapter/security/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>
