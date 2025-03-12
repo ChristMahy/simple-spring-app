@@ -33,9 +33,22 @@
         <application.title>ShellClient</application.title>
 
         <cmahy.simple.spring.common.version>1.0.1</cmahy.simple.spring.common.version>
-        <cmahy.simple.spring.webapp.shell-client.version>1.0.0</cmahy.simple.spring.webapp.shell-client.version>
-        <cmahy.simple.spring.webapp.taco.shop.version>1.0.0</cmahy.simple.spring.webapp.taco.shop.version>
-        <cmahy.simple.spring.webapp.user.version>1.0.0</cmahy.simple.spring.webapp.user.version>
+
+        <cmahy.simple.spring.webapp.shell-client.api.version>1.0.1</cmahy.simple.spring.webapp.shell-client.api.version>
+
+        <cmahy.simple.spring.webapp.taco.shop.version>1.0.1</cmahy.simple.spring.webapp.taco.shop.version>
+
+        <cmahy.simple.spring.webapp.taco.shop.kernel.domain.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.kernel.domain.version>
+        <cmahy.simple.spring.webapp.taco.shop.kernel.vo.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.kernel.vo.version>
+        <cmahy.simple.spring.webapp.taco.shop.kernel.application.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.kernel.application.version>
+        <cmahy.simple.spring.webapp.taco.shop.adapter.webclient.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.adapter.webclient.version>
+
+        <cmahy.simple.spring.webapp.user.version>1.0.1</cmahy.simple.spring.webapp.user.version>
+
+        <cmahy.simple.spring.webapp.user.kernel.domain.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.kernel.domain.version>
+        <cmahy.simple.spring.webapp.user.kernel.vo.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.kernel.vo.version>
+        <cmahy.simple.spring.webapp.user.kernel.application.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.kernel.application.version>
+        <cmahy.simple.spring.webapp.user.adapter.webclient.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.adapter.webclient.version>
 
         <picocli.version>4.7.6</picocli.version>
 
@@ -54,55 +67,55 @@
         <dependency>
             <groupId>cmahy.simple.spring.webapp</groupId>
             <artifactId>shell-client.api</artifactId>
-            <version>${cmahy.simple.spring.webapp.shell-client.version}</version>
+            <version>${cmahy.simple.spring.webapp.shell-client.api.version}</version>
         </dependency>
 
         <dependency>
             <groupId>cmahy.simple.spring.webapp</groupId>
             <artifactId>user.kernel.domain</artifactId>
-            <version>${cmahy.simple.spring.webapp.user.version}</version>
+            <version>${cmahy.simple.spring.webapp.user.kernel.domain.version}</version>
         </dependency>
 
         <dependency>
             <groupId>cmahy.simple.spring.webapp</groupId>
             <artifactId>user.kernel.vo</artifactId>
-            <version>${cmahy.simple.spring.webapp.user.version}</version>
+            <version>${cmahy.simple.spring.webapp.user.kernel.vo.version}</version>
         </dependency>
 
         <dependency>
             <groupId>cmahy.simple.spring.webapp</groupId>
             <artifactId>user.kernel.application</artifactId>
-            <version>${cmahy.simple.spring.webapp.user.version}</version>
+            <version>${cmahy.simple.spring.webapp.user.kernel.application.version}</version>
         </dependency>
 
         <dependency>
             <groupId>cmahy.simple.spring.webapp.user</groupId>
             <artifactId>adapter.repository.webclient</artifactId>
-            <version>${cmahy.simple.spring.webapp.user.version}</version>
+            <version>${cmahy.simple.spring.webapp.user.adapter.webclient.version}</version>
         </dependency>
 
         <dependency>
             <groupId>cmahy.simple.spring.webapp</groupId>
             <artifactId>taco.shop.kernel.application</artifactId>
-            <version>${cmahy.simple.spring.webapp.taco.shop.version}</version>
+            <version>${cmahy.simple.spring.webapp.taco.shop.kernel.application.version}</version>
         </dependency>
 
         <dependency>
             <groupId>cmahy.simple.spring.webapp</groupId>
             <artifactId>taco.shop.kernel.vo</artifactId>
-            <version>${cmahy.simple.spring.webapp.taco.shop.version}</version>
+            <version>${cmahy.simple.spring.webapp.taco.shop.kernel.vo.version}</version>
         </dependency>
 
         <dependency>
             <groupId>cmahy.simple.spring.webapp</groupId>
             <artifactId>taco.shop.kernel.domain</artifactId>
-            <version>${cmahy.simple.spring.webapp.taco.shop.version}</version>
+            <version>${cmahy.simple.spring.webapp.taco.shop.kernel.domain.version}</version>
         </dependency>
 
         <dependency>
             <groupId>cmahy.simple.spring.webapp</groupId>
             <artifactId>taco.shop.adapter.repository.webclient</artifactId>
-            <version>${cmahy.simple.spring.webapp.taco.shop.version}</version>
+            <version>${cmahy.simple.spring.webapp.taco.shop.adapter.webclient.version}</version>
         </dependency>
 
         <dependency>
