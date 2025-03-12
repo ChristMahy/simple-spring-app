@@ -31,9 +31,16 @@
 
     <properties>
         <cmahy.simple.spring.common.version>1.0.1</cmahy.simple.spring.common.version>
-        <cmahy.simple.spring.webapp.resource.version>1.0.0</cmahy.simple.spring.webapp.resource.version>
-        <cmahy.simple.spring.webapp.taco.shop.version>1.0.0</cmahy.simple.spring.webapp.taco.shop.version>
-        <cmahy.simple.spring.webapp.user.version>1.0.0</cmahy.simple.spring.webapp.user.version>
+
+        <cmahy.simple.spring.webapp.taco.shop.version>1.0.1</cmahy.simple.spring.webapp.taco.shop.version>
+
+        <cmahy.simple.spring.webapp.taco.shop.kernel.domain.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.kernel.domain.version>
+        <cmahy.simple.spring.webapp.taco.shop.kernel.vo.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.kernel.vo.version>
+
+        <cmahy.simple.spring.webapp.user.version>1.0.1</cmahy.simple.spring.webapp.user.version>
+
+        <cmahy.simple.spring.webapp.user.kernel.domain.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.kernel.domain.version>
+        <cmahy.simple.spring.webapp.user.kernel.vo.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.kernel.vo.version>
     </properties>
 
     <dependencies>
@@ -56,28 +63,28 @@
         <dependency>
             <groupId>cmahy.simple.spring.webapp</groupId>
             <artifactId>user.kernel.domain</artifactId>
-            <version>${cmahy.simple.spring.webapp.user.version}</version>
+            <version>${cmahy.simple.spring.webapp.user.kernel.domain.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>cmahy.simple.spring.webapp</groupId>
             <artifactId>user.kernel.vo</artifactId>
-            <version>${cmahy.simple.spring.webapp.user.version}</version>
+            <version>${cmahy.simple.spring.webapp.user.kernel.vo.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>cmahy.simple.spring.webapp</groupId>
             <artifactId>taco.shop.kernel.vo</artifactId>
-            <version>${cmahy.simple.spring.webapp.taco.shop.version}</version>
+            <version>${cmahy.simple.spring.webapp.taco.shop.kernel.vo.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>cmahy.simple.spring.webapp</groupId>
             <artifactId>taco.shop.kernel.domain</artifactId>
-            <version>${cmahy.simple.spring.webapp.taco.shop.version}</version>
+            <version>${cmahy.simple.spring.webapp.taco.shop.kernel.domain.version}</version>
             <scope>provided</scope>
         </dependency>
 

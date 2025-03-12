@@ -31,8 +31,11 @@
 
     <properties>
         <cmahy.common.version>1.0.1</cmahy.common.version>
-        <cmahy.simple.spring.webapp.resource.version>1.0.0</cmahy.simple.spring.webapp.resource.version>
-        <cmahy.simple.spring.webapp.taco.shop.version>1.0.0</cmahy.simple.spring.webapp.taco.shop.version>
+
+        <cmahy.simple.spring.webapp.taco.shop.version>1.0.1</cmahy.simple.spring.webapp.taco.shop.version>
+
+        <cmahy.simple.spring.webapp.taco.shop.kernel.domain.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.kernel.domain.version>
+        <cmahy.simple.spring.webapp.taco.shop.kernel.vo.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.kernel.vo.version>
     </properties>
 
     <dependencies>
@@ -55,14 +58,14 @@
         <dependency>
             <groupId>cmahy.simple.spring.webapp</groupId>
             <artifactId>taco.shop.kernel.domain</artifactId>
-            <version>${cmahy.simple.spring.webapp.taco.shop.version}</version>
+            <version>${cmahy.simple.spring.webapp.taco.shop.kernel.domain.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>cmahy.simple.spring.webapp</groupId>
             <artifactId>taco.shop.kernel.vo</artifactId>
-            <version>${cmahy.simple.spring.webapp.taco.shop.version}</version>
+            <version>${cmahy.simple.spring.webapp.taco.shop.kernel.vo.version}</version>
             <scope>provided</scope>
         </dependency>
 
