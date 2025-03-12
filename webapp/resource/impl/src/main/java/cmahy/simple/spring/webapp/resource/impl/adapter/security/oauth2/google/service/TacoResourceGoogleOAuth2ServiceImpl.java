@@ -12,6 +12,7 @@ import cmahy.simple.spring.webapp.user.kernel.vo.output.UserSecurityOutputAppVo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.client.userinfo.*;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -20,6 +21,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 @Service
+@ConditionalOnProperty(name = "spring-app.security.oauth2.enable", havingValue = "true")
 public class TacoResourceGoogleOAuth2ServiceImpl extends DefaultOAuth2UserService implements TacoResourceOAuth2Service, OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
     private static final Logger LOG = LoggerFactory.getLogger(TacoResourceGoogleOAuth2ServiceImpl.class);
