@@ -11,6 +11,7 @@ import cmahy.simple.spring.webapp.user.kernel.vo.output.UserSecurityOutputAppVo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+@ConditionalOnProperty(name = "spring-app.security.oauth2.enable", havingValue = "true")
 public class TacoResourceSpringOidcServiceImpl extends OidcUserService implements TacoResourceOidcService, OAuth2UserService<OidcUserRequest, OidcUser> {
 
     private static final Logger LOG = LoggerFactory.getLogger(TacoResourceSpringOidcServiceImpl.class);

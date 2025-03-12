@@ -3,6 +3,7 @@ package cmahy.simple.spring.webapp.resource.impl.adapter.security.oauth2;
 import cmahy.simple.spring.webapp.resource.impl.adapter.security.config.properties.OAuth2Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service("tacoResourceOAuth2Service")
+@ConditionalOnProperty(name = "spring-app.security.oauth2.enable", havingValue = "true")
 public class TacoResourceOAuth2ServiceImpl implements TacoResourceOAuth2Service {
 
     private static final Logger LOG = LoggerFactory.getLogger(TacoResourceOAuth2ServiceImpl.class);
