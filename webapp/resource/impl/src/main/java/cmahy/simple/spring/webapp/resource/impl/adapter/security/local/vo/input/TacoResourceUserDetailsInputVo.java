@@ -60,7 +60,7 @@ public class TacoResourceUserDetailsInputVo implements UserDetails, TacoResource
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return !userSecurity.isExpired();
+        return !userSecurity.isCredentialsExpired();
     }
 
     @Override
