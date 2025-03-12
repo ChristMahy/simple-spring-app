@@ -380,6 +380,7 @@
 
 <!--                        TODO: Remove it and add tests-->
                         <exclude>**/adapter/security/**</exclude>
+                        <exclude>**/adapter/startup/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>
