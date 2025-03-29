@@ -32,7 +32,7 @@
     <properties>
         <cmahy.simple.spring.common.version>1.0.2</cmahy.simple.spring.common.version>
 
-        <cmahy.simple.spring.webapp.user.version>1.0.1</cmahy.simple.spring.webapp.user.version>
+        <cmahy.simple.spring.webapp.user.version>1.0.2</cmahy.simple.spring.webapp.user.version>
 
         <cmahy.simple.spring.webapp.user.domain.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.domain.version>
     </properties>
