@@ -14,7 +14,7 @@
     </licenses>
 
     <artifactId>consumer-jms</artifactId>
-    <version>DEV-SNAPSHOT</version>
+    <version>1.0.2</version>
 
     <name>spring-brokers-consumer-jms</name>
     <description>Broker consumer JMS project</description>
