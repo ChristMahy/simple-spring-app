@@ -15,7 +15,7 @@
 
     <groupId>cmahy.simple.spring.webapp</groupId>
     <artifactId>taco.shop.kernel.vo</artifactId>
-    <version>DEV-SNAPSHOT</version>
+    <version>1.0.2</version>
 
     <name>spring-taco-shop-kernel-vo</name>
     <description>Webapp Taco Shop Kernel VO project</description>
