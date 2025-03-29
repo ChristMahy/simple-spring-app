@@ -1,9 +1,10 @@
 package cmahy.simple.spring.common.entity.id;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 
 public interface EntityId<T> {
 
-    @JsonProperty("id")
+    @JsonValue
     T value();
+
 }
