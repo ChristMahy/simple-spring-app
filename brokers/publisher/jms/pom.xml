@@ -14,7 +14,7 @@
     </licenses>
 
     <artifactId>publisher-jms</artifactId>
-    <version>DEV-SNAPSHOT</version>
+    <version>1.0.2</version>
 
     <name>spring-brokers-publisher-jms</name>
     <description>Broker publisher JMS project</description>
