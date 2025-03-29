@@ -32,12 +32,12 @@
     <properties>
         <cmahy.simple.spring.common.version>1.0.2</cmahy.simple.spring.common.version>
 
-        <cmahy.simple.spring.webapp.resource.version>1.0.1</cmahy.simple.spring.webapp.resource.version>
+        <cmahy.simple.spring.webapp.resource.version>1.0.2</cmahy.simple.spring.webapp.resource.version>
 
         <cmahy.simple.spring.webapp.resource.api.version>${cmahy.simple.spring.webapp.resource.version}</cmahy.simple.spring.webapp.resource.api.version>
         <cmahy.simple.spring.webapp.resource.ui.version>${cmahy.simple.spring.webapp.resource.version}</cmahy.simple.spring.webapp.resource.ui.version>
 
-        <cmahy.simple.spring.webapp.taco.shop.version>1.0.1</cmahy.simple.spring.webapp.taco.shop.version>
+        <cmahy.simple.spring.webapp.taco.shop.version>1.0.2</cmahy.simple.spring.webapp.taco.shop.version>
 
         <cmahy.simple.spring.webapp.taco.shop.adapter.repository.jpa.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.adapter.repository.jpa.version>
         <cmahy.simple.spring.webapp.taco.shop.adapter.repository.cassandra.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.adapter.repository.cassandra.version>
@@ -47,7 +47,7 @@
         <cmahy.simple.spring.webapp.taco.shop.kernel.application.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.kernel.application.version>
         <cmahy.simple.spring.webapp.taco.shop.it.cassandra.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.it.cassandra.version>
 
-        <cmahy.simple.spring.webapp.user.version>1.0.1</cmahy.simple.spring.webapp.user.version>
+        <cmahy.simple.spring.webapp.user.version>1.0.2</cmahy.simple.spring.webapp.user.version>
 
         <cmahy.simple.spring.webapp.user.kernel.domain.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.kernel.domain.version>
         <cmahy.simple.spring.webapp.user.kernel.vo.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.kernel.vo.version>
