@@ -31,7 +31,7 @@
     <properties>
         <cmahy.simple.spring.common.version>1.0.2</cmahy.simple.spring.common.version>
 
-        <cmahy.publisher.version>1.0.1</cmahy.publisher.version>
+        <cmahy.publisher.version>1.0.2</cmahy.publisher.version>
 
         <cmahy.publisher.api.version>${cmahy.publisher.version}</cmahy.publisher.api.version>
         <cmahy.publisher.kafka.version>${cmahy.publisher.version}</cmahy.publisher.kafka.version>
