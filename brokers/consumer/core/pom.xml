@@ -14,7 +14,7 @@
     </licenses>
     
     <artifactId>consumer-core</artifactId>
-    <version>DEV-SNAPSHOT</version>
+    <version>1.0.2</version>
 
     <name>spring-brokers-consumer-core</name>
     <description>Broker consumer core project</description>
