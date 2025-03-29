@@ -32,7 +32,7 @@
     <properties>
         <cmahy.simple.spring.common.version>1.0.2</cmahy.simple.spring.common.version>
 
-        <cmahy.simple.spring.webapp.taco.shop.kernel.version>1.0.1</cmahy.simple.spring.webapp.taco.shop.kernel.version>
+        <cmahy.simple.spring.webapp.taco.shop.kernel.version>1.0.2</cmahy.simple.spring.webapp.taco.shop.kernel.version>
 
         <cmahy.simple.spring.webapp.taco.shop.kernel.domain.version>${cmahy.simple.spring.webapp.taco.shop.kernel.version}</cmahy.simple.spring.webapp.taco.shop.kernel.domain.version>
     </properties>
