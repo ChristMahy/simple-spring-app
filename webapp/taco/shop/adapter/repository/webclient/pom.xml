@@ -15,7 +15,7 @@
 
     <groupId>cmahy.simple.spring.webapp</groupId>
     <artifactId>taco.shop.adapter.repository.webclient</artifactId>
-    <version>DEV-SNAPSHOT</version>
+    <version>1.0.2</version>
 
     <name>spring-taco-shop-adapter-repository-webclient</name>
     <description>Webapp Taco Shop Adapter Repository WebClient project</description>
