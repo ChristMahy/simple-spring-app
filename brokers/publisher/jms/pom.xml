@@ -29,7 +29,7 @@
     </parent>
 
     <properties>
-        <publisher.api.version>1.0.1</publisher.api.version>
+        <publisher.api.version>1.0.2</publisher.api.version>
     </properties>
 
     <dependencies>
