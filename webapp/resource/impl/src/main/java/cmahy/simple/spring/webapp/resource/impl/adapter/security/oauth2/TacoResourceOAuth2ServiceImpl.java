@@ -3,10 +3,9 @@ package cmahy.simple.spring.webapp.resource.impl.adapter.security.oauth2;
 import cmahy.simple.spring.webapp.resource.impl.adapter.security.config.properties.OAuth2Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.ApplicationContext;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -15,32 +14,41 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service("tacoResourceOAuth2Service")
-@ConditionalOnProperty(name = "spring-app.security.oauth2.enable", havingValue = "true")
 public class TacoResourceOAuth2ServiceImpl implements TacoResourceOAuth2Service {
 
     private static final Logger LOG = LoggerFactory.getLogger(TacoResourceOAuth2ServiceImpl.class);
 
-    private final Map<String, TacoResourceOAuth2Service> oauth2Services;
+    private final Map<String, TacoResourceOAuth2Service> oAuth2Services;
 
-    public TacoResourceOAuth2ServiceImpl(OAuth2Properties oAuth2Properties, ApplicationContext applicationContext) {
-        this.oauth2Services = mapClassToBean(oAuth2Properties, applicationContext);
+    public TacoResourceOAuth2ServiceImpl(OAuth2Properties oAuth2Properties, List<TacoResourceOAuth2Service> oAuth2Services) {
+        this.oAuth2Services = mapClassToBean(oAuth2Properties, oAuth2Services);
     }
 
-    private Map<String, TacoResourceOAuth2Service> mapClassToBean(OAuth2Properties oAuth2Properties, ApplicationContext applicationContext) {
-        Map<String, TacoResourceOAuth2Service> oAuth2Services = new HashMap<>(oAuth2Properties.oAuth2ServiceConfigurer().size());
+    private Map<String, TacoResourceOAuth2Service> mapClassToBean(OAuth2Properties oAuth2Properties, List<TacoResourceOAuth2Service> allOAuth2Services) {
 
-        oAuth2Properties.oAuth2ServiceConfigurer()
-            .forEach((key, value) -> {
-                Object bean = applicationContext.getBean(value);
+        return Optional.ofNullable(oAuth2Properties.oAuth2ServiceConfigurer())
+            .filter(oAuth2ServiceConfigurer -> !oAuth2ServiceConfigurer.isEmpty())
+            .map(oAuth2ServiceConfigurer -> {
+                Map<String, TacoResourceOAuth2Service> oAuth2Services = new HashMap<>(oAuth2ServiceConfigurer.size());
 
-                if (bean instanceof TacoResourceOAuth2Service oAuth2Service) {
-                    oAuth2Services.put(key, oAuth2Service);
-                } else {
-                    throw new IllegalArgumentException(String.format("No bean found for key '%s'", key));
-                }
-            });
+                oAuth2ServiceConfigurer.forEach((key, value) -> {
+                    List<TacoResourceOAuth2Service> beans = allOAuth2Services.stream()
+                        .filter(oAuth2Service -> oAuth2Service.getClass().equals(value))
+                        .toList();
 
-        return Collections.unmodifiableMap(oAuth2Services);
+                    if (beans.size() > 1) {
+                        throw new IllegalArgumentException(String.format("Too much beans found for key <%s>", key));
+                    } else if (beans.size() == 1) {
+                        oAuth2Services.put(key, beans.getFirst());
+                    } else {
+                        throw new IllegalArgumentException(String.format("No bean found for key <%s>", key));
+                    }
+                });
+
+                return oAuth2Services;
+            })
+            .map(Collections::unmodifiableMap)
+            .orElseGet(Collections::emptyMap);
     }
 
     @Override
@@ -49,8 +57,8 @@ public class TacoResourceOAuth2ServiceImpl implements TacoResourceOAuth2Service 
             .map(OAuth2UserRequest::getClientRegistration)
             .map(ClientRegistration::getRegistrationId);
 
-        if (registrationId.isPresent() && oauth2Services.containsKey(registrationId.get())) {
-            return oauth2Services.get(registrationId.get()).loadUser(userRequest);
+        if (registrationId.isPresent() && oAuth2Services.containsKey(registrationId.get())) {
+            return oAuth2Services.get(registrationId.get()).loadUser(userRequest);
         }
 
         LOG.warn("No OAuth2 service found for registration id <{}>", registrationId.orElse("NONE"));

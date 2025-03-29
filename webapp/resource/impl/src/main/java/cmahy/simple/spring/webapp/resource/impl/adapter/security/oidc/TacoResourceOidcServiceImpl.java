@@ -3,10 +3,10 @@ package cmahy.simple.spring.webapp.resource.impl.adapter.security.oidc;
 import cmahy.simple.spring.webapp.resource.impl.adapter.security.config.properties.OAuth2Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
@@ -15,32 +15,41 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service("tacoResourceOidcService")
-@ConditionalOnProperty(name = "spring-app.security.oauth2.enable", havingValue = "true")
 public class TacoResourceOidcServiceImpl implements TacoResourceOidcService {
 
     private static final Logger LOG = LoggerFactory.getLogger(TacoResourceOidcServiceImpl.class);
 
     private final Map<String, TacoResourceOidcService> oidcServices;
 
-    public TacoResourceOidcServiceImpl(OAuth2Properties oAuth2Properties, ApplicationContext applicationContext) {
-        this.oidcServices = mapClassToBean(oAuth2Properties, applicationContext);
+    public TacoResourceOidcServiceImpl(OAuth2Properties oAuth2Properties, List<TacoResourceOidcService> oidcServices) {
+        this.oidcServices = mapClassToBean(oAuth2Properties, oidcServices);
     }
 
-    private Map<String, TacoResourceOidcService> mapClassToBean(OAuth2Properties oAuth2Properties, ApplicationContext applicationContext) {
-        Map<String, TacoResourceOidcService> oidcServices = new HashMap<>(oAuth2Properties.oidcServiceConfigurer().size());
+    private Map<String, TacoResourceOidcService> mapClassToBean(OAuth2Properties oAuth2Properties, List<TacoResourceOidcService> allOidcServices) {
 
-        oAuth2Properties.oidcServiceConfigurer()
-            .forEach((key, value) -> {
-                Object bean = applicationContext.getBean(value);
+        return Optional.ofNullable(oAuth2Properties.oidcServiceConfigurer())
+            .filter(oidcServiceConfigurer -> !oidcServiceConfigurer.isEmpty())
+            .map(oidcServiceConfigurer -> {
+                Map<String, TacoResourceOidcService> oidcServices = new HashMap<>(oidcServiceConfigurer.size());
 
-                if (bean instanceof TacoResourceOidcService oidcService) {
-                    oidcServices.put(key, oidcService);
-                } else {
-                    throw new IllegalArgumentException(String.format("No bean found for key '%s'", key));
-                }
-            });
+                oidcServiceConfigurer.forEach((key, value) -> {
+                    List<TacoResourceOidcService> beans = allOidcServices.stream()
+                        .filter(oidcService -> oidcService.getClass().equals(value))
+                        .toList();
 
-        return Collections.unmodifiableMap(oidcServices);
+                    if (beans.size() > 1) {
+                        throw new IllegalArgumentException(String.format("Too much beans found for key <%s>", key));
+                    } else if (beans.size() == 1) {
+                        oidcServices.put(key, beans.getFirst());
+                    } else {
+                        throw new IllegalArgumentException(String.format("No bean found for key <%s>", key));
+                    }
+                });
+
+                return oidcServices;
+            })
+            .map(Collections::unmodifiableMap)
+            .orElseGet(Collections::emptyMap);
     }
 
     @Override

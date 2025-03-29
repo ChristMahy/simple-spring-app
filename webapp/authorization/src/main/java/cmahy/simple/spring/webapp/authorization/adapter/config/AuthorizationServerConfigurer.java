@@ -67,6 +67,7 @@ public class AuthorizationServerConfigurer {
             .authorizationGrantType(AUTHORIZATION_CODE)
             .authorizationGrantType(REFRESH_TOKEN)
             .redirectUri("http://clientserver:9090/login/oauth2/code/taco-admin-client-oidc")
+            .redirectUri("https://localhost:8080/login/oauth2/code/taco-admin-client-oidc")
             .redirectUri("https://localhost:8443/login/oauth2/code/taco-admin-client-oidc")
             .scope(OidcScopes.OPENID)
             .scope("ingredient.read")

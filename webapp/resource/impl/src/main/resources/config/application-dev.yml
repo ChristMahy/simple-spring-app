@@ -1,3 +1,22 @@
+spring:
+  h2:
+    console:
+      enabled: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${SIMPLE_SPRING_WEBAPP_GOOGLE_CLIENT_ID}
+            client-secret: ${SIMPLE_SPRING_WEBAPP_GOOGLE_CLIENT_SECRET}
+            scope: email, profile
+
+spring-app:
+  security:
+    oauth2:
+      o-auth2-service-configurer:
+        google: cmahy.simple.spring.webapp.resource.impl.adapter.security.oauth2.google.service.TacoResourceGoogleOAuth2ServiceImpl
+
 application:
   web-client:
     common:

@@ -7,10 +7,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.condition.*;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
-import org.springframework.context.annotation.*;
-import org.springframework.core.annotation.Order;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.Customizer;
@@ -19,12 +19,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.*;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.*;
 import org.springframework.security.web.authentication.*;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
@@ -48,7 +43,6 @@ public class SecurityConfigurer {
     }
 
     @Bean
-    @Order(1)
     @ConditionalOnExpression(
         """
             ${spring.h2.console.enabled:false} eq true or
@@ -60,44 +54,57 @@ public class SecurityConfigurer {
     public SecurityFilterChain h2ConsoleSecurityFilterChain(HttpSecurity http) throws Exception {
         PathRequest.H2ConsoleRequestMatcher h2ConsoleRequestMatcher = PathRequest.toH2Console();
 
-        return http
+        http
             .securityMatcher(h2ConsoleRequestMatcher)
-            .authorizeHttpRequests(authorized -> authorized.requestMatchers(h2ConsoleRequestMatcher).permitAll())
-            .csrf(csrf -> csrf.ignoringRequestMatchers(PathRequest.toH2Console()))
+            .authorizeHttpRequests(authorized -> authorized.anyRequest().permitAll())
+            .csrf(csrf -> csrf.ignoringRequestMatchers(h2ConsoleRequestMatcher))
             .headers(headerConfigurer -> headerConfigurer.frameOptions(
                 HeadersConfigurer.FrameOptionsConfig::sameOrigin
-            ))
+            ));
+
+        return http.build();
+    }
+
+    @Bean
+    public SecurityFilterChain exposePublicUrlsWithBasicSecurity(HttpSecurity http) throws Exception {
+        return http
+            .securityMatcher("", "/", "/without-controller", "/toggle-theme")
+            .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll())
+            .anonymous(AbstractHttpConfigurer::disable)
+            .cors(Customizer.withDefaults())
+            .csrf(this::defaultCsrfConfigurer)
+            .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.NEVER))
             .build();
     }
 
     @Bean
-    @ConditionalOnProperty(name = "spring-app.security.oauth2.enable", havingValue = "false", matchIfMissing = true)
-    @Order(100)
-    public SecurityFilterChain securityFilterChain(
-        HttpSecurity http,
-        MvcRequestMatcher.Builder mvcMatcherBuilder
-    ) throws Exception {
-
-        LOG.info("Setup normal login configuration");
-
-        return defaultSecurity(mvcMatcherBuilder, http).build();
+    public SecurityFilterChain exposeRegisterUrls(HttpSecurity http) throws Exception {
+        return http
+            .securityMatcher("/register**")
+            .authorizeHttpRequests(authorized -> authorized.anyRequest().permitAll())
+            .anonymous(AbstractHttpConfigurer::disable)
+            .cors(Customizer.withDefaults())
+            .csrf(this::defaultCsrfConfigurer)
+            .sessionManagement(this::defaultSessionConfigurer)
+            .build();
     }
 
     @Bean
-    @ConditionalOnProperty(name = "spring-app.security.oauth2.enable", havingValue = "true")
-    @Order(100)
-    public SecurityFilterChain securityFilterChainWithOAuth2(
+    public SecurityFilterChain exposeLoginUrls(
         HttpSecurity http,
-        MvcRequestMatcher.Builder mvcMatcherBuilder,
         TacoResourceOAuth2Service tacoResourceOAuth2Service,
         TacoResourceOidcService tacoResourceOidcService
     ) throws Exception {
-
-        LOG.info("OAuth2 Security Configurer active");
-
-        http.authorizeHttpRequests(registry -> registry.requestMatchers(antMatcher("/oauth2/authorization**")).permitAll());
-
-        return defaultSecurity(mvcMatcherBuilder, http)
+        return http
+            .securityMatcher(
+                "/login", "/login/**",
+                "/oauth2/authorization", "/oauth2/authorization/**"
+            )
+            .authorizeHttpRequests(authorized -> authorized.anyRequest().permitAll())
+            .formLogin(configurer ->
+                configurer
+                    .loginPage("/login")
+            )
             .oauth2Login(configurer -> {
                 configurer
                     .loginPage("/login").permitAll()
@@ -108,45 +115,86 @@ public class SecurityConfigurer {
                     });
             })
             .oauth2Client(Customizer.withDefaults())
+            .cors(Customizer.withDefaults())
+            .csrf(this::defaultCsrfConfigurer)
+            .sessionManagement(this::defaultSessionConfigurer)
             .build();
     }
 
-    private HttpSecurity defaultSecurity(
-        MvcRequestMatcher.Builder mvcMatcherBuilder,
+    @Bean
+    public SecurityFilterChain exposeLogoutUrls(HttpSecurity http) throws Exception {
+        return http
+            .securityMatcher("/logout", "/logout/**")
+            .authorizeHttpRequests(authorized -> authorized.anyRequest().permitAll())
+            .logout(configurer ->
+                configurer
+                    .logoutSuccessUrl("/")
+                    .deleteCookies("JSESSIONID")
+            )
+            .cors(Customizer.withDefaults())
+            .csrf(this::defaultCsrfConfigurer)
+            .sessionManagement(this::defaultSessionConfigurer)
+            .build();
+    }
+
+    @Bean
+    public SecurityFilterChain exposeStaticUrls(HttpSecurity http) throws Exception {
+        return http
+            .securityMatcher(PathRequest.toStaticResources().atCommonLocations())
+            .authorizeHttpRequests(registry -> registry.anyRequest().permitAll())
+            .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.NEVER))
+            .build();
+    }
+
+    @Bean
+    public SecurityFilterChain allAPIOptionMethod(HttpSecurity http) throws Exception {
+        return http
+            .securityMatcher(antMatcher(HttpMethod.OPTIONS))
+            .authorizeHttpRequests(registry -> registry.anyRequest().permitAll())
+            .build();
+    }
+
+    @Bean
+    public SecurityFilterChain allowAPIUrls(HttpSecurity http) throws Exception {
+        return http
+            .securityMatcher(antMatcher("/api/**"))
+            .authorizeHttpRequests(registry -> registry.anyRequest().fullyAuthenticated())
+            .anonymous(AbstractHttpConfigurer::disable)
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.NEVER))
+            .cors(Customizer.withDefaults())
+            .csrf(configurer -> configurer.ignoringRequestMatchers("/api/**"))
+            .httpBasic(Customizer.withDefaults())
+            .build();
+    }
+
+    @Bean
+    public SecurityFilterChain anyLeftUnsecureUrls(
         HttpSecurity http
     ) throws Exception {
         return http
+            .authorizeHttpRequests(authorize -> authorize.anyRequest().fullyAuthenticated())
             .anonymous(AbstractHttpConfigurer::disable)
-            .authorizeHttpRequests(registry -> {
-                registry
-                    .requestMatchers(antMatcher(HttpMethod.OPTIONS)).permitAll()
-                    .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                    .requestMatchers(mvcMatcherBuilder.pattern( "")).permitAll()
-                    .requestMatchers(mvcMatcherBuilder.pattern( "/")).permitAll()
-                    .requestMatchers(mvcMatcherBuilder.pattern( "/without-controller")).permitAll()
-                    .requestMatchers(mvcMatcherBuilder.pattern( "/toggle-theme")).permitAll()
-                    .requestMatchers(mvcMatcherBuilder.pattern("/register**")).permitAll()
-                    .requestMatchers(mvcMatcherBuilder.pattern("/login**")).permitAll()
-                    .anyRequest().fullyAuthenticated();
-            })
-            .csrf(csrfConfigurer -> {
-                csrfConfigurer
-                    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                    .ignoringRequestMatchers(antMatcher("/api/**"));
-            })
+            .csrf(this::defaultCsrfConfigurer)
             .cors(Customizer.withDefaults())
-            .sessionManagement(sessionConfigurer -> {
-                sessionConfigurer
-                    // TODO: Trick with stateless session doesn't work, Html thymeleaf requires a session. Explore io.jsonwebtoken ???
-                    .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                    .sessionFixation(SessionManagementConfigurer.SessionFixationConfigurer::migrateSession);
-            })
-            .logout(configurer -> configurer
-                .logoutSuccessUrl("/")
-                .deleteCookies("JSESSIONID")
+            .sessionManagement(this::defaultSessionConfigurer)
+            .exceptionHandling(exceptionHandler ->
+                exceptionHandler
+                    .authenticationEntryPoint((request, response, authenticationException) ->
+                        response.sendRedirect("/login")
+                    )
             )
-            .formLogin(configurer -> configurer.loginPage("/login"))
-            .httpBasic(Customizer.withDefaults());
+            .build();
+    }
+
+    private void defaultSessionConfigurer(SessionManagementConfigurer<HttpSecurity> sessionConfigurer) {
+        sessionConfigurer
+            .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+            .sessionFixation(SessionManagementConfigurer.SessionFixationConfigurer::migrateSession);
+    }
+
+    private void defaultCsrfConfigurer(CsrfConfigurer<HttpSecurity> csrfConfigurer) {
+        csrfConfigurer
+            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
     }
 
     private AuthenticationFailureHandler authenticationFailureHandler() {
