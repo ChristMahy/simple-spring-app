@@ -15,7 +15,7 @@
 
     <groupId>cmahy.simple.spring.webapp.user</groupId>
     <artifactId>adapter.repository.cassandra</artifactId>
-    <version>DEV-SNAPSHOT</version>
+    <version>1.0.2</version>
 
     <name>spring-user-adapter-repository-cassandra</name>
     <description>Webapp User Adapter Repository Cassandra project</description>
