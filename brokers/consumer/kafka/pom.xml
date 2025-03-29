@@ -30,7 +30,7 @@
 
     <properties>
         <common.version>1.0.2</common.version>
-        <consumer.api.version>1.0.1</consumer.api.version>
+        <consumer.api.version>1.0.2</consumer.api.version>
     </properties>
 
     <dependencies>
