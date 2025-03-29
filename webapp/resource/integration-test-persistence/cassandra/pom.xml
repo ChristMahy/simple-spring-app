@@ -15,7 +15,7 @@
 
     <groupId>cmahy.simple.spring.webapp</groupId>
     <artifactId>resource.integration.test.persistence.cassandra</artifactId>
-    <version>DEV-SNAPSHOT</version>
+    <version>1.0.2</version>
 
     <name>spring-taco-resource-it-helper-cassaandra</name>
     <description>Webapp Taco Resource Integration Test Persistence Helper - Cassandra</description>
