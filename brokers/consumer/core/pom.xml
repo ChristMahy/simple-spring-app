@@ -24,19 +24,19 @@
     <parent>
         <groupId>cmahy.simple.spring</groupId>
         <artifactId>bom</artifactId>
-        <version>1.0.2</version>
+        <version>1.0.3</version>
         <relativePath/>
     </parent>
 
     <properties>
-        <cmahy.common.version>1.0.1</cmahy.common.version>
+        <cmahy.common.version>1.0.2</cmahy.common.version>
 
         <cmahy.consumer.version>1.0.1</cmahy.consumer.version>
 
-        <cmahy.consumer.api.version>${cmahy.common.version}</cmahy.consumer.api.version>
-        <cmahy.consumer.jms.version>${cmahy.common.version}</cmahy.consumer.jms.version>
-        <cmahy.consumer.kafka.version>${cmahy.common.version}</cmahy.consumer.kafka.version>
-        <cmahy.consumer.rabbitmq.version>${cmahy.common.version}</cmahy.consumer.rabbitmq.version>
+        <cmahy.consumer.api.version>${cmahy.consumer.version}</cmahy.consumer.api.version>
+        <cmahy.consumer.jms.version>${cmahy.consumer.version}</cmahy.consumer.jms.version>
+        <cmahy.consumer.kafka.version>${cmahy.consumer.version}</cmahy.consumer.kafka.version>
+        <cmahy.consumer.rabbitmq.version>${cmahy.consumer.version}</cmahy.consumer.rabbitmq.version>
 
         <start-class>cmahy.simple.spring.brokers.consumer.core.adapter.ConsumerApplication</start-class>
     </properties>

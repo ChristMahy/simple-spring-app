@@ -24,12 +24,12 @@
     <parent>
         <groupId>cmahy.simple.spring</groupId>
         <artifactId>bom</artifactId>
-        <version>1.0.2</version>
+        <version>1.0.3</version>
         <relativePath/>
     </parent>
 
     <properties>
-        <common.version>1.0.1</common.version>
+        <common.version>1.0.2</common.version>
         <consumer.api.version>1.0.1</consumer.api.version>
     </properties>
 
