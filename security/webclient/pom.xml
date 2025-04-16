@@ -6,20 +6,17 @@
 >
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>cmahy</groupId>
-    <artifactId>all</artifactId>
+    <groupId>cmahy.simple.spring.security</groupId>
+    <artifactId>webclient</artifactId>
     <version>DEV-SNAPSHOT</version>
+
+    <name>WebClient-Security</name>
+    <description>Some common WebClient's security</description>
 
     <packaging>pom</packaging>
 
-    <name>all</name>
-    <description>Spring Brokers sample project</description>
-
     <modules>
-        <module>bom</module>
-        <module>brokers</module>
-        <module>common</module>
-        <module>webapp</module>
-        <module>security</module>
+        <module>api</module>
+        <module>impl</module>
     </modules>
 </project>
