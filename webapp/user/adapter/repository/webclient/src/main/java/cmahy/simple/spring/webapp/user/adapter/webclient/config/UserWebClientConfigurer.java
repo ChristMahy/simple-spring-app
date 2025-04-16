@@ -1,8 +1,10 @@
 package cmahy.simple.spring.webapp.user.adapter.webclient.config;
 
+import cmahy.simple.spring.security.webclient.api.filter.factory.ExchangeFilterAuthorizationHeaderFactory;
 import cmahy.simple.spring.webapp.user.adapter.webclient.config.properties.user.SslOption;
 import cmahy.simple.spring.webapp.user.adapter.webclient.config.properties.user.UserProperties;
 import cmahy.simple.spring.webapp.user.adapter.webclient.config.properties.webclient.WebClientProperties;
+import cmahy.simple.spring.webapp.user.adapter.webclient.annotation.security.UserExchangeFilter;
 import io.netty.channel.ChannelOption;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
@@ -14,7 +16,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.boot.ssl.SslBundle;
 import org.springframework.boot.ssl.SslBundles;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.netty.http.client.HttpClient;
@@ -26,8 +29,6 @@ import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-
-import static org.springframework.web.reactive.function.client.ExchangeFilterFunctions.basicAuthentication;
 
 @AutoConfiguration
 @ConditionalOnProperty(value = UserWebClientConfigurer.USER_WEBCLIENT_ACTIVE, havingValue = "true")
@@ -45,7 +46,8 @@ public class UserWebClientConfigurer {
     public WebClient userResource(
         UserProperties userProperties,
         WebClientProperties webClientProperties,
-        WebClient.Builder webClientBuilder
+        WebClient.Builder webClientBuilder,
+        @UserExchangeFilter ExchangeFilterAuthorizationHeaderFactory exchangeFilterAuthorizationHeaderFactory
     ) {
         HttpClient httpClient = HttpClient.create()
             .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, Long.valueOf(webClientProperties.common().connectTimeout().toMillis()).intValue())
@@ -57,10 +59,7 @@ public class UserWebClientConfigurer {
 
         return webClientBuilder
             .baseUrl(userProperties.externalResource().baseUrl())
-            .filter(basicAuthentication(
-                webClientProperties.user().credentials().usernameToString(),
-                webClientProperties.user().credentials().passwordToString()
-            ))
+            .filter(exchangeFilterAuthorizationHeaderFactory.create())
             .clientConnector(new ReactorClientHttpConnector(httpClient))
             .build();
     }
@@ -71,7 +70,8 @@ public class UserWebClientConfigurer {
         UserProperties userProperties,
         WebClientProperties webClientProperties,
         WebClient.Builder webClientBuilder,
-        SslContext userSslContext
+        SslContext userSslContext,
+        @UserExchangeFilter ExchangeFilterAuthorizationHeaderFactory exchangeFilterAuthorizationHeaderFactory
     ) {
         HttpClient httpClient = HttpClient.create()
             .secure(sslContextSpec -> sslContextSpec.sslContext(userSslContext))
@@ -84,10 +84,7 @@ public class UserWebClientConfigurer {
 
         return webClientBuilder
             .baseUrl(userProperties.externalResource().baseUrl())
-            .filter(basicAuthentication(
-                webClientProperties.user().credentials().usernameToString(),
-                webClientProperties.user().credentials().passwordToString()
-            ))
+            .filter(exchangeFilterAuthorizationHeaderFactory.create())
             .clientConnector(new ReactorClientHttpConnector(httpClient))
             .build();
     }
