@@ -23,7 +23,7 @@
     <packaging>jar</packaging>
 
     <properties>
-        <cmahy.simple.spring.security.webclient.api.version>DEV-SNAPSHOT</cmahy.simple.spring.security.webclient.api.version>
+        <cmahy.simple.spring.security.webclient.api.version>1.0.0</cmahy.simple.spring.security.webclient.api.version>
 
         <cmahy.simple.spring.common.version>1.0.2</cmahy.simple.spring.common.version>
     </properties>
