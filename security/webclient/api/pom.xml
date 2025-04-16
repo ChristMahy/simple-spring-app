@@ -8,7 +8,7 @@
 
     <groupId>cmahy.simple.spring.security</groupId>
     <artifactId>webclient.api</artifactId>
-    <version>DEV-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <name>WebClient-Security-API</name>
     <description>Some common WebClient's security API</description>
