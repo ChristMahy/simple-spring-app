@@ -1,0 +1,32 @@
+name: Run User Adapter package publisher
+
+on:
+  push:
+    tags:
+      - 'security/webclient/\d+/api-\d+\.\d+\.\d+'
+      - 'security/webclient/\d+/impl-\d+\.\d+\.\d+'
+
+jobs:
+  publish:
+    name: Publish Common Security (${{github.ref_name}})
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout commit ${{github.sha}}
+        uses: actions/checkout@v4
+
+      - name: Publish Security WebClient API package
+        if: startsWith(github.ref, 'refs/tags/security/webclient') && contains(github.ref, 'api')
+        uses: ./.github/workflows/publish
+        with:
+          working-directory: security/webclient/api
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish Security WebClient Impl package
+        if: startsWith(github.ref, 'refs/tags/security/webclient') && contains(github.ref, 'impl')
+        uses: ./.github/workflows/publish
+        with:
+          working-directory: security/webclient/impl
+          github-token: ${{ secrets.GITHUB_TOKEN }}
