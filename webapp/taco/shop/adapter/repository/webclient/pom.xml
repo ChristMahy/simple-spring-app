@@ -41,6 +41,8 @@
 
         <cmahy.simple.spring.webapp.taco.shop.domain.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.domain.version>
         <cmahy.simple.spring.webapp.taco.shop.application.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.application.version>
+
+        <cmahy.simple.spring.security.webclient.api.version>1.0.0</cmahy.simple.spring.security.webclient.api.version>
     </properties>
 
     <dependencies>
@@ -73,6 +75,12 @@
         </dependency>
 
         <dependency>
+            <groupId>cmahy.simple.spring.security</groupId>
+            <artifactId>webclient.api</artifactId>
+            <version>${cmahy.simple.spring.security.webclient.api.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>jakarta.inject</groupId>
             <artifactId>jakarta.inject-api</artifactId>
         </dependency>
@@ -83,8 +91,8 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webflux</artifactId>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webflux</artifactId>
         </dependency>
 
         <dependency>

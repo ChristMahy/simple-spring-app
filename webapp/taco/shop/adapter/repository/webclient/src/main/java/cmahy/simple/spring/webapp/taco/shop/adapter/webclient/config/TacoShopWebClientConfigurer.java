@@ -1,16 +1,19 @@
 package cmahy.simple.spring.webapp.taco.shop.adapter.webclient.config;
 
-import cmahy.simple.spring.webapp.taco.shop.adapter.webclient.config.primary.*;
+import cmahy.simple.spring.security.webclient.api.filter.factory.ExchangeFilterAuthorizationHeaderFactory;
 import cmahy.simple.spring.webapp.taco.shop.adapter.webclient.config.primary.*;
 import cmahy.simple.spring.webapp.taco.shop.adapter.webclient.config.properties.ingredient.IngredientProperties;
 import cmahy.simple.spring.webapp.taco.shop.adapter.webclient.config.properties.ingredient.SslOption;
 import cmahy.simple.spring.webapp.taco.shop.adapter.webclient.config.properties.webclient.WebClientProperties;
+import cmahy.simple.spring.webapp.taco.shop.adapter.webclient.annotation.security.TacoShopExchangeFilter;
 import io.netty.channel.ChannelOption;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.handler.timeout.WriteTimeoutHandler;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
@@ -28,8 +31,6 @@ import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-
-import static org.springframework.web.reactive.function.client.ExchangeFilterFunctions.basicAuthentication;
 
 @AutoConfiguration
 @ConditionalOnProperty(value = TacoShopWebClientConfigurer.TACO_SHOP_WEBCLIENT_ACTIVE, havingValue = "true")
@@ -55,7 +56,8 @@ public class TacoShopWebClientConfigurer {
     public WebClient tacoResource(
         IngredientProperties ingredientProperties,
         WebClientProperties webClientProperties,
-        WebClient.Builder webClientBuilder
+        WebClient.Builder webClientBuilder,
+        @TacoShopExchangeFilter ExchangeFilterAuthorizationHeaderFactory exchangeFilterAuthorizationHeaderFactory
     ) {
         HttpClient httpClient = HttpClient.create()
             .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, Long.valueOf(webClientProperties.common().connectTimeout().toMillis()).intValue())
@@ -67,13 +69,12 @@ public class TacoShopWebClientConfigurer {
 
         return webClientBuilder
             .baseUrl(ingredientProperties.externalResource().baseUrl())
-            .filter(basicAuthentication(
-                webClientProperties.taco().credentials().usernameToString(),
-                webClientProperties.taco().credentials().passwordToString()
-            ))
+            .filter(exchangeFilterAuthorizationHeaderFactory.create())
             .clientConnector(new ReactorClientHttpConnector(httpClient))
             .build();
     }
+
+    private static final Logger LOG = LoggerFactory.getLogger(TacoShopWebClientConfigurer.class);
 
     @Bean(name = "tacoResource")
     @ConditionalOnProperty(name = TacoShopWebClientConfigurer.SSL_ACTIVATION_PROPERTY_NAME, havingValue = "true")
@@ -81,7 +82,8 @@ public class TacoShopWebClientConfigurer {
         IngredientProperties ingredientProperties,
         WebClientProperties webClientProperties,
         WebClient.Builder webClientBuilder,
-        SslContext tacoSslContext
+        SslContext tacoSslContext,
+        @TacoShopExchangeFilter ExchangeFilterAuthorizationHeaderFactory exchangeFilterAuthorizationHeaderFactory
     ) {
         HttpClient httpClient = HttpClient.create()
             .secure(sslContextSpec -> sslContextSpec.sslContext(tacoSslContext))
@@ -94,10 +96,7 @@ public class TacoShopWebClientConfigurer {
 
         return webClientBuilder
             .baseUrl(ingredientProperties.externalResource().baseUrl())
-            .filter(basicAuthentication(
-                webClientProperties.taco().credentials().usernameToString(),
-                webClientProperties.taco().credentials().passwordToString()
-            ))
+            .filter(exchangeFilterAuthorizationHeaderFactory.create())
             .clientConnector(new ReactorClientHttpConnector(httpClient))
             .build();
     }

@@ -7,7 +7,6 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 @ConfigurationProperties(prefix = "application.web-client")
 public record WebClientProperties(
-    @Valid WebClientCommonProperties common,
-    @Valid WebClientTacoProperties taco
+    @Valid WebClientCommonProperties common
 ) {
 }
