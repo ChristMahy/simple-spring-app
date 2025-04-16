@@ -1,4 +1,4 @@
-name: Run User Adapter package publisher
+name: Run Security package publisher
 
 on:
   push:
