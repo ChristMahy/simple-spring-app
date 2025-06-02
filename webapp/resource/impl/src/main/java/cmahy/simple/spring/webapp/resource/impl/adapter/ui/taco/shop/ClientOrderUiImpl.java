@@ -35,7 +35,7 @@ public class ClientOrderUiImpl implements ClientOrderUi {
     }
 
     @Override
-    @PreAuthorize("hasRole(@preAuthorizeScope.GUEST)")
+    @PreAuthorize("hasRole(@preAuthorizeAuthorities.GUEST)")
     public String current(Model model) {
         if (!model.containsAttribute(TACOS) || ((List<TacoInputVo>) model.getAttribute(TACOS)).isEmpty()) {
             return "redirect:" + TacoUriConstant.Design.DESIGN_BASE_URL;
@@ -61,7 +61,7 @@ public class ClientOrderUiImpl implements ClientOrderUi {
     }
 
     @Override
-    @PreAuthorize("hasRole(@preAuthorizeScope.GUEST)")
+    @PreAuthorize("hasRole(@preAuthorizeAuthorities.GUEST)")
     @Transactional
     public String saveOrder(
         Model model,
@@ -98,7 +98,7 @@ public class ClientOrderUiImpl implements ClientOrderUi {
     }
 
     @Override
-    @PreAuthorize("hasRole(@preAuthorizeScope.GUEST)")
+    @PreAuthorize("hasRole(@preAuthorizeAuthorities.GUEST)")
     public String saveOrder(
         Model model,
         ClientOrderInputVo tacoOrder

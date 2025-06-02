@@ -35,7 +35,7 @@ public class SingleFileApiImpl implements SingleFileApi {
     }
 
     @Override
-    @PreAuthorize("hasAuthority(@preAuthorizeScope.GUEST)")
+    @PreAuthorize("hasAuthority(@preAuthorizeAuthorities.GUEST)")
     public ResponseEntity<StreamingResponseBody> readme(Optional<Boolean> onFailure) throws IOException {
 
         LOG.info("Build http response");

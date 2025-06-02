@@ -30,7 +30,7 @@ public class ZipApiImpl implements ZipApi {
     }
 
     @Override
-    @PreAuthorize("hasAuthority(@preAuthorizeScope.GUEST)")
+    @PreAuthorize("hasAuthority(@preAuthorizeAuthorities.GUEST)")
     public ResponseEntity<StreamingResponseBody> makeAZip(Optional<Boolean> onFailure) throws IOException {
         var streamVisitor = streamVisitorFactory.create();
 

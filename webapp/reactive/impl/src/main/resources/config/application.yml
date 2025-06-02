@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: 'todo-server'
+  datasource:
+    generate-unique-name: false
+    name: todo-server
+  r2dbc:
+    url: r2dbc:h2:mem:///${spring.datasource.name}?options=DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL
+    username: sa
+    password:
+  mvc:
+    async:
+      request-timeout: 10m

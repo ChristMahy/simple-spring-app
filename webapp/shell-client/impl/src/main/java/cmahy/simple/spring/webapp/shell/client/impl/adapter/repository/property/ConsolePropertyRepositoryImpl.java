@@ -1,21 +1,21 @@
 package cmahy.simple.spring.webapp.shell.client.impl.adapter.repository.property;
 
+import cmahy.simple.spring.webapp.shell.client.impl.adapter.config.properties.ApplicationProperties;
 import cmahy.simple.spring.webapp.shell.client.impl.application.repository.property.ConsolePropertyRepository;
 import cmahy.simple.spring.webapp.shell.client.impl.application.vo.property.console.ConsolePropertyVo;
 import cmahy.simple.spring.webapp.shell.client.impl.application.vo.property.console.OutputPropertyVo;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.bind.ConstructorBinding;
+import jakarta.inject.Named;
 
 import java.util.Optional;
 
-@ConfigurationProperties(prefix = "application")
+@Named
 public class ConsolePropertyRepositoryImpl implements ConsolePropertyRepository {
 
     private final Optional<ConsolePropertyVo> consolePropertyVo;
 
-    @ConstructorBinding
-    public ConsolePropertyRepositoryImpl(ConsolePropertyVo console) {
-        this.consolePropertyVo = Optional.ofNullable(console);
+    public ConsolePropertyRepositoryImpl(ApplicationProperties applicationProperties) {
+        this.consolePropertyVo = Optional.ofNullable(applicationProperties)
+            .map(ApplicationProperties::console);
     }
 
     @Override

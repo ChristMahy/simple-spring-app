@@ -2,7 +2,8 @@ package cmahy.simple.spring.webapp.shell.client.impl.adapter.api.taco.shop.ingre
 
 import cmahy.simple.spring.common.entity.page.DefaultEntityPageableImpl;
 import cmahy.simple.spring.webapp.shell.client.api.taco.shop.ingredient.IngredientApi;
-import cmahy.simple.spring.webapp.shell.client.impl.adapter.config.properties.ingredient.IngredientProperties;
+import cmahy.simple.spring.webapp.shell.client.impl.adapter.config.properties.ApplicationProperties;
+import cmahy.simple.spring.webapp.shell.client.impl.adapter.config.properties.taco.ingredient.IngredientProperties;
 import cmahy.simple.spring.webapp.shell.client.impl.application.query.PrintMessageQuery;
 import cmahy.simple.spring.webapp.shell.client.impl.application.repository.property.ConsolePropertyRepository;
 import cmahy.simple.spring.webapp.taco.shop.kernel.application.query.GetAllRemoteIngredientPagedQuery;
@@ -30,12 +31,12 @@ public class IngredientApiImpl extends IngredientApi {
         PrintMessageQuery printMessageQuery,
         ConsolePropertyRepository consolePropertyRepository,
         GetAllRemoteIngredientPagedQuery getAllIngredientPagedQuery,
-        IngredientProperties ingredientProperties
+        ApplicationProperties applicationProperties
     ) {
         this.printMessageQuery = printMessageQuery;
         this.consolePropertyRepository = consolePropertyRepository;
         this.getAllIngredientPagedQuery = getAllIngredientPagedQuery;
-        this.ingredientProperties = ingredientProperties;
+        this.ingredientProperties = applicationProperties.taco().ingredients();
     }
 
     @Override

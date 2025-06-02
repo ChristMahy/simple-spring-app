@@ -37,13 +37,11 @@ public class TacoResourceOidcServiceImpl implements TacoResourceOidcService {
                         .filter(oidcService -> oidcService.getClass().equals(value))
                         .toList();
 
-                    if (beans.size() > 1) {
-                        throw new IllegalArgumentException(String.format("Too much beans found for key <%s>", key));
-                    } else if (beans.size() == 1) {
-                        oidcServices.put(key, beans.getFirst());
-                    } else {
-                        throw new IllegalArgumentException(String.format("No bean found for key <%s>", key));
+                    if (beans.size() != 1) {
+                        throw new IllegalArgumentException(String.format("<%d> bean(s) found for key <%s>", beans.size(), key));
                     }
+
+                    oidcServices.put(key, beans.getFirst());
                 });
 
                 return oidcServices;

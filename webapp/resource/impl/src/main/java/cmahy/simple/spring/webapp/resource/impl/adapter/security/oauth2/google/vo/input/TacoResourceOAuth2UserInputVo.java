@@ -9,6 +9,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import java.util.Collection;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class TacoResourceOAuth2UserInputVo implements OAuth2User, TacoResourceUserSecurityInputVo {
 
@@ -19,8 +20,17 @@ public class TacoResourceOAuth2UserInputVo implements OAuth2User, TacoResourceUs
     public TacoResourceOAuth2UserInputVo(OAuth2User oAuth2User, UserSecurityOutputAppVo userSecurity) {
         this.oAuth2User = oAuth2User;
         this.userSecurity = userSecurity;
-        this.authorities = userSecurity.roles().stream()
-            .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
+
+        this.authorities = Stream.concat(
+                /*
+                Pour ajouter un scope il faut un intermediaire,
+                sinon il faut passer le chemin officiel de Google et mettre la (grosse) machine administrative en route...
+                ou passer tout simplement par un keycloak (l'intermediaire)...
+                 */
+                oAuth2User.getAuthorities().stream(),
+                userSecurity.roles().stream()
+                    .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
+            )
             .collect(Collectors.toUnmodifiableSet());
     }
 

@@ -29,6 +29,11 @@
     <properties>
         <cmahy.simple.spring.common.version>1.0.2</cmahy.simple.spring.common.version>
 
+        <cmahy.simple.spring.security.common.version>DEV-SNAPSHOT</cmahy.simple.spring.security.common.version>
+
+        <cmahy.simple.spring.security.common.api.version>${cmahy.simple.spring.security.common.version}</cmahy.simple.spring.security.common.api.version>
+        <cmahy.simple.spring.security.common.impl.version>${cmahy.simple.spring.security.common.version}</cmahy.simple.spring.security.common.impl.version>
+
         <start-class>cmahy.simple.spring.webapp.authorization.adapter.AuthorizationApplication</start-class>
     </properties>
 
@@ -41,6 +46,18 @@
             </activation>
 
             <dependencies>
+                <dependency>
+                    <groupId>cmahy.simple.spring.security</groupId>
+                    <artifactId>common.api</artifactId>
+                    <version>${cmahy.simple.spring.security.common.api.version}</version>
+                </dependency>
+
+                <dependency>
+                    <groupId>cmahy.simple.spring.security</groupId>
+                    <artifactId>common.impl</artifactId>
+                    <version>${cmahy.simple.spring.security.common.impl.version}</version>
+                </dependency>
+
                 <dependency>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-actuator</artifactId>
@@ -83,6 +100,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
         <dependency>

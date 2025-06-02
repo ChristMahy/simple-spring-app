@@ -1,13 +1,11 @@
 package cmahy.simple.spring.webapp.shell.client.impl.adapter.config.properties.webclient;
 
+import cmahy.simple.spring.webapp.shell.client.impl.adapter.config.properties.webclient.tacoshop.TacoShopWebClientProperties;
+import cmahy.simple.spring.webapp.shell.client.impl.adapter.config.properties.webclient.user.UserWebClientProperties;
 import jakarta.validation.Valid;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.validation.annotation.Validated;
 
-@Validated
-@ConfigurationProperties(prefix = "application.web-client")
 public record WebClientProperties(
-    @Valid WebClientCommonProperties common,
-    @Valid WebClientTacoProperties taco
+    @Valid UserWebClientProperties user,
+    @Valid TacoShopWebClientProperties tacoShop
 ) {
 }

@@ -1,0 +1,12 @@
+{
+  "keys": [
+    {
+      "kid": "spring-web-app.api",
+      "kty": "RSA",
+      "use": "sig",
+      "alg": "RS256",
+      "n": "sK1GJgExagdWbsut-FkFhoV3RPd0I1QaeshJ6dmGZTsRoUowm7N-NdHsMHNU7F2hJa4pEpaqZf39fGWFwVOlww7a-giF1B9gcdZFofNyTOldheDjmWSPuOzh4PPE_-bz8o4XXkNY8KZ0Gvotc75CKx_4MbSnC0SUrkaxIcAEUDX86h2POoOiaLYVNKTrcKp6b8yjlhvdEz4bhZLSegSIX39L-7r3Quravs3xupPBmvaSzc6zvhbUmHOIPEDcDx5ZrlZR1dSk1W93yly7Eitmtskb5QVjTysAffekVkIhIm4WHxfs7nhO03ZZyDcc_Dbcw4Mxrk8jhHXbJYvfkkDMhBgVDHyfhBs9jRHsKd1nT268qZmuB-o7ROB8CggP2-ol8oe2GczPiv4bLNXfak5V0exZVk7S4cBXaIKRVj1E48utFc9uqzX0XQFtoAgmXItQDQdI5B5HON4HNBgwlYQA7I7XIqqKHsq8-JD6EpvDNr1I_xS7QEFn6eGLwB2y7BvfGw2rr_dPudzmZnSbU_3rgyH0eqEkO21ZOfmCcmWRcGX5Al_qIYijkQdehtb1fiTC1mnYy_DDUXIFTZk-_2uzrBOViQUhACfrd4mLpYx79QieaESDeQlKi_9d9Fz83REQx76gbNcX3KviF4E7CVVgxIUEcygMXyATOSXHcyr_xJ0",
+      "e": "AQAB"
+    }
+  ]
+}

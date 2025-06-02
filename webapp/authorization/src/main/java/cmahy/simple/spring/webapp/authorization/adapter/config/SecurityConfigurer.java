@@ -45,11 +45,11 @@ public class SecurityConfigurer {
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-            .authorizeHttpRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
-//            .csrf(csrfConfigurer -> {
-//                csrfConfigurer
-//                    .ignoringRequestMatchers(toH2Console());
-//            })
+            .authorizeHttpRequests(authorizeRequests -> authorizeRequests.anyRequest().fullyAuthenticated())
+            .csrf(csrfConfigurer -> {
+                csrfConfigurer
+                    .ignoringRequestMatchers(toH2Console());
+            })
             .headers(headersConfigurer -> {
                 headersConfigurer
                     .frameOptions(

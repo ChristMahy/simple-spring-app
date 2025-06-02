@@ -1,9 +1,9 @@
 package cmahy.simple.spring.webapp.user.adapter.webclient.config;
 
-import cmahy.simple.spring.security.webclient.api.filter.factory.ExchangeFilterAuthorizationHeaderFactory;
+import cmahy.simple.spring.security.client.api.webclient.filter.factory.ExchangeFilterAuthorizationHeaderFactory;
 import cmahy.simple.spring.webapp.user.adapter.webclient.config.properties.user.SslOption;
 import cmahy.simple.spring.webapp.user.adapter.webclient.config.properties.user.UserProperties;
-import cmahy.simple.spring.webapp.user.adapter.webclient.config.properties.webclient.WebClientProperties;
+import cmahy.simple.spring.webapp.user.adapter.webclient.config.properties.webclient.UserWebClientProperties;
 import cmahy.simple.spring.webapp.user.adapter.webclient.annotation.security.UserExchangeFilter;
 import io.netty.channel.ChannelOption;
 import io.netty.handler.ssl.SslContext;
@@ -32,10 +32,9 @@ import java.util.concurrent.TimeUnit;
 
 @AutoConfiguration
 @ConditionalOnProperty(value = UserWebClientConfigurer.USER_WEBCLIENT_ACTIVE, havingValue = "true")
-@ConfigurationPropertiesScan(basePackageClasses = {WebClientProperties.class, UserProperties.class})
+@ConfigurationPropertiesScan(basePackageClasses = {UserWebClientProperties.class, UserProperties.class})
 @ComponentScan({
-    "cmahy.simple.spring.webapp.user.adapter.webclient.repository",
-    "cmahy.simple.spring.webapp.user.adapter.webclient.entity.id.factory"
+    "cmahy.simple.spring.webapp.user.adapter.webclient.repository"
 })
 public class UserWebClientConfigurer {
     protected static final String USER_WEBCLIENT_ACTIVE = "application.user.webclient.enabled";
@@ -45,16 +44,16 @@ public class UserWebClientConfigurer {
     @ConditionalOnProperty(name = UserWebClientConfigurer.SSL_ACTIVATION_PROPERTY_NAME, havingValue = "false", matchIfMissing = true)
     public WebClient userResource(
         UserProperties userProperties,
-        WebClientProperties webClientProperties,
+        UserWebClientProperties userWebClientProperties,
         WebClient.Builder webClientBuilder,
         @UserExchangeFilter ExchangeFilterAuthorizationHeaderFactory exchangeFilterAuthorizationHeaderFactory
     ) {
         HttpClient httpClient = HttpClient.create()
-            .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, Long.valueOf(webClientProperties.common().connectTimeout().toMillis()).intValue())
-            .responseTimeout(webClientProperties.common().responseTimeout())
+            .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, Long.valueOf(userWebClientProperties.common().connectTimeout().toMillis()).intValue())
+            .responseTimeout(userWebClientProperties.common().responseTimeout())
             .doOnConnected(connection -> connection
-                .addHandlerLast(new ReadTimeoutHandler(webClientProperties.common().readTimeout().toMillis(), TimeUnit.MILLISECONDS))
-                .addHandlerLast(new WriteTimeoutHandler(webClientProperties.common().writeTimeout().toMillis(), TimeUnit.MILLISECONDS))
+                .addHandlerLast(new ReadTimeoutHandler(userWebClientProperties.common().readTimeout().toMillis(), TimeUnit.MILLISECONDS))
+                .addHandlerLast(new WriteTimeoutHandler(userWebClientProperties.common().writeTimeout().toMillis(), TimeUnit.MILLISECONDS))
             );
 
         return webClientBuilder
@@ -68,18 +67,18 @@ public class UserWebClientConfigurer {
     @ConditionalOnProperty(name = UserWebClientConfigurer.SSL_ACTIVATION_PROPERTY_NAME, havingValue = "true")
     public WebClient userResourceSsl(
         UserProperties userProperties,
-        WebClientProperties webClientProperties,
+        UserWebClientProperties userWebClientProperties,
         WebClient.Builder webClientBuilder,
         SslContext userSslContext,
         @UserExchangeFilter ExchangeFilterAuthorizationHeaderFactory exchangeFilterAuthorizationHeaderFactory
     ) {
         HttpClient httpClient = HttpClient.create()
             .secure(sslContextSpec -> sslContextSpec.sslContext(userSslContext))
-            .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, Long.valueOf(webClientProperties.common().connectTimeout().toMillis()).intValue())
-            .responseTimeout(webClientProperties.common().responseTimeout())
+            .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, Long.valueOf(userWebClientProperties.common().connectTimeout().toMillis()).intValue())
+            .responseTimeout(userWebClientProperties.common().responseTimeout())
             .doOnConnected(connection -> connection
-                .addHandlerLast(new ReadTimeoutHandler(webClientProperties.common().readTimeout().toMillis(), TimeUnit.MILLISECONDS))
-                .addHandlerLast(new WriteTimeoutHandler(webClientProperties.common().writeTimeout().toMillis(), TimeUnit.MILLISECONDS))
+                .addHandlerLast(new ReadTimeoutHandler(userWebClientProperties.common().readTimeout().toMillis(), TimeUnit.MILLISECONDS))
+                .addHandlerLast(new WriteTimeoutHandler(userWebClientProperties.common().writeTimeout().toMillis(), TimeUnit.MILLISECONDS))
             );
 
         return webClientBuilder

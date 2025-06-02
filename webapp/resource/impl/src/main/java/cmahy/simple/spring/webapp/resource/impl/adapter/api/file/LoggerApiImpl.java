@@ -15,7 +15,7 @@ public class LoggerApiImpl implements LoggerApi {
     }
 
     @Override
-    @PreAuthorize("hasRole(@preAuthorizeScope.GUEST)")
+    @PreAuthorize("hasRole(@preAuthorizeAuthorities.GUEST)")
     public void logSomeText(String line) {
         logTextWithLoggerCommand.execute(line);
     }

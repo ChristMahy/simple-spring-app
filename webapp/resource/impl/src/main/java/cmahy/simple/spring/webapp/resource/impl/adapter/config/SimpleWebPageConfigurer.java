@@ -13,7 +13,8 @@ public class SimpleWebPageConfigurer implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/without-controller").setViewName("no-controller");
-        registry.addViewController("/error");
+        registry.addViewController("/error").setViewName("error");
+        registry.addViewController("/access-denied").setViewName("access-denied");
     }
 
     @Override

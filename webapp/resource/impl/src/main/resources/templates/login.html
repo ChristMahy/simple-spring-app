@@ -56,19 +56,12 @@
 
     </form>
 
-    <div>
-        <table>
-            <tbody>
-            <tr>
-                <td>
-                    <a th:href="@{/oauth2/authorization/google}">Google</a>
-                </td>
-                <td>
-                    <a th:href="@{/oauth2/authorization/taco-admin-client-oidc}">Spring Authorization</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <div th:if="${registrations} != null and ${registrations.size()} > 0" class="registrations-links">
+        <a
+            th:each="registration : ${registrations}"
+            th:href="@{/oauth2/authorization/{id}(id=${registration.id})}"
+            th:text="${registration.name}"
+        ></a>
     </div>
 </th:block>
 </body>

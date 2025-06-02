@@ -56,7 +56,7 @@ public class DesignUiImpl implements DesignUi {
     }
 
     @Override
-    @PreAuthorize("hasRole(@preAuthorizeScope.GUEST)")
+    @PreAuthorize("hasRole(@preAuthorizeAuthorities.GUEST)")
     public String designForm(Model model) {
         model.addAttribute(TACO, new TacoInputVo(
             "", new HashSet<>(0)
@@ -70,7 +70,7 @@ public class DesignUiImpl implements DesignUi {
     }
 
     @Override
-    @PreAuthorize("hasRole(@preAuthorizeScope.GUEST)")
+    @PreAuthorize("hasRole(@preAuthorizeAuthorities.GUEST)")
     public String addDesignTaco(
         Model model,
         TacoInputVo taco,
@@ -91,7 +91,7 @@ public class DesignUiImpl implements DesignUi {
     }
 
     @Override
-    @PreAuthorize("hasRole(@preAuthorizeScope.GUEST)")
+    @PreAuthorize("hasRole(@preAuthorizeAuthorities.GUEST)")
     public String saveDesignTaco(
         TacoInputVo taco,
         Errors errors,

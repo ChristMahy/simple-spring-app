@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+        xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>cmahy.simple.spring.webapp.reactive</groupId>
+    <artifactId>resource.impl</artifactId>
+    <version>DEV-SNAPSHOT</version>
+
+    <name>Todo - Reactive resources - Implementation</name>
+
+    <parent>
+        <groupId>cmahy.simple.spring</groupId>
+        <artifactId>bom</artifactId>
+        <version>1.0.3</version>
+        <relativePath />
+    </parent>
+
+    <packaging>jar</packaging>
+
+    <properties>
+        <cmahy.common.version>1.0.2</cmahy.common.version>
+
+        <cmahy.resource.reactive.api.version>DEV-SNAPSHOT</cmahy.resource.reactive.api.version>
+
+        <start-class>cmahy.simple.spring.webapp.reactive.resource.impl.adapter.ReactiveApplication</start-class>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+
+            <dependencies>
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-devtools</artifactId>
+                    <scope>runtime</scope>
+                    <optional>true</optional>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+
+    <dependencies>
+        <dependency>
+            <groupId>cmahy.simple.spring</groupId>
+            <artifactId>common</artifactId>
+            <version>${cmahy.common.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy.simple.spring.webapp.reactive</groupId>
+            <artifactId>resource.api</artifactId>
+            <version>${cmahy.resource.reactive.api.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.inject</groupId>
+            <artifactId>jakarta.inject-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-r2dbc</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.r2dbc</groupId>
+            <artifactId>r2dbc-h2</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-test</artifactId>
+        </dependency>
+    </dependencies>
+
+    <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://repo1.maven.org/maven2</url>
+        </repository>
+
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/ChristMahy/simple-spring-app</url>
+        </repository>
+    </repositories>
+</project>

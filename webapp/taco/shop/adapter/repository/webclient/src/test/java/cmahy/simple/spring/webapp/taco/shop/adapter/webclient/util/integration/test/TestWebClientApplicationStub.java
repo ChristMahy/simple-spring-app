@@ -2,7 +2,7 @@ package cmahy.simple.spring.webapp.taco.shop.adapter.webclient.util.integration.
 
 import cmahy.simple.spring.common.converter.StringToByteConverter;
 import cmahy.simple.spring.common.converter.factory.StringToByteConverterFactory;
-import cmahy.simple.spring.security.webclient.api.filter.factory.ExchangeFilterAuthorizationHeaderFactory;
+import cmahy.simple.spring.security.client.api.webclient.filter.factory.ExchangeFilterAuthorizationHeaderFactory;
 import cmahy.simple.spring.webapp.taco.shop.adapter.webclient.annotation.security.TacoShopExchangeFilter;
 import cmahy.simple.spring.webapp.taco.shop.adapter.webclient.config.TacoShopWebClientConfigurer;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

@@ -3,8 +3,8 @@ package cmahy.simple.spring.webapp.shell.client.impl.adapter.api.taco.shop.ingre
 import cmahy.simple.spring.common.entity.page.DefaultEntityPageableImpl;
 import cmahy.simple.spring.common.entity.page.EntityPageable;
 import cmahy.simple.spring.common.helper.Generator;
-import cmahy.simple.spring.webapp.shell.client.impl.adapter.config.properties.ingredient.IngredientProperties;
-import cmahy.simple.spring.webapp.shell.client.impl.adapter.config.properties.ingredient.IngredientResource;
+import cmahy.simple.spring.webapp.shell.client.impl.adapter.config.properties.taco.ingredient.IngredientProperties;
+import cmahy.simple.spring.webapp.shell.client.impl.adapter.config.properties.taco.ingredient.IngredientResource;
 import cmahy.simple.spring.webapp.shell.client.impl.application.query.PrintMessageQuery;
 import cmahy.simple.spring.webapp.shell.client.impl.application.repository.property.ConsolePropertyRepository;
 import cmahy.simple.spring.webapp.taco.shop.kernel.application.query.GetAllRemoteIngredientPagedQuery;

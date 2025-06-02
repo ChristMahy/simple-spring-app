@@ -5,14 +5,22 @@ application:
       response-timeout: 5s
       read-timeout: 5s
       write-timeout: 5s
-    taco:
-      credentials:
+    taco-shop:
+      credential:
+        appender: basic
+      basic-authorization-credentials:
         username: test2test
         password: test2test
+      o-auth2-authorization-credentials:
+        registration-id: taco-shop
     user:
-      credentials:
+      credential:
+        appender: basic
+      basic-authorization-credentials:
         username: test2test
         password: test2test
+      o-auth2-authorization-credentials:
+        registration-id: taco-shop
   taco:
     ingredients:
       external-resource:

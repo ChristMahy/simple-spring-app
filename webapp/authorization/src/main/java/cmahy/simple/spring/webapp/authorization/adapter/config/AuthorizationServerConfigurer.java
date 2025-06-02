@@ -1,82 +1,92 @@
 package cmahy.simple.spring.webapp.authorization.adapter.config;
 
-import com.nimbusds.jose.jwk.JWKSet;
-import com.nimbusds.jose.jwk.RSAKey;
+import cmahy.simple.spring.security.common.api.rsa.repository.RSAPublicKeyRepository;
+import cmahy.simple.spring.security.common.api.rsa.vo.id.PublicKeyId;
+import cmahy.simple.spring.security.common.impl.rsa.repository.NormalizedKeyResolverRepository;
+import cmahy.simple.spring.security.common.impl.rsa.repository.RSAPublicKeyFileResolverRepositoryImpl;
+import cmahy.simple.spring.webapp.authorization.adapter.config.properties.ApplicationProperties;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.core.oidc.OidcScopes;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.server.authorization.client.*;
+import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
+import org.springframework.security.oauth2.jwt.*;
+import org.springframework.security.oauth2.server.authorization.authentication.JwtClientAssertionAuthenticationProvider;
+import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
-import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 
-import java.util.UUID;
+import java.security.interfaces.RSAPublicKey;
 
 import static org.springframework.security.config.Customizer.withDefaults;
-import static org.springframework.security.oauth2.core.AuthorizationGrantType.AUTHORIZATION_CODE;
-import static org.springframework.security.oauth2.core.AuthorizationGrantType.REFRESH_TOKEN;
-import static org.springframework.security.oauth2.core.ClientAuthenticationMethod.CLIENT_SECRET_BASIC;
 
 @Configuration(proxyBeanMethods = false)
+@EnableCaching
 public class AuthorizationServerConfigurer {
 
     @Bean
+    public NormalizedKeyResolverRepository normalizedKeyResolverRepository(
+        ResourceLoader resourceLoader
+    ) {
+        return new NormalizedKeyResolverRepository(resourceLoader);
+    }
+
+    @Bean
+    public RSAPublicKeyRepository rsaPublicKeyRepository(
+        NormalizedKeyResolverRepository normalizedKeyResolverRepository,
+        ApplicationProperties applicationProperties
+    ) {
+        return new RSAPublicKeyFileResolverRepositoryImpl(
+            normalizedKeyResolverRepository,
+            applicationProperties.security()
+        );
+    }
+
+    @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
-    public SecurityFilterChain authorizationSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
+    public SecurityFilterChain authorizationSecurityFilterChain(
+        HttpSecurity httpSecurity,
+        RSAPublicKeyRepository rsaPublicKeyRepository
+    ) throws Exception {
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(httpSecurity);
 
-        httpSecurity.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
-            .oidc(withDefaults());
+        httpSecurity
+            .getConfigurer(OAuth2AuthorizationServerConfigurer.class)
+            .oidc(withDefaults())
+            .clientAuthentication(clientAuthenticationConfigurer -> {
+                clientAuthenticationConfigurer.authenticationProviders(authenticationProviders -> {
+                    authenticationProviders.stream()
+                        .filter(aP -> aP instanceof JwtClientAssertionAuthenticationProvider)
+                        .findFirst()
+                        .map(JwtClientAssertionAuthenticationProvider.class::cast)
+                        .ifPresent(authenticationProvider -> {
+                            authenticationProvider.setJwtDecoderFactory(jwtDecoderFactory(rsaPublicKeyRepository));
+                        });
+                });
+            });
 
         httpSecurity
             // Redirect to the login page when not authenticated from the
             // authorization endpoint
             .exceptionHandling((exceptions) -> exceptions
                 .authenticationEntryPoint(
-                    new LoginUrlAuthenticationEntryPoint("/login"))
+                    new LoginUrlAuthenticationEntryPoint("/login")
+                )
             )
             // Accept access tokens for User Info and/or Client Registration
-            .oauth2ResourceServer(oAuth2ResourceServerConfigurer ->
-                oAuth2ResourceServerConfigurer.jwt(withDefaults())
-            );
+            .oauth2ResourceServer(withDefaults());
 
         return httpSecurity
             .formLogin(withDefaults())
             .build();
-    }
-
-    @Bean
-    public RegisteredClientRepository registeredClientRepository(
-        PasswordEncoder passwordEncoder
-    ) {
-        RegisteredClient registeredClient = RegisteredClient
-            .withId(UUID.randomUUID().toString())
-            .clientId("taco-admin-client")
-            .clientSecret(passwordEncoder.encode("taco-secret"))
-            .clientAuthenticationMethod(CLIENT_SECRET_BASIC)
-            .authorizationGrantType(AUTHORIZATION_CODE)
-            .authorizationGrantType(REFRESH_TOKEN)
-            .redirectUri("http://clientserver:9090/login/oauth2/code/taco-admin-client-oidc")
-            .redirectUri("https://localhost:8080/login/oauth2/code/taco-admin-client-oidc")
-            .redirectUri("https://localhost:8443/login/oauth2/code/taco-admin-client-oidc")
-            .scope(OidcScopes.OPENID)
-            .scope("ingredient.read")
-            .scope("ingredient.write")
-            .scope("ingredient.delete")
-            .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
-            .build();
-
-        return new InMemoryRegisteredClientRepository(registeredClient);
     }
 
     @Bean
@@ -85,14 +95,22 @@ public class AuthorizationServerConfigurer {
     }
 
     @Bean
-    public JWKSource<SecurityContext> jwkSource() {
-        RSAKey rsaKey = Jwks.generateRsa();
-        JWKSet jwkSet = new JWKSet(rsaKey);
-        return (jwkSelector, securityContext) -> jwkSelector.select(jwkSet);
-    }
-
-    @Bean
     public JwtDecoder jwtDecoder(JWKSource<SecurityContext> jwkSource) {
         return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
+    }
+
+    private JwtDecoderFactory<RegisteredClient> jwtDecoderFactory(RSAPublicKeyRepository rsaPublicKeyRepository) {
+        return registeredClient -> {
+            try {
+                RSAPublicKey publicKey = rsaPublicKeyRepository.findById(new PublicKeyId(registeredClient.getClientId()));
+
+                return NimbusJwtDecoder
+                    .withPublicKey(publicKey)
+                    .signatureAlgorithm(SignatureAlgorithm.RS256)
+                    .build();
+            } catch (Exception ignored) {}
+
+            throw new IllegalArgumentException("Unknown client: " + registeredClient.getClientId());
+        };
     }
 }

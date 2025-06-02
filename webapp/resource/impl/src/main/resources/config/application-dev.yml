@@ -2,20 +2,6 @@ spring:
   h2:
     console:
       enabled: true
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id: ${SIMPLE_SPRING_WEBAPP_GOOGLE_CLIENT_ID}
-            client-secret: ${SIMPLE_SPRING_WEBAPP_GOOGLE_CLIENT_SECRET}
-            scope: email, profile
-
-spring-app:
-  security:
-    oauth2:
-      o-auth2-service-configurer:
-        google: cmahy.simple.spring.webapp.resource.impl.adapter.security.oauth2.google.service.TacoResourceGoogleOAuth2ServiceImpl
 
 application:
   web-client:
@@ -24,16 +10,10 @@ application:
       response-timeout: 5s
       read-timeout: 5s
       write-timeout: 5s
-    taco:
-      credentials:
-        username: machine2machine
-        password: machine2machine
   start-up:
     order:
       generate: true
       initial-size: 1
-  google:
-    api-url: https://www.googleapis.com/oauth2/v3/userinfo
   taco:
     orders:
       page-size: 20
@@ -43,7 +23,7 @@ application:
       external-resource:
         scheduler:
           initial-delay: 5000
-          fixed-delay: 5000
+          fixed-delay: 30000
           enable: true
         base-url: 'http://localhost:8080/api/v1'
   password:

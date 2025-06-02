@@ -40,7 +40,7 @@ public class IngredientApiImpl implements IngredientApi {
     }
 
     @Override
-    @PreAuthorize("hasRole(@preAuthorizeScope.GUEST)")
+    @PreAuthorize("hasAuthority(@preAuthorizeAuthorities.ingredient.READ)")
     public IngredientPageOutputVo getAll(
         Integer pageNumber,
         Integer pageSize
@@ -54,19 +54,19 @@ public class IngredientApiImpl implements IngredientApi {
     }
 
     @Override
-    @PreAuthorize("hasRole(@preAuthorizeScope.ADMIN)")
+    @PreAuthorize("hasAuthority(@preAuthorizeAuthorities.ingredient.WRITE)")
     public IngredientOutputVo create(IngredientCreateInputVo input) throws IngredientDuplicateException, RequiredException {
         return createIngredientCommand.execute(input);
     }
 
     @Override
-    @PreAuthorize("hasRole(@preAuthorizeScope.ADMIN)")
+    @PreAuthorize("hasAuthority(@preAuthorizeAuthorities.ingredient.WRITE)")
     public IngredientOutputVo update(IngredientId id, IngredientUpdateInputVo input) throws IngredientNotFoundException, RequiredException {
         return partialUpdatingAnIngredientCommand.execute(id, input);
     }
 
     @Override
-    @PreAuthorize("hasRole(@preAuthorizeScope.ADMIN)")
+    @PreAuthorize("hasAuthority(@preAuthorizeAuthorities.ingredient.DELETE)")
     public void delete(IngredientId id) throws IngredientUsageElementOnDeletionException {
         deleteAnIngredientCommand.execute(id);
     }

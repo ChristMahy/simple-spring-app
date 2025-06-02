@@ -1,9 +1,7 @@
 package cmahy.simple.spring.webapp.authorization.adapter.generator;
 
-import cmahy.simple.spring.webapp.authorization.application.repository.RoleRepository;
-import cmahy.simple.spring.webapp.authorization.application.repository.UserRepository;
-import cmahy.simple.spring.webapp.authorization.domain.Role;
-import cmahy.simple.spring.webapp.authorization.domain.User;
+import cmahy.simple.spring.webapp.authorization.application.repository.*;
+import cmahy.simple.spring.webapp.authorization.domain.*;
 import cmahy.simple.spring.webapp.authorization.exception.RoleNotFoundException;
 import jakarta.inject.Named;
 import org.springframework.boot.ApplicationArguments;
@@ -19,15 +17,18 @@ import java.util.stream.Stream;
 @Named
 public class GenerateUserAtStart implements ApplicationRunner {
 
+    private final RightRepository rightRepository;
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
     public GenerateUserAtStart(
+        RightRepository rightRepository,
         RoleRepository roleRepository,
         UserRepository userRepository,
         PasswordEncoder passwordEncoder
     ) {
+        this.rightRepository = rightRepository;
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -36,23 +37,39 @@ public class GenerateUserAtStart implements ApplicationRunner {
     @Override
     @Transactional(propagation = Propagation.NEVER)
     public void run(ApplicationArguments args) throws Exception {
-        Stream.of("ADMIN", "GUEST")
-            .forEach(role -> {
-                roleRepository.save(Role.builder()
-                    .name(role)
-                    .users(new HashSet<>())
-                    .build());
+        Stream.of("ingredient:read", "ingredient:write", "ingredient:delete")
+            .forEach(right -> {
+                rightRepository.save(
+                    Right.builder()
+                        .roles(new HashSet<>())
+                        .name(right)
+                        .build()
+                );
             });
 
-        Role admin = roleRepository.findByName("ADMIN")
+        Stream.of("ingredient:admin", "ingredient:guest")
+            .forEach(role -> {
+                roleRepository.save(
+                    Role.builder()
+                        .name(role)
+                        .users(new HashSet<>())
+                        .build()
+                );
+            });
+
+        Role ingredientAdmin = roleRepository.findByName("ingredient:admin")
             .orElseThrow(() -> new RoleNotFoundException(
-                "Role <ADMIN> not found"
+                "Role <ingredient:admin> not found"
             ));
 
-        Role guest = roleRepository.findByName("GUEST")
+        ingredientAdmin = bindRoleWithRights(ingredientAdmin, new String[] {"ingredient:read", "ingredient:write", "ingredient:delete"});
+
+        Role ingredientGuest = roleRepository.findByName("ingredient:guest")
             .orElseThrow(() -> new RoleNotFoundException(
-                "Role <GUEST> not found"
+                "Role <ingredient:guest> not found"
             ));
+
+        ingredientGuest = bindRoleWithRights(ingredientGuest, new String[] {"ingredient:read"});
 
         userRepository.save(
             User.builder()
@@ -63,7 +80,27 @@ public class GenerateUserAtStart implements ApplicationRunner {
                         .getBytes(StandardCharsets.UTF_8)
                 )
                 .build()
-                .addRole(admin)
+                .addRole(ingredientAdmin)
+        );
+
+        userRepository.save(
+            User.builder()
+                .username("taco-shop-m2m")
+                .password(
+                    passwordEncoder
+                        .encode("taco-shop-m2m")
+                        .getBytes(StandardCharsets.UTF_8)
+                )
+                .build()
+                .addRole(ingredientGuest)
+        );
+
+        userRepository.save(
+            User.builder()
+                .username("shell-client-auth-jwt")
+                .build()
+                .addRole(ingredientAdmin)
+                .addRole(ingredientGuest)
         );
 
         userRepository.save(
@@ -75,7 +112,19 @@ public class GenerateUserAtStart implements ApplicationRunner {
                         .getBytes(StandardCharsets.UTF_8)
                 )
                 .build()
-                .addRole(guest)
+                .addRole(ingredientGuest)
         );
+    }
+
+    private Role bindRoleWithRights(Role role, String[] rightNames) {
+        for (String rightName : rightNames) {
+            rightRepository
+                .findByName(rightName)
+                .ifPresent(role::addRight);
+        }
+
+        roleRepository.save(role);
+
+        return roleRepository.findByName(role.getName()).orElseThrow();
     }
 }

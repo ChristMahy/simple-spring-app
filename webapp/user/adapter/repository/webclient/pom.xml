@@ -37,7 +37,7 @@
         <cmahy.simple.spring.webapp.user.domain.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.domain.version>
         <cmahy.simple.spring.webapp.user.application.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.application.version>
 
-        <cmahy.simple.spring.security.webclient.api.version>1.0.0</cmahy.simple.spring.security.webclient.api.version>
+        <cmahy.simple.spring.security.spring-client.api.version>DEV-SNAPSHOT</cmahy.simple.spring.security.spring-client.api.version>
     </properties>
 
     <dependencies>
@@ -57,8 +57,8 @@
 
         <dependency>
             <groupId>cmahy.simple.spring.security</groupId>
-            <artifactId>webclient.api</artifactId>
-            <version>${cmahy.simple.spring.security.webclient.api.version}</version>
+            <artifactId>spring-client.api</artifactId>
+            <version>${cmahy.simple.spring.security.spring-client.api.version}</version>
         </dependency>
 
         <dependency>
@@ -77,8 +77,13 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webflux</artifactId>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webflux</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.projectreactor.netty</groupId>
+            <artifactId>reactor-netty-http</artifactId>
         </dependency>
 
         <dependency>
@@ -151,10 +156,10 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <configuration>
-                    <excludes>
-                        <exclude>**/webclient/config/**</exclude>
-                        <exclude>**/webclient/entity/domain/**</exclude>
-                    </excludes>
+                    <includes>
+                        <include>**/webclient/repository/**</include>
+                        <include>**/webclient/entity/builder/**</include>
+                    </includes>
                 </configuration>
             </plugin>
         </plugins>

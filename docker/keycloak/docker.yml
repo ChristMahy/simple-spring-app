@@ -1,0 +1,32 @@
+services:
+  keycloak:
+    container_name: keycloak
+    image: quay.io/keycloak/keycloak:latest
+    ports:
+      - '18080:18080'
+      - '18443:18443'
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      KC_HOSTNAME: localhost
+      KC_HOSTNAME_PORT: 18080
+      KC_HOSTNAME_STRICT_BACKCHANNEL: "true"
+      KC_HEALTH_ENABLED: "true"
+      KC_LOG_LEVEL: info
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:18080/health/ready" ]
+      interval: 15s
+      timeout: 2s
+      retries: 15
+    command: [ "start-dev", "--import-realm", "--verbose", "--http-port", "18080", "--https-port", "18443" ]
+    volumes:
+      - ./realm-config/spring-apps.json:/opt/keycloak/data/import/spring-apps.json
+    networks:
+      backend:
+        aliases:
+          - "keycloak"
+
+networks:
+  backend:
+    name: "keycloak-net"
+    driver: bridge

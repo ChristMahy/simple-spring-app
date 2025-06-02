@@ -1,6 +1,7 @@
 package cmahy.simple.spring.webapp.shell.client.impl.adapter.repository.property;
 
 import cmahy.simple.spring.common.helper.Generator;
+import cmahy.simple.spring.webapp.shell.client.impl.adapter.config.properties.ApplicationProperties;
 import cmahy.simple.spring.webapp.shell.client.impl.application.vo.property.console.ConsolePropertyVo;
 import cmahy.simple.spring.webapp.shell.client.impl.application.vo.property.console.OutputPropertyVo;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class ConsolePropertyRepositoryImplTest {
 
@@ -21,9 +23,12 @@ class ConsolePropertyRepositoryImplTest {
     @Test
     void consoleProperty() {
         assertDoesNotThrow(() -> {
+            ApplicationProperties applicationProperties = mock(ApplicationProperties.class);
             ConsolePropertyVo consolePropertyVo = mock(ConsolePropertyVo.class);
 
-            consolePropertyRepositoryImpl = new ConsolePropertyRepositoryImpl(consolePropertyVo);
+            when(applicationProperties.console()).thenReturn(consolePropertyVo);
+
+            consolePropertyRepositoryImpl = new ConsolePropertyRepositoryImpl(applicationProperties);
 
             Optional<ConsolePropertyVo> actual = consolePropertyRepositoryImpl.consoleProperty();
 
@@ -49,10 +54,15 @@ class ConsolePropertyRepositoryImplTest {
         assertDoesNotThrow(() -> {
             String expectedFormatter = Generator.generateAString(1000);
             consolePropertyRepositoryImpl = new ConsolePropertyRepositoryImpl(
-                new ConsolePropertyVo(
-                    new OutputPropertyVo(
-                        expectedFormatter
-                    )
+                new ApplicationProperties(
+                    new ConsolePropertyVo(
+                        new OutputPropertyVo(
+                            expectedFormatter
+                        )
+                    ),
+                    null,
+                    null,
+                    null
                 )
             );
 
@@ -68,7 +78,9 @@ class ConsolePropertyRepositoryImplTest {
     @MethodSource("emptyValues")
     void findFormat_whenGivenValueIsNull_thenResultHasToBeEmpty(ConsolePropertyVo consolePropertyVo) {
         assertDoesNotThrow(() -> {
-            consolePropertyRepositoryImpl = new ConsolePropertyRepositoryImpl(consolePropertyVo);
+            consolePropertyRepositoryImpl = new ConsolePropertyRepositoryImpl(new ApplicationProperties(
+                consolePropertyVo, null, null, null
+            ));
 
             Optional<String> actual = consolePropertyRepositoryImpl.findFormat();
 
@@ -78,6 +90,7 @@ class ConsolePropertyRepositoryImplTest {
 
     protected static Stream<ConsolePropertyVo> emptyValues() {
         return Stream.of(
+            null,
             new ConsolePropertyVo(null),
             new ConsolePropertyVo(new OutputPropertyVo(null))
         );

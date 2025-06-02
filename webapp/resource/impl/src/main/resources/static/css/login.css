@@ -29,3 +29,11 @@
 
     width: 100%;
 }
+
+.registrations-links {
+    display: flex;
+
+    flex-flow: row;
+
+    gap: 0.5rem;
+}

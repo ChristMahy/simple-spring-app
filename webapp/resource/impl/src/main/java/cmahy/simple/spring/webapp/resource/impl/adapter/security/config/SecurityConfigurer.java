@@ -2,17 +2,18 @@ package cmahy.simple.spring.webapp.resource.impl.adapter.security.config;
 
 import cmahy.simple.spring.webapp.resource.impl.adapter.security.oauth2.TacoResourceOAuth2Service;
 import cmahy.simple.spring.webapp.resource.impl.adapter.security.oidc.TacoResourceOidcService;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManagerResolver;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -28,6 +29,7 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
+import java.util.Optional;
 
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
@@ -45,10 +47,9 @@ public class SecurityConfigurer {
     @Bean
     @ConditionalOnExpression(
         """
-            ${spring.h2.console.enabled:false} eq true or
-            ${spring.h2.console.enabled:false} eq 'true' or
-            ${spring.h2.console.enabled:false} eq 'on' or
-            ${spring.h2.console.enabled:false} eq '1'
+            '${spring.h2.console.enabled:false}' eq 'true' or
+            '${spring.h2.console.enabled:false}' eq 'on' or
+            '${spring.h2.console.enabled:false}' eq '1'
         """
     )
     public SecurityFilterChain h2ConsoleSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -63,6 +64,18 @@ public class SecurityConfigurer {
             ));
 
         return http.build();
+    }
+
+    @Bean
+    public SecurityFilterChain errorPagesSecurityFilterChain(HttpSecurity http) throws Exception {
+        return http
+            .securityMatcher("/error/**", "/access-denied/**")
+            .authorizeHttpRequests(authorized -> authorized.anyRequest().permitAll())
+            .anonymous(AbstractHttpConfigurer::disable)
+            .cors(Customizer.withDefaults())
+            .csrf(this::defaultCsrfConfigurer)
+            .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.NEVER))
+            .build();
     }
 
     @Bean
@@ -93,9 +106,10 @@ public class SecurityConfigurer {
     public SecurityFilterChain exposeLoginUrls(
         HttpSecurity http,
         TacoResourceOAuth2Service tacoResourceOAuth2Service,
-        TacoResourceOidcService tacoResourceOidcService
+        TacoResourceOidcService tacoResourceOidcService,
+        Optional<OAuth2ClientProperties> oAuth2ClientProperties
     ) throws Exception {
-        return http
+        HttpSecurity buildingHttpSecurity = http
             .securityMatcher(
                 "/login", "/login/**",
                 "/oauth2/authorization", "/oauth2/authorization/**"
@@ -104,21 +118,33 @@ public class SecurityConfigurer {
             .formLogin(configurer ->
                 configurer
                     .loginPage("/login")
-            )
-            .oauth2Login(configurer -> {
-                configurer
-                    .loginPage("/login").permitAll()
-                    .failureHandler(authenticationFailureHandler())
-                    .userInfoEndpoint(userInfoEndpoint -> {
-                        userInfoEndpoint.userService(tacoResourceOAuth2Service);
-                        userInfoEndpoint.oidcUserService(tacoResourceOidcService);
-                    });
-            })
-            .oauth2Client(Customizer.withDefaults())
+            );
+
+        if (
+            oAuth2ClientProperties
+                .map(OAuth2ClientProperties::getRegistration)
+                .filter(registrations -> !registrations.isEmpty())
+                .isPresent()
+        ) {
+            buildingHttpSecurity
+                .oauth2Login(configurer -> {
+                    configurer
+                        .loginPage("/login").permitAll()
+                        .failureHandler(authenticationFailureHandler())
+                        .userInfoEndpoint(userInfoEndpoint -> {
+                            userInfoEndpoint.userService(tacoResourceOAuth2Service);
+                            userInfoEndpoint.oidcUserService(tacoResourceOidcService);
+                        });
+                })
+                .oauth2Client(Customizer.withDefaults());
+        }
+
+        buildingHttpSecurity
             .cors(Customizer.withDefaults())
             .csrf(this::defaultCsrfConfigurer)
-            .sessionManagement(this::defaultSessionConfigurer)
-            .build();
+            .sessionManagement(this::defaultSessionConfigurer);
+
+        return http.build();
     }
 
     @Bean
@@ -155,16 +181,27 @@ public class SecurityConfigurer {
     }
 
     @Bean
-    public SecurityFilterChain allowAPIUrls(HttpSecurity http) throws Exception {
-        return http
+    public SecurityFilterChain allowAPIUrls(
+        HttpSecurity http,
+        Optional<AuthenticationManagerResolver<HttpServletRequest>> authenticationManagerResolver
+    ) throws Exception {
+        http
             .securityMatcher(antMatcher("/api/**"))
             .authorizeHttpRequests(registry -> registry.anyRequest().fullyAuthenticated())
             .anonymous(AbstractHttpConfigurer::disable)
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.NEVER))
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .cors(Customizer.withDefaults())
-            .csrf(configurer -> configurer.ignoringRequestMatchers("/api/**"))
-            .httpBasic(Customizer.withDefaults())
-            .build();
+            .csrf(CsrfConfigurer::disable)
+            .httpBasic(Customizer.withDefaults());
+
+        if (authenticationManagerResolver.isPresent()) {
+            http.oauth2ResourceServer(configurer -> {
+                configurer
+                    .authenticationManagerResolver(authenticationManagerResolver.get());
+            });
+        }
+
+        return http.build();
     }
 
     @Bean
@@ -181,6 +218,9 @@ public class SecurityConfigurer {
                 exceptionHandler
                     .authenticationEntryPoint((request, response, authenticationException) ->
                         response.sendRedirect("/login")
+                    )
+                    .accessDeniedHandler((request, response, accessDeniedException) ->
+                        response.sendRedirect("/access-denied")
                     )
             )
             .build();
@@ -217,7 +257,7 @@ public class SecurityConfigurer {
         }
 
         @Override
-        public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+        public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
             OAuth2AuthenticationException oauthException = (OAuth2AuthenticationException) exception;
 
             response.setStatus(HttpStatus.UNAUTHORIZED.value());

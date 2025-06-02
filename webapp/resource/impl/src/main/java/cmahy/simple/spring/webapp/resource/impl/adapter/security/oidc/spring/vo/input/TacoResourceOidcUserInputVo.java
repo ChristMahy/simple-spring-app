@@ -11,6 +11,7 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import java.util.Collection;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class TacoResourceOidcUserInputVo implements OidcUser, TacoResourceUserSecurityInputVo {
 
@@ -21,8 +22,12 @@ public class TacoResourceOidcUserInputVo implements OidcUser, TacoResourceUserSe
     public TacoResourceOidcUserInputVo(OidcUser oidcUser, UserSecurityOutputAppVo userSecurity) {
         this.oidcUser = oidcUser;
         this.userSecurity = userSecurity;
-        this.authorities = userSecurity.roles().stream()
-            .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
+
+        this.authorities = Stream.concat(
+            oidcUser.getAuthorities().stream(),
+            userSecurity.roles().stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
+        )
             .collect(Collectors.toUnmodifiableSet());
     }
 

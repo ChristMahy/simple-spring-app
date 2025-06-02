@@ -33,7 +33,7 @@ public class ClientOrderHistoryUiImpl implements ClientOrderHistoryUi {
     }
 
     @Override
-    @PreAuthorize("hasRole(@preAuthorizeScope.GUEST)")
+    @PreAuthorize("hasRole(@preAuthorizeAuthorities.GUEST)")
     @Transactional
     public String orders(
         Optional<Integer> pageSize,

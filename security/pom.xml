@@ -16,6 +16,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>webclient</module>
+        <module>common</module>
+        <module>spring-client</module>
+        <module>spring-authorization</module>
     </modules>
 </project>

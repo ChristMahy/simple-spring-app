@@ -2,3 +2,50 @@ application:
   taco-shop:
     webclient:
       enabled: true
+  web-client:
+    taco-shop:
+      credential:
+#        appender: basic
+#        appender: o-auth2
+        appender: o-auth2-private-key-jwt
+      basic-authorization-credentials:
+        username: machine2machine
+        password: machine2machine
+      o-auth2-authorization-credentials:
+#        registration-id: taco-shop
+#        registration-id: taco-shop-private-key-jwt
+        registration-id: taco-shop-keycloak-private-key
+  security:
+    private-keys:
+      locations:
+        shell-client-auth-jwt: file:${user.home}/IdeaProjects/simple-spring-app-refact/webapp-shared/rsa-keys/shell-client/private.pem
+        'spring-web-app.api': file:${user.home}/IdeaProjects/simple-spring-app-refact/webapp-shared/rsa-keys/shell-client/private.pem
+
+spring:
+  security:
+    oauth2:
+      client:
+        provider:
+          spring-authorization-server:
+            token-uri: http://authserver:9000/oauth2/token
+          keycloak:
+            token-uri: http://localhost:18080/realms/spring-apps/protocol/openid-connect/token
+        registration:
+          taco-shop:
+            provider: spring-authorization-server
+            client-id: taco-shop-m2m
+            client-secret: taco-shop-m2m-secret
+            authorization-grant-type: client_credentials
+            client-authentication-method: client_secret_basic
+          taco-shop-private-key-jwt:
+            provider: spring-authorization-server
+            client-id: shell-client-auth-jwt
+            authorization-grant-type: client_credentials
+            client-authentication-method: private_key_jwt
+          taco-shop-keycloak-private-key:
+            provider: keycloak
+            client-id: spring-web-app.api
+            authorization-grant-type: client_credentials
+            client-authentication-method: private_key_jwt
+            scope:
+              - openid

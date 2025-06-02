@@ -4,7 +4,57 @@ spring:
     name: authorization-cloud
   h2:
     console:
-      enabled: false
+      enabled: true
+  cache:
+    cache-names:
+      - KeyPairLoader.file
+    caffeine:
+      spec: maximumSize=10,expireAfterWrite=1h
+  security:
+    oauth2:
+      authorizationserver:
+        client:
+          taco-admin-client:
+            registration:
+              client-id: taco-admin-client
+              client-secret: '{noop}taco-secret'
+              client-authentication-methods:
+                - client_secret_basic
+              authorization-grant-types:
+                - authorization_code
+                - refresh_token
+              redirect-uris:
+                - http://clientserver:9090/login/oauth2/code/taco-admin-client-oidc
+                - http://localhost:8080/login/oauth2/code/taco-admin-client-oidc
+                - https://localhost:8443/login/oauth2/code/taco-admin-client-oidc
+              scopes:
+                - openid
+            require-authorization-consent: false
+          taco-shop-m2m:
+            registration:
+              client-id: taco-shop-m2m
+              client-secret: '{noop}taco-shop-m2m-secret'
+              client-name: machine2machine
+              client-authentication-methods:
+                - client_secret_basic
+              authorization-grant-types:
+                - client_credentials
+          taco-shop-private-key-jwt:
+            registration:
+              client-id: shell-client-auth-jwt
+              client-name: m2m-jwt
+              client-authentication-methods:
+                - private_key_jwt
+              authorization-grant-types:
+                - client_credentials
+            token-endpoint-authentication-signing-algorithm: RS256
+            jwk-set-uri: ""
+
+application:
+  security:
+    public-keys:
+      locations:
+        shell-client-auth-jwt: file:${user.home}/IdeaProjects/simple-spring-app-refact/webapp-shared/rsa-keys/shell-client/public.pem
 
 server:
   port: 9000

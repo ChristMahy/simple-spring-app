@@ -10,5 +10,12 @@
     <artifactId>reactive</artifactId>
     <version>DEV-SNAPSHOT</version>
 
+    <name>Todo - Reactive resources</name>
+
     <packaging>pom</packaging>
+
+    <modules>
+        <module>api</module>
+        <module>impl</module>
+    </modules>
 </project>

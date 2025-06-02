@@ -5,6 +5,7 @@ import lombok.*;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -24,6 +25,20 @@ public class Role {
 
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
+
+    @ManyToMany
+    private Set<Right> rights;
+
+    public Role addRight(Right right) {
+        if (this.rights == null) {
+            this.rights = new HashSet<>();
+        }
+
+        this.rights.add(right);
+        right.getRoles().add(this);
+
+        return this;
+    }
 
     @Override
     public String toString() {

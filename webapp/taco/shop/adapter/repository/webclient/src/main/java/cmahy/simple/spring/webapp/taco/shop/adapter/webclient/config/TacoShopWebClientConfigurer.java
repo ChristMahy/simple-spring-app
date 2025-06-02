@@ -1,19 +1,17 @@
 package cmahy.simple.spring.webapp.taco.shop.adapter.webclient.config;
 
-import cmahy.simple.spring.security.webclient.api.filter.factory.ExchangeFilterAuthorizationHeaderFactory;
+import cmahy.simple.spring.security.client.api.webclient.filter.factory.ExchangeFilterAuthorizationHeaderFactory;
+import cmahy.simple.spring.webapp.taco.shop.adapter.webclient.annotation.security.TacoShopExchangeFilter;
 import cmahy.simple.spring.webapp.taco.shop.adapter.webclient.config.primary.*;
 import cmahy.simple.spring.webapp.taco.shop.adapter.webclient.config.properties.ingredient.IngredientProperties;
 import cmahy.simple.spring.webapp.taco.shop.adapter.webclient.config.properties.ingredient.SslOption;
-import cmahy.simple.spring.webapp.taco.shop.adapter.webclient.config.properties.webclient.WebClientProperties;
-import cmahy.simple.spring.webapp.taco.shop.adapter.webclient.annotation.security.TacoShopExchangeFilter;
+import cmahy.simple.spring.webapp.taco.shop.adapter.webclient.config.properties.webclient.TacoShopWebClientProperties;
 import io.netty.channel.ChannelOption;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.handler.timeout.WriteTimeoutHandler;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
@@ -34,7 +32,7 @@ import java.util.concurrent.TimeUnit;
 
 @AutoConfiguration
 @ConditionalOnProperty(value = TacoShopWebClientConfigurer.TACO_SHOP_WEBCLIENT_ACTIVE, havingValue = "true")
-@ConfigurationPropertiesScan(basePackageClasses = {WebClientProperties.class, IngredientProperties.class})
+@ConfigurationPropertiesScan(basePackageClasses = {TacoShopWebClientProperties.class, IngredientProperties.class})
 @ComponentScan({
     "cmahy.simple.spring.webapp.taco.shop.adapter.webclient.repository",
     "cmahy.simple.spring.webapp.taco.shop.adapter.webclient.entity.builder.factory"
@@ -55,16 +53,16 @@ public class TacoShopWebClientConfigurer {
     @ConditionalOnProperty(name = TacoShopWebClientConfigurer.SSL_ACTIVATION_PROPERTY_NAME, havingValue = "false", matchIfMissing = true)
     public WebClient tacoResource(
         IngredientProperties ingredientProperties,
-        WebClientProperties webClientProperties,
+        TacoShopWebClientProperties tacoShopWebClientProperties,
         WebClient.Builder webClientBuilder,
         @TacoShopExchangeFilter ExchangeFilterAuthorizationHeaderFactory exchangeFilterAuthorizationHeaderFactory
     ) {
         HttpClient httpClient = HttpClient.create()
-            .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, Long.valueOf(webClientProperties.common().connectTimeout().toMillis()).intValue())
-            .responseTimeout(webClientProperties.common().responseTimeout())
+            .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, Long.valueOf(tacoShopWebClientProperties.common().connectTimeout().toMillis()).intValue())
+            .responseTimeout(tacoShopWebClientProperties.common().responseTimeout())
             .doOnConnected(connection -> connection
-                .addHandlerLast(new ReadTimeoutHandler(webClientProperties.common().readTimeout().toMillis(), TimeUnit.MILLISECONDS))
-                .addHandlerLast(new WriteTimeoutHandler(webClientProperties.common().writeTimeout().toMillis(), TimeUnit.MILLISECONDS))
+                .addHandlerLast(new ReadTimeoutHandler(tacoShopWebClientProperties.common().readTimeout().toMillis(), TimeUnit.MILLISECONDS))
+                .addHandlerLast(new WriteTimeoutHandler(tacoShopWebClientProperties.common().writeTimeout().toMillis(), TimeUnit.MILLISECONDS))
             );
 
         return webClientBuilder
@@ -74,24 +72,22 @@ public class TacoShopWebClientConfigurer {
             .build();
     }
 
-    private static final Logger LOG = LoggerFactory.getLogger(TacoShopWebClientConfigurer.class);
-
     @Bean(name = "tacoResource")
     @ConditionalOnProperty(name = TacoShopWebClientConfigurer.SSL_ACTIVATION_PROPERTY_NAME, havingValue = "true")
     public WebClient tacoResourceSsl(
         IngredientProperties ingredientProperties,
-        WebClientProperties webClientProperties,
+        TacoShopWebClientProperties tacoShopWebClientProperties,
         WebClient.Builder webClientBuilder,
         SslContext tacoSslContext,
         @TacoShopExchangeFilter ExchangeFilterAuthorizationHeaderFactory exchangeFilterAuthorizationHeaderFactory
     ) {
         HttpClient httpClient = HttpClient.create()
             .secure(sslContextSpec -> sslContextSpec.sslContext(tacoSslContext))
-            .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, Long.valueOf(webClientProperties.common().connectTimeout().toMillis()).intValue())
-            .responseTimeout(webClientProperties.common().responseTimeout())
+            .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, Long.valueOf(tacoShopWebClientProperties.common().connectTimeout().toMillis()).intValue())
+            .responseTimeout(tacoShopWebClientProperties.common().responseTimeout())
             .doOnConnected(connection -> connection
-                .addHandlerLast(new ReadTimeoutHandler(webClientProperties.common().readTimeout().toMillis(), TimeUnit.MILLISECONDS))
-                .addHandlerLast(new WriteTimeoutHandler(webClientProperties.common().writeTimeout().toMillis(), TimeUnit.MILLISECONDS))
+                .addHandlerLast(new ReadTimeoutHandler(tacoShopWebClientProperties.common().readTimeout().toMillis(), TimeUnit.MILLISECONDS))
+                .addHandlerLast(new WriteTimeoutHandler(tacoShopWebClientProperties.common().writeTimeout().toMillis(), TimeUnit.MILLISECONDS))
             );
 
         return webClientBuilder

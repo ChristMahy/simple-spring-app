@@ -36,13 +36,11 @@ public class TacoResourceOAuth2ServiceImpl implements TacoResourceOAuth2Service 
                         .filter(oAuth2Service -> oAuth2Service.getClass().equals(value))
                         .toList();
 
-                    if (beans.size() > 1) {
-                        throw new IllegalArgumentException(String.format("Too much beans found for key <%s>", key));
-                    } else if (beans.size() == 1) {
-                        oAuth2Services.put(key, beans.getFirst());
-                    } else {
-                        throw new IllegalArgumentException(String.format("No bean found for key <%s>", key));
+                    if (beans.size() != 1) {
+                        throw new IllegalArgumentException(String.format("<%d> beans found for key <%s>", beans.size(), key));
                     }
+
+                    oAuth2Services.put(key, beans.getFirst());
                 });
 
                 return oAuth2Services;
