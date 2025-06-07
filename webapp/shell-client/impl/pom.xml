@@ -50,12 +50,12 @@
         <cmahy.simple.spring.webapp.user.kernel.application.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.kernel.application.version>
         <cmahy.simple.spring.webapp.user.adapter.webclient.version>DEV-SNAPSHOT</cmahy.simple.spring.webapp.user.adapter.webclient.version>
 
-        <cmahy.simple.spring.security.common.version>DEV-SNAPSHOT</cmahy.simple.spring.security.common.version>
+        <cmahy.simple.spring.security.common.version>1.0.0</cmahy.simple.spring.security.common.version>
 
         <cmahy.simple.spring.security.common.api.version>${cmahy.simple.spring.security.common.version}</cmahy.simple.spring.security.common.api.version>
         <cmahy.simple.spring.security.common.impl.version>${cmahy.simple.spring.security.common.version}</cmahy.simple.spring.security.common.impl.version>
 
-        <cmahy.simple.spring.security.spring-client.version>DEV-SNAPSHOT</cmahy.simple.spring.security.spring-client.version>
+        <cmahy.simple.spring.security.spring-client.version>1.0.0</cmahy.simple.spring.security.spring-client.version>
 
         <cmahy.simple.spring.security.spring-client.api.version>${cmahy.simple.spring.security.spring-client.version}</cmahy.simple.spring.security.spring-client.api.version>
         <cmahy.simple.spring.security.spring-client.impl.version>${cmahy.simple.spring.security.spring-client.version}</cmahy.simple.spring.security.spring-client.impl.version>

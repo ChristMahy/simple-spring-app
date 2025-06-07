@@ -42,7 +42,7 @@
         <cmahy.simple.spring.webapp.taco.shop.domain.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.domain.version>
         <cmahy.simple.spring.webapp.taco.shop.application.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.application.version>
 
-        <cmahy.simple.spring.security.spring-client.api.version>DEV-SNAPSHOT</cmahy.simple.spring.security.spring-client.api.version>
+        <cmahy.simple.spring.security.spring-client.api.version>1.0.0</cmahy.simple.spring.security.spring-client.api.version>
     </properties>
 
     <dependencies>

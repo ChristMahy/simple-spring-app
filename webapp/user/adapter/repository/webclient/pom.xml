@@ -37,7 +37,7 @@
         <cmahy.simple.spring.webapp.user.domain.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.domain.version>
         <cmahy.simple.spring.webapp.user.application.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.application.version>
 
-        <cmahy.simple.spring.security.spring-client.api.version>DEV-SNAPSHOT</cmahy.simple.spring.security.spring-client.api.version>
+        <cmahy.simple.spring.security.spring-client.api.version>1.0.0</cmahy.simple.spring.security.spring-client.api.version>
     </properties>
 
     <dependencies>

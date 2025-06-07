@@ -29,7 +29,7 @@
     <properties>
         <cmahy.simple.spring.common.version>1.0.2</cmahy.simple.spring.common.version>
 
-        <cmahy.simple.spring.security.common.version>DEV-SNAPSHOT</cmahy.simple.spring.security.common.version>
+        <cmahy.simple.spring.security.common.version>1.0.0</cmahy.simple.spring.security.common.version>
 
         <cmahy.simple.spring.security.common.api.version>${cmahy.simple.spring.security.common.version}</cmahy.simple.spring.security.common.api.version>
         <cmahy.simple.spring.security.common.impl.version>${cmahy.simple.spring.security.common.version}</cmahy.simple.spring.security.common.impl.version>
