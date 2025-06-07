@@ -8,7 +8,7 @@
 
     <groupId>cmahy.simple.spring.security</groupId>
     <artifactId>spring-client.impl</artifactId>
-    <version>DEV-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <name>Security Client Impl</name>
     <description>Security client Impl</description>
