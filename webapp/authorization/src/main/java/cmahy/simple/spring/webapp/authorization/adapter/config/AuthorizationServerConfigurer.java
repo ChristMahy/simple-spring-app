@@ -2,8 +2,7 @@ package cmahy.simple.spring.webapp.authorization.adapter.config;
 
 import cmahy.simple.spring.security.common.api.rsa.repository.RSAPublicKeyRepository;
 import cmahy.simple.spring.security.common.api.rsa.vo.id.PublicKeyId;
-import cmahy.simple.spring.security.common.impl.rsa.repository.NormalizedKeyResolverRepository;
-import cmahy.simple.spring.security.common.impl.rsa.repository.RSAPublicKeyFileResolverRepositoryImpl;
+import cmahy.simple.spring.security.common.impl.rsa.repository.RSAPublicKeyFileResolverRepositoryImplFactory;
 import cmahy.simple.spring.webapp.authorization.adapter.config.properties.ApplicationProperties;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
@@ -33,20 +32,12 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class AuthorizationServerConfigurer {
 
     @Bean
-    public NormalizedKeyResolverRepository normalizedKeyResolverRepository(
-        ResourceLoader resourceLoader
-    ) {
-        return new NormalizedKeyResolverRepository(resourceLoader);
-    }
-
-    @Bean
     public RSAPublicKeyRepository rsaPublicKeyRepository(
-        NormalizedKeyResolverRepository normalizedKeyResolverRepository,
+        ResourceLoader resourceLoader,
         ApplicationProperties applicationProperties
     ) {
-        return new RSAPublicKeyFileResolverRepositoryImpl(
-            normalizedKeyResolverRepository,
-            applicationProperties.security()
+        return RSAPublicKeyFileResolverRepositoryImplFactory.create(
+            resourceLoader, applicationProperties.security()
         );
     }
 

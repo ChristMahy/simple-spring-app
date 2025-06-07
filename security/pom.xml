@@ -18,6 +18,5 @@
     <modules>
         <module>common</module>
         <module>spring-client</module>
-        <module>spring-authorization</module>
     </modules>
 </project>

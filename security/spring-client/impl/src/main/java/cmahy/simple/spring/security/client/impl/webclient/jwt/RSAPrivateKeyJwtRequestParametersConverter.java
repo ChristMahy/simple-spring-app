@@ -24,6 +24,8 @@ import static org.springframework.security.oauth2.core.AuthorizationGrantType.CL
 
 public class RSAPrivateKeyJwtRequestParametersConverter implements PrivateKeyJwtRequestParametersConverter {
 
+    protected static final String ASSERTION_TYPE = "urn:ietf:params:oauth:client-assertion-type:jwt-bearer";
+
     private static final Logger LOG = LoggerFactory.getLogger(RSAPrivateKeyJwtRequestParametersConverter.class);
 
     private final RSAPrivateKeyRepository rsaPrivateKeyRepository;
@@ -41,10 +43,12 @@ public class RSAPrivateKeyJwtRequestParametersConverter implements PrivateKeyJwt
 
         try {
 
+            String clientAssertion = createClientAssertion(clientRegistration);
+
             parameters.add("grant_type", CLIENT_CREDENTIALS.getValue());
             parameters.add("client_id", clientRegistration.getClientId());
-            parameters.add("client_assertion_type", "urn:ietf:params:oauth:client-assertion-type:jwt-bearer");
-            parameters.add("client_assertion", createClientAssertion(clientRegistration));
+            parameters.add("client_assertion_type", ASSERTION_TYPE);
+            parameters.add("client_assertion", clientAssertion);
 
         } catch (RSAPrivateKeyException | JOSEException e) {
             LOG.warn("Can not generate client assertion", e);

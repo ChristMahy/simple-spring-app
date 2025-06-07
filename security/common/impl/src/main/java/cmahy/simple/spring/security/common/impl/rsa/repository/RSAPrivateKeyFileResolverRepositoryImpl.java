@@ -4,28 +4,37 @@ import cmahy.simple.spring.security.common.api.rsa.exception.RSAPrivateKeyExcept
 import cmahy.simple.spring.security.common.api.rsa.repository.RSAPrivateKeyConfigurationRepository;
 import cmahy.simple.spring.security.common.api.rsa.repository.RSAPrivateKeyRepository;
 import cmahy.simple.spring.security.common.api.rsa.vo.id.PrivateKeyId;
+import cmahy.simple.spring.security.common.impl.io.ResourceFactory;
 import cmahy.simple.spring.security.common.impl.rsa.exception.FileResolverException;
+import cmahy.simple.spring.security.common.impl.rsa.exception.IOResourceException;
+import cmahy.simple.spring.security.common.impl.rsa.factory.RSAPrivateKeyFactory;
+import cmahy.simple.spring.security.common.impl.rsa.service.NormalizePEMFileRSAKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
 
-import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
+import java.io.IOException;
 import java.security.interfaces.RSAPrivateKey;
-import java.security.spec.*;
 import java.util.*;
 
 public class RSAPrivateKeyFileResolverRepositoryImpl implements RSAPrivateKeyRepository {
 
     private static final Logger LOG = LoggerFactory.getLogger(RSAPrivateKeyFileResolverRepositoryImpl.class);
 
-    private final NormalizedKeyResolverRepository normalizedKeyResolverRepository;
+    private final ResourceFactory resourceFactory;
+    private final NormalizePEMFileRSAKey normalizePEMFileRsaKey;
+    private final RSAPrivateKeyFactory rsaPrivateKeyFactory;
     private final RSAPrivateKeyConfigurationRepository rsaPrivateKeyConfigurationRepository;
 
     public RSAPrivateKeyFileResolverRepositoryImpl(
-        NormalizedKeyResolverRepository normalizedKeyResolverRepository,
+        ResourceFactory resourceFactory,
+        NormalizePEMFileRSAKey normalizePEMFileRsaKey,
+        RSAPrivateKeyFactory rsaPrivateKeyFactory,
         RSAPrivateKeyConfigurationRepository rsaPrivateKeyConfigurationRepository
     ) {
-        this.normalizedKeyResolverRepository = normalizedKeyResolverRepository;
+        this.resourceFactory = resourceFactory;
+        this.normalizePEMFileRsaKey = normalizePEMFileRsaKey;
+        this.rsaPrivateKeyFactory = rsaPrivateKeyFactory;
         this.rsaPrivateKeyConfigurationRepository = rsaPrivateKeyConfigurationRepository;
     }
 
@@ -36,10 +45,14 @@ public class RSAPrivateKeyFileResolverRepositoryImpl implements RSAPrivateKeyRep
 
         Map<PrivateKeyId, String> privateKeyIds = rsaPrivateKeyConfigurationRepository.allLocations();
 
+        if (Objects.isNull(privateKeyIds) || privateKeyIds.isEmpty()) {
+            return Collections.emptyMap();
+        }
+
         Map<PrivateKeyId, RSAPrivateKey> privateKeys = new HashMap<>();
 
-        for (PrivateKeyId privateKeyId : privateKeyIds.keySet()) {
-            privateKeys.put(privateKeyId, findById(privateKeyId));
+        for (Map.Entry<PrivateKeyId, String> privateKey : privateKeyIds.entrySet()) {
+            privateKeys.put(privateKey.getKey(), map(privateKey.getValue()));
         }
 
         LOG.debug("Found <{}> private keys", privateKeys.size());
@@ -50,35 +63,39 @@ public class RSAPrivateKeyFileResolverRepositoryImpl implements RSAPrivateKeyRep
     @Override
     public RSAPrivateKey findById(PrivateKeyId id) throws RSAPrivateKeyException {
 
-        try {
+        Optional<String> location = rsaPrivateKeyConfigurationRepository.getLocation(id);
 
-            Optional<String> location = rsaPrivateKeyConfigurationRepository.getLocation(id);
+        LOG.info("Location <{}> matches for <{}>", location.orElse("NONE"), id);
 
-            LOG.info("Location <{}> matches for <{}>", location.orElse("NONE"), id);
-
-            if (location.isEmpty()) {
-                throw new RSAPrivateKeyException("No location found");
-            }
-
-            byte[] normalizedKey = normalizedKeyResolverRepository.execute(location.get());
-
-            LOG.debug("Key successfully loaded from <{}>", location.get());
-
-            EncodedKeySpec spec = new PKCS8EncodedKeySpec(normalizedKey);
-
-            return (RSAPrivateKey) KeyFactory
-                .getInstance("RSA")
-                .generatePrivate(spec);
-
-        } catch (
-            FileResolverException |
-            NoSuchAlgorithmException |
-            InvalidKeySpecException
-                e
-        ) {
-            throw new RSAPrivateKeyException(e.getMessage(), e);
+        if (location.isEmpty()) {
+            throw new RSAPrivateKeyException("No location found");
         }
 
+        return map(location.get());
+    }
+
+    private RSAPrivateKey map(String location) throws RSAPrivateKeyException {
+        try {
+            Resource resource = resourceFactory.create(location);
+
+            try (var inStream = resource.getInputStream()) {
+
+                byte[] resourceContent = inStream.readAllBytes();
+
+                LOG.debug("Resource successfully loaded from <{}>", location);
+
+                byte[] normalizedResourceContent = normalizePEMFileRsaKey.execute(resourceContent);
+
+                return rsaPrivateKeyFactory.create(normalizedResourceContent);
+
+            } catch (IOException ioException) {
+                LOG.error("Error reading resource <{}>", resource, ioException);
+
+                throw new IOResourceException(String.format("Unreadable resource <%s>", resource));
+            }
+        } catch (FileResolverException e) {
+            throw new RSAPrivateKeyException(e.getMessage(), e);
+        }
     }
 
 }

@@ -3,8 +3,10 @@ name: Run Security package publisher
 on:
   push:
     tags:
-      - 'security/webclient/\d+/api-\d+\.\d+\.\d+'
-      - 'security/webclient/\d+/impl-\d+\.\d+\.\d+'
+      - 'security/common/\d+/api-\d+\.\d+\.\d+'
+      - 'security/common/\d+/impl-\d+\.\d+\.\d+'
+      - 'security/spring-client/\d+/api-\d+\.\d+\.\d+'
+      - 'security/spring-client/\d+/impl-\d+\.\d+\.\d+'
 
 jobs:
   publish:
@@ -17,16 +19,30 @@ jobs:
       - name: Checkout commit ${{github.sha}}
         uses: actions/checkout@v4
 
-      - name: Publish Security WebClient API package
-        if: startsWith(github.ref, 'refs/tags/security/webclient') && contains(github.ref, 'api')
+      - name: Publish Security Common API package
+        if: startsWith(github.ref, 'refs/tags/security/common') && contains(github.ref, 'api')
         uses: ./.github/workflows/publish
         with:
-          working-directory: security/webclient/api
+          working-directory: security/common/api
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Publish Security WebClient Impl package
-        if: startsWith(github.ref, 'refs/tags/security/webclient') && contains(github.ref, 'impl')
+      - name: Publish Security Common Impl package
+        if: startsWith(github.ref, 'refs/tags/security/common') && contains(github.ref, 'impl')
         uses: ./.github/workflows/publish
         with:
-          working-directory: security/webclient/impl
+          working-directory: security/common/impl
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish Security Spring Client API package
+        if: startsWith(github.ref, 'refs/tags/security/spring-client') && contains(github.ref, 'api')
+        uses: ./.github/workflows/publish
+        with:
+          working-directory: security/spring-client/api
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish Security Spring Client Impl package
+        if: startsWith(github.ref, 'refs/tags/security/spring-client') && contains(github.ref, 'impl')
+        uses: ./.github/workflows/publish
+        with:
+          working-directory: security/spring-client/impl
           github-token: ${{ secrets.GITHUB_TOKEN }}

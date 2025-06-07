@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public class BasicAuthorizationHeaderAppenderImpl implements AuthorizationHeaderAppender {
 
-    private static final String DEFAULT_USERNAME_OR_PASSWORD_VALUE = "";
+    protected static final String DEFAULT_USERNAME_OR_PASSWORD_VALUE = "";
 
     private final BasicCredentialRepository basicCredentialRepository;
 
