@@ -3,7 +3,7 @@ package cmahy.simple.spring.webapp.shell.client.impl.adapter.api.taco.shop.ingre
 import cmahy.simple.spring.common.entity.page.DefaultEntityPageableImpl;
 import cmahy.simple.spring.common.entity.page.EntityPageable;
 import cmahy.simple.spring.common.helper.Generator;
-import cmahy.simple.spring.webapp.shell.client.impl.adapter.config.properties.taco.ingredient.IngredientProperties;
+import cmahy.simple.spring.webapp.shell.client.impl.adapter.config.properties.ApplicationProperties;
 import cmahy.simple.spring.webapp.shell.client.impl.adapter.config.properties.taco.ingredient.IngredientResource;
 import cmahy.simple.spring.webapp.shell.client.impl.application.query.PrintMessageQuery;
 import cmahy.simple.spring.webapp.shell.client.impl.application.repository.property.ConsolePropertyRepository;
@@ -41,8 +41,8 @@ class IngredientApiImplTest {
     @Mock
     private GetAllRemoteIngredientPagedQuery getAllIngredientPagedQuery;
 
-    @Mock
-    private IngredientProperties ingredientProperties;
+    @Mock(answer = Answers.RETURNS_DEEP_STUBS)
+    private ApplicationProperties applicationProperties;
 
     @InjectMocks
     private IngredientApiImpl ingredientApiImpl;
@@ -97,7 +97,7 @@ class IngredientApiImplTest {
             when(ingredientOutputVo.toString()).thenCallRealMethod();
 
             try (MockedStatic<CommandLine> ignored = mockStatic(CommandLine.class)) {
-                when(ingredientProperties.externalResource()).thenReturn(ingredientResource);
+                when(applicationProperties.taco().ingredients().externalResource()).thenReturn(ingredientResource);
                 when(ingredientResource.pageSize()).thenReturn(Optional.of(pageSize));
 
                 when(getAllIngredientPagedQuery.execute(any(EntityPageable.class))).thenAnswer(invocationOnMock -> {
@@ -133,7 +133,7 @@ class IngredientApiImplTest {
     void getAll_onAnyException_shouldBeThreadSafeAndReturnOne(Exception anException) {
         assertDoesNotThrow(() -> {
             try (MockedStatic<CommandLine> ignored = mockStatic(CommandLine.class)) {
-                when(ingredientProperties.externalResource()).thenAnswer(_ -> {
+                when(applicationProperties.taco().ingredients().externalResource()).thenAnswer(_ -> {
                     throw anException;
                 });
 
