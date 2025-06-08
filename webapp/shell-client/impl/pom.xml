@@ -48,7 +48,7 @@
         <cmahy.simple.spring.webapp.user.kernel.domain.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.kernel.domain.version>
         <cmahy.simple.spring.webapp.user.kernel.vo.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.kernel.vo.version>
         <cmahy.simple.spring.webapp.user.kernel.application.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.kernel.application.version>
-        <cmahy.simple.spring.webapp.user.adapter.webclient.version>DEV-SNAPSHOT</cmahy.simple.spring.webapp.user.adapter.webclient.version>
+        <cmahy.simple.spring.webapp.user.adapter.webclient.version>1.0.4</cmahy.simple.spring.webapp.user.adapter.webclient.version>
 
         <cmahy.simple.spring.security.common.version>1.0.0</cmahy.simple.spring.security.common.version>
 
