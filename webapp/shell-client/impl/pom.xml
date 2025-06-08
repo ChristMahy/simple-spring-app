@@ -41,7 +41,7 @@
         <cmahy.simple.spring.webapp.taco.shop.kernel.domain.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.kernel.domain.version>
         <cmahy.simple.spring.webapp.taco.shop.kernel.vo.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.kernel.vo.version>
         <cmahy.simple.spring.webapp.taco.shop.kernel.application.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.kernel.application.version>
-        <cmahy.simple.spring.webapp.taco.shop.adapter.webclient.version>DEV-SNAPSHOT</cmahy.simple.spring.webapp.taco.shop.adapter.webclient.version>
+        <cmahy.simple.spring.webapp.taco.shop.adapter.webclient.version>1.0.5</cmahy.simple.spring.webapp.taco.shop.adapter.webclient.version>
 
         <cmahy.simple.spring.webapp.user.version>1.0.2</cmahy.simple.spring.webapp.user.version>
 
