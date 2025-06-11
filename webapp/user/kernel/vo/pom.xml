@@ -15,7 +15,7 @@
 
     <groupId>cmahy.simple.spring.webapp</groupId>
     <artifactId>user.kernel.vo</artifactId>
-    <version>DEV-SNAPSHOT</version>
+    <version>1.0.3</version>
 
     <name>spring-user-kernel-vo</name>
     <description>Webapp User Kernel VO project</description>
