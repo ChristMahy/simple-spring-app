@@ -15,7 +15,7 @@
 
     <groupId>cmahy.simple.spring.webapp.user</groupId>
     <artifactId>adapter.repository.webclient</artifactId>
-    <version>DEV-SNAPSHOT</version>
+    <version>1.0.5</version>
 
     <name>spring-user-adapter-repository-webclient</name>
     <description>Webapp User Adapter Repository WebClient project</description>
