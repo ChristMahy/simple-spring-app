@@ -37,6 +37,11 @@ public class RoleBuilderStub implements RoleBuilder<RoleStub> {
     }
 
     @Override
+    public <RIGHT extends Right> RoleBuilder<RoleStub> rights(Collection<RIGHT> rights) {
+        throw new IllegalStateException("Not yet implemented !");
+    }
+
+    @Override
     public RoleStub build() {
         return this.originalRole.orElseGet(RoleStub::new)
             .setName(name)

@@ -10,6 +10,8 @@ public class RoleStub implements Role {
 
     private Collection<UserStub> users;
 
+    private Collection<RightStub> rights;
+
     @Override
     public UUID getId() {
         return id;
@@ -30,12 +32,24 @@ public class RoleStub implements Role {
         return this;
     }
 
+    @Override
     public Collection<UserStub> getUsers() {
         return users;
     }
 
     public RoleStub setUsers(Collection<UserStub> users) {
         this.users = Objects.isNull(users) ? null : new ArrayList<>(users);
+        return this;
+    }
+
+    @Override
+    public Collection<RightStub> getRights() {
+        return rights;
+    }
+
+    public RoleStub setRights(Collection<RightStub> rights) {
+        this.rights = rights;
+
         return this;
     }
 }

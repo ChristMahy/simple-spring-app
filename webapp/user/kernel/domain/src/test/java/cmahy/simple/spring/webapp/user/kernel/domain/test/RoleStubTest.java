@@ -23,11 +23,16 @@ class RoleStubTest {
                 .generate(() -> mock(UserStub.class))
                 .limit(Generator.randomInt(50, 500))
                 .toList();
+            Collection<RightStub> rights = Stream
+                .generate(() -> mock(RightStub.class))
+                .limit(Generator.randomInt(50, 500))
+                .toList();
 
             Role actual = new RoleStub()
                 .setId(id)
                 .setName(name)
-                .setUsers(users);
+                .setUsers(users)
+                .setRights(rights);
 
             assertThat(actual)
                 .isNotNull()
@@ -36,6 +41,7 @@ class RoleStubTest {
             assertThat(actual.getId()).isEqualTo(id);
             assertThat(actual.getName()).isEqualTo(name);
             assertThat(actual.getUsers()).containsExactlyElementsOf(users);
+            assertThat(actual.getRights()).containsExactlyElementsOf(rights);
         });
     }
 
@@ -51,6 +57,7 @@ class RoleStubTest {
             assertThat(actual.getId()).isNull();
             assertThat(actual.getName()).isNull();
             assertThat(actual.getUsers()).isNull();
+            assertThat(actual.getRights()).isNull();
         });
     }
 
@@ -63,16 +70,22 @@ class RoleStubTest {
                 .generate(() -> mock(UserStub.class))
                 .limit(Generator.randomInt(50, 500))
                 .toList();
+            Collection<RightStub> rights = Stream
+                .generate(() -> mock(RightStub.class))
+                .limit(Generator.randomInt(50, 500))
+                .toList();
 
             RoleStub actual = new RoleStub()
                 .setId(id)
                 .setName(name)
-                .setUsers(users);
+                .setUsers(users)
+                .setRights(rights);
 
             actual = actual
                 .setId(null)
                 .setName(null)
-                .setUsers(null);
+                .setUsers(null)
+                .setRights(null);
 
             assertThat(actual)
                 .isNotNull()
@@ -81,6 +94,7 @@ class RoleStubTest {
             assertThat(actual.getId()).isNull();
             assertThat(actual.getName()).isNull();
             assertThat(actual.getUsers()).isNull();
+            assertThat(actual.getRights()).isNull();
         });
     }
 }

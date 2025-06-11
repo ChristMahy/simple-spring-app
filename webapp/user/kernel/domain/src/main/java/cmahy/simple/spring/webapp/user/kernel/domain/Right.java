@@ -3,13 +3,11 @@ package cmahy.simple.spring.webapp.user.kernel.domain;
 import java.util.Collection;
 import java.util.UUID;
 
-public interface Role {
+public interface Right {
 
     UUID getId();
 
     String getName();
 
-    <U extends User> Collection<U> getUsers();
-
-    <R extends Right> Collection<R> getRights();
+    <R extends Role> Collection<R> getRoles();
 }
