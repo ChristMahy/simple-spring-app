@@ -1,27 +1,28 @@
 package cmahy.simple.spring.webapp.user.adapter.webclient.entity.domain;
 
-import cmahy.simple.spring.webapp.user.kernel.domain.Role;
+import cmahy.simple.spring.webapp.user.kernel.domain.Right;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.Collection;
 import java.util.UUID;
 
-public class ExternalRole implements Role {
+public class ExternalRight implements Right {
 
     protected UUID id;
     protected String name;
 
-    protected Collection<ExternalUser> users;
-    protected Collection<ExternalRight> rights;
+    protected Collection<ExternalRole> roles;
 
     @Override
     public UUID getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public ExternalRight setId(UUID id) {
         this.id = id;
+
+        return this;
     }
 
     @Override
@@ -29,26 +30,20 @@ public class ExternalRole implements Role {
         return name;
     }
 
-    public void setName(String name) {
+    public ExternalRight setName(String name) {
         this.name = name;
+
+        return this;
     }
 
-    @Override
-    public Collection<ExternalUser> getUsers() {
-        return users;
+    public Collection<ExternalRole> getRoles() {
+        return roles;
     }
 
-    public void setUsers(Collection<ExternalUser> users) {
-        this.users = users;
-    }
+    public ExternalRight setRoles(Collection<ExternalRole> roles) {
+        this.roles = roles;
 
-    @Override
-    public Collection<ExternalRight> getRights() {
-        return rights;
-    }
-
-    public void setRights(Collection<ExternalRight> rights) {
-        this.rights = rights;
+        return this;
     }
 
     @Override
