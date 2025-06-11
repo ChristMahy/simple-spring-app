@@ -25,14 +25,14 @@
     <parent>
         <groupId>cmahy.simple.spring</groupId>
         <artifactId>bom</artifactId>
-        <version>1.0.3</version>
+        <version>1.0.4</version>
         <relativePath/>
     </parent>
 
     <properties>
         <cmahy.common>1.0.2</cmahy.common>
 
-        <cmahy.simple.spring.webapp.user.version>1.0.2</cmahy.simple.spring.webapp.user.version>
+        <cmahy.simple.spring.webapp.user.version>1.0.3</cmahy.simple.spring.webapp.user.version>
 
         <cmahy.simple.spring.webapp.user.domain.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.domain.version>
         <cmahy.simple.spring.webapp.user.application.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.application.version>
@@ -143,10 +143,6 @@
             </plugin>
         </plugins>
     </build>
-
-    <reporting>
-        <outputDirectory>${project.build.directory}/${project.build.finalName}-reports</outputDirectory>
-    </reporting>
 
     <repositories>
         <repository>
