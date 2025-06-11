@@ -25,7 +25,7 @@
     <parent>
         <groupId>cmahy.simple.spring</groupId>
         <artifactId>bom</artifactId>
-        <version>1.0.3</version>
+        <version>1.0.4</version>
         <relativePath/>
     </parent>
 
@@ -160,10 +160,6 @@
             </plugin>
         </plugins>
     </build>
-
-    <reporting>
-        <outputDirectory>${project.build.directory}/${project.build.finalName}-reports</outputDirectory>
-    </reporting>
 
     <repositories>
         <repository>
