@@ -18,14 +18,14 @@ public record UserOutputAppVo(
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
-            .append("id", id)
-            .append("userName", userName)
-            .append("fullName", fullName)
-            .append("street", street)
-            .append("city", city)
-            .append("state", state)
-            .append("zip", zip)
-            .append("phoneNumber", phoneNumber)
+            .append("id", id())
+            .append("userName", userName())
+            .append("fullName", fullName())
+            .append("street", street())
+            .append("city", city())
+            .append("state", state())
+            .append("zip", zip())
+            .append("phoneNumber", phoneNumber())
             .toString();
     }
 }
