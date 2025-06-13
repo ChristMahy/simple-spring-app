@@ -10,6 +10,7 @@ public class RoleBuilderStub implements RoleBuilder<RoleStub> {
 
     private String name;
     private List<UserStub> users;
+    private Collection<RightStub> rights;
 
     public RoleBuilderStub() {}
 
@@ -18,7 +19,8 @@ public class RoleBuilderStub implements RoleBuilder<RoleStub> {
 
         this.originalRole.ifPresent(originalRole -> {
             this.name(originalRole.getName())
-                .users(originalRole.getUsers());
+                .users(originalRole.getUsers())
+                .rights(originalRole.getRights());
         });
     }
 
@@ -38,13 +40,16 @@ public class RoleBuilderStub implements RoleBuilder<RoleStub> {
 
     @Override
     public <RIGHT extends Right> RoleBuilder<RoleStub> rights(Collection<RIGHT> rights) {
-        throw new IllegalStateException("Not yet implemented !");
+        this.rights =  (Collection<RightStub>) rights;
+
+        return this;
     }
 
     @Override
     public RoleStub build() {
         return this.originalRole.orElseGet(RoleStub::new)
             .setName(name)
-            .setUsers(users);
+            .setUsers(users)
+            .setRights(rights);
     }
 }

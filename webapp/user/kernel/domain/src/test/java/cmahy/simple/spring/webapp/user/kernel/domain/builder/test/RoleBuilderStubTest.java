@@ -22,10 +22,15 @@ class RoleBuilderStubTest {
                 .generate(() -> mock(UserStub.class))
                 .limit(Generator.randomInt(50, 500))
                 .toList();
+            List<RightStub> rights = Stream
+                .generate(() -> mock(RightStub.class))
+                .limit(Generator.randomInt(50, 500))
+                .toList();
 
             Role actual = new RoleBuilderStub()
                 .name(name)
                 .users(users)
+                .rights(rights)
                 .build();
 
             assertThat(actual)
@@ -35,6 +40,7 @@ class RoleBuilderStubTest {
             assertThat(actual.getId()).isNull();
             assertThat(actual.getName()).isEqualTo(name);
             assertThat(actual.getUsers()).containsExactlyElementsOf(users);
+            assertThat(actual.getRights()).containsExactlyElementsOf(rights);
         });
     }
 
@@ -46,6 +52,10 @@ class RoleBuilderStubTest {
                 .generate(() -> mock(UserStub.class))
                 .limit(Generator.randomInt(50, 500))
                 .toList();
+            List<RightStub> rights = Stream
+                .generate(() -> mock(RightStub.class))
+                .limit(Generator.randomInt(50, 500))
+                .toList();
 
             RoleStub originalRole = new RoleStub()
                 .setId(Generator.randomUUID())
@@ -55,11 +65,18 @@ class RoleBuilderStubTest {
                         .generate(() -> mock(UserStub.class))
                         .limit(40)
                         .toList()
+                )
+                .setRights(
+                    Stream
+                        .generate(() -> mock(RightStub.class))
+                        .limit(40)
+                        .toList()
                 );
 
             Role actual = new RoleBuilderStub(originalRole)
                 .name(newName)
                 .users(newUsers)
+                .rights(rights)
                 .build();
 
             assertThat(actual)
@@ -84,6 +101,12 @@ class RoleBuilderStubTest {
                         .generate(() -> mock(UserStub.class))
                         .limit(40)
                         .toList()
+                )
+                .setRights(
+                    Stream
+                        .generate(() -> mock(RightStub.class))
+                        .limit(Generator.randomInt(50, 500))
+                        .toList()
                 );
 
 
@@ -97,6 +120,7 @@ class RoleBuilderStubTest {
             assertThat(actual.getId()).isEqualTo(originalRole.getId());
             assertThat(actual.getName()).isEqualTo(originalRole.getName());
             assertThat(actual.getUsers()).containsExactlyElementsOf(originalRole.getUsers());
+            assertThat(actual.getRights()).containsExactlyElementsOf(originalRole.getRights());
         });
     }
 
@@ -108,10 +132,15 @@ class RoleBuilderStubTest {
                 .generate(() -> mock(UserStub.class))
                 .limit(Generator.randomInt(50, 500))
                 .toList();
+            List<RightStub> rights = Stream
+                .generate(() -> mock(RightStub.class))
+                .limit(Generator.randomInt(50, 500))
+                .toList();
 
             Role actual = new RoleBuilderStub(null)
                 .name(newName)
                 .users(newUsers)
+                .rights(rights)
                 .build();
 
             assertThat(actual).isNotNull();
@@ -119,6 +148,7 @@ class RoleBuilderStubTest {
             assertThat(actual.getId()).isNull();
             assertThat(actual.getName()).isEqualTo(newName);
             assertThat(actual.getUsers()).containsExactlyElementsOf(newUsers);
+            assertThat(actual.getRights()).containsExactlyElementsOf(rights);
         });
     }
 }
