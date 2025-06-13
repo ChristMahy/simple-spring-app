@@ -1,7 +1,7 @@
 package cmahy.simple.spring.webapp.user.adapter.jpa.entity.builder;
 
-import cmahy.simple.spring.webapp.user.adapter.jpa.entity.domain.JpaRole;
-import cmahy.simple.spring.webapp.user.adapter.jpa.entity.domain.JpaUser;
+import cmahy.simple.spring.webapp.user.adapter.jpa.entity.domain.*;
+import cmahy.simple.spring.webapp.user.kernel.domain.Right;
 import cmahy.simple.spring.webapp.user.kernel.domain.User;
 import cmahy.simple.spring.webapp.user.kernel.domain.builder.RoleBuilder;
 
@@ -18,12 +18,14 @@ public class JpaRoleBuilder implements RoleBuilder<JpaRole> {
 
         this.originalRole.ifPresent(originalRole -> {
             this.name(originalRole.getName())
-                .users(originalRole.getUsers());
+                .users(originalRole.getUsers())
+                .rights(originalRole.getRights());
         });
     }
 
     private String name;
     private List<JpaUser> users;
+    private Collection<JpaRight> rights;
 
     @Override
     public JpaRoleBuilder name(String name) {
@@ -40,9 +42,17 @@ public class JpaRoleBuilder implements RoleBuilder<JpaRole> {
     }
 
     @Override
+    public <RIGHT extends Right> JpaRoleBuilder rights(Collection<RIGHT> rights) {
+        this.rights = (Collection<JpaRight>) rights;
+
+        return this;
+    }
+
+    @Override
     public JpaRole build() {
         return this.originalRole.orElseGet(JpaRole::new)
             .setName(name)
-            .setUsers(users);
+            .setUsers(users)
+            .setRights(rights);
     }
 }

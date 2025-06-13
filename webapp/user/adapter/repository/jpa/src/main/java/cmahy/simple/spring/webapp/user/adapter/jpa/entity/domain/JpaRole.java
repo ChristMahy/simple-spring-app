@@ -20,6 +20,18 @@ public class JpaRole implements Role {
     @ManyToMany
     protected Collection<JpaUser> users;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "role_right_app",
+        joinColumns = @JoinColumn(name = "role_app_id"),
+        inverseJoinColumns = @JoinColumn(name = "right_app_id"),
+        uniqueConstraints = @UniqueConstraint(
+            name = "u_role_right_app",
+            columnNames = { "role_app_id", "right_app_id" }
+        )
+    )
+    protected Collection<JpaRight> rights;
+
     @Override
     public UUID getId() {
         return id;
@@ -49,6 +61,17 @@ public class JpaRole implements Role {
 
     public JpaRole setUsers(Collection<JpaUser> users) {
         this.users = users;
+
+        return this;
+    }
+
+    @Override
+    public Collection<JpaRight> getRights() {
+        return rights;
+    }
+
+    public JpaRole setRights(Collection<JpaRight> rights) {
+        this.rights = rights;
 
         return this;
     }
