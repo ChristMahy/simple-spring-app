@@ -1,8 +1,10 @@
 package cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.builder.factory;
 
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.builder.CassandraClientOrderBuilder;
+import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.domain.CassandraClientOrder;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.CassandraClientOrderProxy;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.factory.CassandraClientOrderProxyFactory;
+import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.factory.provider.CassandraTacoProxyFactoryProvider;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.builder.factory.ClientOrderBuilderFactory;
 import jakarta.inject.Named;
 import org.springframework.context.annotation.Primary;
@@ -13,8 +15,8 @@ public class CassandraClientOrderBuilderFactory implements ClientOrderBuilderFac
 
     private final CassandraClientOrderProxyFactory clientOrderProxyFactory;
 
-    public CassandraClientOrderBuilderFactory(CassandraClientOrderProxyFactory clientOrderProxyFactory) {
-        this.clientOrderProxyFactory = clientOrderProxyFactory;
+    public CassandraClientOrderBuilderFactory(CassandraTacoProxyFactoryProvider factoryProvider) {
+        this.clientOrderProxyFactory = factoryProvider.resolve(CassandraClientOrder.class);
     }
 
     @Override

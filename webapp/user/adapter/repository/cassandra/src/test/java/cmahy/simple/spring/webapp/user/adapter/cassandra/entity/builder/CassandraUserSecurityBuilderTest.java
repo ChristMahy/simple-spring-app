@@ -2,10 +2,11 @@ package cmahy.simple.spring.webapp.user.adapter.cassandra.entity.builder;
 
 import cmahy.simple.spring.common.helper.Generator;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.domain.CassandraUserSecurityImpl;
-import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.loader.UserSecurityLoader;
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.loader.provider.UserLoaderProvider;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.CassandraRoleProxy;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.CassandraUserSecurityProxy;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.CassandraUserSecurityProxyFactory;
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.provider.CassandraUserProxyFactoryProvider;
 import cmahy.simple.spring.webapp.user.kernel.domain.AuthProvider;
 import cmahy.simple.spring.webapp.user.kernel.domain.UserSecurity;
 import org.junit.jupiter.api.Test;
@@ -30,7 +31,10 @@ class CassandraUserSecurityBuilderTest {
     private CassandraUserSecurityProxyFactory userSecurityProxyFactory;
 
     @Mock
-    private UserSecurityLoader userSecurityLoader;
+    private UserLoaderProvider userLoaderProvider;
+
+    @Mock
+    private CassandraUserProxyFactoryProvider factoryProvider;
 
     @Test
     void build() {
@@ -63,7 +67,7 @@ class CassandraUserSecurityBuilderTest {
 
                     assertThat(methodArgument).isInstanceOf(CassandraUserSecurityImpl.class);
 
-                    return new CassandraUserSecurityProxy((CassandraUserSecurityImpl) methodArgument, userSecurityLoader);
+                    return new CassandraUserSecurityProxy((CassandraUserSecurityImpl) methodArgument, userLoaderProvider, factoryProvider);
                 });
 
             UserSecurity actual = new CassandraUserSecurityBuilder(userSecurityProxyFactory)
@@ -134,7 +138,7 @@ class CassandraUserSecurityBuilderTest {
             Boolean newIsEnabled = Generator.randomBoolean();
             Boolean newIsCredentialsExpired = Generator.randomBoolean();
 
-            CassandraUserSecurityProxy original = new CassandraUserSecurityProxy(new CassandraUserSecurityImpl(), userSecurityLoader)
+            CassandraUserSecurityProxy original = new CassandraUserSecurityProxy(new CassandraUserSecurityImpl(), userLoaderProvider, factoryProvider)
                 .setUserName(Generator.generateAString(30))
                 .setPassword(Generator.randomBytes(Generator.randomInt(20, 30)))
                 .setFullName(Generator.generateAString(30))
@@ -202,7 +206,7 @@ class CassandraUserSecurityBuilderTest {
     void buildWithOriginal_thenReturnOriginalWithoutModifiedValuesAndKeepingSameValues() {
         assertDoesNotThrow(() -> {
 
-            CassandraUserSecurityProxy original = new CassandraUserSecurityProxy(new CassandraUserSecurityImpl(), userSecurityLoader)
+            CassandraUserSecurityProxy original = new CassandraUserSecurityProxy(new CassandraUserSecurityImpl(), userLoaderProvider, factoryProvider)
                 .setUserName(Generator.generateAString(30))
                 .setPassword(Generator.randomBytes(Generator.randomInt(20, 30)))
                 .setFullName(Generator.generateAString(30))
@@ -282,7 +286,7 @@ class CassandraUserSecurityBuilderTest {
 
                     assertThat(methodArgument).isInstanceOf(CassandraUserSecurityImpl.class);
 
-                    return new CassandraUserSecurityProxy((CassandraUserSecurityImpl) methodArgument, userSecurityLoader);
+                    return new CassandraUserSecurityProxy((CassandraUserSecurityImpl) methodArgument, userLoaderProvider, factoryProvider);
                 });
 
             UserSecurity actual = new CassandraUserSecurityBuilder(userSecurityProxyFactory, null)

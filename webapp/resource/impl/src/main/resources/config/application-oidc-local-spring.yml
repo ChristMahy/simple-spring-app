@@ -32,4 +32,4 @@ spring-app:
     oauth2:
       oidc-service-configurer:
         taco-admin-client-oidc: cmahy.simple.spring.webapp.resource.impl.adapter.security.oidc.spring.service.TacoResourceSpringOidcServiceImpl
-        taco-admin-client-keycloak: cmahy.simple.spring.webapp.resource.impl.adapter.security.oidc.spring.service.TacoResourceSpringOidcServiceImpl
+#        taco-admin-client-keycloak: cmahy.simple.spring.webapp.resource.impl.adapter.security.oidc.spring.service.TacoResourceSpringOidcServiceImpl

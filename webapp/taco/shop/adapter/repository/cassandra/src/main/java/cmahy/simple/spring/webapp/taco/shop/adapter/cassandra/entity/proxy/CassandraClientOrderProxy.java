@@ -1,11 +1,17 @@
 package cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy;
 
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.domain.CassandraClientOrder;
+import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.domain.CassandraTaco;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.loader.ClientOrderLoader;
+import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.loader.provider.TacoLoaderProvider;
+import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.factory.CassandraTacoProxyFactory;
+import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.factory.provider.CassandraTacoProxyFactoryProvider;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.ClientOrder;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.Taco;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.id.TacoId;
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.domain.CassandraUserImpl;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.CassandraUserProxy;
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.CassandraUserProxyFactory;
 import cmahy.simple.spring.webapp.user.kernel.domain.User;
 import cmahy.simple.spring.webapp.user.kernel.domain.id.UserId;
 
@@ -19,14 +25,18 @@ public class CassandraClientOrderProxy implements ClientOrder {
     private CassandraUserProxy user;
     private List<CassandraTacoProxy> tacos;
 
-    private final ClientOrderLoader clientOrderLoader;
+    private final TacoLoaderProvider tacoLoaderProvider;
+    private final CassandraTacoProxyFactoryProvider factoryProvider;
 
     public CassandraClientOrderProxy(
         CassandraClientOrder clientOrder,
-        ClientOrderLoader clientOrderLoader
+        TacoLoaderProvider tacoLoaderProvider,
+        CassandraTacoProxyFactoryProvider factoryProvider
     ) {
         this.clientOrder = clientOrder;
-        this.clientOrderLoader = clientOrderLoader;
+
+        this.tacoLoaderProvider = tacoLoaderProvider;
+        this.factoryProvider = factoryProvider;
     }
 
     public CassandraClientOrder unwrap() {
@@ -134,7 +144,10 @@ public class CassandraClientOrderProxy implements ClientOrder {
     @Override
     public User getUser() {
         if (Objects.isNull(user)) {
-            user = clientOrderLoader.loadUser(clientOrder.getUserId()).orElse(null);
+            user = ((ClientOrderLoader) tacoLoaderProvider.resolve(CassandraClientOrder.class))
+                .loadUser(clientOrder.getUserId())
+                .map(((CassandraUserProxyFactory) factoryProvider.resolve(CassandraUserImpl.class))::create)
+                .orElse(null);
         }
 
         return user;
@@ -156,7 +169,12 @@ public class CassandraClientOrderProxy implements ClientOrder {
     @Override
     public List<CassandraTacoProxy> getTacos() {
         if (Objects.isNull(tacos)) {
-            tacos = clientOrderLoader.loadTacos(clientOrder.getTacoIds());
+            CassandraTacoProxyFactory factory = factoryProvider.resolve(CassandraTaco.class);
+
+            tacos = ((ClientOrderLoader) tacoLoaderProvider.resolve(CassandraClientOrder.class))
+                .loadTacos(clientOrder.getTacoIds()).stream()
+                .map(factory::create)
+                .toList();
         }
 
         return tacos;

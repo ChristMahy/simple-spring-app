@@ -1,20 +1,25 @@
 package cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.factory;
 
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.domain.CassandraClientOrder;
-import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.loader.ClientOrderLoader;
+import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.loader.provider.TacoLoaderProvider;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.CassandraClientOrderProxy;
-import jakarta.inject.Named;
+import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.factory.provider.CassandraTacoProxyFactoryProvider;
 
-@Named
-public class CassandraClientOrderProxyFactory {
+public class CassandraClientOrderProxyFactory implements CassandraProxyFactory {
 
-    private final ClientOrderLoader clientOrderLoader;
+    private final TacoLoaderProvider tacoLoaderProvider;
+    private final CassandraTacoProxyFactoryProvider factoryProvider;
 
-    public CassandraClientOrderProxyFactory(ClientOrderLoader clientOrderLoader) {
-        this.clientOrderLoader = clientOrderLoader;
+    public CassandraClientOrderProxyFactory(
+        TacoLoaderProvider tacoLoaderProvider,
+        CassandraTacoProxyFactoryProvider factoryProvider
+    ) {
+        this.tacoLoaderProvider = tacoLoaderProvider;
+        this.factoryProvider = factoryProvider;
     }
 
+
     public CassandraClientOrderProxy create(CassandraClientOrder clientOrder) {
-        return new CassandraClientOrderProxy(clientOrder, clientOrderLoader);
+        return new CassandraClientOrderProxy(clientOrder, tacoLoaderProvider, factoryProvider);
     }
 }

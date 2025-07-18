@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+        xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
+    <modelVersion>4.0.0</modelVersion>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+
+    <groupId>cmahy.simple.spring.webapp</groupId>
+    <artifactId>resource.cassandra-starter</artifactId>
+    <version>DEV-SNAPSHOT</version>
+
+    <name>spring-taco-resource-cassandra-starter</name>
+    <description>Webapp Taco Resource</description>
+
+    <packaging>jar</packaging>
+
+    <parent>
+        <groupId>cmahy.simple.spring</groupId>
+        <artifactId>bom</artifactId>
+        <version>DEV-SNAPSHOT</version>
+        <relativePath/>
+    </parent>
+
+    <properties>
+        <cmahy.simple.spring.webapp.taco.shop.adapter.repository.cassandra.version>DEV-SNAPSHOT</cmahy.simple.spring.webapp.taco.shop.adapter.repository.cassandra.version>
+        <cmahy.simple.spring.webapp.user.adapter.cassandra.version>DEV-SNAPSHOT</cmahy.simple.spring.webapp.user.adapter.cassandra.version>
+        <cmahy.simple.spring.webapp.taco.shop.it.cassandra.version>DEV-SNAPSHOT</cmahy.simple.spring.webapp.taco.shop.it.cassandra.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>cmahy.simple.spring.webapp</groupId>
+            <artifactId>taco.shop.adapter.repository.cassandra</artifactId>
+            <version>${cmahy.simple.spring.webapp.taco.shop.adapter.repository.cassandra.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy.simple.spring.webapp.user</groupId>
+            <artifactId>adapter.repository.cassandra</artifactId>
+            <version>${cmahy.simple.spring.webapp.user.adapter.cassandra.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-cassandra</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy.simple.spring.webapp</groupId>
+            <artifactId>resource.integration.test.persistence.cassandra</artifactId>
+            <version>${cmahy.simple.spring.webapp.taco.shop.it.cassandra.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://repo1.maven.org/maven2</url>
+        </repository>
+
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/ChristMahy/simple-spring-app</url>
+        </repository>
+    </repositories>
+</project>

@@ -17,7 +17,7 @@ import java.util.HashSet;
 import java.util.Optional;
 
 @Component
-@Order(2)
+@Order(GeneratorConstants.ExecutionOrder.USER)
 public class UserGenerator implements ApplicationRunner {
 
     private final UserSecurityRepository<UserSecurity> userSecurityRepository;

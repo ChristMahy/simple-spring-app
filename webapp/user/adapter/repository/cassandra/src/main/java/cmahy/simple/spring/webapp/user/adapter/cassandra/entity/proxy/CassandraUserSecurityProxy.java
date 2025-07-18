@@ -1,7 +1,11 @@
 package cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy;
 
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.domain.CassandraRole;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.domain.CassandraUserSecurityImpl;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.loader.UserSecurityLoader;
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.loader.provider.UserLoaderProvider;
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.CassandraRoleProxyFactory;
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.provider.CassandraUserProxyFactoryProvider;
 import cmahy.simple.spring.webapp.user.kernel.domain.*;
 import cmahy.simple.spring.webapp.user.kernel.domain.id.RoleId;
 
@@ -12,14 +16,17 @@ public class CassandraUserSecurityProxy implements UserSecurity {
 
     private final CassandraUserSecurityImpl userSecurity;
     private Set<CassandraRoleProxy> roles;
-    private final UserSecurityLoader userLoader;
+    private final UserLoaderProvider userLoaderProvider;
+    private final CassandraUserProxyFactoryProvider factoryProvider;
 
     public CassandraUserSecurityProxy(
         CassandraUserSecurityImpl userSecurity,
-        UserSecurityLoader userLoader
+        UserLoaderProvider userLoaderProvider,
+        CassandraUserProxyFactoryProvider factoryProvider
     ) {
         this.userSecurity = userSecurity;
-        this.userLoader = userLoader;
+        this.userLoaderProvider = userLoaderProvider;
+        this.factoryProvider = factoryProvider;
     }
 
     public CassandraUserSecurityImpl unwrap() {
@@ -164,7 +171,13 @@ public class CassandraUserSecurityProxy implements UserSecurity {
     @Override
     public Collection<CassandraRoleProxy> getRoles() {
         if (roles == null) {
-            roles = userLoader.loadRoles(userSecurity.getCassandraRoleIds());
+            CassandraRoleProxyFactory factory = factoryProvider.resolve(CassandraRole.class);
+
+            roles = ((UserSecurityLoader) userLoaderProvider.resolve(CassandraUserSecurityImpl.class))
+                .loadRoles(userSecurity.getCassandraRoleIds())
+                .stream()
+                .map(factory::create)
+                .collect(Collectors.toSet());
         }
 
         return roles;

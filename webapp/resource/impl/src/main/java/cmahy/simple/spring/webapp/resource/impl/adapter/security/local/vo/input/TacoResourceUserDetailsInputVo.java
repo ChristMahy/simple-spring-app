@@ -1,7 +1,7 @@
 package cmahy.simple.spring.webapp.resource.impl.adapter.security.local.vo.input;
 
-import cmahy.simple.spring.webapp.resource.impl.adapter.api.security.PreAuthorizeAuthorities;
 import cmahy.simple.spring.webapp.resource.ui.vo.input.TacoResourceUserSecurityInputVo;
+import cmahy.simple.spring.webapp.user.kernel.vo.output.RoleOutputAppVo;
 import cmahy.simple.spring.webapp.user.kernel.vo.output.UserSecurityOutputAppVo;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -22,17 +23,14 @@ public class TacoResourceUserDetailsInputVo implements UserDetails, TacoResource
     ) {
         this.userSecurity = userSecurity;
 
+        Set<RoleOutputAppVo> roles = userSecurity.roles();
+
         this.authorities = Stream.concat(
-                userSecurity
-                    .roles().stream()
+                roles.stream()
                     .map(role -> "ROLE_" + role.name()),
-                /*
-                TODO: Create rights table... and bind it to role, next build SimpleGrantedAuthority with right table
-                For now, webclient request works with this fix
-                 */
-                Stream.of(
-                    PreAuthorizeAuthorities.IngredientAuthorities.READ
-                )
+                roles.stream()
+                    .flatMap(role -> role.rights().stream())
+                    .map(right -> "SCOPE_" + right.name())
             )
             .distinct()
             .map(SimpleGrantedAuthority::new)

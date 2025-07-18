@@ -13,8 +13,8 @@ application:
         password: machine2machine
       o-auth2-authorization-credentials:
 #        registration-id: taco-shop
-#        registration-id: taco-shop-private-key-jwt
-        registration-id: taco-shop-keycloak-private-key
+        registration-id: taco-shop-private-key-jwt
+#        registration-id: taco-shop-keycloak-private-key
   security:
     private-keys:
       locations:
@@ -42,10 +42,10 @@ spring:
             client-id: shell-client-auth-jwt
             authorization-grant-type: client_credentials
             client-authentication-method: private_key_jwt
-          taco-shop-keycloak-private-key:
-            provider: keycloak
-            client-id: spring-web-app.api
-            authorization-grant-type: client_credentials
-            client-authentication-method: private_key_jwt
-            scope:
-              - openid
+#          taco-shop-keycloak-private-key:
+#            provider: keycloak
+#            client-id: spring-web-app.api
+#            authorization-grant-type: client_credentials
+#            client-authentication-method: private_key_jwt
+#            scope:
+#              - openid

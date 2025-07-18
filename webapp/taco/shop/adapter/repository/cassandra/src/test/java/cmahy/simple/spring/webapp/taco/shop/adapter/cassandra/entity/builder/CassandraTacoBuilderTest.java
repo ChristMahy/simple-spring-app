@@ -2,10 +2,11 @@ package cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.builder;
 
 import cmahy.simple.spring.common.helper.Generator;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.domain.CassandraTaco;
-import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.loader.TacoLoader;
+import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.loader.provider.TacoLoaderProvider;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.CassandraIngredientProxy;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.CassandraTacoProxy;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.factory.CassandraTacoProxyFactory;
+import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.factory.provider.CassandraTacoProxyFactoryProvider;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.Taco;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +30,10 @@ class CassandraTacoBuilderTest {
     private CassandraTacoProxyFactory proxyFactory;
 
     @Mock
-    private TacoLoader tacoLoader;
+    private TacoLoaderProvider tacoLoaderProvider;
+
+    @Mock
+    private CassandraTacoProxyFactoryProvider factoryProvider;
 
     @Test
     void build() {
@@ -47,7 +51,7 @@ class CassandraTacoBuilderTest {
 
                     assertThat(methodArgument).isInstanceOf(CassandraTaco.class);
 
-                    return new CassandraTacoProxy((CassandraTaco) methodArgument, tacoLoader);
+                    return new CassandraTacoProxy((CassandraTaco) methodArgument, tacoLoaderProvider, factoryProvider);
                 });
 
             Taco actual = new CassandraTacoBuilder(proxyFactory)
@@ -79,7 +83,8 @@ class CassandraTacoBuilderTest {
 
             CassandraTacoProxy original = new CassandraTacoProxy(
                 new CassandraTaco().setId(Generator.randomUUID()),
-                tacoLoader
+                tacoLoaderProvider,
+                factoryProvider
             )
                 .setName(Generator.generateAString(30))
                 .setCreatedAt(new Date())
@@ -112,7 +117,8 @@ class CassandraTacoBuilderTest {
 
             CassandraTacoProxy original = new CassandraTacoProxy(
                 new CassandraTaco().setId(Generator.randomUUID()),
-                tacoLoader
+                tacoLoaderProvider,
+                factoryProvider
             )
                 .setName(Generator.generateAString(30))
                 .setCreatedAt(new Date())
@@ -151,7 +157,7 @@ class CassandraTacoBuilderTest {
 
                     assertThat(methodArgument).isInstanceOf(CassandraTaco.class);
 
-                    return new CassandraTacoProxy((CassandraTaco) methodArgument, tacoLoader);
+                    return new CassandraTacoProxy((CassandraTaco) methodArgument, tacoLoaderProvider, factoryProvider);
                 });
 
             Taco actual = new CassandraTacoBuilder(proxyFactory, null)

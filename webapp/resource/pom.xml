@@ -18,6 +18,7 @@
         <module>api</module>
         <module>ui</module>
         <module>impl</module>
+        <module>cassandra-starter</module>
         <module>integration-test-persistence</module>
     </modules>
 </project>

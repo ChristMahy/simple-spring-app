@@ -25,7 +25,7 @@
     <parent>
         <groupId>cmahy.simple.spring</groupId>
         <artifactId>bom</artifactId>
-        <version>1.0.3</version>
+        <version>DEV-SNAPSHOT</version>
         <relativePath/>
     </parent>
 
@@ -37,7 +37,7 @@
         <cmahy.simple.spring.webapp.taco.shop.domain.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.domain.version>
         <cmahy.simple.spring.webapp.taco.shop.application.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.application.version>
 
-        <cmahy.simple.spring.webapp.user.version>1.0.2</cmahy.simple.spring.webapp.user.version>
+        <cmahy.simple.spring.webapp.user.version>DEV-SNAPSHOT</cmahy.simple.spring.webapp.user.version>
 
         <cmahy.simple.spring.webapp.user.domain.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.domain.version>
         <cmahy.simple.spring.webapp.user.cassandra.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.cassandra.version>
@@ -167,10 +167,6 @@
             </plugin>
         </plugins>
     </build>
-
-    <reporting>
-        <outputDirectory>${project.build.directory}/${project.build.finalName}-reports</outputDirectory>
-    </reporting>
 
     <repositories>
         <repository>

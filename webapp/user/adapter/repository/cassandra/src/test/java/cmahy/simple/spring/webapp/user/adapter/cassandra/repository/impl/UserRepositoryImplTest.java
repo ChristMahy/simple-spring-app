@@ -4,8 +4,10 @@ import cmahy.simple.spring.common.helper.Generator;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.domain.CassandraUserImpl;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.CassandraUserProxy;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.CassandraUserProxyFactory;
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.provider.CassandraUserProxyFactoryProvider;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.repository.cassandra.CassandraUserRepositoryImpl;
 import cmahy.simple.spring.webapp.user.kernel.domain.id.UserId;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,10 +27,18 @@ class UserRepositoryImplTest {
     private CassandraUserRepositoryImpl cassandraUserRepository;
 
     @Mock
-    private CassandraUserProxyFactory cassandraUserProxyFactory;
+    private CassandraUserProxyFactoryProvider proxyFactoryResolver;
 
     @InjectMocks
     private UserRepositoryImpl userRepositoryImpl;
+
+    @Mock
+    private CassandraUserProxyFactory cassandraUserProxyFactory;
+
+    @BeforeEach
+    void setUp() {
+        when(proxyFactoryResolver.resolve(CassandraUserImpl.class)).thenReturn(cassandraUserProxyFactory);
+    }
 
     @Test
     void findById() {

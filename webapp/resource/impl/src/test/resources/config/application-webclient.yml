@@ -2,3 +2,24 @@ application:
   taco-shop:
     webclient:
       enabled: true
+  web-client:
+    taco-shop:
+      credential:
+        appender: o-auth2
+      o-auth2-authorization-credentials:
+        registration-id: taco-shop
+
+spring:
+  security:
+    oauth2:
+      client:
+        provider:
+          spring-authorization-server:
+            token-uri: http://authserver:9000/oauth2/token
+        registration:
+          taco-shop:
+            provider: spring-authorization-server
+            client-id: taco-shop-m2m
+            client-secret: taco-shop-m2m-secret
+            authorization-grant-type: client_credentials
+            client-authentication-method: client_secret_basic

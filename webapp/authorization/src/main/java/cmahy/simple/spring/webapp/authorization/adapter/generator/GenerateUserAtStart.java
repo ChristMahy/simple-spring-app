@@ -53,6 +53,7 @@ public class GenerateUserAtStart implements ApplicationRunner {
                     Role.builder()
                         .name(role)
                         .users(new HashSet<>())
+                        .rights(new HashSet<>())
                         .build()
                 );
             });
@@ -127,4 +128,5 @@ public class GenerateUserAtStart implements ApplicationRunner {
 
         return roleRepository.findByName(role.getName()).orElseThrow();
     }
+
 }

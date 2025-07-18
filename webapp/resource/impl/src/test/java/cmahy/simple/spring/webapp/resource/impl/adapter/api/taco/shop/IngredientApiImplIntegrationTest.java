@@ -7,16 +7,17 @@ import cmahy.simple.spring.webapp.resource.impl.helper.security.user.SecurityUse
 import cmahy.simple.spring.webapp.taco.shop.kernel.application.repository.IngredientRepository;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.Ingredient;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.IngredientType;
+import cmahy.simple.spring.webapp.taco.shop.kernel.domain.builder.factory.IngredientBuilderFactory;
+import cmahy.simple.spring.webapp.taco.shop.kernel.domain.id.IngredientId;
 import cmahy.simple.spring.webapp.taco.shop.kernel.vo.input.IngredientCreateInputVo;
+import cmahy.simple.spring.webapp.taco.shop.kernel.vo.input.IngredientUpdateInputVo;
 import cmahy.simple.spring.webapp.taco.shop.kernel.vo.output.IngredientOutputVo;
 import cmahy.simple.spring.webapp.taco.shop.kernel.vo.output.IngredientPageOutputVo;
 import cmahy.simple.spring.webapp.user.kernel.application.repository.UserSecurityRepository;
 import cmahy.simple.spring.webapp.user.kernel.domain.AuthProvider;
 import cmahy.simple.spring.webapp.user.kernel.domain.UserSecurity;
-import cmahy.simple.spring.webapp.user.kernel.domain.id.RoleId;
-import cmahy.simple.spring.webapp.user.kernel.domain.id.UserId;
-import cmahy.simple.spring.webapp.user.kernel.vo.output.RoleOutputAppVo;
-import cmahy.simple.spring.webapp.user.kernel.vo.output.UserSecurityOutputAppVo;
+import cmahy.simple.spring.webapp.user.kernel.domain.id.*;
+import cmahy.simple.spring.webapp.user.kernel.vo.output.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.recursive.comparison.RecursiveComparisonConfiguration;
 import org.junit.jupiter.api.Test;
@@ -30,7 +31,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -46,17 +47,21 @@ class IngredientApiImplIntegrationTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private IngredientRepository<? extends Ingredient> ingredientRepository;
+    private IngredientRepository ingredientRepository;
 
     @Autowired
     private ObjectMapper objectMapper;
 
     @Autowired
-    private UserSecurityRepository<? extends UserSecurity> userSecurityRepository;
+    private UserSecurityRepository userSecurityRepository;
+
+    @Autowired
+    private IngredientBuilderFactory ingredientBuilderFactory;
 
     @Test
     void create() {
         assertDoesNotThrow(() -> {
+
             IngredientCreateInputVo createInputVo = new IngredientCreateInputVo(
                 Generator.generateAStringWithoutSpecialChars(20),
                 Generator.randomEnum(IngredientType.class).name()
@@ -88,33 +93,104 @@ class IngredientApiImplIntegrationTest {
 
             assertThat(actualIngredient)
                 .isNotNull()
-                .isNotEmpty();
+                .isNotEmpty()
+                .get()
+                .hasNoNullFieldsOrProperties()
+                .satisfies(ingredient -> {
+                    assertThat(ingredient.getId()).isEqualTo(actual.id().value());
+                    assertThat(ingredient.getName()).isEqualTo(createInputVo.name());
+                    assertThat(ingredient.getType().name()).isEqualTo(createInputVo.type());
+                });
 
-            assertThat(actualIngredient.get()).hasNoNullFieldsOrProperties();
-
-            assertThat(actualIngredient.get().getId()).isEqualTo(actual.id().value());
-            assertThat(actualIngredient.get().getName()).isEqualTo(actual.name());
-            assertThat(actualIngredient.get().getType().name()).isEqualTo(actual.type());
         });
     }
 
     @Test
     void update() {
         assertDoesNotThrow(() -> {
-            assertThat(true).isTrue();
+
+            Ingredient ingredient = ingredientRepository.save(
+                ingredientBuilderFactory.create()
+                    .name(Generator.generateAString())
+                    .type(Generator.randomEnum(IngredientType.class))
+                    .build()
+            );
+
+            String newName = Generator.generateAString(20);
+            String newType = Generator.randomEnum(IngredientType.class).name();
+
+            MvcResult patchUpdateResult = mockMvc.perform(
+                    MockMvcRequestBuilders.patch(IngredientApi.BASE_URL + "/{id}", ingredient.getId())
+                        .content(objectMapper.writeValueAsString(
+                            new IngredientUpdateInputVo(
+                                Optional.of(newName),
+                                Optional.of(newType)
+                            )
+                        ))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .with(getUser())
+                )
+                .andExpect(status().isOk())
+                .andReturn();
+
+            IngredientOutputVo actual = objectMapper
+                .readValue(patchUpdateResult.getResponse().getContentAsString(), IngredientOutputVo.class);
+
+            assertThat(actual)
+                .isNotNull()
+                .hasNoNullFieldsOrProperties()
+                .satisfies(ingredientOutputVo -> {
+                    assertThat(ingredientOutputVo.id().value()).isEqualTo(ingredient.getId());
+                    assertThat(ingredientOutputVo.name()).isEqualTo(newName);
+                    assertThat(ingredientOutputVo.type()).isEqualTo(newType);
+                });
+
+            Optional<? extends Ingredient> actualIngredient = ingredientRepository.findById(actual.id());
+
+            assertThat(actualIngredient)
+                .isNotNull()
+                .isNotEmpty()
+                .get()
+                .hasNoNullFieldsOrProperties()
+                .satisfies(ingredientResult -> {
+                    assertThat(ingredientResult.getId()).isEqualTo(ingredient.getId());
+                    assertThat(ingredientResult.getName()).isEqualTo(newName);
+                    assertThat(ingredientResult.getType().name()).isEqualTo(newType);
+                });
+
         });
     }
 
     @Test
     void delete() {
         assertDoesNotThrow(() -> {
-            assertThat(true).isTrue();
+
+            Ingredient ingredient = ingredientRepository.save(
+                ingredientBuilderFactory.create()
+                    .name(Generator.generateAString())
+                    .type(Generator.randomEnum(IngredientType.class))
+                    .build()
+            );
+
+            mockMvc.perform(
+                    MockMvcRequestBuilders
+                        .delete(IngredientApi.BASE_URL + "/{id}", ingredient.getId())
+                        .with(getUser())
+                )
+                .andExpect(status().isNoContent())
+                .andReturn();
+
+            Optional<? extends Ingredient> actualIngredient = ingredientRepository.findById(new IngredientId(ingredient.getId()));
+
+            assertThat(actualIngredient).isEmpty();
+
         });
     }
 
     @Test
     void getAll() {
         assertDoesNotThrow(() -> {
+
             MvcResult postCreateResult = mockMvc.perform(
                     MockMvcRequestBuilders.get(IngredientApi.BASE_URL)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -135,7 +211,9 @@ class IngredientApiImplIntegrationTest {
     }
 
     private RequestPostProcessor getUser() {
-        UserSecurity machine2machine = userSecurityRepository.findByUserNameAndAuthProvider("machine2machine", AuthProvider.LOCAL).orElseThrow();
+        UserSecurity machine2machine = ((Optional<UserSecurity>) userSecurityRepository
+            .findByUserNameAndAuthProvider("machine2machine", AuthProvider.LOCAL))
+            .orElseThrow();
 
         return SecurityUserGenerator.generateWithSpecificUser(new TacoResourceUserDetailsInputVo(
             new UserSecurityOutputAppVo(
@@ -156,7 +234,13 @@ class IngredientApiImplIntegrationTest {
                 machine2machine.getRoles().stream()
                     .map(r -> new RoleOutputAppVo(
                         new RoleId(r.getId()),
-                        r.getName()
+                        r.getName(),
+                        r.getRights().stream()
+                            .map(right -> new RightOutputAppVo(
+                                new RightId(right.getId()),
+                                right.getName()
+                            ))
+                            .collect(Collectors.toSet())
                     ))
                     .collect(Collectors.toSet()))
             )

@@ -2,10 +2,11 @@ package cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.builder;
 
 import cmahy.simple.spring.common.helper.Generator;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.domain.CassandraClientOrder;
-import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.loader.ClientOrderLoader;
+import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.loader.provider.TacoLoaderProvider;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.CassandraClientOrderProxy;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.CassandraTacoProxy;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.factory.CassandraClientOrderProxyFactory;
+import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.factory.provider.CassandraTacoProxyFactoryProvider;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.ClientOrder;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.CassandraUserProxy;
 import org.junit.jupiter.api.Test;
@@ -30,7 +31,10 @@ class CassandraClientOrderBuilderTest {
     private CassandraClientOrderProxyFactory clientOrderProxyFactory;
 
     @Mock
-    private ClientOrderLoader clientOrderLoader;
+    private TacoLoaderProvider tacoLoaderProvider;
+
+    @Mock
+    private CassandraTacoProxyFactoryProvider factoryProvider;
 
     @Test
     void build() {
@@ -60,7 +64,7 @@ class CassandraClientOrderBuilderTest {
 
                     assertThat(methodArgument).isInstanceOf(CassandraClientOrder.class);
 
-                    return new CassandraClientOrderProxy((CassandraClientOrder) methodArgument, clientOrderLoader);
+                    return new CassandraClientOrderProxy((CassandraClientOrder) methodArgument, tacoLoaderProvider, factoryProvider);
                 });
 
             ClientOrder actual = new CassandraClientOrderBuilder(clientOrderProxyFactory)
@@ -126,7 +130,8 @@ class CassandraClientOrderBuilderTest {
                 new CassandraClientOrder()
                     .setId(Generator.randomUUID())
                     .setPlacedAt(placedAt),
-                clientOrderLoader
+                tacoLoaderProvider,
+                factoryProvider
             )
                 .setUser(mock(CassandraUserProxy.class))
                 .setDeliveryName(Generator.generateAString(30))
@@ -191,7 +196,8 @@ class CassandraClientOrderBuilderTest {
                 new CassandraClientOrder()
                     .setId(Generator.randomUUID())
                     .setPlacedAt(placedAt),
-                clientOrderLoader
+                tacoLoaderProvider,
+                factoryProvider
             )
                 .setUser(mock(CassandraUserProxy.class))
                 .setDeliveryName(Generator.generateAString(30))
@@ -263,7 +269,7 @@ class CassandraClientOrderBuilderTest {
 
                     assertThat(methodArgument).isInstanceOf(CassandraClientOrder.class);
 
-                    return new CassandraClientOrderProxy((CassandraClientOrder) methodArgument, clientOrderLoader);
+                    return new CassandraClientOrderProxy((CassandraClientOrder) methodArgument, tacoLoaderProvider, factoryProvider);
                 });
 
             ClientOrder actual = new CassandraClientOrderBuilder(clientOrderProxyFactory, null)

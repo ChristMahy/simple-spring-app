@@ -1,10 +1,9 @@
 package cmahy.simple.spring.webapp.user.adapter.cassandra.entity.loader;
 
-import cmahy.simple.spring.common.helper.Generator;
-import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.domain.CassandraUserImpl;
-import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.CassandraUserProxy;
-import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.CassandraUserProxyFactory;
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.domain.*;
+import cmahy.simple.spring.webapp.user.adapter.cassandra.repository.cassandra.CassandraRightRepositoryImpl;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.repository.cassandra.CassandraUserRepositoryImpl;
+import cmahy.simple.spring.webapp.user.kernel.domain.id.RightId;
 import cmahy.simple.spring.webapp.user.kernel.domain.id.RoleId;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -27,39 +25,61 @@ class RoleLoaderImplTest {
     private CassandraUserRepositoryImpl cassandraUserRepository;
 
     @Mock
-    private CassandraUserProxyFactory cassandraUserProxyFactory;
+    private CassandraRightRepositoryImpl cassandraRightRepository;
 
     @InjectMocks
     private RoleLoaderImpl roleLoaderImpl;
 
     @Test
+    void entityClass() {
+        assertDoesNotThrow(() -> {
+
+            assertThat(roleLoaderImpl.entityClass())
+                .isNotNull()
+                .isEqualTo(CassandraRole.class);
+
+        });
+    }
+
+    @Test
     void loadUsers() {
         assertDoesNotThrow(() -> {
+
             RoleId roleId = mock(RoleId.class);
 
-            Set<CassandraUserProxy> userProxies = new HashSet<>();
-
-            List<CassandraUserImpl> users = Stream
-                .generate(() -> {
-                    CassandraUserImpl user = mock(CassandraUserImpl.class);
-                    CassandraUserProxy userProxy = mock(CassandraUserProxy.class);
-
-                    when(cassandraUserProxyFactory.create(user)).thenReturn(userProxy);
-
-                    userProxies.add(userProxy);
-
-                    return user;
-                })
-                .limit(Generator.randomInt(100, 1000))
-                .toList();
+            List<CassandraUserImpl> users = mock(List.class);
 
             when(cassandraUserRepository.findByCassandraRoleId(roleId)).thenReturn(users);
 
-            List<CassandraUserProxy> actual = roleLoaderImpl.loadUsers(roleId);
+
+            Collection<CassandraUserImpl> actual = roleLoaderImpl.loadUsers(roleId);
+
 
             assertThat(actual)
                 .isNotNull()
-                .containsExactlyInAnyOrderElementsOf(userProxies);
+                .isSameAs(users);
+
+        });
+    }
+
+    @Test
+    void loadRights() {
+        assertDoesNotThrow(() -> {
+
+            Set<RightId> rightIds = mock(Set.class);
+
+            List<CassandraRight> rights = mock(List.class);
+
+            when(cassandraRightRepository.findByRightIds(rightIds)).thenReturn(rights);
+
+
+            Collection<CassandraRight> actual = roleLoaderImpl.loadRights(rightIds);
+
+
+            assertThat(actual)
+                .isNotNull()
+                .isSameAs(rights);
+
         });
     }
 }

@@ -3,8 +3,10 @@ package cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.repository.impl;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.domain.CassandraTaco;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.CassandraTacoProxy;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.factory.CassandraTacoProxyFactory;
+import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.factory.provider.CassandraTacoProxyFactoryProvider;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.repository.cassandra.CassandraTacoRepository;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.id.IngredientId;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
@@ -26,10 +28,18 @@ class TacoRepositoryImplTest {
     private CassandraTacoRepository tacoRepository;
 
     @Mock
-    private CassandraTacoProxyFactory tacoProxyFactory;
+    private CassandraTacoProxyFactoryProvider factoryProvider;
 
     @InjectMocks
     private TacoRepositoryImpl tacoRepositoryImpl;
+
+    @Mock
+    private CassandraTacoProxyFactory tacoProxyFactory;
+
+    @BeforeEach
+    void setUp() {
+        when(factoryProvider.resolve(CassandraTaco.class)).thenReturn(tacoProxyFactory);
+    }
 
     @Test
     void save() {

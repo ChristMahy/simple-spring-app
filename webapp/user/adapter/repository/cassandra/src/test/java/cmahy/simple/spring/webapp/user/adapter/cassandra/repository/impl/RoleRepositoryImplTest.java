@@ -4,7 +4,9 @@ import cmahy.simple.spring.common.helper.Generator;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.domain.CassandraRole;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.CassandraRoleProxy;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.CassandraRoleProxyFactory;
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.provider.CassandraUserProxyFactoryProvider;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.repository.cassandra.CassandraRoleRepositoryImpl;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
@@ -24,10 +26,18 @@ class RoleRepositoryImplTest {
     private CassandraRoleRepositoryImpl cassandraRoleRepository;
 
     @Mock
-    private CassandraRoleProxyFactory cassandraRoleProxyFactory;
+    private CassandraUserProxyFactoryProvider proxyFactoryResolver;
 
     @InjectMocks
     private RoleRepositoryImpl roleRepositoryImpl;
+
+    @Mock
+    private CassandraRoleProxyFactory cassandraRoleProxyFactory;
+
+    @BeforeEach
+    void setUp() {
+        when(proxyFactoryResolver.resolve(CassandraRole.class)).thenReturn(cassandraRoleProxyFactory);
+    }
 
     @Test
     void findByName() {

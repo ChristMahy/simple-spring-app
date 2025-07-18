@@ -25,7 +25,7 @@
     <parent>
         <groupId>cmahy.simple.spring</groupId>
         <artifactId>bom</artifactId>
-        <version>1.0.3</version>
+        <version>DEV-SNAPSHOT</version>
         <relativePath/>
     </parent>
 
@@ -50,20 +50,18 @@
         <cmahy.simple.spring.webapp.taco.shop.version>1.0.2</cmahy.simple.spring.webapp.taco.shop.version>
 
         <cmahy.simple.spring.webapp.taco.shop.adapter.repository.jpa.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.adapter.repository.jpa.version>
-        <cmahy.simple.spring.webapp.taco.shop.adapter.repository.cassandra.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.adapter.repository.cassandra.version>
+        <cmahy.simple.spring.webapp.resource.cassandra-starter.version>DEV-SNAPSHOT</cmahy.simple.spring.webapp.resource.cassandra-starter.version>
         <cmahy.simple.spring.webapp.taco.shop.adapter.repository.webclient.version>1.0.5</cmahy.simple.spring.webapp.taco.shop.adapter.repository.webclient.version>
         <cmahy.simple.spring.webapp.taco.shop.kernel.domain.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.kernel.domain.version>
         <cmahy.simple.spring.webapp.taco.shop.kernel.vo.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.kernel.vo.version>
         <cmahy.simple.spring.webapp.taco.shop.kernel.application.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.kernel.application.version>
-        <cmahy.simple.spring.webapp.taco.shop.it.cassandra.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.it.cassandra.version>
 
-        <cmahy.simple.spring.webapp.user.version>1.0.2</cmahy.simple.spring.webapp.user.version>
+        <cmahy.simple.spring.webapp.user.version>DEV-SNAPSHOT</cmahy.simple.spring.webapp.user.version>
 
         <cmahy.simple.spring.webapp.user.kernel.domain.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.kernel.domain.version>
         <cmahy.simple.spring.webapp.user.kernel.vo.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.kernel.vo.version>
         <cmahy.simple.spring.webapp.user.kernel.application.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.kernel.application.version>
         <cmahy.simple.spring.webapp.user.adapter.jpa.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.adapter.jpa.version>
-        <cmahy.simple.spring.webapp.user.adapter.cassandra.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.adapter.cassandra.version>
 
         <packaging.artifact-id>resource.impl</packaging.artifact-id>
 
@@ -142,27 +140,8 @@
             <dependencies>
                 <dependency>
                     <groupId>cmahy.simple.spring.webapp</groupId>
-                    <artifactId>taco.shop.adapter.repository.cassandra</artifactId>
-                    <version>${cmahy.simple.spring.webapp.taco.shop.adapter.repository.cassandra.version}</version>
-                </dependency>
-
-                <dependency>
-                    <groupId>cmahy.simple.spring.webapp.user</groupId>
-                    <artifactId>adapter.repository.cassandra</artifactId>
-                    <version>${cmahy.simple.spring.webapp.user.adapter.cassandra.version}</version>
-                </dependency>
-
-                <dependency>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-data-cassandra</artifactId>
-                </dependency>
-
-                <dependency>
-                    <groupId>cmahy.simple.spring.webapp</groupId>
-                    <artifactId>resource.integration.test.persistence.cassandra</artifactId>
-                    <version>${cmahy.simple.spring.webapp.taco.shop.it.cassandra.version}</version>
-                    <type>test-jar</type>
-                    <scope>test</scope>
+                    <artifactId>resource.cassandra-starter</artifactId>
+                    <version>${cmahy.simple.spring.webapp.resource.cassandra-starter.version}</version>
                 </dependency>
             </dependencies>
 
@@ -420,10 +399,6 @@
             </plugin>
         </plugins>
     </build>
-
-    <reporting>
-        <outputDirectory>${project.build.directory}/${project.build.finalName}-reports</outputDirectory>
-    </reporting>
 
     <repositories>
         <repository>

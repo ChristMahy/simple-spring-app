@@ -9,3 +9,4 @@ docker exec -it cassandra cqlsh -u cassandra -p cassandra -e "$(cat ./db/migrati
 docker exec -it cassandra cqlsh -u cassandra -p cassandra -e "$(cat ./db/migration/00004_create_ingredient_table.cql)"
 docker exec -it cassandra cqlsh -u cassandra -p cassandra -e "$(cat ./db/migration/00005_create_taco_table.cql)"
 docker exec -it cassandra cqlsh -u cassandra -p cassandra -e "$(cat ./db/migration/00006_create_client_order_table.cql)"
+docker exec -it cassandra cqlsh -u cassandra -p cassandra -e "$(cat ./db/migration/00007_create_right_table.cql)"

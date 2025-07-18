@@ -20,7 +20,7 @@
     <parent>
         <groupId>cmahy.simple.spring</groupId>
         <artifactId>bom</artifactId>
-        <version>1.0.3</version>
+        <version>DEV-SNAPSHOT</version>
         <relativePath/>
     </parent>
 
@@ -46,18 +46,6 @@
             </activation>
 
             <dependencies>
-                <dependency>
-                    <groupId>cmahy.simple.spring.security</groupId>
-                    <artifactId>common.api</artifactId>
-                    <version>${cmahy.simple.spring.security.common.api.version}</version>
-                </dependency>
-
-                <dependency>
-                    <groupId>cmahy.simple.spring.security</groupId>
-                    <artifactId>common.impl</artifactId>
-                    <version>${cmahy.simple.spring.security.common.impl.version}</version>
-                </dependency>
-
                 <dependency>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-actuator</artifactId>
@@ -90,6 +78,18 @@
             <groupId>cmahy.simple.spring</groupId>
             <artifactId>common</artifactId>
             <version>${cmahy.simple.spring.common.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy.simple.spring.security</groupId>
+            <artifactId>common.api</artifactId>
+            <version>${cmahy.simple.spring.security.common.api.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy.simple.spring.security</groupId>
+            <artifactId>common.impl</artifactId>
+            <version>${cmahy.simple.spring.security.common.impl.version}</version>
         </dependency>
 
         <dependency>
@@ -143,8 +143,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.source}</target>
-                    <compilerVersion>${java.version}</compilerVersion>
+                    <target>${maven.compiler.target}</target>
+                    <release>${java.version}</release>
                     <encoding>${project.build.sourceEncoding}</encoding>
                     <showDeprecation>true</showDeprecation>
                     <parameters>true</parameters>

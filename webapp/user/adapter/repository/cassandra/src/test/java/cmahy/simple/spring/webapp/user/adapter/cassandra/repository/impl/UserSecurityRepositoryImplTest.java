@@ -4,8 +4,10 @@ import cmahy.simple.spring.common.helper.Generator;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.domain.CassandraUserSecurityImpl;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.CassandraUserSecurityProxy;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.CassandraUserSecurityProxyFactory;
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.provider.CassandraUserProxyFactoryProvider;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.repository.cassandra.CassandraUserSecurityRepositoryImpl;
 import cmahy.simple.spring.webapp.user.kernel.domain.AuthProvider;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
@@ -25,10 +27,18 @@ class UserSecurityRepositoryImplTest {
     private CassandraUserSecurityRepositoryImpl userSecurityRepository;
 
     @Mock
-    private CassandraUserSecurityProxyFactory userSecurityProxyFactory;
+    private CassandraUserProxyFactoryProvider proxyFactoryResolver;
 
     @InjectMocks
     private UserSecurityRepositoryImpl userSecurityRepositoryImpl;
+
+    @Mock
+    private CassandraUserSecurityProxyFactory userSecurityProxyFactory;
+
+    @BeforeEach
+    void setUp() {
+        when(proxyFactoryResolver.resolve(CassandraUserSecurityImpl.class)).thenReturn(userSecurityProxyFactory);
+    }
 
     @Test
     void findByUserNameAndAuthProvider() {

@@ -5,10 +5,12 @@ import cmahy.simple.spring.common.helper.Generator;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.domain.CassandraIngredient;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.CassandraIngredientProxy;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.factory.CassandraIngredientProxyFactory;
+import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.factory.provider.CassandraTacoProxyFactoryProvider;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.repository.cassandra.CassandraIngredientRepository;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.IngredientType;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.id.IngredientId;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.page.IngredientPage;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
@@ -29,10 +31,18 @@ class IngredientRepositoryImplTest {
     private CassandraIngredientRepository ingredientRepository;
 
     @Mock
-    private CassandraIngredientProxyFactory ingredientProxyFactory;
+    private CassandraTacoProxyFactoryProvider factoryProvider;
 
     @InjectMocks
     private IngredientRepositoryImpl ingredientRepositoryImpl;
+
+    @Mock
+    private CassandraIngredientProxyFactory ingredientProxyFactory;
+
+    @BeforeEach
+    void setUp() {
+        lenient().when(factoryProvider.resolve(CassandraIngredient.class)).thenReturn(ingredientProxyFactory);
+    }
 
     @Test
     void findAll() {

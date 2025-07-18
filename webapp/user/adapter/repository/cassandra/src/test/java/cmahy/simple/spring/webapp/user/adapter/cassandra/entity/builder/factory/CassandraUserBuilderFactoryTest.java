@@ -4,9 +4,10 @@ import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.builder.Cassandr
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.domain.CassandraUserImpl;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.CassandraUserProxy;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.CassandraUserProxyFactory;
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.provider.CassandraUserProxyFactoryProvider;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -20,10 +21,19 @@ import static org.mockito.Mockito.*;
 class CassandraUserBuilderFactoryTest {
 
     @Mock
+    private CassandraUserProxyFactoryProvider factoryProvider;
+
+    private CassandraUserBuilderFactory cassandraUserBuilderFactory;
+
+    @Mock
     private CassandraUserProxyFactory cassandraUserProxyFactory;
 
-    @InjectMocks
-    private CassandraUserBuilderFactory cassandraUserBuilderFactory;
+    @BeforeEach
+    void setUp() {
+        when(factoryProvider.resolve(CassandraUserImpl.class)).thenReturn(cassandraUserProxyFactory);
+
+        cassandraUserBuilderFactory = new CassandraUserBuilderFactory(factoryProvider);
+    }
 
     @Test
     void create() {

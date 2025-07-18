@@ -1,12 +1,13 @@
 package cmahy.simple.spring.webapp.authorization.adapter.vo.output;
 
-import cmahy.simple.spring.webapp.authorization.application.vo.output.UserOutputAppVo;
+import cmahy.simple.spring.webapp.authorization.application.vo.output.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public record UserSecurityDetails(
     UserOutputAppVo user
@@ -14,9 +15,13 @@ public record UserSecurityDetails(
 
     @Override
     public Set<SimpleGrantedAuthority> getAuthorities() {
-        return user
-            .roles().stream()
-            .map(role -> new SimpleGrantedAuthority(role.name()))
+        return Stream.of(
+                user.roles().stream().map(RoleOutputAppVo::name),
+                user.roles().stream().flatMap(r -> r.rights().stream()).map(RightOutputAppVo::name)
+            )
+            .flatMap(s -> s)
+            .distinct()
+            .map(SimpleGrantedAuthority::new)
             .collect(Collectors.toSet());
     }
 

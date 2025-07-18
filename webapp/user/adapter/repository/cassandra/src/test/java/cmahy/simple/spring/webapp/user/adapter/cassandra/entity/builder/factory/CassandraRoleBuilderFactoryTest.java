@@ -4,9 +4,10 @@ import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.builder.Cassandr
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.domain.CassandraRole;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.CassandraRoleProxy;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.CassandraRoleProxyFactory;
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.provider.CassandraUserProxyFactoryProvider;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -18,10 +19,19 @@ import static org.mockito.Mockito.*;
 class CassandraRoleBuilderFactoryTest {
 
     @Mock
+    private CassandraUserProxyFactoryProvider factoryProvider;
+
+    private CassandraRoleBuilderFactory cassandraRoleBuilderFactory;
+
+    @Mock
     private CassandraRoleProxyFactory cassandraRoleProxyFactory;
 
-    @InjectMocks
-    private CassandraRoleBuilderFactory cassandraRoleBuilderFactory;
+    @BeforeEach
+    void setUp() {
+        when(factoryProvider.resolve(CassandraRole.class)).thenReturn(cassandraRoleProxyFactory);
+
+        cassandraRoleBuilderFactory = new CassandraRoleBuilderFactory(factoryProvider);
+    }
 
     @Test
     void create() {

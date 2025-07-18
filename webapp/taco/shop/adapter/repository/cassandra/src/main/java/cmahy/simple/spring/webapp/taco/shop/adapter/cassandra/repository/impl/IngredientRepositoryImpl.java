@@ -4,6 +4,7 @@ import cmahy.simple.spring.common.entity.page.EntityPageable;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.domain.CassandraIngredient;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.CassandraIngredientProxy;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.factory.CassandraIngredientProxyFactory;
+import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.factory.provider.CassandraTacoProxyFactoryProvider;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.repository.cassandra.CassandraIngredientRepository;
 import cmahy.simple.spring.webapp.taco.shop.kernel.application.repository.IngredientPagingRepository;
 import cmahy.simple.spring.webapp.taco.shop.kernel.application.repository.IngredientRepository;
@@ -24,23 +25,25 @@ public class IngredientRepositoryImpl implements
     IngredientPagingRepository<CassandraIngredientProxy> {
 
     private final CassandraIngredientRepository ingredientRepository;
-    private final CassandraIngredientProxyFactory ingredientProxyFactory;
+    private final CassandraTacoProxyFactoryProvider factoryProvider;
 
     public IngredientRepositoryImpl(
         CassandraIngredientRepository ingredientRepository,
-        CassandraIngredientProxyFactory ingredientProxyFactory
+        CassandraTacoProxyFactoryProvider factoryProvider
     ) {
         this.ingredientRepository = ingredientRepository;
-        this.ingredientProxyFactory = ingredientProxyFactory;
+        this.factoryProvider = factoryProvider;
     }
 
     @Override
     public IngredientPage<CassandraIngredientProxy> findAll(EntityPageable pageable) {
         Slice<CassandraIngredient> all = ingredientRepository.findAll(pageable);
 
+        CassandraIngredientProxyFactory factory = factoryProvider.resolve(CassandraIngredient.class);
+
         return new IngredientPage<>(
             all.getContent().stream()
-                .map(ingredientProxyFactory::create)
+                .map(factory::create)
                 .toList(),
             ingredientRepository.count()
         );
@@ -49,20 +52,22 @@ public class IngredientRepositoryImpl implements
     @Override
     public Optional<CassandraIngredientProxy> findById(IngredientId id) {
         return ingredientRepository.findById(id)
-            .map(ingredientProxyFactory::create);
+            .map(((CassandraIngredientProxyFactory) factoryProvider.resolve(CassandraIngredient.class))::create);
     }
 
     @Override
     public Set<CassandraIngredientProxy> findByType(IngredientType type) {
+        CassandraIngredientProxyFactory factory = factoryProvider.resolve(CassandraIngredient.class);
+
         return ingredientRepository.findByType(type).stream()
-            .map(ingredientProxyFactory::create)
+            .map(factory::create)
             .collect(Collectors.toSet());
     }
 
     @Override
     public Optional<CassandraIngredientProxy> findByNameAndType(String name, IngredientType type) {
         return ingredientRepository.findByNameAndType(name, type)
-            .map(ingredientProxyFactory::create);
+            .map(((CassandraIngredientProxyFactory) factoryProvider.resolve(CassandraIngredient.class))::create);
     }
 
     @Override
@@ -73,7 +78,9 @@ public class IngredientRepositoryImpl implements
             ingredientUnwrapped.setId(UUID.randomUUID());
         }
 
-        return ingredientProxyFactory.create(
+        CassandraIngredientProxyFactory factory = factoryProvider.resolve(CassandraIngredient.class);
+
+        return factory.create(
             ingredientRepository.save(ingredientUnwrapped)
         );
     }

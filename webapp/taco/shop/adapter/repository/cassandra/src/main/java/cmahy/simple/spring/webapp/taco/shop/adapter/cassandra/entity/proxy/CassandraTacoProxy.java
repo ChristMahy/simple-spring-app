@@ -1,7 +1,11 @@
 package cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy;
 
+import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.domain.CassandraIngredient;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.domain.CassandraTaco;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.loader.TacoLoader;
+import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.loader.provider.TacoLoaderProvider;
+import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.factory.CassandraIngredientProxyFactory;
+import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.factory.provider.CassandraTacoProxyFactoryProvider;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.Ingredient;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.Taco;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.id.IngredientId;
@@ -13,14 +17,19 @@ public class CassandraTacoProxy implements Taco {
 
     private final CassandraTaco taco;
     private List<CassandraIngredientProxy> ingredients;
-    private final TacoLoader tacoLoader;
+
+    private final TacoLoaderProvider tacoLoaderProvider;
+    private final CassandraTacoProxyFactoryProvider factoryProvider;
 
     public CassandraTacoProxy(
         CassandraTaco taco,
-        TacoLoader tacoLoader
+        TacoLoaderProvider tacoLoaderProvider,
+        CassandraTacoProxyFactoryProvider factoryProvider
     ) {
         this.taco = taco;
-        this.tacoLoader = tacoLoader;
+
+        this.tacoLoaderProvider = tacoLoaderProvider;
+        this.factoryProvider = factoryProvider;
     }
 
     public CassandraTaco unwrap() {
@@ -55,7 +64,12 @@ public class CassandraTacoProxy implements Taco {
     @Override
     public Collection<CassandraIngredientProxy> getIngredients() {
         if (ingredients == null) {
-            ingredients = tacoLoader.loadIngredients(taco.getIngredientIds());
+            CassandraIngredientProxyFactory factory = factoryProvider.resolve(CassandraIngredient.class);
+
+            ingredients = ((TacoLoader) tacoLoaderProvider.resolve(CassandraTaco.class))
+                .loadIngredients(taco.getIngredientIds()).stream()
+                .map(factory::create)
+                .toList();
         }
 
         return ingredients;

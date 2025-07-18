@@ -5,10 +5,12 @@ import cmahy.simple.spring.common.helper.Generator;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.domain.CassandraClientOrder;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.CassandraClientOrderProxy;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.factory.CassandraClientOrderProxyFactory;
+import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.factory.provider.CassandraTacoProxyFactoryProvider;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.repository.cassandra.CassandraClientOrderRepository;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.page.ClientOrderPage;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.CassandraUserProxy;
 import cmahy.simple.spring.webapp.user.kernel.domain.id.UserId;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
@@ -31,10 +33,18 @@ class ClientOrderRepositoryImplTest {
     private CassandraClientOrderRepository clientOrderRepository;
 
     @Mock
-    private CassandraClientOrderProxyFactory clientOrderProxyFactory;
+    private CassandraTacoProxyFactoryProvider factoryProvider;
 
     @InjectMocks
     private ClientOrderRepositoryImpl clientOrderRepositoryImpl;
+
+    @Mock
+    private CassandraClientOrderProxyFactory clientOrderProxyFactory;
+
+    @BeforeEach
+    void setUp() {
+        when(factoryProvider.resolve(CassandraClientOrder.class)).thenReturn(clientOrderProxyFactory);
+    }
 
     @Test
     void getByUser() {

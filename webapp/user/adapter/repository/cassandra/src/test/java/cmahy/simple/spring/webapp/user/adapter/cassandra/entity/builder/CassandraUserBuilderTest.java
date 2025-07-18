@@ -2,10 +2,11 @@ package cmahy.simple.spring.webapp.user.adapter.cassandra.entity.builder;
 
 import cmahy.simple.spring.common.helper.Generator;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.domain.CassandraUserImpl;
-import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.loader.UserLoader;
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.loader.provider.UserLoaderProvider;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.CassandraRoleProxy;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.CassandraUserProxy;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.CassandraUserProxyFactory;
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.provider.CassandraUserProxyFactoryProvider;
 import cmahy.simple.spring.webapp.user.kernel.domain.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +30,10 @@ class CassandraUserBuilderTest {
     private CassandraUserProxyFactory userProxyFactory;
 
     @Mock
-    private UserLoader userLoader;
+    private UserLoaderProvider userLoaderProvider;
+
+    @Mock
+    private CassandraUserProxyFactoryProvider factoryProvider;
 
     @Test
     void build() {
@@ -55,7 +59,7 @@ class CassandraUserBuilderTest {
 
                     assertThat(methodArgument).isInstanceOf(CassandraUserImpl.class);
 
-                    return new CassandraUserProxy((CassandraUserImpl) methodArgument, userLoader);
+                    return new CassandraUserProxy((CassandraUserImpl) methodArgument, userLoaderProvider, factoryProvider);
                 });
 
             User actual = new CassandraUserBuilder(userProxyFactory)
@@ -108,7 +112,7 @@ class CassandraUserBuilderTest {
                 .limit(Generator.randomInt(50, 500))
                 .collect(Collectors.toSet());
 
-            CassandraUserProxy original = new CassandraUserProxy(new CassandraUserImpl(), userLoader)
+            CassandraUserProxy original = new CassandraUserProxy(new CassandraUserImpl(), userLoaderProvider, factoryProvider)
                 .setUserName(Generator.generateAString(30))
                 .setPassword(Generator.randomBytes(Generator.randomInt(20, 30)))
                 .setFullName(Generator.generateAString(30))
@@ -160,7 +164,7 @@ class CassandraUserBuilderTest {
     void buildWithOriginal_thenReturnOriginalWithoutModifiedValuesAndKeepingSameValues() {
         assertDoesNotThrow(() -> {
 
-            CassandraUserProxy original = new CassandraUserProxy(new CassandraUserImpl(), userLoader)
+            CassandraUserProxy original = new CassandraUserProxy(new CassandraUserImpl(), userLoaderProvider, factoryProvider)
                 .setUserName(Generator.generateAString(30))
                 .setPassword(Generator.randomBytes(Generator.randomInt(20, 30)))
                 .setFullName(Generator.generateAString(30))
@@ -222,7 +226,7 @@ class CassandraUserBuilderTest {
 
                     assertThat(methodArgument).isInstanceOf(CassandraUserImpl.class);
 
-                    return new CassandraUserProxy((CassandraUserImpl) methodArgument, userLoader);
+                    return new CassandraUserProxy((CassandraUserImpl) methodArgument, userLoaderProvider, factoryProvider);
                 });
 
             User actual = new CassandraUserBuilder(userProxyFactory, null)

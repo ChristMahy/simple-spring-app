@@ -9,5 +9,5 @@ import java.util.UUID;
 @Repository
 public interface JpaRightRepository extends
     RightRepository,
-    org.springframework.data.repository.Repository<Right, UUID> {
+    org.springframework.data.repository.Repository<Right, Long> {
 }

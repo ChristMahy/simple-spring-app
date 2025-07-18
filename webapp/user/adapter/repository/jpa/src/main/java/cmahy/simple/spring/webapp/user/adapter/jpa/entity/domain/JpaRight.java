@@ -17,7 +17,7 @@ public class JpaRight implements Right {
     protected UUID id;
     protected String name;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "rights")
     protected Collection<JpaRole> roles;
 
     @Override

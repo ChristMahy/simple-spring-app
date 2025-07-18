@@ -1,20 +1,24 @@
 package cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory;
 
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.domain.CassandraUserImpl;
-import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.loader.UserLoader;
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.loader.provider.UserLoaderProvider;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.CassandraUserProxy;
-import jakarta.inject.Named;
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.provider.CassandraUserProxyFactoryProvider;
 
-@Named
-public class CassandraUserProxyFactory {
+public class CassandraUserProxyFactory implements CassandraProxyFactory {
 
-    private final UserLoader userLoader;
+    private final UserLoaderProvider userLoaderProvider;
+    private final CassandraUserProxyFactoryProvider factoryProvider;
 
-    public CassandraUserProxyFactory(UserLoader userLoader) {
-        this.userLoader = userLoader;
+    public CassandraUserProxyFactory(
+        UserLoaderProvider userLoaderProvider,
+        CassandraUserProxyFactoryProvider factoryProvider
+    ) {
+        this.userLoaderProvider = userLoaderProvider;
+        this.factoryProvider = factoryProvider;
     }
 
     public CassandraUserProxy create(CassandraUserImpl user) {
-        return new CassandraUserProxy(user, userLoader);
+        return new CassandraUserProxy(user, userLoaderProvider, factoryProvider);
     }
 }

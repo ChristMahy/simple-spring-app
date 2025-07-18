@@ -1,8 +1,12 @@
 package cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy;
 
 import cmahy.simple.spring.common.helper.Generator;
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.domain.CassandraRole;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.domain.CassandraUserSecurityImpl;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.loader.UserSecurityLoader;
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.loader.provider.UserLoaderProvider;
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.CassandraRoleProxyFactory;
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.provider.CassandraUserProxyFactoryProvider;
 import cmahy.simple.spring.webapp.user.kernel.domain.AuthProvider;
 import cmahy.simple.spring.webapp.user.kernel.domain.id.RoleId;
 import org.junit.jupiter.api.Test;
@@ -10,10 +14,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.stream.Collector;
-import java.util.stream.Stream;
+import java.util.stream.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -24,14 +28,23 @@ class CassandraUserSecurityProxyTest {
 
     @Mock
     private CassandraUserSecurityImpl userSecurity;
-    
+
+    @Mock
+    private UserLoaderProvider userLoaderProvider;
+
+    @Mock
+    private CassandraUserProxyFactoryProvider factoryProvider;
+
     @Mock
     private UserSecurityLoader userLoader;
+
+    @Mock
+    private CassandraRoleProxyFactory roleProxyFactory;
 
     @Test
     void unwrap() {
         assertDoesNotThrow(() -> {
-            assertThat(new CassandraUserSecurityProxy(userSecurity, userLoader).unwrap()).isSameAs(userSecurity);
+            assertThat(new CassandraUserSecurityProxy(userSecurity, userLoaderProvider, factoryProvider).unwrap()).isSameAs(userSecurity);
         });
     }
 
@@ -39,7 +52,7 @@ class CassandraUserSecurityProxyTest {
     void getters() {
         assertDoesNotThrow(() -> {
 
-            CassandraUserSecurityProxy actual = new CassandraUserSecurityProxy(userSecurity, userLoader);
+            CassandraUserSecurityProxy actual = new CassandraUserSecurityProxy(userSecurity, userLoaderProvider, factoryProvider);
 
             actual.getId();
             actual.getUserName();
@@ -72,7 +85,7 @@ class CassandraUserSecurityProxyTest {
             verify(userSecurity).getCredentialsExpired();
 
             verifyNoMoreInteractions(userSecurity);
-            verifyNoInteractions(userLoader);
+            verifyNoInteractions(userLoaderProvider, userLoader);
         });
     }
 
@@ -80,7 +93,7 @@ class CassandraUserSecurityProxyTest {
     void setters() {
         assertDoesNotThrow(() -> {
 
-            CassandraUserSecurityProxy actual = new CassandraUserSecurityProxy(userSecurity, userLoader);
+            CassandraUserSecurityProxy actual = new CassandraUserSecurityProxy(userSecurity, userLoaderProvider, factoryProvider);
 
             String userName = Generator.generateAString();
             byte[] password = Generator.randomBytes(100);
@@ -125,7 +138,7 @@ class CassandraUserSecurityProxyTest {
             verify(userSecurity).setCredentialsExpired(credentialsExpired);
 
             verifyNoMoreInteractions(userSecurity);
-            verifyNoInteractions(userLoader);
+            verifyNoInteractions(userLoaderProvider, userLoader);
         });
     }
 
@@ -133,15 +146,34 @@ class CassandraUserSecurityProxyTest {
     void getRoles_whenFirstAccess_thenFetchRolesWithLoaderAndReturnRoles() {
         assertDoesNotThrow(() -> {
 
-            Set<CassandraRoleProxy> roles = mock(Set.class);
+            when(userLoaderProvider.resolve(CassandraUserSecurityImpl.class)).thenReturn(userLoader);
+            when(factoryProvider.resolve(CassandraRole.class)).thenReturn(roleProxyFactory);
+
+            Set<CassandraRoleProxy> rolesProxies = new HashSet<>();
+            Set<CassandraRole> roles = Stream
+                .generate(() -> {
+                    CassandraRole role = mock(CassandraRole.class);
+
+                    CassandraRoleProxy roleProxy = mock(CassandraRoleProxy.class);
+                    rolesProxies.add(roleProxy);
+
+                    when(roleProxyFactory.create(role)).thenReturn(roleProxy);
+
+                    return role;
+                })
+                .limit(Generator.randomInt(50, 500))
+                .collect(Collectors.toSet());
+
             Set<RoleId> roleIds = mock(Set.class);
 
             when(userSecurity.getCassandraRoleIds()).thenReturn(roleIds);
             when(userLoader.loadRoles(roleIds)).thenReturn(roles);
 
-            CassandraUserSecurityProxy actual = new CassandraUserSecurityProxy(userSecurity, userLoader);
 
-            assertThat(actual.getRoles()).isSameAs(roles);
+            CassandraUserSecurityProxy actual = new CassandraUserSecurityProxy(userSecurity, userLoaderProvider, factoryProvider);
+
+
+            assertThat(actual.getRoles()).containsExactlyInAnyOrderElementsOf(rolesProxies);
 
             verify(userSecurity).getCassandraRoleIds();
             verify(userLoader).loadRoles(roleIds);
@@ -156,14 +188,14 @@ class CassandraUserSecurityProxyTest {
 
             Set<CassandraRoleProxy> roles = mock(Set.class);
 
-            CassandraUserSecurityProxy actual = new CassandraUserSecurityProxy(userSecurity, userLoader)
+            CassandraUserSecurityProxy actual = new CassandraUserSecurityProxy(userSecurity, userLoaderProvider, factoryProvider)
                 .setRoles(roles);
 
             assertThat(actual.getRoles()).isSameAs(roles);
 
             verify(userSecurity, never()).getCassandraRoleIds();
 
-            verifyNoInteractions(userLoader);
+            verifyNoInteractions(userLoaderProvider, userLoader);
         });
     }
 
@@ -179,14 +211,14 @@ class CassandraUserSecurityProxyTest {
             when(stream.map(any(Function.class))).thenReturn(stream);
             when(stream.collect(any(Collector.class))).thenReturn(roleIds);
 
-            CassandraUserSecurityProxy actual = new CassandraUserSecurityProxy(userSecurity, userLoader);
+            CassandraUserSecurityProxy actual = new CassandraUserSecurityProxy(userSecurity, userLoaderProvider, factoryProvider);
 
             actual.setRoles(roles);
 
             assertThat(actual.getRoles()).isSameAs(roles);
 
             verify(userSecurity).setCassandraRoleIds(roleIds);
-            verifyNoInteractions(userLoader);
+            verifyNoInteractions(userLoaderProvider, userLoader);
         });
     }
 
@@ -194,14 +226,14 @@ class CassandraUserSecurityProxyTest {
     void setRoles_whenGivenListIsNull_thenReplaceWithNewEmptyCollection() {
         assertDoesNotThrow(() -> {
 
-            CassandraUserSecurityProxy actual = new CassandraUserSecurityProxy(userSecurity, userLoader);
+            CassandraUserSecurityProxy actual = new CassandraUserSecurityProxy(userSecurity, userLoaderProvider, factoryProvider);
 
             actual.setRoles(null);
 
             assertThat(actual.getRoles()).isEmpty();
 
             verify(userSecurity).setCassandraRoleIds(any(Set.class));
-            verifyNoInteractions(userLoader);
+            verifyNoInteractions(userLoaderProvider, userLoader);
         });
     }
 }

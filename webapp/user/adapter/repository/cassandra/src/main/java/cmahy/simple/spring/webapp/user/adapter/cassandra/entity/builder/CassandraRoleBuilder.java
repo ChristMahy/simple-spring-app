@@ -1,9 +1,9 @@
 package cmahy.simple.spring.webapp.user.adapter.cassandra.entity.builder;
 
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.domain.CassandraRole;
-import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.CassandraRoleProxy;
-import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.CassandraUserProxy;
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.*;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.CassandraRoleProxyFactory;
+import cmahy.simple.spring.webapp.user.kernel.domain.Right;
 import cmahy.simple.spring.webapp.user.kernel.domain.User;
 import cmahy.simple.spring.webapp.user.kernel.domain.builder.RoleBuilder;
 
@@ -25,12 +25,14 @@ public class CassandraRoleBuilder implements RoleBuilder<CassandraRoleProxy> {
 
         this.originalRole.ifPresent(originalRole -> {
             this.name(originalRole.getName())
-                .users(originalRole.getUsers());
+                .users(originalRole.getUsers())
+                .rights(originalRole.getRights());
         });
     }
 
     private String name;
     private List<CassandraUserProxy> users;
+    private Collection<CassandraRightProxy> rights;
 
     @Override
     public CassandraRoleBuilder name(String name) {
@@ -47,10 +49,18 @@ public class CassandraRoleBuilder implements RoleBuilder<CassandraRoleProxy> {
     }
 
     @Override
+    public <RIGHT extends Right> RoleBuilder<CassandraRoleProxy> rights(Collection<RIGHT> rights) {
+        this.rights = (Collection<CassandraRightProxy>) rights;
+
+        return this;
+    }
+
+    @Override
     public CassandraRoleProxy build() {
         return this.originalRole
             .orElseGet(() -> roleProxyFactory.create(new CassandraRole()))
             .setName(name)
-            .setUsers(users);
+            .setUsers(users)
+            .setRights(rights);
     }
 }

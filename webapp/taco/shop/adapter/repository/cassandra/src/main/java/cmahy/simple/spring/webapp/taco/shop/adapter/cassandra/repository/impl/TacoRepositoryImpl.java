@@ -3,6 +3,7 @@ package cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.repository.impl;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.domain.CassandraTaco;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.CassandraTacoProxy;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.factory.CassandraTacoProxyFactory;
+import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.factory.provider.CassandraTacoProxyFactoryProvider;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.repository.cassandra.CassandraTacoRepository;
 import cmahy.simple.spring.webapp.taco.shop.kernel.application.repository.TacoRepository;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.id.IngredientId;
@@ -17,14 +18,14 @@ import java.util.stream.Collectors;
 public class TacoRepositoryImpl implements TacoRepository<CassandraTacoProxy> {
 
     private final CassandraTacoRepository tacoRepository;
-    private final CassandraTacoProxyFactory tacoProxyFactory;
+    private final CassandraTacoProxyFactoryProvider factoryProvider;
 
     public TacoRepositoryImpl(
         CassandraTacoRepository tacoRepository,
-        CassandraTacoProxyFactory tacoProxyFactory
+        CassandraTacoProxyFactoryProvider factoryProvider
     ) {
         this.tacoRepository = tacoRepository;
-        this.tacoProxyFactory = tacoProxyFactory;
+        this.factoryProvider = factoryProvider;
     }
 
     @Override
@@ -39,15 +40,19 @@ public class TacoRepositoryImpl implements TacoRepository<CassandraTacoProxy> {
             tacoUnwrapped.setCreatedAt(new Date());
         }
 
-        return tacoProxyFactory.create(
+        CassandraTacoProxyFactory factory = factoryProvider.resolve(CassandraTaco.class);
+
+        return factory.create(
             tacoRepository.save(tacoUnwrapped)
         );
     }
 
     @Override
     public Set<CassandraTacoProxy> findByIngredientId(IngredientId ingredientId) {
+        CassandraTacoProxyFactory factory = factoryProvider.resolve(CassandraTaco.class);
+
         return tacoRepository.findByIngredientId(ingredientId).stream()
-            .map(tacoProxyFactory::create)
+            .map(factory::create)
             .collect(Collectors.toSet());
     }
 }

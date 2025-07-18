@@ -21,7 +21,7 @@ public abstract class CassandraUser {
     private String zip;
     private String phoneNumber;
 
-    @CassandraType(type = CassandraType.Name.LIST, typeArguments = CassandraType.Name.BIGINT)
+    @CassandraType(type = CassandraType.Name.SET, typeArguments = CassandraType.Name.UUID)
     private Set<RoleId> cassandraRoleIds;
 
     private String discriminator;

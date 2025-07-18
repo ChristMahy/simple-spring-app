@@ -4,6 +4,7 @@ import cmahy.simple.spring.common.entity.page.EntityPageable;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.domain.CassandraClientOrder;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.CassandraClientOrderProxy;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.factory.CassandraClientOrderProxyFactory;
+import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.factory.provider.CassandraTacoProxyFactoryProvider;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.repository.cassandra.CassandraClientOrderRepository;
 import cmahy.simple.spring.webapp.taco.shop.kernel.application.repository.ClientOrderPagingRepository;
 import cmahy.simple.spring.webapp.taco.shop.kernel.application.repository.ClientOrderRepository;
@@ -24,24 +25,26 @@ public class ClientOrderRepositoryImpl implements
     ClientOrderPagingRepository<CassandraClientOrderProxy> {
 
     private final CassandraClientOrderRepository clientOrderRepository;
-    private final CassandraClientOrderProxyFactory clientOrderProxyFactory;
+    private final CassandraTacoProxyFactoryProvider factoryProvider;
 
     public ClientOrderRepositoryImpl(
         CassandraClientOrderRepository clientOrderRepository,
-        CassandraClientOrderProxyFactory clientOrderProxyFactory
+        CassandraTacoProxyFactoryProvider factoryProvider
     ) {
         this.clientOrderRepository = clientOrderRepository;
-        this.clientOrderProxyFactory = clientOrderProxyFactory;
+        this.factoryProvider = factoryProvider;
     }
 
     @Override
     public ClientOrderPage<CassandraClientOrderProxy> getByUser(User user, EntityPageable pageable) {
+        CassandraClientOrderProxyFactory factory = factoryProvider.resolve(CassandraClientOrder.class);
+
         Slice<CassandraClientOrderProxy> clientOrders = clientOrderRepository
             .findByUserId(
                 new UserId(user.getId()),
                 PageRequest.of(pageable.pageNumber(), pageable.pageSize())
             )
-            .map(clientOrderProxyFactory::create);
+            .map(factory::create);
 
         return new ClientOrderPage<>(
             clientOrders.getContent(),
@@ -61,7 +64,9 @@ public class ClientOrderRepositoryImpl implements
             clientOrderUnwrapped.setPlacedAt(new Date());
         }
 
-        return clientOrderProxyFactory.create(
+        CassandraClientOrderProxyFactory factory = factoryProvider.resolve(CassandraClientOrder.class);
+
+        return factory.create(
             clientOrderRepository.save(clientOrderUnwrapped)
         );
     }

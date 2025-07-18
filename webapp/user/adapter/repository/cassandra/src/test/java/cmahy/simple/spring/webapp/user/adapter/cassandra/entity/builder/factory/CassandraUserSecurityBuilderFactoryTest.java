@@ -4,9 +4,10 @@ import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.builder.Cassandr
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.domain.CassandraUserSecurityImpl;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.CassandraUserSecurityProxy;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.CassandraUserSecurityProxyFactory;
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.provider.CassandraUserProxyFactoryProvider;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -23,11 +24,20 @@ import static org.mockito.Mockito.when;
 class CassandraUserSecurityBuilderFactoryTest {
 
     @Mock
+    private CassandraUserProxyFactoryProvider factoryProvider;
+
+    private CassandraUserSecurityBuilderFactory cassandraUserSecurityBuilderFactory;
+
+    @Mock
     private CassandraUserSecurityProxyFactory userSecurityProxyFactory;
 
-    @InjectMocks
-    private CassandraUserSecurityBuilderFactory cassandraUserSecurityBuilderFactory;
-    
+    @BeforeEach
+    void setUp() {
+        when(factoryProvider.resolve(CassandraUserSecurityImpl.class)).thenReturn(userSecurityProxyFactory);
+
+        cassandraUserSecurityBuilderFactory = new CassandraUserSecurityBuilderFactory(factoryProvider);
+    }
+
     @Test
     void create() {
         assertDoesNotThrow(() -> {

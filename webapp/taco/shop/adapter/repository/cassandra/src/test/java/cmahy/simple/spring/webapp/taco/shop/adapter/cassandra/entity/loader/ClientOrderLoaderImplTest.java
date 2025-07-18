@@ -1,14 +1,9 @@
 package cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.loader;
 
-import cmahy.simple.spring.common.helper.Generator;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.domain.CassandraTaco;
-import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.CassandraTacoProxy;
-import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.factory.CassandraTacoProxyFactory;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.repository.cassandra.CassandraTacoRepository;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.id.TacoId;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.domain.CassandraUserImpl;
-import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.CassandraUserProxy;
-import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.CassandraUserProxyFactory;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.repository.cassandra.CassandraUserRepositoryImpl;
 import cmahy.simple.spring.webapp.user.kernel.domain.id.UserId;
 import org.junit.jupiter.api.Test;
@@ -17,8 +12,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.*;
-import java.util.stream.Stream;
+import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -33,11 +28,6 @@ class ClientOrderLoaderImplTest {
     @Mock
     private CassandraUserRepositoryImpl userRepository;
 
-    @Mock
-    private CassandraTacoProxyFactory tacoProxyFactory;
-    @Mock
-    private CassandraUserProxyFactory userProxyFactory;
-
     @InjectMocks
     private ClientOrderLoaderImpl clientOrderLoaderImpl;
 
@@ -45,30 +35,15 @@ class ClientOrderLoaderImplTest {
     void loadTacos() {
         assertDoesNotThrow(() -> {
             List<TacoId> tacoIds = mock(List.class);
-
-            List<CassandraTacoProxy> tacoProxies = new ArrayList<>();
-
-            List<CassandraTaco> tacos = Stream
-                .generate(() -> {
-                    CassandraTaco taco = mock(CassandraTaco.class);
-                    CassandraTacoProxy tacoProxy = mock(CassandraTacoProxy.class);
-
-                    when(tacoProxyFactory.create(taco)).thenReturn(tacoProxy);
-
-                    tacoProxies.add(tacoProxy);
-
-                    return taco;
-                })
-                .limit(Generator.randomInt(100, 1000))
-                .toList();
+            List<CassandraTaco> tacos = mock(List.class);
 
             when(tacoRepository.findAllById(tacoIds)).thenReturn(tacos);
 
-            List<CassandraTacoProxy> actual = clientOrderLoaderImpl.loadTacos(tacoIds);
+            List<CassandraTaco> actual = clientOrderLoaderImpl.loadTacos(tacoIds);
 
             assertThat(actual)
                 .isNotNull()
-                .containsExactlyInAnyOrderElementsOf(tacoProxies);
+                .isSameAs(tacos);
         });
     }
 
@@ -78,17 +53,15 @@ class ClientOrderLoaderImplTest {
             UserId id = mock(UserId.class);
 
             CassandraUserImpl user = mock(CassandraUserImpl.class);
-            CassandraUserProxy userProxy = mock(CassandraUserProxy.class);
 
             when(userRepository.findById(id)).thenReturn(Optional.of(user));
-            when(userProxyFactory.create(user)).thenReturn(userProxy);
 
-            Optional<CassandraUserProxy> actual = clientOrderLoaderImpl.loadUser(id);
+            Optional<CassandraUserImpl> actual = clientOrderLoaderImpl.loadUser(id);
 
             assertThat(actual)
                 .isNotEmpty()
                 .hasValueSatisfying(value -> {
-                    assertThat(value).isSameAs(userProxy);
+                    assertThat(value).isSameAs(user);
                 });
         });
     }

@@ -12,8 +12,12 @@ import java.util.*;
 @Repository
 public interface CassandraTacoRepository extends CassandraRepository<CassandraTaco, UUID> {
 
-    @Query("select t from CassandraTaco t where t.ingredientIds contains #{#ingredientId.value()} allow filtering")
-    Set<CassandraTaco> findByIngredientId(IngredientId ingredientId);
+    @Query("select * from taco where ingredientIds contains ?0 allow filtering")
+    Set<CassandraTaco> findByIngredientId(UUID ingredientId);
+
+    default Set<CassandraTaco> findByIngredientId(IngredientId ingredientId) {
+        return this.findByIngredientId(ingredientId.value());
+    }
 
     default List<CassandraTaco> findAllById(List<TacoId> tacoIds) {
         return this.findAllById(tacoIds.stream().map(TacoId::value).toList());

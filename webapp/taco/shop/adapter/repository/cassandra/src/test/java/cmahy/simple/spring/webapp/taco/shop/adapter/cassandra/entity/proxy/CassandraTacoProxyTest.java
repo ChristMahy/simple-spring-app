@@ -1,8 +1,12 @@
 package cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy;
 
 import cmahy.simple.spring.common.helper.Generator;
+import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.domain.CassandraIngredient;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.domain.CassandraTaco;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.loader.TacoLoader;
+import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.loader.provider.TacoLoaderProvider;
+import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.factory.CassandraIngredientProxyFactory;
+import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.factory.provider.CassandraTacoProxyFactoryProvider;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.id.IngredientId;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,12 +28,21 @@ class CassandraTacoProxyTest {
     private CassandraTaco taco;
 
     @Mock
+    private TacoLoaderProvider tacoLoaderProvider;
+
+    @Mock
+    private CassandraTacoProxyFactoryProvider factoryProvider;
+
+    @Mock
     private TacoLoader tacoLoader;
+
+    @Mock
+    private CassandraIngredientProxyFactory ingredientProxyFactory;
 
     @Test
     void unwrap() {
         assertDoesNotThrow(() -> {
-            assertThat(new CassandraTacoProxy(taco, tacoLoader).unwrap()).isSameAs(taco);
+            assertThat(new CassandraTacoProxy(taco, tacoLoaderProvider, factoryProvider).unwrap()).isSameAs(taco);
         });
     }
 
@@ -37,7 +50,7 @@ class CassandraTacoProxyTest {
     void getters() {
         assertDoesNotThrow(() -> {
 
-            CassandraTacoProxy actual = new CassandraTacoProxy(taco, tacoLoader);
+            CassandraTacoProxy actual = new CassandraTacoProxy(taco, tacoLoaderProvider, factoryProvider);
 
             actual.getId();
             actual.getCreatedAt();
@@ -48,7 +61,7 @@ class CassandraTacoProxyTest {
             verify(taco).getName();
 
             verifyNoMoreInteractions(taco);
-            verifyNoInteractions(tacoLoader);
+            verifyNoInteractions(tacoLoaderProvider, tacoLoader);
         });
     }
 
@@ -56,7 +69,7 @@ class CassandraTacoProxyTest {
     void setters() {
         assertDoesNotThrow(() -> {
 
-            CassandraTacoProxy actual = new CassandraTacoProxy(taco, tacoLoader);
+            CassandraTacoProxy actual = new CassandraTacoProxy(taco, tacoLoaderProvider, factoryProvider);
 
             Date createdAt = new Date();
             String name = Generator.generateAString();
@@ -70,7 +83,7 @@ class CassandraTacoProxyTest {
             verify(taco, never()).setId(any(UUID.class));
 
             verifyNoMoreInteractions(taco);
-            verifyNoInteractions(tacoLoader);
+            verifyNoInteractions(tacoLoaderProvider, tacoLoader);
         });
     }
 
@@ -78,15 +91,34 @@ class CassandraTacoProxyTest {
     void getIngredients_whenFirstAccess_thenFetchIngredientsWithLoaderAndReturnIngredients() {
         assertDoesNotThrow(() -> {
 
-            List<CassandraIngredientProxy> ingredients = mock(List.class);
+            when(factoryProvider.resolve(CassandraIngredient.class)).thenReturn(ingredientProxyFactory);
+            when(tacoLoaderProvider.resolve(CassandraTaco.class)).thenReturn(tacoLoader);
+
+            List<CassandraIngredientProxy> ingredientsProxies = new ArrayList<>();
+            List<CassandraIngredient> ingredients = Stream
+                .generate(() -> {
+                    CassandraIngredient ingredient = mock(CassandraIngredient.class);
+                    CassandraIngredientProxy ingredientProxy = mock(CassandraIngredientProxy.class);
+
+                    ingredientsProxies.add(ingredientProxy);
+
+                    when(ingredientProxyFactory.create(ingredient)).thenReturn(ingredientProxy);
+
+                    return ingredient;
+                })
+                .limit(Generator.randomInt(50, 500))
+                .toList();
+
             Set<IngredientId> ingredientIds = mock(Set.class);
 
             when(taco.getIngredientIds()).thenReturn(ingredientIds);
             when(tacoLoader.loadIngredients(ingredientIds)).thenReturn(ingredients);
 
-            CassandraTacoProxy actual = new CassandraTacoProxy(taco, tacoLoader);
 
-            assertThat(actual.getIngredients()).isSameAs(ingredients);
+            CassandraTacoProxy actual = new CassandraTacoProxy(taco, tacoLoaderProvider, factoryProvider);
+
+
+            assertThat(actual.getIngredients()).containsExactlyInAnyOrderElementsOf(ingredientsProxies);
 
             verify(taco).getIngredientIds();
             verify(tacoLoader).loadIngredients(ingredientIds);
@@ -101,14 +133,14 @@ class CassandraTacoProxyTest {
 
             List<CassandraIngredientProxy> ingredients = mock(List.class);
 
-            CassandraTacoProxy actual = new CassandraTacoProxy(taco, tacoLoader)
+            CassandraTacoProxy actual = new CassandraTacoProxy(taco, tacoLoaderProvider, factoryProvider)
                 .setIngredients(ingredients);
 
             assertThat(actual.getIngredients()).isSameAs(ingredients);
 
             verify(taco, never()).getIngredientIds();
 
-            verifyNoInteractions(tacoLoader);
+            verifyNoInteractions(tacoLoaderProvider, tacoLoader);
         });
     }
 
@@ -123,14 +155,14 @@ class CassandraTacoProxyTest {
             when(ingredients.stream()).thenReturn(stream);
             when(stream.collect(any(Collector.class))).thenReturn(ingredientIds);
 
-            CassandraTacoProxy actual = new CassandraTacoProxy(taco, tacoLoader);
+            CassandraTacoProxy actual = new CassandraTacoProxy(taco, tacoLoaderProvider, factoryProvider);
 
             actual.setIngredients(ingredients);
 
             assertThat(actual.getIngredients()).isSameAs(ingredients);
 
             verify(taco).setIngredientIds(ingredientIds);
-            verifyNoInteractions(tacoLoader);
+            verifyNoInteractions(tacoLoaderProvider, tacoLoader);
         });
     }
 
@@ -138,14 +170,14 @@ class CassandraTacoProxyTest {
     void setIngredients_whenGivenListIsNull_thenReplaceWithNewEmptyCollection() {
         assertDoesNotThrow(() -> {
 
-            CassandraTacoProxy actual = new CassandraTacoProxy(taco, tacoLoader);
+            CassandraTacoProxy actual = new CassandraTacoProxy(taco, tacoLoaderProvider, factoryProvider);
 
             actual.setIngredients(null);
 
             assertThat(actual.getIngredients()).isEmpty();
 
             verify(taco).setIngredientIds(any(Set.class));
-            verifyNoInteractions(tacoLoader);
+            verifyNoInteractions(tacoLoaderProvider, tacoLoader);
         });
     }
 
@@ -163,7 +195,7 @@ class CassandraTacoProxyTest {
             when(ingredients.stream()).thenReturn(stream);
             when(stream.collect(any(Collector.class))).thenReturn(ingredientIds);
 
-            CassandraTacoProxy actual = new CassandraTacoProxy(taco, tacoLoader)
+            CassandraTacoProxy actual = new CassandraTacoProxy(taco, tacoLoaderProvider, factoryProvider)
                 .setIngredients(ingredients);
 
             actual.addIngredient(ingredient);
@@ -183,7 +215,7 @@ class CassandraTacoProxyTest {
             when(ingredients.stream()).thenReturn(stream);
             when(stream.collect(any(Collector.class))).thenReturn(ingredientIds);
 
-            CassandraTacoProxy actual = new CassandraTacoProxy(taco, tacoLoader)
+            CassandraTacoProxy actual = new CassandraTacoProxy(taco, tacoLoaderProvider, factoryProvider)
                 .setIngredients(ingredients);
 
             actual.addIngredient(null);
@@ -201,7 +233,7 @@ class CassandraTacoProxyTest {
             UUID ingredientId = mock(UUID.class);
             when(ingredient.getId()).thenReturn(ingredientId);
 
-            CassandraTacoProxy actual = new CassandraTacoProxy(taco, tacoLoader);
+            CassandraTacoProxy actual = new CassandraTacoProxy(taco, tacoLoaderProvider, factoryProvider);
 
             actual.addIngredient(ingredient);
 

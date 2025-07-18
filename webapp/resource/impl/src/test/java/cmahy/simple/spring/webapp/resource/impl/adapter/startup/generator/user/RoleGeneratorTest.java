@@ -1,6 +1,8 @@
 package cmahy.simple.spring.webapp.resource.impl.adapter.startup.generator.user;
 
+import cmahy.simple.spring.webapp.user.kernel.application.repository.RightRepository;
 import cmahy.simple.spring.webapp.user.kernel.application.repository.RoleRepository;
+import cmahy.simple.spring.webapp.user.kernel.domain.Right;
 import cmahy.simple.spring.webapp.user.kernel.domain.Role;
 import cmahy.simple.spring.webapp.user.kernel.domain.builder.RoleBuilder;
 import cmahy.simple.spring.webapp.user.kernel.domain.builder.factory.RoleBuilderFactory;
@@ -11,12 +13,17 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.ApplicationArguments;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.Answers.RETURNS_SELF;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class RoleGeneratorTest {
+
+    @Mock
+    private RightRepository<Right> rightRepository;
 
     @Mock
     private RoleRepository<Role> roleRepository;
@@ -39,12 +46,15 @@ class RoleGeneratorTest {
     @Test
     void run() {
         assertDoesNotThrow(() -> {
+
+            when(rightRepository.findByName(anyString())).thenAnswer(_ -> Optional.of(mock(Right.class)));
             when(roleBuilderFactory.create()).thenReturn(roleBuilder);
             when(roleBuilder.build()).thenReturn(role);
 
             roleGenerator.run(applicationArguments);
 
             verify(roleRepository, times(2)).save(role);
+
         });
     }
 }

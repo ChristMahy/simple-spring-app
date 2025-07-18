@@ -1,7 +1,11 @@
 package cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy;
 
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.domain.CassandraRole;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.domain.CassandraUserImpl;
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.loader.provider.UserLoaderProvider;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.loader.UserLoader;
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.CassandraRoleProxyFactory;
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.provider.CassandraUserProxyFactoryProvider;
 import cmahy.simple.spring.webapp.user.kernel.domain.Role;
 import cmahy.simple.spring.webapp.user.kernel.domain.User;
 import cmahy.simple.spring.webapp.user.kernel.domain.id.RoleId;
@@ -13,14 +17,17 @@ public class CassandraUserProxy implements User {
 
     private final CassandraUserImpl user;
     private Set<CassandraRoleProxy> roles;
-    private final UserLoader userLoader;
+    private final UserLoaderProvider userLoaderProvider;
+    private final CassandraUserProxyFactoryProvider factoryProvider;
 
     public CassandraUserProxy(
         CassandraUserImpl user,
-        UserLoader userLoader
+        UserLoaderProvider userLoaderProvider,
+        CassandraUserProxyFactoryProvider factoryProvider
     ) {
         this.user = user;
-        this.userLoader = userLoader;
+        this.userLoaderProvider = userLoaderProvider;
+        this.factoryProvider = factoryProvider;
     }
 
     public CassandraUserImpl unwrap() {
@@ -115,7 +122,13 @@ public class CassandraUserProxy implements User {
     @Override
     public Collection<CassandraRoleProxy> getRoles() {
         if (roles == null) {
-            roles = userLoader.loadRoles(user.getCassandraRoleIds());
+            CassandraRoleProxyFactory factory = factoryProvider.resolve(CassandraRole.class);
+
+            roles = ((UserLoader) userLoaderProvider.resolve(CassandraUserImpl.class))
+                .loadRoles(user.getCassandraRoleIds())
+                .stream()
+                .map(factory::create)
+                .collect(Collectors.toSet());
         }
 
         return roles;

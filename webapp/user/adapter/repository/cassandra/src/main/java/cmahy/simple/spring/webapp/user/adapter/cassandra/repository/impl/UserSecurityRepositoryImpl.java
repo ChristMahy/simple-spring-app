@@ -2,6 +2,7 @@ package cmahy.simple.spring.webapp.user.adapter.cassandra.repository.impl;
 
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.domain.CassandraUserSecurityImpl;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.CassandraUserSecurityProxy;
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.provider.CassandraUserProxyFactoryProvider;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.CassandraUserSecurityProxyFactory;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.repository.cassandra.CassandraUserSecurityRepositoryImpl;
 import cmahy.simple.spring.webapp.user.kernel.application.repository.UserSecurityRepository;
@@ -15,20 +16,20 @@ public class UserSecurityRepositoryImpl implements UserSecurityRepository<Cassan
 
 
     private final CassandraUserSecurityRepositoryImpl userSecurityRepository;
-    private final CassandraUserSecurityProxyFactory userSecurityProxyFactory;
+    private final CassandraUserProxyFactoryProvider proxyFactoryResolver;
 
     public UserSecurityRepositoryImpl(
         CassandraUserSecurityRepositoryImpl userSecurityRepository,
-        CassandraUserSecurityProxyFactory userSecurityProxyFactory
+        CassandraUserProxyFactoryProvider proxyFactoryResolver
     ) {
         this.userSecurityRepository = userSecurityRepository;
-        this.userSecurityProxyFactory = userSecurityProxyFactory;
+        this.proxyFactoryResolver = proxyFactoryResolver;
     }
 
     @Override
     public Optional<CassandraUserSecurityProxy> findByUserNameAndAuthProvider(String username, AuthProvider authProvider) {
         return userSecurityRepository.findByUserNameAndAuthProvider(username, authProvider)
-            .map(userSecurityProxyFactory::create);
+            .map(resolveFactory()::create);
     }
 
     @Override
@@ -39,8 +40,12 @@ public class UserSecurityRepositoryImpl implements UserSecurityRepository<Cassan
             userSecurityUnwrapped = userSecurityUnwrapped.setId(UUID.randomUUID());
         }
 
-        return userSecurityProxyFactory.create(
+        return resolveFactory().create(
             userSecurityRepository.save(userSecurityUnwrapped)
         );
+    }
+
+    private CassandraUserSecurityProxyFactory resolveFactory() {
+        return proxyFactoryResolver.resolve(CassandraUserSecurityImpl.class);
     }
 }

@@ -61,7 +61,8 @@ public final class SecurityUserGenerator {
 
     public static Set<RoleOutputAppVo> generateCommonAppRoles() {
         return IntStream.rangeClosed(0, COMMON_ROLES.size() - 1)
-            .mapToObj(index -> new RoleOutputAppVo(new RoleId(randomUUID()), COMMON_ROLES.get(index)))
+            // TODO: Add rights...
+            .mapToObj(index -> new RoleOutputAppVo(new RoleId(randomUUID()), COMMON_ROLES.get(index), Set.of()))
             .collect(Collectors.toSet());
     }
 }

@@ -8,7 +8,7 @@ create table if not exists keyspace_placeholder.user (
     state text,
     zip text,
     phoneNumber text,
-    cassandraRoleIds list<uuid>,
+    cassandraRoleIds set<uuid>,
     discriminator text,
     authProvider text,
     isExpired boolean,

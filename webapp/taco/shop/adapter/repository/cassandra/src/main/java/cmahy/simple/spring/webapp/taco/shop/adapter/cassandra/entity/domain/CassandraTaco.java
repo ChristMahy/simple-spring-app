@@ -16,7 +16,7 @@ public class CassandraTaco {
 
     protected String name;
 
-    @CassandraType(type = CassandraType.Name.SET, typeArguments = CassandraType.Name.TEXT)
+    @CassandraType(type = CassandraType.Name.SET, typeArguments = CassandraType.Name.UUID)
     protected Set<IngredientId> ingredientIds;
 
     public UUID getId() {
