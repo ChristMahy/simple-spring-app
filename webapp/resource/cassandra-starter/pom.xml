@@ -31,7 +31,7 @@
 
     <properties>
         <cmahy.simple.spring.webapp.taco.shop.adapter.repository.cassandra.version>DEV-SNAPSHOT</cmahy.simple.spring.webapp.taco.shop.adapter.repository.cassandra.version>
-        <cmahy.simple.spring.webapp.user.adapter.cassandra.version>DEV-SNAPSHOT</cmahy.simple.spring.webapp.user.adapter.cassandra.version>
+        <cmahy.simple.spring.webapp.user.adapter.cassandra.version>1.0.3</cmahy.simple.spring.webapp.user.adapter.cassandra.version>
         <cmahy.simple.spring.webapp.taco.shop.it.cassandra.version>DEV-SNAPSHOT</cmahy.simple.spring.webapp.taco.shop.it.cassandra.version>
     </properties>
 
