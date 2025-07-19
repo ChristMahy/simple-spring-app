@@ -39,7 +39,7 @@
 
         <cmahy.simple.spring.webapp.user.version>DEV-SNAPSHOT</cmahy.simple.spring.webapp.user.version>
 
-        <cmahy.simple.spring.webapp.user.domain.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.domain.version>
+        <cmahy.simple.spring.webapp.user.domain.version>1.0.5</cmahy.simple.spring.webapp.user.domain.version>
         <cmahy.simple.spring.webapp.user.cassandra.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.cassandra.version>
     </properties>
 

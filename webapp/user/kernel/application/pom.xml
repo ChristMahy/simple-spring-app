@@ -34,7 +34,7 @@
 
         <cmahy.simple.spring.webapp.user.kernel>DEV-SNAPSHOT</cmahy.simple.spring.webapp.user.kernel>
 
-        <cmahy.simple.spring.webapp.user.domain.kernel>${cmahy.simple.spring.webapp.user.kernel}</cmahy.simple.spring.webapp.user.domain.kernel>
+        <cmahy.simple.spring.webapp.user.domain.kernel>1.0.5</cmahy.simple.spring.webapp.user.domain.kernel>
         <cmahy.simple.spring.webapp.user.vo.kernel>${cmahy.simple.spring.webapp.user.kernel}</cmahy.simple.spring.webapp.user.vo.kernel>
     </properties>
 
