@@ -8,6 +8,7 @@ on:
       - 'taco-resource/it/\d+/cassandra-\d+\.\d+\.\d+'
       - 'taco-resource/it/\d+/h2-\d+\.\d+\.\d+'
       - 'taco-resource/it/\d+/mysql-\d+\.\d+\.\d+'
+      - 'taco-resource/starter/\d+/cassandra-\d+\.\d+\.\d+'
       - 'taco-resource/impl/\d+/cassandra-\d+\.\d+\.\d+'
       - 'taco-resource/impl/\d+/h2-\d+\.\d+\.\d+'
       - 'taco-resource/impl/\d+/mysql-\d+\.\d+\.\d+'
@@ -56,6 +57,13 @@ jobs:
         uses: ./.github/workflows/publish
         with:
           working-directory: webapp/resource/integration-test-persistence/mysql
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish Starter <Cassandra> package
+        if: startsWith(github.ref, 'refs/tags/taco-resource/starter') && contains(github.ref, 'cassandra')
+        uses: ./.github/workflows/publish
+        with:
+          working-directory: webapp/resource/cassandra-starter
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish Impl <Cassandra> package
