@@ -50,7 +50,7 @@
         <cmahy.simple.spring.webapp.taco.shop.version>1.0.2</cmahy.simple.spring.webapp.taco.shop.version>
 
         <cmahy.simple.spring.webapp.taco.shop.adapter.repository.jpa.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.adapter.repository.jpa.version>
-        <cmahy.simple.spring.webapp.resource.cassandra-starter.version>DEV-SNAPSHOT</cmahy.simple.spring.webapp.resource.cassandra-starter.version>
+        <cmahy.simple.spring.webapp.resource.cassandra-starter.version>1.0.0</cmahy.simple.spring.webapp.resource.cassandra-starter.version>
         <cmahy.simple.spring.webapp.taco.shop.adapter.repository.webclient.version>1.0.5</cmahy.simple.spring.webapp.taco.shop.adapter.repository.webclient.version>
         <cmahy.simple.spring.webapp.taco.shop.kernel.domain.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.kernel.domain.version>
         <cmahy.simple.spring.webapp.taco.shop.kernel.vo.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.kernel.vo.version>
