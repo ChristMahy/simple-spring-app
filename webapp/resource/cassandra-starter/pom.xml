@@ -15,7 +15,7 @@
 
     <groupId>cmahy.simple.spring.webapp</groupId>
     <artifactId>resource.cassandra-starter</artifactId>
-    <version>DEV-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <name>spring-taco-resource-cassandra-starter</name>
     <description>Webapp Taco Resource</description>
