@@ -60,7 +60,7 @@
 
         <cmahy.simple.spring.webapp.user.kernel.domain.version>1.0.5</cmahy.simple.spring.webapp.user.kernel.domain.version>
         <cmahy.simple.spring.webapp.user.kernel.vo.version>1.0.4</cmahy.simple.spring.webapp.user.kernel.vo.version>
-        <cmahy.simple.spring.webapp.user.kernel.application.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.kernel.application.version>
+        <cmahy.simple.spring.webapp.user.kernel.application.version>1.0.4</cmahy.simple.spring.webapp.user.kernel.application.version>
         <cmahy.simple.spring.webapp.user.adapter.jpa.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.adapter.jpa.version>
 
         <packaging.artifact-id>resource.impl</packaging.artifact-id>
