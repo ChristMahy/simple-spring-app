@@ -1,5 +1,6 @@
 package cmahy.simple.spring.webapp.resource.impl.adapter.startup.generator.user;
 
+import cmahy.simple.spring.webapp.resource.impl.adapter.startup.generator.GeneratorConstants;
 import cmahy.simple.spring.webapp.user.kernel.application.repository.RightRepository;
 import cmahy.simple.spring.webapp.user.kernel.application.repository.RoleRepository;
 import cmahy.simple.spring.webapp.user.kernel.domain.Right;
@@ -8,19 +9,18 @@ import cmahy.simple.spring.webapp.user.kernel.domain.builder.factory.RoleBuilder
 import cmahy.simple.spring.webapp.user.kernel.exception.RightNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.context.event.ApplicationStartedEvent;
+import org.springframework.context.ApplicationListener;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Stream;
 
 @Component
-@Order(GeneratorConstants.ExecutionOrder.ROLE)
-public class RoleGenerator implements ApplicationRunner {
+@Order(GeneratorConstants.UserGeneratorExecutionOrder.ROLE)
+public class RoleGenerator implements ApplicationListener<ApplicationStartedEvent> {
 
     private static final Logger LOG = LoggerFactory.getLogger(RoleGenerator.class);
 
@@ -40,41 +40,45 @@ public class RoleGenerator implements ApplicationRunner {
 
     @Override
     @Transactional
-    public void run(ApplicationArguments args) throws Exception {
+    public void onApplicationEvent(ApplicationStartedEvent event) {
 
-        Right read = rightRepository.findByName("ingredient:read")
-            .orElseThrow(() -> new RightNotFoundException("ingredient:read"));
+        try {
+            Right read = rightRepository.findByName("ingredient:read")
+                .orElseThrow(() -> new RightNotFoundException("ingredient:read"));
 
-        Right write = rightRepository.findByName("ingredient:write")
-            .orElseThrow(() -> new RightNotFoundException("ingredient:write"));
+            Right write = rightRepository.findByName("ingredient:write")
+                .orElseThrow(() -> new RightNotFoundException("ingredient:write"));
 
-        Right delete = rightRepository.findByName("ingredient:delete")
-            .orElseThrow(() -> new RightNotFoundException("ingredient:delete"));
+            Right delete = rightRepository.findByName("ingredient:delete")
+                .orElseThrow(() -> new RightNotFoundException("ingredient:delete"));
 
-        Optional<Role> guest = roleRepository.findByName("Guest");
+            Optional<Role> guest = roleRepository.findByName("Guest");
 
-        if (guest.isEmpty()) {
-            Role role = roleBuilderFactory.create()
-                .name("Guest")
-                .rights(Set.of(read))
-                .build();
+            if (guest.isEmpty()) {
+                Role role = roleBuilderFactory.create()
+                    .name("Guest")
+                    .rights(Set.of(read))
+                    .build();
 
-            role = roleRepository.save(role);
+                role = roleRepository.save(role);
 
-            LOG.info("Role saved <{}>", role);
-        }
+                LOG.info("Role saved <{}>", role);
+            }
 
-        Optional<Role> admin = roleRepository.findByName("Admin");
+            Optional<Role> admin = roleRepository.findByName("Admin");
 
-        if (admin.isEmpty()) {
-            Role role = roleBuilderFactory.create()
-                .name("Admin")
-                .rights(Set.of(read, write, delete))
-                .build();
+            if (admin.isEmpty()) {
+                Role role = roleBuilderFactory.create()
+                    .name("Admin")
+                    .rights(Set.of(read, write, delete))
+                    .build();
 
-            role = roleRepository.save(role);
+                role = roleRepository.save(role);
 
-            LOG.info("Role saved <{}>", role);
+                LOG.info("Role saved <{}>", role);
+            }
+        } catch (Exception any) {
+            throw new RuntimeException(any);
         }
 
     }

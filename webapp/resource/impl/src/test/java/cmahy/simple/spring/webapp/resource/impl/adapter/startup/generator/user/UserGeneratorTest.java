@@ -13,11 +13,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Answers.RETURNS_SELF;
@@ -52,28 +53,33 @@ class UserGeneratorTest {
     private UserSecurity userSecurity;
 
     @Mock
-    private ApplicationArguments applicationArguments;
+    private ApplicationStartedEvent applicationArguments;
 
     @Test
-    void run() {
+    void onApplicationEvent() {
         assertDoesNotThrow(() -> {
             when(roleRepository.findByName(anyString())).thenReturn(Optional.of(role));
             when(passwordEncoder.encode(anyString())).thenReturn(Generator.generateAString());
             when(userSecurityBuilderFactory.create()).thenReturn(userSecurityBuilder);
             when(userSecurityBuilder.build()).thenReturn(userSecurity);
 
-            userGenerator.run(applicationArguments);
+            userGenerator.onApplicationEvent(applicationArguments);
 
             verify(userSecurityRepository, times(2)).save(userSecurity);
         });
     }
 
     @Test
-    void run_whenRoleNotFound_thenThrowException() {
-        assertThrows(RoleNotFoundException.class, () -> {
+    void onApplicationEvent_whenRoleNotFound_thenThrowException() {
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             when(roleRepository.findByName(anyString())).thenReturn(Optional.empty());
 
-            userGenerator.run(applicationArguments);
+            userGenerator.onApplicationEvent(applicationArguments);
         });
+
+        assertThat(exception)
+            .isNotNull()
+            .extracting(RuntimeException::getCause)
+            .isInstanceOf(RoleNotFoundException.class);
     }
 }

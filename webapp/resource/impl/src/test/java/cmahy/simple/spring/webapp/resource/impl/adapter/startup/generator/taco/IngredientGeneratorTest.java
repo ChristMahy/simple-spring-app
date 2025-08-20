@@ -10,7 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.context.event.ApplicationStartedEvent;
 
 import java.util.Optional;
 
@@ -30,13 +30,13 @@ class IngredientGeneratorTest {
     private IngredientGenerator ingredientGenerator;
 
     @Test
-    void run() {
+    void onApplicationEvent() {
         assertDoesNotThrow(() -> {
-            ApplicationArguments applicationArguments = mock(ApplicationArguments.class);
+            ApplicationStartedEvent applicationArguments = mock(ApplicationStartedEvent.class);
 
             when(ingredientRepository.findByNameAndType(anyString(), any(IngredientType.class))).thenReturn(Optional.empty());
 
-            ingredientGenerator.run(applicationArguments);
+            ingredientGenerator.onApplicationEvent(applicationArguments);
 
             verify(createIngredientCommand, times(10)).execute(any(IngredientCreateInputVo.class));
         });

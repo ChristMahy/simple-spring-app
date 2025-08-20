@@ -77,7 +77,7 @@ class ZipRandomContentWriterTasksFactoryTest {
 
             var zipEntryProxy = mock(ZipEntryProxy.class);
 
-            when(randomizer.nextInt(0, elementsSize)).thenReturn(failAtPosition);
+            when(randomizer.nextInt(0, elementsSize)).thenAnswer(_ -> failAtPosition);
 
             var actual = zipRandomContentWriterTasksFactory.execute(options);
 

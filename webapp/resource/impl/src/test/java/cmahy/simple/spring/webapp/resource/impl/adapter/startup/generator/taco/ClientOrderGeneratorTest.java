@@ -13,7 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Answers;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.context.event.ApplicationStartedEvent;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -67,12 +67,12 @@ class ClientOrderGeneratorTest {
     }
 
     @Test
-    void run() {
+    void onApplicationEvent() {
         assertDoesNotThrow(() -> {
             TacoStub tacoStub = mock(TacoStub.class);
             ClientOrderStub clientOrderStub = mock(ClientOrderStub.class);
 
-            ApplicationArguments applicationArguments = mock(ApplicationArguments.class);
+            ApplicationStartedEvent applicationArguments = mock(ApplicationStartedEvent.class);
 
             Arrays.stream(IngredientType.values()).forEach(type -> {
                 Set<IngredientStub> ingredients = Stream
@@ -96,7 +96,7 @@ class ClientOrderGeneratorTest {
             when(tacoRepository.save(tacoStub)).thenReturn(tacoStub);
             when(clientOrderRepository.save(clientOrderStub)).thenReturn(clientOrderStub);
 
-            clientOrderGenerator.run(applicationArguments);
+            clientOrderGenerator.onApplicationEvent(applicationArguments);
 
             verify(tacoRepository, times(initialClientOrderSize * 2)).save(tacoStub);
             verify(clientOrderRepository, times(initialClientOrderSize)).save(clientOrderStub);

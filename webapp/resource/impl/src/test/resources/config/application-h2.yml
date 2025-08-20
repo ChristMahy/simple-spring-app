@@ -2,3 +2,4 @@ spring:
   datasource:
     generate-unique-name: false
     name: webapp-resource-cloud
+    username: sa

@@ -1,13 +1,14 @@
 package cmahy.simple.spring.webapp.resource.impl.adapter.startup.generator.user;
 
+import cmahy.simple.spring.webapp.resource.impl.adapter.startup.generator.GeneratorConstants;
 import cmahy.simple.spring.webapp.user.kernel.application.repository.RoleRepository;
 import cmahy.simple.spring.webapp.user.kernel.application.repository.UserSecurityRepository;
 import cmahy.simple.spring.webapp.user.kernel.domain.*;
 import cmahy.simple.spring.webapp.user.kernel.domain.builder.UserSecurityBuilder;
 import cmahy.simple.spring.webapp.user.kernel.domain.builder.factory.UserSecurityBuilderFactory;
 import cmahy.simple.spring.webapp.user.kernel.exception.RoleNotFoundException;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.context.event.ApplicationStartedEvent;
+import org.springframework.context.ApplicationListener;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -17,8 +18,8 @@ import java.util.HashSet;
 import java.util.Optional;
 
 @Component
-@Order(GeneratorConstants.ExecutionOrder.USER)
-public class UserGenerator implements ApplicationRunner {
+@Order(GeneratorConstants.UserGeneratorExecutionOrder.USER)
+public class UserGenerator implements ApplicationListener<ApplicationStartedEvent> {
 
     private final UserSecurityRepository<UserSecurity> userSecurityRepository;
     private final RoleRepository<Role> roleRepository;
@@ -39,60 +40,66 @@ public class UserGenerator implements ApplicationRunner {
 
     @Override
     @Transactional
-    public void run(ApplicationArguments args) throws Exception {
-        Role guestRole = roleRepository.findByName("Guest")
-            .orElseThrow(() -> new RoleNotFoundException("Guest"));
+    public void onApplicationEvent(ApplicationStartedEvent event) {
 
-        Role adminRole = roleRepository.findByName("Admin")
-            .orElseThrow(() -> new RoleNotFoundException("Admin"));
+        try {
+            Role guestRole = roleRepository.findByName("Guest")
+                .orElseThrow(() -> new RoleNotFoundException("Guest"));
 
-        Optional<UserSecurity> machine2machine = userSecurityRepository.findByUserNameAndAuthProvider("machine2machine", AuthProvider.LOCAL);
+            Role adminRole = roleRepository.findByName("Admin")
+                .orElseThrow(() -> new RoleNotFoundException("Admin"));
 
-        if (machine2machine.isEmpty()) {
-            UserSecurityBuilder<UserSecurity> machine2machineBuilder = userSecurityBuilderFactory.create()
-                .userName("machine2machine")
-                .fullName("machine2machine")
-                .street("Local")
-                .state("Local_Machine")
-                .city("Machine")
-                .zip("1234")
-                .phoneNumber("Call_Me_Maybe")
-                .password(passwordEncoder.encode("machine2machine").getBytes())
-                .roles(new HashSet<>(2) {{
-                    add(guestRole);
-                    add(adminRole);
-                }})
-                .authProvider(AuthProvider.LOCAL)
-                .enabled(true)
-                .expired(false)
-                .credentialsExpired(false)
-                .locked(false);
+            Optional<UserSecurity> machine2machine = userSecurityRepository.findByUserNameAndAuthProvider("machine2machine", AuthProvider.LOCAL);
 
-            userSecurityRepository.save(machine2machineBuilder.build());
+            if (machine2machine.isEmpty()) {
+                UserSecurityBuilder<UserSecurity> machine2machineBuilder = userSecurityBuilderFactory.create()
+                    .userName("machine2machine")
+                    .fullName("machine2machine")
+                    .street("Local")
+                    .state("Local_Machine")
+                    .city("Machine")
+                    .zip("1234")
+                    .phoneNumber("Call_Me_Maybe")
+                    .password(passwordEncoder.encode("machine2machine").getBytes())
+                    .roles(new HashSet<>(2) {{
+                        add(guestRole);
+                        add(adminRole);
+                    }})
+                    .authProvider(AuthProvider.LOCAL)
+                    .enabled(true)
+                    .expired(false)
+                    .credentialsExpired(false)
+                    .locked(false);
+
+                userSecurityRepository.save(machine2machineBuilder.build());
+            }
+
+            Optional<UserSecurity> testUser = userSecurityRepository.findByUserNameAndAuthProvider("test", AuthProvider.LOCAL);
+
+            if (testUser.isEmpty()) {
+                UserSecurityBuilder<UserSecurity> testUserBuilder = userSecurityBuilderFactory.create()
+                    .userName("test")
+                    .fullName("test")
+                    .street("Local")
+                    .state("Local_Test")
+                    .city("Test")
+                    .zip("1234")
+                    .phoneNumber("Call_Me_Maybe")
+                    .password(passwordEncoder.encode("test").getBytes())
+                    .roles(new HashSet<>(1) {{
+                        add(guestRole);
+                    }})
+                    .authProvider(AuthProvider.LOCAL)
+                    .enabled(true)
+                    .expired(false)
+                    .credentialsExpired(false)
+                    .locked(false);
+
+                userSecurityRepository.save(testUserBuilder.build());
+            }
+        } catch (Exception any) {
+            throw new RuntimeException(any);
         }
 
-        Optional<UserSecurity> testUser = userSecurityRepository.findByUserNameAndAuthProvider("test", AuthProvider.LOCAL);
-
-        if (testUser.isEmpty()) {
-            UserSecurityBuilder<UserSecurity> testUserBuilder = userSecurityBuilderFactory.create()
-                .userName("test")
-                .fullName("test")
-                .street("Local")
-                .state("Local_Test")
-                .city("Test")
-                .zip("1234")
-                .phoneNumber("Call_Me_Maybe")
-                .password(passwordEncoder.encode("test").getBytes())
-                .roles(new HashSet<>(1) {{
-                    add(guestRole);
-                }})
-                .authProvider(AuthProvider.LOCAL)
-                .enabled(true)
-                .expired(false)
-                .credentialsExpired(false)
-                .locked(false);
-
-            userSecurityRepository.save(testUserBuilder.build());
-        }
     }
 }

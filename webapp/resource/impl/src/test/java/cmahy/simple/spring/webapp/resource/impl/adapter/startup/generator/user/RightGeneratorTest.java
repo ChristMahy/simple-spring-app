@@ -1,20 +1,17 @@
 package cmahy.simple.spring.webapp.resource.impl.adapter.startup.generator.user;
 
 import cmahy.simple.spring.webapp.user.kernel.application.repository.RightRepository;
-import cmahy.simple.spring.webapp.user.kernel.application.repository.RoleRepository;
 import cmahy.simple.spring.webapp.user.kernel.domain.Right;
 import cmahy.simple.spring.webapp.user.kernel.domain.builder.RightBuilder;
 import cmahy.simple.spring.webapp.user.kernel.domain.builder.factory.RightBuilderFactory;
-import cmahy.simple.spring.webapp.user.kernel.domain.builder.factory.RoleBuilderFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.context.event.ApplicationStartedEvent;
 
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.Mockito.*;
 
@@ -31,7 +28,7 @@ class RightGeneratorTest {
     private RightGenerator rightGenerator;
 
     @Mock
-    private ApplicationArguments applicationArguments;
+    private ApplicationStartedEvent applicationArguments;
 
     @Mock(answer = Answers.RETURNS_SELF)
     private RightBuilder<Right> rightBuilder;
@@ -40,7 +37,7 @@ class RightGeneratorTest {
     private Right right;
 
     @Test
-    void run() {
+    void onApplicationEvent() {
         assertDoesNotThrow(() -> {
 
             when(rightRepository.findByName(anyString())).thenReturn(Optional.empty());
@@ -50,7 +47,7 @@ class RightGeneratorTest {
             when(rightBuilder.build()).thenReturn(right);
 
 
-            rightGenerator.run(applicationArguments);
+            rightGenerator.onApplicationEvent(applicationArguments);
 
 
             verify(rightRepository, times(3)).save(right);

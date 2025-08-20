@@ -1,12 +1,13 @@
 package cmahy.simple.spring.webapp.resource.impl.adapter.startup.generator.taco;
 
+import cmahy.simple.spring.webapp.resource.impl.adapter.startup.generator.GeneratorConstants;
 import cmahy.simple.spring.webapp.taco.shop.kernel.application.command.CreateIngredientCommand;
 import cmahy.simple.spring.webapp.taco.shop.kernel.application.repository.IngredientRepository;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.Ingredient;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.IngredientType;
 import cmahy.simple.spring.webapp.taco.shop.kernel.vo.input.IngredientCreateInputVo;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.context.event.ApplicationStartedEvent;
+import org.springframework.context.ApplicationListener;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,8 +16,8 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @Component
-@Order(101)
-public class IngredientGenerator implements ApplicationRunner {
+@Order(GeneratorConstants.TacoGeneratorExecutionOrder.INGREDIENT)
+public class IngredientGenerator implements ApplicationListener<ApplicationStartedEvent> {
 
     private final CreateIngredientCommand createIngredientCommand;
     private final IngredientRepository<? extends Ingredient> ingredientRepository;
@@ -31,14 +32,20 @@ public class IngredientGenerator implements ApplicationRunner {
 
     @Override
     @Transactional
-    public void run(ApplicationArguments args) throws Exception {
-        List<IngredientCreateInputVo> ingredients = generateSomeIngredients()
-            .filter(this::ingredientDoesNotExists)
-            .toList();
+    public void onApplicationEvent(ApplicationStartedEvent event) {
 
-        for (IngredientCreateInputVo ingredient : ingredients) {
-            createIngredientCommand.execute(ingredient);
+        try {
+            List<IngredientCreateInputVo> ingredients = generateSomeIngredients()
+                .filter(this::ingredientDoesNotExists)
+                .toList();
+
+            for (IngredientCreateInputVo ingredient : ingredients) {
+                createIngredientCommand.execute(ingredient);
+            }
+        } catch (Exception any) {
+            throw new RuntimeException(any);
         }
+
     }
 
     private Stream<IngredientCreateInputVo> generateSomeIngredients() {

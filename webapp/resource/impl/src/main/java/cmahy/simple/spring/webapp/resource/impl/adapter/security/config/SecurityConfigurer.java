@@ -4,8 +4,6 @@ import cmahy.simple.spring.webapp.resource.impl.adapter.security.oauth2.TacoReso
 import cmahy.simple.spring.webapp.resource.impl.adapter.security.oidc.TacoResourceOidcService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -24,25 +22,14 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.web.*;
 import org.springframework.security.web.authentication.*;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
-import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Optional;
 
-import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
-
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfigurer {
-
-    private static final Logger LOG = LoggerFactory.getLogger(SecurityConfigurer.class);
-
-    @Bean
-    protected MvcRequestMatcher.Builder mvcMatcherBuilder(HandlerMappingIntrospector introspector) {
-        return new MvcRequestMatcher.Builder(introspector);
-    }
 
     @Bean
     @ConditionalOnExpression(
@@ -175,7 +162,9 @@ public class SecurityConfigurer {
     @Bean
     public SecurityFilterChain allAPIOptionMethod(HttpSecurity http) throws Exception {
         return http
-            .securityMatcher(antMatcher(HttpMethod.OPTIONS))
+            .securityMatchers(
+                configurer -> configurer.requestMatchers(HttpMethod.OPTIONS)
+            )
             .authorizeHttpRequests(registry -> registry.anyRequest().permitAll())
             .build();
     }
@@ -186,7 +175,7 @@ public class SecurityConfigurer {
         Optional<AuthenticationManagerResolver<HttpServletRequest>> authenticationManagerResolver
     ) throws Exception {
         http
-            .securityMatcher(antMatcher("/api/**"))
+            .securityMatchers(configurer -> configurer.requestMatchers("/api/**"))
             .authorizeHttpRequests(registry -> registry.anyRequest().fullyAuthenticated())
             .anonymous(AbstractHttpConfigurer::disable)
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

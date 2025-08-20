@@ -11,7 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.context.event.ApplicationStartedEvent;
 
 import java.util.Optional;
 
@@ -35,7 +35,7 @@ class RoleGeneratorTest {
     private RoleGenerator roleGenerator;
 
     @Mock
-    private ApplicationArguments applicationArguments;
+    private ApplicationStartedEvent applicationArguments;
 
     @Mock(answer = RETURNS_SELF)
     private RoleBuilder<Role> roleBuilder;
@@ -44,14 +44,14 @@ class RoleGeneratorTest {
     private Role role;
 
     @Test
-    void run() {
+    void onApplicationEvent() {
         assertDoesNotThrow(() -> {
 
             when(rightRepository.findByName(anyString())).thenAnswer(_ -> Optional.of(mock(Right.class)));
             when(roleBuilderFactory.create()).thenReturn(roleBuilder);
             when(roleBuilder.build()).thenReturn(role);
 
-            roleGenerator.run(applicationArguments);
+            roleGenerator.onApplicationEvent(applicationArguments);
 
             verify(roleRepository, times(2)).save(role);
 

@@ -1,5 +1,6 @@
 package cmahy.simple.spring.webapp.resource.impl.adapter.startup.generator.taco;
 
+import cmahy.simple.spring.webapp.resource.impl.adapter.startup.generator.GeneratorConstants;
 import cmahy.simple.spring.webapp.taco.shop.kernel.application.repository.*;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.*;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.builder.factory.ClientOrderBuilderFactory;
@@ -7,9 +8,9 @@ import cmahy.simple.spring.webapp.taco.shop.kernel.domain.builder.factory.TacoBu
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.event.ApplicationStartedEvent;
+import org.springframework.context.ApplicationListener;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,9 +19,9 @@ import java.util.*;
 import java.util.stream.IntStream;
 
 @Component
-@Order(102)
+@Order(GeneratorConstants.TacoGeneratorExecutionOrder.CLIENT_ORDER)
 @ConditionalOnProperty(name = "application.start-up.order.generate", havingValue = "true")
-public class ClientOrderGenerator implements ApplicationRunner {
+public class ClientOrderGenerator implements ApplicationListener<ApplicationStartedEvent> {
 
     private static final Logger LOG = LoggerFactory.getLogger(ClientOrderGenerator.class);
 
@@ -49,7 +50,8 @@ public class ClientOrderGenerator implements ApplicationRunner {
 
     @Override
     @Transactional
-    public void run(ApplicationArguments args) throws Exception {
+    public void onApplicationEvent(ApplicationStartedEvent event) {
+
         LOG.warn("Generate order on start up");
 
         IntStream.rangeClosed(1, initialClientOrderSize.orElse(1))
@@ -85,6 +87,7 @@ public class ClientOrderGenerator implements ApplicationRunner {
                 return clientOrder;
             })
             .forEach(clientOrderRepository::save);
+
     }
 
     private Collection<Ingredient> generateIngredients() {
