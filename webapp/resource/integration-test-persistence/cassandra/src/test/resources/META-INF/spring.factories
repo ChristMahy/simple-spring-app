@@ -1,4 +1,7 @@
+org.springframework.test.context.TestExecutionListener = \
+  cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.CassandraSnapshotListener
+
 org.springframework.context.ApplicationListener = \
-  cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.CassandraApplicationStartingEventListener, \
-  cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.CassandraEnvironmentPreparedEventListener, \
-  cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.CassandraContextClosedEventListener
+  cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.CassandraITApplicationStartingEventListener, \
+  cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.CassandraITApplicationStartedEventListener, \
+  cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.CassandraITEnvironmentPreparedEventListener

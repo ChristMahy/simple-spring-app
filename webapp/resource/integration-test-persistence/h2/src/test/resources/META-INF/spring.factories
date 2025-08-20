@@ -1,0 +1,5 @@
+org.springframework.test.context.TestExecutionListener = \
+  cmahy.simple.spring.webapp.resource.integration.test.persistence.h2.H2SnapshotListener
+
+org.springframework.context.ApplicationListener = \
+  cmahy.simple.spring.webapp.resource.integration.test.persistence.h2.H2ITApplicationStartedEventListener
