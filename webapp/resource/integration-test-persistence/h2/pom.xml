@@ -15,7 +15,7 @@
 
     <groupId>cmahy.simple.spring.webapp</groupId>
     <artifactId>resource.integration.test.persistence.h2</artifactId>
-    <version>DEV-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <name>spring-taco-resource-it-h2</name>
     <description>Webapp Taco Resource Integration Test Persistence Helper - H2</description>
