@@ -55,6 +55,9 @@
         <maven-failsafe-plugin.aditional.arg-line />
 
         <start-class>Start class missing !!!</start-class>
+
+        <cmahy.archunit-plugin.build.directory>${project.build.directory}</cmahy.archunit-plugin.build.directory>
+
     </properties>
 
     <dependencyManagement>
@@ -398,6 +401,21 @@
                             </configuration>
                         </execution>
                     </executions>
+                </plugin>
+                <plugin>
+                    <groupId>cmahy.plugins</groupId>
+                    <artifactId>archunit</artifactId>
+                    <version>1.0.0</version>
+
+                    <configuration>
+                        <archConfiguration>
+                            <project>
+                                <build>
+                                    <directory>${cmahy.archunit-plugin.build.directory}</directory>
+                                </build>
+                            </project>
+                        </archConfiguration>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
