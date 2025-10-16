@@ -15,7 +15,7 @@
 
     <groupId>cmahy.simple.spring.webapp</groupId>
     <artifactId>shell-client.impl</artifactId>
-    <version>DEV-SNAPSHOT</version>
+    <version>1.0.5</version>
 
     <name>spring-shell-client-impl</name>
     <description>Webapp Shell Client - Run request with CLI</description>
