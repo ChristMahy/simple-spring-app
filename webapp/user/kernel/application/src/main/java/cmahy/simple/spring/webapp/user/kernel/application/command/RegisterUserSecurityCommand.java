@@ -59,10 +59,12 @@ public class RegisterUserSecurityCommand {
 
         UserSecurity userSecurity = userSecurityInputAppVoMapper.map(userSecurityInput);
 
+        HashSet<Role> roles = new HashSet<>(1);
+
+        roles.add(guestRole);
+
         userSecurity = userSecurityBuilderFactory.create(userSecurity)
-            .roles(new HashSet<>(1) {{
-                add(guestRole);
-            }})
+            .roles(roles)
             .build();
 
         return userSecurityOutputAppVoMapper.map(
