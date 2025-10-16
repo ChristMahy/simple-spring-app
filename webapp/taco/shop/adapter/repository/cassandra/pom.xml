@@ -25,7 +25,7 @@
     <parent>
         <groupId>cmahy.simple.spring</groupId>
         <artifactId>bom</artifactId>
-        <version>1.0.5</version>
+        <version>1.0.6</version>
         <relativePath/>
     </parent>
 
@@ -162,6 +162,45 @@
                         <exclude>**/cassandra/repository/cassandra/**</exclude>
                     </excludes>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>cmahy.plugins</groupId>
+                <artifactId>archunit</artifactId>
+
+                <executions>
+                    <execution>
+                        <id>archunit-library</id>
+
+                        <phase>post-integration-test</phase>
+
+                        <goals>
+                            <goal>arch</goal>
+                        </goals>
+
+                        <configuration>
+                            <types>application,vo</types>
+
+                            <archConfiguration>
+                                <validators>
+                                    <validator>
+                                        <type>application</type>
+
+                                        <active-packages>adapter</active-packages>
+
+                                        <command>
+                                            <active>false</active>
+                                        </command>
+
+                                        <query>
+                                            <active>false</active>
+                                        </query>
+                                    </validator>
+                                </validators>
+                            </archConfiguration>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

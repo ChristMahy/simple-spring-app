@@ -25,7 +25,7 @@
     <parent>
         <groupId>cmahy.simple.spring</groupId>
         <artifactId>bom</artifactId>
-        <version>1.0.5</version>
+        <version>1.0.6</version>
         <relativePath/>
     </parent>
 
@@ -413,6 +413,29 @@
                         <exclude>**/adapter/startup/**</exclude>
                     </excludes>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>cmahy.plugins</groupId>
+                <artifactId>archunit</artifactId>
+
+                <executions>
+                    <execution>
+                        <id>archunit-library</id>
+
+                        <phase>post-integration-test</phase>
+
+                        <goals>
+                            <goal>arch</goal>
+                        </goals>
+
+                        <configuration>
+                            <types>application,vo</types>
+
+                            <archConfiguration />
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
