@@ -121,7 +121,7 @@
             <id>mysql</id>
 
             <properties>
-                <cmahy.simple.spring.webapp.taco.shop.it.mysql.version>DEV-SNAPSHOT</cmahy.simple.spring.webapp.taco.shop.it.mysql.version>
+                <cmahy.simple.spring.webapp.taco.shop.it.mysql.version>1.0.0</cmahy.simple.spring.webapp.taco.shop.it.mysql.version>
 
                 <maven-failsafe-plugin.aditional.arg-line>-Dspring.profiles.active=jpa,mysql,webclient</maven-failsafe-plugin.aditional.arg-line>
 
