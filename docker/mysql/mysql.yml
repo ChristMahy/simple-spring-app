@@ -1,0 +1,20 @@
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:lts
+    ports:
+      - '3306:3306'
+    environment:
+      - MYSQL_ROOT_PASSWORD=sa
+      - MYSQL_DATABASE=webapp_resource_cloud
+      - MYSQL_USER=sa
+      - MYSQL_PASSWORD=sa
+    networks:
+      backend:
+        aliases:
+          - "mysql-net"
+
+networks:
+  backend:
+    name: "mysql-net"
+    driver: bridge

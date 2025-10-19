@@ -1,0 +1,7 @@
+org.springframework.test.context.TestExecutionListener = \
+  cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql.MySqlSnapshotListener
+
+org.springframework.context.ApplicationListener = \
+  cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql.MySqlITApplicationStartingEventListener, \
+  cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql.MySqlITApplicationStartedEventListener, \
+  cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql.MySqlITEnvironmentPreparedEventListener
