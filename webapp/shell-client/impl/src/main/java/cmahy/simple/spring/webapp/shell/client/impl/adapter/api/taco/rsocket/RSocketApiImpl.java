@@ -17,6 +17,7 @@ import reactor.core.publisher.Flux;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.*;
@@ -89,9 +90,9 @@ public class RSocketApiImpl extends RSocketApi {
 
             LOG.info("RSocket menu started, get a randomized string with a length of <{}>.", length);
 
-            RSocketRequester tcp = builder.tcp(rSocketPropertyVo.host(), rSocketPropertyVo.port());
+            RSocketRequester requester = createRequester(rSocketPropertyVo);
 
-            String response = tcp
+            String response = requester
                 .route("r-socket/request-response/{size}", length)
                 .retrieveMono(String.class)
                 .block();
@@ -110,6 +111,7 @@ public class RSocketApiImpl extends RSocketApi {
 
     }
 
+
     @Override
     public Integer requestStream() {
 
@@ -121,16 +123,16 @@ public class RSocketApiImpl extends RSocketApi {
 
             LOG.info("RSocket menu started, get a randomized string with a length of <{}>.", length);
 
-            RSocketRequester tcp = builder.tcp(rSocketPropertyVo.host(), rSocketPropertyVo.port());
+            RSocketRequester requester = createRequester(rSocketPropertyVo);
 
-            List<String> response = tcp
+            List<String> response = requester
                 .route("r-socket/request-stream/{stream-length}/{string-size}", 50, length)
                 .retrieveFlux(String.class)
                 .doOnNext(r -> LOG.info("Got a response <{}>", r))
                 .collectList()
                 .block();
 
-            LOG.info("Got a response <{}>", String.join(";\n\r", response));
+            LOG.info("Got a response <{}>", Objects.nonNull(response) ? String.join(";\n\r", response) : "");
 
             LOG.info("RSocket menu has been finished successfully.");
 
@@ -153,9 +155,9 @@ public class RSocketApiImpl extends RSocketApi {
 
             LOG.info("RSocket menu started, fire and forget");
 
-            RSocketRequester tcp = builder.tcp(rSocketPropertyVo.host(), rSocketPropertyVo.port());
+            RSocketRequester requester = createRequester(rSocketPropertyVo);
 
-            tcp
+            requester
                 .route("r-socket/fire-and-forget")
                 .data(random.nextInt(100_000))
                 .send()
@@ -193,9 +195,9 @@ public class RSocketApiImpl extends RSocketApi {
 
             LOG.info("RSocket menu started, channel");
 
-            RSocketRequester tcp = builder.tcp(rSocketPropertyVo.host(), rSocketPropertyVo.port());
+            RSocketRequester requester = createRequester(rSocketPropertyVo);
 
-            tcp
+            requester
                 .route("r-socket/channel")
                 .data(channelOutputs.doOnNext(channelOut -> LOG.info("Sending request <{}>", channelOut)))
                 .retrieveFlux(new ParameterizedTypeReference<Collection<String>>() {})
@@ -212,6 +214,27 @@ public class RSocketApiImpl extends RSocketApi {
 
             return 1;
         }
+
+    }
+
+    private RSocketRequester createRequester(RSocketPropertyVo rSocketPropertyVo) {
+
+        if (Objects.nonNull(rSocketPropertyVo.host()) && Objects.nonNull(rSocketPropertyVo.port())) {
+
+            return builder.tcp(
+                rSocketPropertyVo.host(),
+                rSocketPropertyVo.port()
+            );
+
+        }
+
+        if (Objects.nonNull(rSocketPropertyVo.uri())) {
+
+            return builder.websocket(rSocketPropertyVo.uri());
+
+        }
+
+        throw new IllegalArgumentException("RSocket or WebSocket property is required.");
 
     }
 

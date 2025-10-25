@@ -14,4 +14,6 @@ spring:
   rsocket:
     server:
       port: 9080
-      transport: tcp
+#      transport: tcp
+      transport: websocket
+      mapping-path: /web-socket/

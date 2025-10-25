@@ -9,6 +9,8 @@ import jakarta.validation.Valid;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.Optional;
+
 @ConfigurationProperties(prefix = "application")
 @Validated
 public record ApplicationProperties(
@@ -17,5 +19,5 @@ public record ApplicationProperties(
     @Valid WebClientProperties webClient,
     @Valid TacoProperties taco,
     @Valid RSocketPropertyVo rSocket
-    ) {
+) {
 }
