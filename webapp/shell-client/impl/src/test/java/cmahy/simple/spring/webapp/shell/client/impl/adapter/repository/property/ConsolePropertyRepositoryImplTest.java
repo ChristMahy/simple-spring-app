@@ -62,6 +62,7 @@ class ConsolePropertyRepositoryImplTest {
                     ),
                     null,
                     null,
+                    null,
                     null
                 )
             );
@@ -79,7 +80,7 @@ class ConsolePropertyRepositoryImplTest {
     void findFormat_whenGivenValueIsNull_thenResultHasToBeEmpty(ConsolePropertyVo consolePropertyVo) {
         assertDoesNotThrow(() -> {
             consolePropertyRepositoryImpl = new ConsolePropertyRepositoryImpl(new ApplicationProperties(
-                consolePropertyVo, null, null, null
+                consolePropertyVo, null, null, null, null
             ));
 
             Optional<String> actual = consolePropertyRepositoryImpl.findFormat();
