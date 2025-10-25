@@ -1,3 +1,6 @@
+server:
+  port: 8080
+
 spring:
   application:
     name: webapp-resource
@@ -8,3 +11,7 @@ spring:
         core-size: 2
         max-size: 20
         queue-capacity: 10000
+  rsocket:
+    server:
+      port: 9080
+      transport: tcp
