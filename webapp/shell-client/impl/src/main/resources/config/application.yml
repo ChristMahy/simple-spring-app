@@ -20,8 +20,8 @@ application:
     webclient:
       enabled: true
   r-socket:
-#    host: localhost
-#    port: 9080
-    uri: ws://localhost:9080/web-socket/
+    host: localhost
+    port: 9080
+#    uri: ws://localhost:9080/web-socket/
     randomizer:
       string-length: 200
