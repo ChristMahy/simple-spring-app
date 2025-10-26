@@ -18,7 +18,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.*;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.*;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.*;
 import org.springframework.security.web.authentication.*;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
@@ -75,6 +77,28 @@ public class SecurityConfigurer {
             .csrf(this::defaultCsrfConfigurer)
             .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.NEVER))
             .build();
+    }
+
+    @Bean
+    public SecurityFilterChain exposeAuthenticatorEndPoints(HttpSecurity http) throws Exception {
+        return http
+            .securityMatcher("/actuator", "/actuator/**")
+            .authorizeHttpRequests(authorize -> authorize.anyRequest().hasRole("ADMIN"))
+            .anonymous(AbstractHttpConfigurer::disable)
+            .sessionManagement(this::defaultSessionConfigurer)
+            .userDetailsService(this.inMemoryActuatorUserDetailsService())
+            .httpBasic(Customizer.withDefaults())
+            .build();
+    }
+
+    private UserDetailsService inMemoryActuatorUserDetailsService() {
+        UserDetails user = User.builder()
+            .username("actuator_test")
+            .password("{bcrypt}$2a$10$/CToef.6weENA1KiYDCklefeYOE/ZWusaZGTCZyHss2ozfKtsDEp6")
+            .roles("ADMIN")
+            .build();
+
+        return new InMemoryUserDetailsManager(user);
     }
 
     @Bean

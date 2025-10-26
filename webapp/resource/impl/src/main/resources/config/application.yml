@@ -1,3 +1,8 @@
+infos:
+  contact:
+    email: test@test-tacocloud.com
+    phone: +32 0XX XX XX XX
+
 server:
   port: 8080
   shutdown: graceful
@@ -20,3 +25,20 @@ spring:
       transport: tcp
 #      transport: websocket
 #      mapping-path: /web-socket/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,loggers,metrics,notes
+  endpoint:
+    health:
+      access: read_only
+      show-details: when_authorized
+      show-components: when_authorized
+    metrics:
+      access: read_only
+    loggers:
+      access: read_only
+    info:
+      access: read_only
