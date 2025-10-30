@@ -1,0 +1,9 @@
+spring:
+  jmx:
+    enabled: true
+
+management:
+  endpoints:
+    jmx:
+      exposure:
+        include: health,info,bean,conditions
