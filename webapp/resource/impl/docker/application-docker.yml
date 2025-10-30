@@ -1,0 +1,30 @@
+application:
+  web-client:
+    common:
+      connect-timeout: 5s
+      response-timeout: 5s
+      read-timeout: 5s
+      write-timeout: 5s
+  start-up:
+    order:
+      generate: true
+      initial-size: 1
+  taco:
+    orders:
+      page-size: 20
+      sub-samples:
+        test-it: exact-match
+    ingredients:
+      external-resource:
+        scheduler:
+          initial-delay: 5000
+          fixed-delay: 30000
+          enable: true
+        base-url: 'http://localhost:8080/api/v1'
+  password:
+    default-encoder: bcrypt
+    encoders:
+      bcrypt:
+        org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+  pagination:
+    page-size: 10
