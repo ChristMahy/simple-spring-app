@@ -32,23 +32,23 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <spring-boot.version>3.5.3</spring-boot.version>
+        <spring-boot.version>4.0.1</spring-boot.version>
         <mapstruct.version>1.6.3</mapstruct.version>
         <jakarta.inject.version>2.0.1</jakarta.inject.version>
-        <jackson.version>2.19.1</jackson.version>
-        <logback.version>1.5.18</logback.version>
+        <jackson.version>3.0.3</jackson.version>
+        <logback.version>1.5.24</logback.version>
         <slf4j.version>2.0.17</slf4j.version>
         <archunit-junit5.version>1.4.1</archunit-junit5.version>
-        <apache.commons.lang.version>3.17.0</apache.commons.lang.version>
+        <apache.commons.lang.version>3.20.0</apache.commons.lang.version>
 
-        <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
         <maven-clean-plugin.version>3.5.0</maven-clean-plugin.version>
-        <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
-        <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
-        <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
-        <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
-        <maven-failsafe-plugin.version>3.5.3</maven-failsafe-plugin.version>
-        <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
+        <maven-resources-plugin.version>3.4.0</maven-resources-plugin.version>
+        <maven-source-plugin.version>3.4.0</maven-source-plugin.version>
+        <maven-jar-plugin.version>3.5.0</maven-jar-plugin.version>
+        <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
+        <maven-failsafe-plugin.version>3.5.4</maven-failsafe-plugin.version>
+        <jacoco-maven-plugin.version>0.8.14</jacoco-maven-plugin.version>
 
         <surefire.jacoco.args />
         <failsafe.jacoco.args />
@@ -82,7 +82,7 @@
             </dependency>
 
             <dependency>
-                <groupId>com.fasterxml.jackson</groupId>
+                <groupId>tools.jackson</groupId>
                 <artifactId>jackson-bom</artifactId>
                 <version>${jackson.version}</version>
                 <type>pom</type>
