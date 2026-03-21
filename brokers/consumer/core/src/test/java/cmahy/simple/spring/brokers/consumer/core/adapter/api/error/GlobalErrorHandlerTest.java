@@ -12,7 +12,7 @@ import java.util.List;
 
 import static cmahy.simple.spring.common.helper.Generator.generateAString;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyNoInteractions;
 
@@ -47,7 +47,11 @@ class GlobalErrorHandlerTest {
 
             assertThat(actual).isNotNull();
             assertThat(actual.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
-            assertThat(actual.getHeaders()).containsEntry(HttpHeaders.CONTENT_TYPE, List.of(MediaType.APPLICATION_PROBLEM_JSON_VALUE));
+            assertThat(actual.getHeaders())
+                .isNotNull()
+                .extracting(headers -> headers.get(HttpHeaders.CONTENT_TYPE))
+                .isNotNull();
+            assertThat(actual.getHeaders().get(HttpHeaders.CONTENT_TYPE)).containsAnyElementsOf(List.of(MediaType.APPLICATION_PROBLEM_JSON_VALUE));
 
             assertThat(actual.getBody()).isNotNull();
             assertThat(actual.getBody().getDetail()).isEqualTo("Internal server error");
@@ -67,7 +71,11 @@ class GlobalErrorHandlerTest {
 
             assertThat(actual).isNotNull();
             assertThat(actual.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
-            assertThat(actual.getHeaders()).containsEntry(HttpHeaders.CONTENT_TYPE, List.of(MediaType.APPLICATION_PROBLEM_JSON_VALUE));
+            assertThat(actual.getHeaders())
+                .isNotNull()
+                .extracting(headers -> headers.get(HttpHeaders.CONTENT_TYPE))
+                .isNotNull();
+            assertThat(actual.getHeaders().get(HttpHeaders.CONTENT_TYPE)).containsAnyElementsOf(List.of(MediaType.APPLICATION_PROBLEM_JSON_VALUE));
 
             assertThat(actual.getBody()).isNotNull();
             assertThat(actual.getBody().getDetail()).isEqualTo("Internal server error");

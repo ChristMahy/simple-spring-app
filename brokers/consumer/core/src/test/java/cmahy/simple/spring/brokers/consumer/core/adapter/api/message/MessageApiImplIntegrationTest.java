@@ -1,18 +1,18 @@
 package cmahy.simple.spring.brokers.consumer.core.adapter.api.message;
 
-import cmahy.simple.spring.brokers.consumer.message.api.MessageUriConstant;
-import cmahy.simple.spring.brokers.consumer.message.api.vo.output.MessageOutputApiVo;
 import cmahy.simple.spring.brokers.consumer.core.application.message.repository.MessageRepository;
 import cmahy.simple.spring.brokers.consumer.core.domain.message.Message;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import cmahy.simple.spring.brokers.consumer.message.api.MessageUriConstant;
+import cmahy.simple.spring.brokers.consumer.message.api.vo.output.MessageOutputApiVo;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.*;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.json.JsonMapper;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
@@ -34,7 +34,7 @@ class MessageApiImplIntegrationTest {
     private MessageRepository repository;
 
     @Inject
-    private ObjectMapper jsonMapper;
+    private JsonMapper jsonMapper;
 
     @Inject
     private MockMvc mockMvc;
