@@ -1,11 +1,11 @@
 package cmahy.simple.spring.brokers.consumer.rabbitmq.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.amqp.core.Queue;
+import tools.jackson.databind.json.JsonMapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -20,9 +20,9 @@ class RabbitMQConfigurerTest {
     @Test
     void jacksonMessageConverter() {
         assertDoesNotThrow(() -> {
-            var objectMapper = mock(ObjectMapper.class);
+            var jsonMapper = mock(JsonMapper.class);
 
-            var actual = configurer.jacksonMessageConverter(objectMapper);
+            var actual = configurer.jacksonMessageConverter(jsonMapper);
 
             assertThat(actual).isNotNull();
         });

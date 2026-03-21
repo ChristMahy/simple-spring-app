@@ -1,14 +1,14 @@
 package cmahy.simple.spring.brokers.consumer.jms.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
+import org.springframework.jms.support.converter.JacksonJsonMessageConverter;
+import tools.jackson.databind.json.JsonMapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
@@ -20,9 +20,9 @@ class JmsConfigurerTest {
     @Test
     void mappingJackson2MessageConverter() {
         assertDoesNotThrow(() -> {
-            var objectMapper = mock(ObjectMapper.class);
+            var jsonMapper = mock(JsonMapper.class);
 
-            MappingJackson2MessageConverter actual = configurer.mappingJackson2MessageConverter(objectMapper);
+            JacksonJsonMessageConverter actual = configurer.mappingJackson2MessageConverter(jsonMapper);
 
             assertThat(actual).isNotNull();
         });
