@@ -25,19 +25,19 @@
     <parent>
         <groupId>cmahy.simple.spring</groupId>
         <artifactId>bom</artifactId>
-        <version>1.0.6</version>
+        <version>1.1.0</version>
         <relativePath/>
     </parent>
 
     <properties>
-        <cmahy.simple.spring.common>1.0.2</cmahy.simple.spring.common>
+        <cmahy.simple.spring.common>1.1.0</cmahy.simple.spring.common>
 
-        <cmahy.simple.spring.webapp.taco.shop.version>1.0.2</cmahy.simple.spring.webapp.taco.shop.version>
+        <cmahy.simple.spring.webapp.taco.shop.version>1.1.0</cmahy.simple.spring.webapp.taco.shop.version>
 
         <cmahy.simple.spring.webapp.taco.shop.domain.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.domain.version>
         <cmahy.simple.spring.webapp.taco.shop.application.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.application.version>
 
-        <cmahy.simple.spring.webapp.user.version>1.0.2</cmahy.simple.spring.webapp.user.version>
+        <cmahy.simple.spring.webapp.user.version>1.1.0</cmahy.simple.spring.webapp.user.version>
 
         <cmahy.simple.spring.webapp.user.domain.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.domain.version>
         <cmahy.simple.spring.webapp.user.adapter.jpa.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.adapter.jpa.version>
@@ -84,7 +84,12 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.inject</groupId>
+            <artifactId>jakarta.inject-api</artifactId>
         </dependency>
 
         <dependency>
