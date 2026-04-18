@@ -1,11 +1,12 @@
 package cmahy.simple.spring.brokers.publisher.kafka.config;
 
 import org.apache.kafka.clients.admin.NewTopic;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.kafka.autoconfigure.KafkaAutoConfiguration;
+import org.springframework.context.annotation.*;
 import org.springframework.kafka.config.TopicBuilder;
 
 @Configuration
+@Import({ KafkaAutoConfiguration.class })
 public class KafkaConfigurer {
 
     @Bean

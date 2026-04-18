@@ -1,17 +1,19 @@
 package cmahy.simple.spring.brokers.publisher.rabbitmq.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.amqp.support.converter.JacksonJsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.boot.amqp.autoconfigure.RabbitAutoConfiguration;
+import org.springframework.context.annotation.*;
+import tools.jackson.databind.json.JsonMapper;
 
 @Configuration
+@Import({RabbitAutoConfiguration.class})
 public class RabbitMQConfigurer {
 
     @Bean
-    public Jackson2JsonMessageConverter jacksonMessageConverter(ObjectMapper objectMapper) {
-        return new Jackson2JsonMessageConverter(objectMapper);
+    public MessageConverter jacksonMessageConverter(JsonMapper jsonMapper) {
+        return new JacksonJsonMessageConverter(jsonMapper);
     }
 
     @Bean
