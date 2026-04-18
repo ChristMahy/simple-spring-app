@@ -25,15 +25,15 @@
     <parent>
         <groupId>cmahy.simple.spring</groupId>
         <artifactId>bom</artifactId>
-        <version>1.0.6</version>
+        <version>1.1.0</version>
         <relativePath/>
     </parent>
 
     <properties>
-        <cmahy.common.version>1.0.2</cmahy.common.version>
+        <cmahy.common.version>1.1.0</cmahy.common.version>
 
-        <cmahy.simple.spring.webapp.user.domain.kernel>1.0.5</cmahy.simple.spring.webapp.user.domain.kernel>
-        <cmahy.simple.spring.webapp.user.vo.kernel>1.0.4</cmahy.simple.spring.webapp.user.vo.kernel>
+        <cmahy.simple.spring.webapp.user.domain.kernel>1.1.0</cmahy.simple.spring.webapp.user.domain.kernel>
+        <cmahy.simple.spring.webapp.user.vo.kernel>1.1.0</cmahy.simple.spring.webapp.user.vo.kernel>
     </properties>
 
     <dependencies>
