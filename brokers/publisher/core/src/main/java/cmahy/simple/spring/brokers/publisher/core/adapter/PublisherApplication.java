@@ -2,10 +2,15 @@ package cmahy.simple.spring.brokers.publisher.core.adapter;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration;
-import org.springframework.boot.autoconfigure.jms.artemis.ArtemisAutoConfiguration;
 
-@SpringBootApplication(scanBasePackages = { "cmahy.simple.spring.brokers.publisher.core" }, exclude = { ArtemisAutoConfiguration.class, RabbitAutoConfiguration.class })
+@SpringBootApplication(
+    scanBasePackages = { "cmahy.simple.spring.brokers.publisher.core" },
+    excludeName = {
+        "org.springframework.boot.amqp.autoconfigure.RabbitAutoConfiguration",
+        "org.springframework.boot.kafka.autoconfigure.KafkaAutoConfiguration",
+        "org.springframework.boot.artemis.autoconfigure.ArtemisAutoConfiguration"
+    }
+)
 public class PublisherApplication {
     public static void main(String[] args) {
         SpringApplication.run(PublisherApplication.class, args);
