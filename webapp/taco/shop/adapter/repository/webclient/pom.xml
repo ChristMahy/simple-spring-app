@@ -25,24 +25,24 @@
     <parent>
         <groupId>cmahy.simple.spring</groupId>
         <artifactId>bom</artifactId>
-        <version>1.1.0</version>
+        <version>1.1.1</version>
         <relativePath/>
     </parent>
 
     <properties>
-        <cmahy.simple.spring.common.version>1.1.0</cmahy.simple.spring.common.version>
+        <cmahy.simple.spring.common.version>1.1.1</cmahy.simple.spring.common.version>
 
-        <cmahy.simple.spring.webapp.user.version>1.1.0</cmahy.simple.spring.webapp.user.version>
+        <cmahy.simple.spring.webapp.user.version>1.1.1</cmahy.simple.spring.webapp.user.version>
 
         <cmahy.simple.spring.webapp.user.domain.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.domain.version>
         <cmahy.simple.spring.webapp.user.webclient.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.webclient.version>
 
-        <cmahy.simple.spring.webapp.taco.shop.version>1.1.0</cmahy.simple.spring.webapp.taco.shop.version>
+        <cmahy.simple.spring.webapp.taco.shop.version>1.1.1</cmahy.simple.spring.webapp.taco.shop.version>
 
         <cmahy.simple.spring.webapp.taco.shop.domain.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.domain.version>
         <cmahy.simple.spring.webapp.taco.shop.application.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.application.version>
 
-        <cmahy.simple.spring.security.spring-client.api.version>1.1.0</cmahy.simple.spring.security.spring-client.api.version>
+        <cmahy.simple.spring.security.spring-client.api.version>1.1.1</cmahy.simple.spring.security.spring-client.api.version>
     </properties>
 
     <dependencies>
