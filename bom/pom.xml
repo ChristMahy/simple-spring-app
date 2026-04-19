@@ -32,12 +32,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <spring-boot.version>4.0.1</spring-boot.version>
+        <spring-boot.version>4.0.5</spring-boot.version>
+        <spring-jcl.version>6.2.18</spring-jcl.version>
         <mapstruct.version>1.6.3</mapstruct.version>
         <jakarta.inject.version>2.0.1</jakarta.inject.version>
-        <jackson.version>3.0.3</jackson.version>
         <logback.version>1.5.24</logback.version>
-        <slf4j.version>2.0.17</slf4j.version>
         <archunit-junit5.version>1.4.1</archunit-junit5.version>
         <apache.commons.lang.version>3.20.0</apache.commons.lang.version>
 
@@ -73,20 +72,13 @@
                         <groupId>junit</groupId>
                         <artifactId>junit</artifactId>
                     </exclusion>
-
-                    <exclusion>
-                        <groupId>com.fasterxml.jackson</groupId>
-                        <artifactId>jackson-bom</artifactId>
-                    </exclusion>
                 </exclusions>
             </dependency>
 
             <dependency>
-                <groupId>tools.jackson</groupId>
-                <artifactId>jackson-bom</artifactId>
-                <version>${jackson.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jcl</artifactId>
+                <version>${spring-jcl.version}</version>
             </dependency>
 
             <dependency>
@@ -99,12 +91,6 @@
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-core</artifactId>
                 <version>${logback.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>jcl-over-slf4j</artifactId>
-                <version>${slf4j.version}</version>
             </dependency>
 
             <dependency>
