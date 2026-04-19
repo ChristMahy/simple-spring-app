@@ -1,9 +1,12 @@
 spring:
   datasource:
-    generate-unique-name: false
-    name: authorization-cloud
+    url: jdbc:h2:mem:authorization-cloud
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ''
   h2:
     console:
+      path: /h2-console
       enabled: true
   cache:
     cache-names:

@@ -13,12 +13,12 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.security.oauth2.server.authorization.authentication.JwtClientAssertionAuthenticationProvider;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
-import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
-import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
@@ -47,22 +47,31 @@ public class AuthorizationServerConfigurer {
         HttpSecurity httpSecurity,
         RSAPublicKeyRepository rsaPublicKeyRepository
     ) throws Exception {
-        OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(httpSecurity);
+
+        OAuth2AuthorizationServerConfigurer authorizationServerConfigurer = new OAuth2AuthorizationServerConfigurer();
 
         httpSecurity
-            .getConfigurer(OAuth2AuthorizationServerConfigurer.class)
-            .oidc(withDefaults())
-            .clientAuthentication(clientAuthenticationConfigurer -> {
-                clientAuthenticationConfigurer.authenticationProviders(authenticationProviders -> {
-                    authenticationProviders.stream()
-                        .filter(aP -> aP instanceof JwtClientAssertionAuthenticationProvider)
-                        .findFirst()
-                        .map(JwtClientAssertionAuthenticationProvider.class::cast)
-                        .ifPresent(authenticationProvider -> {
-                            authenticationProvider.setJwtDecoderFactory(jwtDecoderFactory(rsaPublicKeyRepository));
+            .securityMatcher(authorizationServerConfigurer.getEndpointsMatcher())
+            .with(
+                authorizationServerConfigurer,
+                configurer -> {
+
+                    configurer
+                        .oidc(withDefaults())
+                        .clientAuthentication(clientAuthenticationConfigurer -> {
+                            clientAuthenticationConfigurer.authenticationProviders(authenticationProviders -> {
+                                authenticationProviders
+                                    .stream()
+                                    .filter(JwtClientAssertionAuthenticationProvider.class::isInstance)
+                                    .map(JwtClientAssertionAuthenticationProvider.class::cast)
+                                    .forEach(jwtProvider -> {
+                                        jwtProvider.setJwtDecoderFactory(jwtDecoderFactory(rsaPublicKeyRepository));
+                                    });
+                            });
                         });
-                });
-            });
+
+                }
+            );
 
         httpSecurity
             // Redirect to the login page when not authenticated from the
@@ -78,6 +87,7 @@ public class AuthorizationServerConfigurer {
         return httpSecurity
             .formLogin(withDefaults())
             .build();
+
     }
 
     @Bean
