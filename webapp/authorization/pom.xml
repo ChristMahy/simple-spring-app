@@ -20,16 +20,16 @@
     <parent>
         <groupId>cmahy.simple.spring</groupId>
         <artifactId>bom</artifactId>
-        <version>DEV-SNAPSHOT</version>
+        <version>1.1.1</version>
         <relativePath/>
     </parent>
 
     <packaging>jar</packaging>
 
     <properties>
-        <cmahy.simple.spring.common.version>1.1.0</cmahy.simple.spring.common.version>
+        <cmahy.simple.spring.common.version>1.1.1</cmahy.simple.spring.common.version>
 
-        <cmahy.simple.spring.security.common.version>1.1.0</cmahy.simple.spring.security.common.version>
+        <cmahy.simple.spring.security.common.version>1.1.1</cmahy.simple.spring.security.common.version>
 
         <cmahy.simple.spring.security.common.api.version>${cmahy.simple.spring.security.common.version}</cmahy.simple.spring.security.common.api.version>
         <cmahy.simple.spring.security.common.impl.version>${cmahy.simple.spring.security.common.version}</cmahy.simple.spring.security.common.impl.version>
