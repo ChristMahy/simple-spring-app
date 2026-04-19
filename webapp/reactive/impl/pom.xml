@@ -15,14 +15,14 @@
     <parent>
         <groupId>cmahy.simple.spring</groupId>
         <artifactId>bom</artifactId>
-        <version>1.0.3</version>
+        <version>1.1.0</version>
         <relativePath />
     </parent>
 
     <packaging>jar</packaging>
 
     <properties>
-        <cmahy.common.version>1.0.2</cmahy.common.version>
+        <cmahy.common.version>1.1.0</cmahy.common.version>
 
         <cmahy.resource.reactive.api.version>DEV-SNAPSHOT</cmahy.resource.reactive.api.version>
 
