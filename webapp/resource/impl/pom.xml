@@ -25,41 +25,43 @@
     <parent>
         <groupId>cmahy.simple.spring</groupId>
         <artifactId>bom</artifactId>
-        <version>1.0.6</version>
+        <version>1.1.1</version>
         <relativePath/>
     </parent>
 
     <properties>
-        <cmahy.simple.spring.common.version>1.0.2</cmahy.simple.spring.common.version>
+        <cmahy.simple.spring.common.version>1.1.1</cmahy.simple.spring.common.version>
 
-        <cmahy.simple.spring.security.common.version>1.0.0</cmahy.simple.spring.security.common.version>
+        <cmahy.simple.spring.security.common.version>1.1.1</cmahy.simple.spring.security.common.version>
 
         <cmahy.simple.spring.security.common.api.version>${cmahy.simple.spring.security.common.version}</cmahy.simple.spring.security.common.api.version>
         <cmahy.simple.spring.security.common.impl.version>${cmahy.simple.spring.security.common.version}</cmahy.simple.spring.security.common.impl.version>
 
-        <cmahy.simple.spring.security.spring-client.version>1.0.0</cmahy.simple.spring.security.spring-client.version>
+        <cmahy.simple.spring.security.spring-client.version>1.1.1</cmahy.simple.spring.security.spring-client.version>
 
         <cmahy.simple.spring.security.spring-client.api.version>${cmahy.simple.spring.security.spring-client.version}</cmahy.simple.spring.security.spring-client.api.version>
         <cmahy.simple.spring.security.spring-client.impl.version>${cmahy.simple.spring.security.spring-client.version}</cmahy.simple.spring.security.spring-client.impl.version>
 
-        <cmahy.simple.spring.webapp.resource.version>1.0.2</cmahy.simple.spring.webapp.resource.version>
+        <cmahy.simple.spring.webapp.resource.version>1.1.1</cmahy.simple.spring.webapp.resource.version>
 
         <cmahy.simple.spring.webapp.resource.api.version>${cmahy.simple.spring.webapp.resource.version}</cmahy.simple.spring.webapp.resource.api.version>
-        <cmahy.simple.spring.webapp.resource.ui.version>1.0.3</cmahy.simple.spring.webapp.resource.ui.version>
+        <cmahy.simple.spring.webapp.resource.ui.version>${cmahy.simple.spring.webapp.resource.version}</cmahy.simple.spring.webapp.resource.ui.version>
 
-        <cmahy.simple.spring.webapp.taco.shop.version>1.0.2</cmahy.simple.spring.webapp.taco.shop.version>
+        <cmahy.simple.spring.webapp.taco.shop.version>1.1.1</cmahy.simple.spring.webapp.taco.shop.version>
 
         <cmahy.simple.spring.webapp.taco.shop.adapter.repository.jpa.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.adapter.repository.jpa.version>
-        <cmahy.simple.spring.webapp.resource.cassandra-starter.version>1.0.0</cmahy.simple.spring.webapp.resource.cassandra-starter.version>
-        <cmahy.simple.spring.webapp.taco.shop.adapter.repository.webclient.version>1.0.5</cmahy.simple.spring.webapp.taco.shop.adapter.repository.webclient.version>
+        <cmahy.simple.spring.webapp.resource.cassandra-starter.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.resource.cassandra-starter.version>
+        <cmahy.simple.spring.webapp.taco.shop.adapter.repository.webclient.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.adapter.repository.webclient.version>
         <cmahy.simple.spring.webapp.taco.shop.kernel.domain.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.kernel.domain.version>
         <cmahy.simple.spring.webapp.taco.shop.kernel.vo.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.kernel.vo.version>
         <cmahy.simple.spring.webapp.taco.shop.kernel.application.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.kernel.application.version>
 
-        <cmahy.simple.spring.webapp.user.kernel.domain.version>1.0.5</cmahy.simple.spring.webapp.user.kernel.domain.version>
-        <cmahy.simple.spring.webapp.user.kernel.vo.version>1.0.4</cmahy.simple.spring.webapp.user.kernel.vo.version>
-        <cmahy.simple.spring.webapp.user.kernel.application.version>1.0.4</cmahy.simple.spring.webapp.user.kernel.application.version>
-        <cmahy.simple.spring.webapp.user.adapter.jpa.version>1.0.4</cmahy.simple.spring.webapp.user.adapter.jpa.version>
+        <cmahy.simple.spring.webapp.user.version>1.1.1</cmahy.simple.spring.webapp.user.version>
+
+        <cmahy.simple.spring.webapp.user.kernel.domain.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.kernel.domain.version>
+        <cmahy.simple.spring.webapp.user.kernel.vo.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.kernel.vo.version>
+        <cmahy.simple.spring.webapp.user.kernel.application.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.kernel.application.version>
+        <cmahy.simple.spring.webapp.user.adapter.jpa.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.adapter.jpa.version>
 
         <packaging.artifact-id>resource.impl</packaging.artifact-id>
 
@@ -84,7 +86,7 @@
             <id>h2</id>
 
             <properties>
-                <cmahy.simple.spring.webapp.taco.shop.it.h2.version>1.0.0</cmahy.simple.spring.webapp.taco.shop.it.h2.version>
+                <cmahy.simple.spring.webapp.taco.shop.it.h2.version>1.1.1</cmahy.simple.spring.webapp.taco.shop.it.h2.version>
 
                 <maven-failsafe-plugin.aditional.arg-line>-Dspring.profiles.active=jpa,h2,webclient</maven-failsafe-plugin.aditional.arg-line>
 
@@ -116,7 +118,7 @@
             <id>mysql</id>
 
             <properties>
-                <cmahy.simple.spring.webapp.taco.shop.it.mysql.version>1.0.0</cmahy.simple.spring.webapp.taco.shop.it.mysql.version>
+                <cmahy.simple.spring.webapp.taco.shop.it.mysql.version>1.1.1</cmahy.simple.spring.webapp.taco.shop.it.mysql.version>
 
                 <maven-failsafe-plugin.aditional.arg-line>-Dspring.profiles.active=jpa,mysql,webclient</maven-failsafe-plugin.aditional.arg-line>
 
@@ -172,7 +174,7 @@
             <id>cassandra</id>
 
             <properties>
-                <cmahy.simple.spring.webapp.taco.shop.it.cassandra.version>1.0.4</cmahy.simple.spring.webapp.taco.shop.it.cassandra.version>
+                <cmahy.simple.spring.webapp.taco.shop.it.cassandra.version>1.1.1</cmahy.simple.spring.webapp.taco.shop.it.cassandra.version>
 
                 <maven-failsafe-plugin.aditional.arg-line>-Dspring.profiles.active=cassandra,webclient</maven-failsafe-plugin.aditional.arg-line>
 
