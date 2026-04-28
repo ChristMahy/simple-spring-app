@@ -40,7 +40,7 @@
         <cmahy.simple.spring.webapp.user.version>1.1.1</cmahy.simple.spring.webapp.user.version>
 
         <cmahy.simple.spring.webapp.user.domain.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.domain.version>
-        <cmahy.simple.spring.webapp.user.adapter.jpa.version>DEV-SNAPSHOT</cmahy.simple.spring.webapp.user.adapter.jpa.version>
+        <cmahy.simple.spring.webapp.user.adapter.jpa.version>1.1.2</cmahy.simple.spring.webapp.user.adapter.jpa.version>
     </properties>
 
     <dependencies>
