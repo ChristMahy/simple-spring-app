@@ -1,0 +1,207 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: data-ingredient
+      author: app
+      changes:
+
+        - insert:
+            tableName: ingredient
+            columns:
+              - column: { name: id, value: 'ded135a5-1af3-4c80-ae57-e3a9af3bface' }
+              - column: { name: name, value: 'Flour Tortilla' }
+              - column: { name: type, value: 'WRAP' }
+
+        - insert:
+            tableName: ingredient
+            columns:
+              - column: { name: id, value: '381a5639-9db7-497a-98b1-63e66e479944' }
+              - column: { name: name, value: 'Corn Tortilla' }
+              - column: { name: type, value: 'WRAP' }
+
+        - insert:
+            tableName: ingredient
+            columns:
+              - column: { name: id, value: '1030318d-f754-41c3-bde2-3e7cda8d74f8' }
+              - column: { name: name, value: 'Ground Beef' }
+              - column: { name: type, value: 'PROTEIN' }
+
+        - insert:
+            tableName: ingredient
+            columns:
+              - column: { name: id, value: '04a712dc-982a-431d-90f6-1eac74bbd726' }
+              - column: { name: name, value: 'Carnitas' }
+              - column: { name: type, value: 'PROTEIN' }
+
+        - insert:
+            tableName: ingredient
+            columns:
+              - column: { name: id, value: '737b8b0f-e19c-40e2-a22b-57ed9b7bbf6b' }
+              - column: { name: name, value: 'Diced Tomatoes' }
+              - column: { name: type, value: 'VEGGIES' }
+
+        - insert:
+            tableName: ingredient
+            columns:
+              - column: { name: id, value: '230c3984-cb3c-4ae9-a09b-0577f9366b7c' }
+              - column: { name: name, value: 'Lettuce' }
+              - column: { name: type, value: 'VEGGIES' }
+
+        - insert:
+            tableName: ingredient
+            columns:
+              - column: { name: id, value: '6b9c337b-860d-4a81-a23f-5e5a4fe019dd' }
+              - column: { name: name, value: 'Cheddar' }
+              - column: { name: type, value: 'CHEESE' }
+
+        - insert:
+            tableName: ingredient
+            columns:
+              - column: { name: id, value: '8f7fc3d0-190b-498c-9e3b-a1615a88cdb8' }
+              - column: { name: name, value: 'Monterrey Jack' }
+              - column: { name: type, value: 'CHEESE' }
+
+        - insert:
+            tableName: ingredient
+            columns:
+              - column: { name: id, value: '26119ebf-e4ba-4bd0-b4b9-6cdc3f604d91' }
+              - column: { name: name, value: 'Salsa' }
+              - column: { name: type, value: 'SAUCE' }
+
+        - insert:
+            tableName: ingredient
+            columns:
+              - column: { name: id, value: 'fde9dfc2-b0bd-46f3-926b-236f3878363f' }
+              - column: { name: name, value: 'Sour Cream' }
+              - column: { name: type, value: 'SAUCE' }
+
+  - changeSet:
+      id: data-role
+      author: app
+      changes:
+        - insert:
+            tableName: role_app
+            columns:
+              - column: { name: id, value: "ef1e961f-bf27-4c43-9a8f-93f0925e175b" }
+              - column: { name: name, value: "Guest" }
+
+        - insert:
+            tableName: role_app
+            columns:
+              - column: { name: id, value: "ac1ecda3-6ffb-4012-ab98-68d3ead3bcb0" }
+              - column: { name: name, value: "Admin" }
+
+  - changeSet:
+      id: data-right
+      author: app
+      changes:
+
+        - insert:
+            columns:
+              - column: { name: id, value: '6c337026-1f13-4daf-872e-28d5f8d7fac9' }
+              - column: { name: name, value: 'ingredient:read' }
+
+        - insert:
+            columns:
+              - column: { name: id, value: 'ef1a9223-e42a-4f43-ba2d-07f850ab4030' }
+              - column: { name: name, value: 'ingredient:write' }
+
+        - insert:
+            columns:
+              - column: { name: id, value: '12f9dca9-ff40-4ad7-ba21-f2f587e179bb' }
+              - column: { name: name, value: 'ingredient:delete' }
+
+  - changeSet:
+      id: data-user
+      author: app
+      changes:
+
+        - insert:
+            tableName: user_app
+            columns:
+              - column: { name: is_credentials_expired, valueBoolean: false }
+              - column: { name: is_enabled, valueBoolean: true }
+              - column: { name: is_expired, valueBoolean: false }
+              - column: { name: is_locked, valueBoolean: false }
+              - column: { name: discriminator, value: 'USER_SECU' }
+              - column: { name: id, value: 'b5d313ce-69e9-4f51-b90c-6ac630ae8a74' }
+              - column: { name: city, value: 'Machine' }
+              - column: { name: full_name, value:  'machine2machine'}
+              - column: { name: password, valueBinary: '7b6263727970747d24326124313024557367516246496c7757526345764d787a5a4b50547542724f644538666d796861654155325773764878566278474c396d66523271' }
+              - column: { name: phone_number, value: 'Call_Me_Maybe' }
+              - column: { name: state, value: 'Local_Machine' }
+              - column: { name: street, value: 'Local' }
+              - column: { name: user_name, value: 'machine2machine' }
+              - column: { name: zip, value: '1234' }
+              - column: { name: auth_provider, value: 'LOCAL' }
+
+        - insert:
+            tableName: user_app
+            columns:
+              - column: { name: is_credentials_expired, valueBoolean: false }
+              - column: { name: is_enabled, valueBoolean: true }
+              - column: { name: is_expired, valueBoolean: false }
+              - column: { name: is_locked, valueBoolean: false }
+              - column: { name: discriminator, value: 'USER_SECU' }
+              - column: { name: id, value: '625c67f0-bd93-4210-86d2-bf9ab0c7a2dd' }
+              - column: { name: city, value: 'Test' }
+              - column: { name: full_name, value: 'test' }
+              - column: { name: password, valueBinary: '7b6263727970747d243261243130246c52694858315465456a484d5630307457706a684c4f7436556c65784957685870426f44374a352e35336573764c46547839366b36' }
+              - column: { name: phone_number, value: 'Call_Me_Maybe' }
+              - column: { name: state, value: 'Local_Test' }
+              - column: { name: street, value: 'Local' }
+              - column: { name: user_name, value: 'test' }
+              - column: { name: zip, value: '1234' }
+              - column: { name: auth_provider, value: 'LOCAL' }
+
+  - changeSet:
+      id: data-right-role-link
+      author: app
+      changes:
+
+        - insert:
+            tableName: role_right_app
+            columns:
+              - column: { name: right_app_id , value: '6c337026-1f13-4daf-872e-28d5f8d7fac9' }
+              - column: { name: role_app_id , value: 'ef1e961f-bf27-4c43-9a8f-93f0925e175b' }
+
+        - insert:
+            tableName: role_right_app
+            columns:
+              - column: { name: right_app_id , value: '12f9dca9-ff40-4ad7-ba21-f2f587e179bb' }
+              - column: { name: role_app_id , value: 'ac1ecda3-6ffb-4012-ab98-68d3ead3bcb0' }
+
+        - insert:
+            tableName: role_right_app
+            columns:
+              - column: { name: right_app_id , value: 'ef1a9223-e42a-4f43-ba2d-07f850ab4030' }
+              - column: { name: role_app_id , value: 'ac1ecda3-6ffb-4012-ab98-68d3ead3bcb0' }
+
+        - insert:
+            tableName: role_right_app
+            columns:
+              - column: { name: right_app_id , value: '6c337026-1f13-4daf-872e-28d5f8d7fac9' }
+              - column: { name: role_app_id , value: 'ac1ecda3-6ffb-4012-ab98-68d3ead3bcb0' }
+
+  - changeSet:
+      id: data-user-role-link
+      author: app
+      changes:
+
+        - insert:
+            tableName: user_app_role
+            columns:
+              - column: { name: role_id , value: 'ac1ecda3-6ffb-4012-ab98-68d3ead3bcb0' }
+              - column: { name: user_app_id , value: 'b5d313ce-69e9-4f51-b90c-6ac630ae8a74' }
+
+        - insert:
+            tableName: user_app_role
+            columns:
+              - column: { name: role_id , value: 'ef1e961f-bf27-4c43-9a8f-93f0925e175b' }
+              - column: { name: user_app_id , value: 'b5d313ce-69e9-4f51-b90c-6ac630ae8a74' }
+
+        - insert:
+            tableName: user_app_role
+            columns:
+              - column: { name: role_id , value: 'ef1e961f-bf27-4c43-9a8f-93f0925e175b' }
+              - column: { name: user_app_id , value: '625c67f0-bd93-4210-86d2-bf9ab0c7a2dd' }

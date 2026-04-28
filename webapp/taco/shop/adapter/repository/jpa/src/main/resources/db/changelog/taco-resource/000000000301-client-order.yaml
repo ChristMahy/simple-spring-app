@@ -1,0 +1,50 @@
+databaseChangeLog:
+  - changeSet:
+      id: client-order
+      author: cm
+
+      changes:
+        - createTable:
+            tableName: client_order
+            columns:
+              - column:
+                  name: id
+                  type: BINARY(16)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: user_id
+                  type: BINARY(16)
+
+              - column:
+                  name: placed_at
+                  type: TIMESTAMP
+
+              - column:
+                  name: delivery_city
+                  type: VARCHAR(255)
+
+              - column:
+                  name: delivery_name
+                  type: VARCHAR(255)
+
+              - column:
+                  name: delivery_state
+                  type: VARCHAR(255)
+
+              - column:
+                  name: delivery_street
+                  type: VARCHAR(255)
+
+              - column:
+                  name: delivery_zip
+                  type: VARCHAR(255)
+
+        - addForeignKeyConstraint:
+            constraintName: fk_client_order_user
+            baseTableName: client_order
+            baseColumnNames: user_id
+            referencedTableName: user_app
+            referencedColumnNames: id

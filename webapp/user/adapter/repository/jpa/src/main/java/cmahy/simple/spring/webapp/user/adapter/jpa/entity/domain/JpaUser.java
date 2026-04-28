@@ -11,8 +11,8 @@ import java.util.UUID;
 @Entity
 @Table(name = "user_app")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "discriminator", discriminatorType = DiscriminatorType.INTEGER)
-@DiscriminatorValue("0")
+@DiscriminatorColumn(name = "discriminator", length = 15, columnDefinition = "varchar(15)")
+@DiscriminatorValue("USER")
 public class JpaUser implements User {
 
     @Id

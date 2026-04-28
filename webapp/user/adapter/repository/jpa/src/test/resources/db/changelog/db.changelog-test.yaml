@@ -1,0 +1,3 @@
+databaseChangeLog:
+  - includeAll:
+    file: db/changelog/data-test

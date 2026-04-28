@@ -5,8 +5,8 @@ import cmahy.simple.spring.webapp.resource.impl.adapter.security.oidc.TacoResour
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
-import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+import org.springframework.boot.security.autoconfigure.web.servlet.PathRequest;
+import org.springframework.boot.security.oauth2.client.autoconfigure.OAuth2ClientProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -70,7 +70,7 @@ public class SecurityConfigurer {
     @Bean
     public SecurityFilterChain exposePublicUrlsWithBasicSecurity(HttpSecurity http) throws Exception {
         return http
-            .securityMatcher("", "/", "/without-controller", "/toggle-theme")
+            .securityMatcher("/", "/without-controller", "/toggle-theme")
             .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll())
             .anonymous(AbstractHttpConfigurer::disable)
             .cors(Customizer.withDefaults())
@@ -104,7 +104,7 @@ public class SecurityConfigurer {
     @Bean
     public SecurityFilterChain exposeRegisterUrls(HttpSecurity http) throws Exception {
         return http
-            .securityMatcher("/register**")
+            .securityMatcher("/register", "/register/**")
             .authorizeHttpRequests(authorized -> authorized.anyRequest().permitAll())
             .anonymous(AbstractHttpConfigurer::disable)
             .cors(Customizer.withDefaults())

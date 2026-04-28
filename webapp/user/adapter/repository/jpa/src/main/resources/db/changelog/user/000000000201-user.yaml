@@ -1,0 +1,75 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: user-app-table
+      author: cm
+
+      changes:
+        - createTable:
+            tableName: user_app
+            columns:
+
+              - column:
+                  name: id
+                  type: BINARY(16)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: discriminator
+                  type: VARCHAR(15)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: is_credentials_expired
+                  type: BOOLEAN
+
+              - column:
+                  name: is_enabled
+                  type: BOOLEAN
+
+              - column:
+                  name: is_expired
+                  type: BOOLEAN
+
+              - column:
+                  name: is_locked
+                  type: BOOLEAN
+
+              - column:
+                  name: city
+                  type: VARCHAR(255)
+
+              - column:
+                  name: full_name
+                  type: VARCHAR(255)
+
+              - column:
+                  name: password
+                  type: BLOB
+
+              - column:
+                  name: phone_number
+                  type: VARCHAR(255)
+
+              - column:
+                  name: state
+                  type: VARCHAR(255)
+
+              - column:
+                  name: street
+                  type: VARCHAR(255)
+
+              - column:
+                  name: user_name
+                  type: VARCHAR(255)
+
+              - column:
+                  name: zip
+                  type: VARCHAR(255)
+
+              - column:
+                  name: auth_provider
+                  type: VARCHAR(50)

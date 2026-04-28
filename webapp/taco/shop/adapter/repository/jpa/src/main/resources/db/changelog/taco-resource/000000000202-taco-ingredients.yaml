@@ -1,0 +1,39 @@
+databaseChangeLog:
+  - changeSet:
+      id: taco-ingredients
+      author: cm
+
+      changes:
+        - createTable:
+            tableName: taco_ingredients
+            columns:
+
+              - column:
+                  name: ingredients_id
+                  type: BINARY(16)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: jpa_taco_id
+                  type: BINARY(16)
+                  constraints:
+                    nullable: false
+
+        - addUniqueConstraint:
+            tableName: taco_ingredients
+            columnNames: ingredients_id, jpa_taco_id
+
+        - addForeignKeyConstraint:
+            constraintName: fk_taco_ingredients_taco
+            baseTableName: taco_ingredients
+            baseColumnNames: jpa_taco_id
+            referencedTableName: taco
+            referencedColumnNames: id
+
+        - addForeignKeyConstraint:
+            constraintName: fk_taco_ingredients_ingredient
+            baseTableName: taco_ingredients
+            baseColumnNames: ingredients_id
+            referencedTableName: ingredient
+            referencedColumnNames: id

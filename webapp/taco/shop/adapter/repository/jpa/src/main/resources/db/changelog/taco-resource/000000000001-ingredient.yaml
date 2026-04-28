@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: ingredient-table
+      author: cm
+
+      changes:
+        - createTable:
+            tableName: ingredient
+            columns:
+              - column:
+                  name: id
+                  type: BINARY(16)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: type
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false

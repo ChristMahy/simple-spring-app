@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: right-app
+      author: cm
+
+      changes:
+        - createTable:
+            tableName: right_app
+            columns:
+              - column:
+                  name: id
+                  type: BINARY(16)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: name
+                  type: VARCHAR(255)

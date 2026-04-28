@@ -16,9 +16,13 @@ public class H2ITApplicationStartedEventListener implements ApplicationListener<
     @Override
     public void onApplicationEvent(ApplicationStartedEvent event) {
 
-        ApplicationContext applicationContext = event.getApplicationContext();
+        ApplicationContext context = event.getApplicationContext();
 
-        SnapshotSingleton.SNAPSHOT.create(applicationContext);
+        H2ITDatasourceSnapshot datasourceSnapshot = context.getBean(H2ITDatasourceSnapshot.class);
+
+        LOG.info("Starting datasource snapshot with <{}>", datasourceSnapshot);
+
+        datasourceSnapshot.create();
 
     }
 

@@ -61,13 +61,13 @@ public class RegistrationUiImpl implements RegistrationUi {
 
             errors.addError(error);
 
-            return "registration";
+//            return "registration";
         } catch (UserExistsException | IllegalStateException e) {
             ObjectError error = new ObjectError("globalError", "registration.error.username.exists");
 
             errors.addError(error);
 
-            return "registration";
+//            return "registration";
         }
 
         return "redirect:/login";

@@ -35,7 +35,7 @@ class StreamVisitorImplTest {
 
             assertThat(actual).isNotNull();
 
-            assertThat(actual.getHeaders()).containsKey(HttpHeaders.CONTENT_DISPOSITION);
+            assertThat(actual.getHeaders().containsHeader(HttpHeaders.CONTENT_DISPOSITION)).isTrue();
             assertThat(actual.getHeaders().get(HttpHeaders.CONTENT_DISPOSITION)).hasSize(1);
             assertThat(actual.getHeaders().getFirst(HttpHeaders.CONTENT_DISPOSITION)).contains(fileNameExpected);
         });
@@ -48,7 +48,7 @@ class StreamVisitorImplTest {
 
             assertThat(actual).isNotNull();
 
-            assertThat(actual.getHeaders()).doesNotContainKey(HttpHeaders.CONTENT_DISPOSITION);
+            assertThat(actual.getHeaders().containsHeader(HttpHeaders.CONTENT_DISPOSITION)).isFalse();
         });
     }
 
@@ -77,7 +77,7 @@ class StreamVisitorImplTest {
 
             assertThat(actual).isNotNull();
 
-            assertThat(actual.getHeaders()).containsKey(HttpHeaders.CONTENT_TYPE);
+            assertThat(actual.getHeaders().containsHeader(HttpHeaders.CONTENT_TYPE)).isTrue();
             assertThat(actual.getHeaders().get(HttpHeaders.CONTENT_TYPE)).hasSize(1);
             assertThat(actual.getHeaders().getFirst(HttpHeaders.CONTENT_TYPE)).isEqualTo(contentTypeExpected);
         });
@@ -90,7 +90,7 @@ class StreamVisitorImplTest {
 
             assertThat(actual).isNotNull();
 
-            assertThat(actual.getHeaders()).containsKey(HttpHeaders.CONTENT_TYPE);
+            assertThat(actual.getHeaders().containsHeader(HttpHeaders.CONTENT_TYPE)).isTrue();
             assertThat(actual.getHeaders().get(HttpHeaders.CONTENT_TYPE)).hasSize(1);
             assertThat(actual.getHeaders().getFirst(HttpHeaders.CONTENT_TYPE)).isEqualTo(MediaType.APPLICATION_OCTET_STREAM_VALUE);
         });
@@ -103,11 +103,11 @@ class StreamVisitorImplTest {
 
             assertThat(actual).isNotNull();
 
-            assertThat(actual.getHeaders()).containsKey(HttpHeaders.CACHE_CONTROL);
+            assertThat(actual.getHeaders().containsHeader(HttpHeaders.CACHE_CONTROL)).isTrue();
             assertThat(actual.getHeaders().get(HttpHeaders.CACHE_CONTROL)).hasSize(1);
             assertThat(actual.getHeaders().getFirst(HttpHeaders.CACHE_CONTROL)).isEqualTo("max-age=0, must-revalidate");
 
-            assertThat(actual.getHeaders()).containsKey(HttpHeaders.PRAGMA);
+            assertThat(actual.getHeaders().containsHeader(HttpHeaders.PRAGMA)).isTrue();
             assertThat(actual.getHeaders().get(HttpHeaders.PRAGMA)).hasSize(1);
             assertThat(actual.getHeaders().getFirst(HttpHeaders.PRAGMA)).isEqualTo("no-cache");
 

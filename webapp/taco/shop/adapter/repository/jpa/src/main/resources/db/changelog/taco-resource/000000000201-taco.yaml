@@ -1,0 +1,27 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: taco-table
+      author: cm
+
+      changes:
+        - createTable:
+            tableName: taco
+            columns:
+
+              - column:
+                  name: id
+                  type: BINARY(16)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: created_at
+                  type: TIMESTAMP

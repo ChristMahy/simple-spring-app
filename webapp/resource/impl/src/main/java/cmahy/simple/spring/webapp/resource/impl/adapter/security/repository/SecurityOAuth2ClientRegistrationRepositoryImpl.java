@@ -2,7 +2,7 @@ package cmahy.simple.spring.webapp.resource.impl.adapter.security.repository;
 
 import cmahy.simple.spring.webapp.resource.impl.adapter.security.vo.output.OAuth2RegistrationOutputVo;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties;
+import org.springframework.boot.security.oauth2.client.autoconfigure.OAuth2ClientProperties;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.stereotype.Component;
 

@@ -1,5 +1,5 @@
 spring:
   datasource:
+    url: jdbc:h2:mem:webapp-${random.uuid}
     generate-unique-name: false
-    name: webapp-resource-cloud
     username: sa

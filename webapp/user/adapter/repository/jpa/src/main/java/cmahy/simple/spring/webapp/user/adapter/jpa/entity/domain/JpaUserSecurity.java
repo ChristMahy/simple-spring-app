@@ -18,9 +18,10 @@ import java.util.UUID;
 //        columnNames = {"userName", "authProvider"}
 //    )
 //)
-@DiscriminatorValue("1")
+@DiscriminatorValue("USER_SECU")
 public class JpaUserSecurity extends JpaUser implements UserSecurity {
 
+    @Enumerated(EnumType.STRING)
     private AuthProvider authProvider;
 
     private Boolean isExpired;

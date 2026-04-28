@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - changeSet:
+      id: user-role-link
+      author: cm
+
+      changes:
+        - createTable:
+            tableName: user_app_role
+            columns:
+              - column:
+                  name: user_app_id
+                  type: BINARY(16)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: role_id
+                  type: BINARY(16)
+                  constraints:
+                    nullable: false
+
+        - addUniqueConstraint:
+            tableName: user_app_role
+            columnNames: user_app_id, role_id
+
+        - addForeignKeyConstraint:
+            constraintName: fk_user_app_role_user
+            baseTableName: user_app_role
+            baseColumnNames: user_app_id
+            referencedTableName: user_app
+            referencedColumnNames: id
+
+        - addForeignKeyConstraint:
+            constraintName: fk_user_app_role_role
+            baseTableName: user_app_role
+            baseColumnNames: role_id
+            referencedTableName: role_app
+            referencedColumnNames: id
