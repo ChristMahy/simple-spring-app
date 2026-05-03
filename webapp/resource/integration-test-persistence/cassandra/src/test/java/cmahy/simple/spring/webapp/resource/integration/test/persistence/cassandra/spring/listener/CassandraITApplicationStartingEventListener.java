@@ -1,4 +1,4 @@
-package cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra;
+package cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.spring.listener;
 
 import cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.container.CassandraTestContainerSingleton;
 import org.slf4j.Logger;
@@ -15,7 +15,9 @@ public class CassandraITApplicationStartingEventListener implements ApplicationL
         LOG.info("CassandraITApplicationStartingEventListener onApplicationEvent");
 
         try {
+
             CassandraTestContainerSingleton.INSTANCE.container().start();
+
         } catch (Exception anyExce) {
             LOG.error(anyExce.getMessage(), anyExce);
 

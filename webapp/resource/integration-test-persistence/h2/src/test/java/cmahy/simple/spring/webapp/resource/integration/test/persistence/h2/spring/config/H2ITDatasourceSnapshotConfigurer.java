@@ -1,5 +1,6 @@
-package cmahy.simple.spring.webapp.resource.integration.test.persistence.h2;
+package cmahy.simple.spring.webapp.resource.integration.test.persistence.h2.spring.config;
 
+import cmahy.simple.spring.webapp.resource.integration.test.persistence.h2.H2ITDatasourceSnapshot;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Import;
 

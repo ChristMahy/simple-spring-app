@@ -4,6 +4,6 @@ public final class CassandraTestContainerConstant {
 
     private CassandraTestContainerConstant() {}
 
-    public static final String KEYSPACE = "test_keyspace_cassandra";
+    public static final String KEYSPACE_PROPERTY_KEY = "cassandra.it.keyspace.name";
 
 }

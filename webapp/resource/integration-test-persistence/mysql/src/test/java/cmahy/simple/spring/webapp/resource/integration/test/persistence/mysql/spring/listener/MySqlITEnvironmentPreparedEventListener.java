@@ -1,4 +1,4 @@
-package cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql;
+package cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql.spring.listener;
 
 import cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql.container.MySqlTestContainer;
 import cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql.container.MySqlTestContainerSingleton;
@@ -8,9 +8,11 @@ import org.springframework.boot.context.event.ApplicationEnvironmentPreparedEven
 import org.springframework.context.ApplicationListener;
 import org.springframework.core.env.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.sql.*;
+import java.util.*;
 import java.util.stream.Stream;
+
+import static cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql.container.MySqlTestContainerConstant.DATABASE_NAME_PROPERTY_KEY;
 
 public class MySqlITEnvironmentPreparedEventListener implements ApplicationListener<ApplicationEnvironmentPreparedEvent> {
 
@@ -18,17 +20,46 @@ public class MySqlITEnvironmentPreparedEventListener implements ApplicationListe
 
     @Override
     public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
+
         ConfigurableEnvironment environment = event.getEnvironment();
 
         MySqlTestContainer mySqlInstance = MySqlTestContainerSingleton.INSTANCE.container();
+
+        String dbName = "webapp_resource_cloud_" + UUID.randomUUID().toString().replace("-", "_");
+
+        try (
+            Connection conn = DriverManager.getConnection(
+                mySqlInstance.getJdbcUrl(),
+                "root",
+                mySqlInstance.getPassword()
+            );
+            Statement statement = conn.createStatement()
+        ) {
+
+            statement.execute("CREATE DATABASE " + dbName);
+            statement.execute("GRANT ALL PRIVILEGES ON " + dbName + ".* TO '" + mySqlInstance.getUsername() + "'@'%'");
+            statement.execute("FLUSH PRIVILEGES");
+
+        } catch (Exception any) {
+            throw new RuntimeException(any);
+        }
 
         MutablePropertySources propertySources = environment.getPropertySources();
 
         Map<String, Object> mySqlDataSourceOverrideProperties = new HashMap<>();
 
-        mySqlDataSourceOverrideProperties.put("spring.datasource.url", mySqlInstance.getJdbcUrl());
-        mySqlDataSourceOverrideProperties.put("spring.datasource.username", mySqlInstance.getUsername());
-        mySqlDataSourceOverrideProperties.put("spring.datasource.password", mySqlInstance.getPassword());
+        mySqlDataSourceOverrideProperties.put(
+            DATABASE_NAME_PROPERTY_KEY, dbName
+        );
+        mySqlDataSourceOverrideProperties.put(
+            "spring.datasource.url", mySqlInstance.getJdbcUrl().replace(mySqlInstance.getDatabaseName(), dbName)
+        );
+        mySqlDataSourceOverrideProperties.put(
+            "spring.datasource.username", mySqlInstance.getUsername()
+        );
+        mySqlDataSourceOverrideProperties.put(
+            "spring.datasource.password", mySqlInstance.getPassword()
+        );
 
         propertySources.addFirst(new MapPropertySource(
             "mySqlDataSourceOverrideProperties", mySqlDataSourceOverrideProperties
@@ -42,6 +73,7 @@ public class MySqlITEnvironmentPreparedEventListener implements ApplicationListe
             .forEach(propName -> {
                 LOG.info("Property <{}> found ? <{}>", propName, environment.getProperty(propName));
             });
+
     }
 
     @Override

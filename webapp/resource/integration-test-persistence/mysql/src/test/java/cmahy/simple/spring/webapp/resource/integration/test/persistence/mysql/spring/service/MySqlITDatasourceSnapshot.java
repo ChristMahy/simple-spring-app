@@ -1,33 +1,33 @@
-package cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql;
+package cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql.spring.service;
 
-import cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql.container.MySqlTestContainer;
-import cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql.container.MySqlTestContainerSingleton;
+import cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql.container.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Service;
 import org.testcontainers.containers.Container;
 
 import java.io.IOException;
 import java.util.List;
 
-import static cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql.container.MySqlTestContainerConstant.CONTAINER_BACKUP_FILE_SQL;
+import static cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql.container.MySqlTestContainerConstant.DATABASE_NAME_PROPERTY_KEY;
 
-public enum SnapshotSingleton {
+@Service
+public class MySqlITDatasourceSnapshot {
 
-    SNAPSHOT;
+    private final Logger LOG = LoggerFactory.getLogger(MySqlITDatasourceSnapshot.class);
 
-    private final Logger LOG = LoggerFactory.getLogger(SnapshotSingleton.class);
+    private final Environment environment;
 
-    private Boolean created = Boolean.FALSE;
-
-    SnapshotSingleton() {}
-
-    public Boolean created() {
-        return created;
+    public MySqlITDatasourceSnapshot(Environment environment) {
+        this.environment = environment;
     }
 
     public void create() throws IOException, InterruptedException {
 
         LOG.info("Creating snapshot for MySqlTestContainer");
+
+        String dbName = environment.getProperty(DATABASE_NAME_PROPERTY_KEY);
 
         MySqlTestContainer containerInstance = MySqlTestContainerSingleton.INSTANCE.container();
 
@@ -35,13 +35,11 @@ public enum SnapshotSingleton {
             "mysqldump -u%s -p%s --databases %s > %s",
             containerInstance.getUsername(),
             containerInstance.getPassword(),
-            containerInstance.getDatabaseName(),
-            CONTAINER_BACKUP_FILE_SQL
+            dbName,
+            MySqlTestContainerConstant.CONTAINER_BACKUP_FILE_DIRECTORY + "/" + dbName + ".sql"
         );
 
         execInContainer("/bin/sh", "-c", dumpCommand);
-
-        this.created = Boolean.TRUE;
 
     }
 
@@ -49,20 +47,22 @@ public enum SnapshotSingleton {
 
         LOG.info("Restoring snapshot for MySqlTestContainer");
 
+        String dbName = environment.getProperty(DATABASE_NAME_PROPERTY_KEY);
+
         MySqlTestContainer containerInstance = MySqlTestContainerSingleton.INSTANCE.container();
 
         String dropCommand = String.format(
             "mysql -u%s -p%s -e 'DROP DATABASE `%s`;'",
             containerInstance.getUsername(),
             containerInstance.getPassword(),
-            containerInstance.getDatabaseName()
+            dbName
         );
 
         String restoreCommand = String.format(
             "mysql -u%s -p%s < %s",
             containerInstance.getUsername(),
             containerInstance.getPassword(),
-            CONTAINER_BACKUP_FILE_SQL
+            MySqlTestContainerConstant.CONTAINER_BACKUP_FILE_DIRECTORY + "/" + dbName + ".sql"
         );
 
         for (String command : List.of(dropCommand, restoreCommand)) {

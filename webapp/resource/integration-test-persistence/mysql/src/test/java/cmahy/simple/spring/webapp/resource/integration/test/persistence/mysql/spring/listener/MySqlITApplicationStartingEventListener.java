@@ -1,4 +1,4 @@
-package cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql;
+package cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql.spring.listener;
 
 import cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql.container.MySqlTestContainerSingleton;
 import org.slf4j.Logger;
@@ -12,10 +12,12 @@ public class MySqlITApplicationStartingEventListener implements ApplicationListe
 
     @Override
     public void onApplicationEvent(ApplicationStartingEvent event) {
-        LOG.info("{} onApplicationEvent", MySqlITApplicationStartingEventListener.class.getSimpleName());
+        LOG.info("Call onApplicationEvent");
 
         try {
+
             MySqlTestContainerSingleton.INSTANCE.container().start();
+
         } catch (Exception anyExce) {
             LOG.error(anyExce.getMessage(), anyExce);
 

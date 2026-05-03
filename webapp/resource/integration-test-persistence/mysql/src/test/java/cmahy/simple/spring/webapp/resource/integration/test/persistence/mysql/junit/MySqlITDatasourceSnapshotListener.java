@@ -1,5 +1,6 @@
-package cmahy.simple.spring.webapp.resource.integration.test.persistence.h2;
+package cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql.junit;
 
+import cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql.spring.service.MySqlITDatasourceSnapshot;
 import com.zaxxer.hikari.HikariDataSource;
 import jakarta.persistence.EntityManagerFactory;
 import org.slf4j.Logger;
@@ -12,12 +13,12 @@ import org.springframework.test.context.support.AbstractTestExecutionListener;
 import java.util.Objects;
 import java.util.Optional;
 
-public class H2ITDatasourceSnapshotListener extends AbstractTestExecutionListener {
+public class MySqlITDatasourceSnapshotListener extends AbstractTestExecutionListener {
 
-    private static final Logger LOG = LoggerFactory.getLogger(H2ITDatasourceSnapshotListener.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MySqlITDatasourceSnapshotListener.class);
 
     @Override
-    public void afterTestMethod(TestContext testContext) {
+    public void afterTestMethod(TestContext testContext) throws Exception {
 
         ApplicationContext applicationContext = testContext.getApplicationContext();
 
@@ -48,12 +49,11 @@ public class H2ITDatasourceSnapshotListener extends AbstractTestExecutionListene
 
             } catch (BeansException ignored) {}
 
-            H2ITDatasourceSnapshot datasourceSnapshot = applicationContext.getBean(H2ITDatasourceSnapshot.class);
-
-            datasourceSnapshot.restore();
-
         }
 
-    }
+        MySqlITDatasourceSnapshot datasourceSnapshot = applicationContext.getBean(MySqlITDatasourceSnapshot.class);
 
+        datasourceSnapshot.restore();
+
+    }
 }

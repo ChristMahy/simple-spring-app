@@ -4,8 +4,8 @@ KEYSPACE="$1"
 
 CASSANDRA_DATA_DIR="/var/lib/cassandra/data/$KEYSPACE"
 
-BACKUP_DIR_INITIAL="/tmp/cassandra_snapshot_backup/initial"
-BACKUP_DIR="/tmp/cassandra_snapshot_backup/working_$(date +%s)"
+BACKUP_DIR_INITIAL="/tmp/cassandra_snapshot_backup/initial/$KEYSPACE"
+BACKUP_DIR="/tmp/cassandra_snapshot_backup/$KEYSPACE/working_$(date +%s)"
 
 mkdir -p "$BACKUP_DIR"
 

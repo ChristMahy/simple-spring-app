@@ -1,34 +1,42 @@
 package cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql.container;
 
 import cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql.exception.MySqlTestContainerException;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.mysql.MySQLContainer;
 
 import java.io.IOException;
 import java.sql.*;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.UUID;
 
-import static cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql.container.MySqlTestContainerConstant.*;
+import static cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql.container.MySqlTestContainerConstant.CONTAINER_BACKUP_FILE_DIRECTORY;
 
-public class MySqlTestContainer extends MySQLContainer<MySqlTestContainer> {
+
+public class MySqlTestContainer extends MySQLContainer {
 
     private static final Logger LOG = LoggerFactory.getLogger(MySqlTestContainer.class);
 
-    protected MySqlTestContainer() {
+    public MySqlTestContainer() {
 
         super("mysql:lts");
 
+        String defaultDbSuffixName = UUID.randomUUID().toString().replace("-", "_");
+
         this
-            .withEnv("MYSQL_ROOT_PASSWORD", "sa")
-            .withUsername("sa")
-            .withPassword("sa")
-            .withDatabaseName(MySqlTestContainerConstant.KEYSPACE)
-            .withReuse(false);
+//            .withCommand("--skip-log-bin --skip-ssl")
+            .withCommand("--skip-log-bin")
+            .withEnv("MYSQL_ROOT_PASSWORD", defaultDbSuffixName)
+            .withUsername(defaultDbSuffixName.substring(0, 13))
+            .withPassword(defaultDbSuffixName)
+            .withDatabaseName("test_" + defaultDbSuffixName)
+            .withReuse(true);
 
     }
+
+
 
     @Override
     public void start() {
@@ -38,13 +46,15 @@ public class MySqlTestContainer extends MySQLContainer<MySqlTestContainer> {
         try {
 
             this.execInContainer("mkdir", "-p", CONTAINER_BACKUP_FILE_DIRECTORY);
-            this.execInContainer("touch", CONTAINER_BACKUP_FILE_SQL);
+//            this.execInContainer("touch", CONTAINER_BACKUP_FILE_SQL);
 
         } catch (IOException | InterruptedException e) {
             throw new MySqlTestContainerException("MySQL start failure", e);
         }
 
-        String jdbcUrl = this.getJdbcUrl().replace("/" + KEYSPACE, "/information_schema");
+        String dbName = this.getDatabaseName();
+
+        String jdbcUrl = this.getJdbcUrl().replace("/" + dbName, "/information_schema");
         String username = this.getUsername();
         String password = this.getPassword();
 
@@ -61,15 +71,14 @@ public class MySqlTestContainer extends MySQLContainer<MySqlTestContainer> {
                 ResultSet rs = stmt.executeQuery("SHOW DATABASES")
             ) {
 
-                while (rs.next()) {
-                    if (StringUtils.equalsIgnoreCase(KEYSPACE, rs.getString(1))) {
+                while (!databaseExists && rs.next()) {
+                    if (Strings.CI.equals(dbName, rs.getString(1))) {
                         databaseExists = true;
-                        break;
                     }
                 }
 
                 if (databaseExists) {
-                    System.out.println("Database `" + KEYSPACE + "` is now available.");
+                    System.out.println("Database `" + dbName + "` is now available.");
 
                     break;
                 }
@@ -85,7 +94,7 @@ public class MySqlTestContainer extends MySQLContainer<MySqlTestContainer> {
 
         if (!databaseExists) {
 
-            throw new MySqlTestContainerException("Timeout: Database `" + KEYSPACE + "` not found after " + timeout.getSeconds() + " seconds");
+            throw new MySqlTestContainerException("Timeout: Database `" + dbName + "` not found after " + timeout.getSeconds() + " seconds");
 
         }
 

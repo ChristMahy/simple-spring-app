@@ -1,35 +1,48 @@
-package cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra;
+package cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.spring.service;
 
 import cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.container.CassandraTestContainerConstant;
 import cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.container.CassandraTestContainerSingleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Service;
 import org.testcontainers.containers.Container;
 
 import java.io.IOException;
 
-enum SnapshotSingleton {
+@Service
+public class CassandraITKeyspaceSnapshot {
 
-    SNAPSHOT;
+    private static final Logger LOG = LoggerFactory.getLogger(CassandraITKeyspaceSnapshot.class);
 
-    private static final Logger LOG = LoggerFactory.getLogger(SnapshotSingleton.class);
+    private final Environment environment;
 
-    private static final String KEYSPACE = CassandraTestContainerConstant.KEYSPACE;
-    private static final String NAME = "test_keyspace_cassandra_snapshot_initial";
+    public CassandraITKeyspaceSnapshot(Environment environment) {
+        this.environment = environment;
+    }
 
     public void createSnapshot() throws IOException, InterruptedException {
+
         LOG.info("Creating snapshot for CassandraTestContainer");
 
-        execInContainer("bash", "/tmp/snapshots/scripts/create-snapshots.sh", KEYSPACE, NAME);
+        String keyspace = environment.getRequiredProperty(CassandraTestContainerConstant.KEYSPACE_PROPERTY_KEY);
+
+        execInContainer("bash", "/tmp/snapshots/scripts/create-snapshots.sh", keyspace, keyspace + "_initial");
+
     }
 
     public void restoreSnapshot() throws IOException, InterruptedException {
+
         LOG.info("Restoring snapshot for CassandraTestContainer");
 
-        execInContainer("bash", "/tmp/snapshots/scripts/restore-snapshots.sh", KEYSPACE);
+        String keyspace = environment.getRequiredProperty(CassandraTestContainerConstant.KEYSPACE_PROPERTY_KEY);
+
+        execInContainer("bash", "/tmp/snapshots/scripts/restore-snapshots.sh", keyspace);
+
     }
 
     private void execInContainer(String... command) throws IOException, InterruptedException {
+
         Container.ExecResult result = CassandraTestContainerSingleton
             .INSTANCE
             .container()
@@ -43,5 +56,6 @@ enum SnapshotSingleton {
                 result.getStderr()
             ));
         }
+
     }
 }

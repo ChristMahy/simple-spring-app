@@ -5,7 +5,7 @@ SNAPSHOT_NAME="$2"
 
 CASSANDRA_DATA_DIR="/var/lib/cassandra/data/$KEYSPACE"
 
-BACKUP_DIR="/tmp/cassandra_snapshot_backup/initial"
+BACKUP_DIR="/tmp/cassandra_snapshot_backup/initial/$KEYSPACE"
 
 mkdir -p "$BACKUP_DIR"
 

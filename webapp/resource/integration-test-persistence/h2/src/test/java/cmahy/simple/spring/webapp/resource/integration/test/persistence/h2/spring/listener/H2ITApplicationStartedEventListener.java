@@ -1,5 +1,6 @@
-package cmahy.simple.spring.webapp.resource.integration.test.persistence.h2;
+package cmahy.simple.spring.webapp.resource.integration.test.persistence.h2.spring.listener;
 
+import cmahy.simple.spring.webapp.resource.integration.test.persistence.h2.H2ITDatasourceSnapshot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
