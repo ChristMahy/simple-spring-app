@@ -1,33 +1,22 @@
 #!/bin/bash
 
 KEYSPACE="$1"
-SNAPSHOT_NAME="$2"
 
-CASSANDRA_DATA_DIR="/var/lib/cassandra/data/$KEYSPACE"
+EXPORT_DIR="/tmp/cassandra_seed/$KEYSPACE"
 
-BACKUP_DIR="/tmp/cassandra_snapshot_backup/initial/$KEYSPACE"
+mkdir -p "$EXPORT_DIR"
 
-mkdir -p "$BACKUP_DIR"
+#echo "USE $KEYSPACE;" > "$SEED_FILE"
 
-nodetool flush "$KEYSPACE"
-nodetool snapshot "$KEYSPACE" -t "$SNAPSHOT_NAME"
+TABLES=$(
+cqlsh -e "SELECT keyspace_name, table_name FROM system_schema.tables WHERE keyspace_name='$KEYSPACE';" \
+| awk -v ks="$KEYSPACE" '$0 ~ ("^[[:space:]]*" ks "[[:space:]]*.*[a-zA-Z_]+$") { print $NF }'
+)
 
-for table_dir in "$CASSANDRA_DATA_DIR"/*; do
-  if [ -d "$table_dir" ]; then
-    table_name=$(basename "$table_dir")
-    clean_name="${table_name%-*}"  # Strip UUID
+for table in $TABLES; do
 
-    snapshot_path="$table_dir/snapshots/$SNAPSHOT_NAME"
+  SEED_FILE="${EXPORT_DIR}/${table}.csv"
 
-    if [ -d "$snapshot_path" ]; then
-      mkdir -p "$BACKUP_DIR/$clean_name"
-      cp "$snapshot_path"/*.db "$BACKUP_DIR/$clean_name"/ 2>/dev/null || true
-    else
-      echo "No snapshot found for table: $clean_name at $snapshot_path"
-    fi
-  fi
+  cqlsh -e "COPY $KEYSPACE.$table TO '$SEED_FILE' WITH HEADER=true"
+
 done
-
-cqlsh -e "DESC KEYSPACE $KEYSPACE" > "$BACKUP_DIR/schema.cql"
-
-echo "Snapshot backup copied to $BACKUP_DIR"

@@ -2,29 +2,21 @@
 
 KEYSPACE="$1"
 
-CASSANDRA_DATA_DIR="/var/lib/cassandra/data/$KEYSPACE"
+IMPORT_DIR="/tmp/cassandra_seed/$KEYSPACE"
 
-BACKUP_DIR_INITIAL="/tmp/cassandra_snapshot_backup/initial/$KEYSPACE"
-BACKUP_DIR="/tmp/cassandra_snapshot_backup/$KEYSPACE/working_$(date +%s)"
+find "$IMPORT_DIR" -type f -name "*.csv" -print0 | \
+while IFS= read -r -d '' file; do
 
-mkdir -p "$BACKUP_DIR"
+  filename=$(basename "$file")
+  table="${filename%.csv}"
 
-cp -r "$BACKUP_DIR_INITIAL"/* "$BACKUP_DIR"
+  echo "TRUNCATE $KEYSPACE.$table;"
 
-chmod a+rwx -R "$BACKUP_DIR" 2>/dev/null
+  if [ "$(wc -l < "$file")" -gt 1 ]; then
 
-find "$CASSANDRA_DATA_DIR"/ -type f -name '*.db' -not -path '*snapshots*' -delete
+    echo "COPY $KEYSPACE.$table FROM '$file' WITH HEADER=true;"
 
-cqlsh -e "DROP KEYSPACE IF EXISTS $KEYSPACE"
-cqlsh -f "$BACKUP_DIR"/schema.cql
+  fi
 
-for dir in "$BACKUP_DIR"/*; do
-  [ -f "$dir/schema.cql" ] && continue
-  table_name=$(basename "$dir")
-  echo "Import $table_name from $dir"
-  nodetool import "$KEYSPACE" "$table_name" "$dir"
-done
-
-rm -rf "$BACKUP_DIR"
-
-echo "Snapshot restored from backup"
+done | \
+cqlsh
