@@ -49,6 +49,8 @@
         <maven-failsafe-plugin.version>3.5.6</maven-failsafe-plugin.version>
         <jacoco-maven-plugin.version>0.8.14</jacoco-maven-plugin.version>
 
+        <archunit-plugin.version>26.05.1</archunit-plugin.version>
+
         <surefire.jacoco.args />
         <failsafe.jacoco.args />
         <maven-failsafe-plugin.aditional.arg-line />
@@ -396,7 +398,7 @@
                 <plugin>
                     <groupId>cmahy.plugins</groupId>
                     <artifactId>archunit</artifactId>
-                    <version>1.0.0</version>
+                    <version>${archunit-plugin.version}</version>
 
                     <configuration>
                         <archConfiguration>
