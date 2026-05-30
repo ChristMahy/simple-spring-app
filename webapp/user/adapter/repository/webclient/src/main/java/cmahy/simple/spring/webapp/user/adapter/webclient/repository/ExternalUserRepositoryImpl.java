@@ -19,4 +19,10 @@ public class ExternalUserRepositoryImpl implements UserRepository<ExternalUser> 
     public Optional<ExternalUser> findByUserName(String username) {
         throw new IllegalStateException("Not yet implemented !");
     }
+
+    @Override
+    public ExternalUser save(ExternalUser user) {
+        throw new IllegalStateException("Not yet implemented !");
+    }
+
 }

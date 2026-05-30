@@ -1,6 +1,7 @@
 package cmahy.simple.spring.webapp.user.adapter.webclient.repository;
 
 import cmahy.simple.spring.common.helper.Generator;
+import cmahy.simple.spring.webapp.user.adapter.webclient.entity.domain.ExternalUser;
 import cmahy.simple.spring.webapp.user.kernel.domain.id.UserId;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,6 +29,13 @@ class ExternalUserRepositoryImplTest {
     void findByUserName() {
         assertThrows(IllegalStateException.class, () -> {
             externalUserRepositoryImpl.findByUserName(Generator.generateAString());
+        });
+    }
+
+    @Test
+    void save() {
+        assertThrows(IllegalStateException.class, () -> {
+            externalUserRepositoryImpl.save(mock(ExternalUser.class));
         });
     }
 }
