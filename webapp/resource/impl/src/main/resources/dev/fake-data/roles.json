@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Guest",
+    "rights": [
+      "ingredient:read"
+    ]
+  },
+  {
+    "name": "Admin",
+    "rights": [
+      "ingredient:delete",
+      "ingredient:write",
+      "ingredient:read"
+    ]
+  }
+]

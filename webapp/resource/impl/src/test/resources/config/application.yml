@@ -14,6 +14,11 @@ logging:
     org.springframework.test.context.cache: DEBUG
 
 application:
+#  on-start:
+#    resources:
+#      rights: classpath:dev/fake-data/rights.json
+#      roles: classpath:dev/fake-data/roles.json
+#      users-securities: classpath:dev/fake-data/users-securities.json
   web-client:
     common:
       connect-timeout: 5s
@@ -24,9 +29,6 @@ application:
       credentials:
         username: machine2machine
         password: machine2machine
-  start-up:
-    order:
-      generate: false
   google:
     api-url: https://SHOULD_NEVER_BE_CALLED
   taco:

@@ -15,24 +15,50 @@ public class JpaClientOrder implements ClientOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id")
     protected UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     protected JpaUser user;
 
+    @Column(name = "placed_at")
     protected Date placedAt;
 
+    @Column(name = "delivery_name")
     protected String deliveryName;
+
+    @Column(name = "delivery_street")
     protected String deliveryStreet;
+
+    @Column(name = "delivery_city")
     protected String deliveryCity;
+
+    @Column(name = "delivery_state")
     protected String deliveryState;
+
+    @Column(name = "delivery_zip")
     protected String deliveryZip;
 
+    @Column(name = "cc_number")
     protected String ccNumber;
+
+    @Column(name = "cc_expiration")
     protected String ccExpiration;
+
+    @Column(name = "cc_cvv")
     protected String ccCVV;
 
     @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+        name = "client_order_tacos",
+        joinColumns = @JoinColumn(name = "client_order_id"),
+        inverseJoinColumns = @JoinColumn(name = "taco_id"),
+        uniqueConstraints = @UniqueConstraint(
+            name = "u_client_order_tacos",
+            columnNames = { "client_order_id", "taco_id" }
+        )
+    )
     protected List<JpaTaco> tacos = new ArrayList<>();
 
     @Override

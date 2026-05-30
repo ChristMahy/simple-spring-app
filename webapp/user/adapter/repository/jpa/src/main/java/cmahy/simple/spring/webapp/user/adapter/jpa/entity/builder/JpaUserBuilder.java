@@ -8,7 +8,7 @@ import cmahy.simple.spring.webapp.user.kernel.domain.builder.UserBuilder;
 import java.util.*;
 
 public class JpaUserBuilder implements UserBuilder<JpaUser> {
-    
+
     private Optional<JpaUser> originalUser = Optional.empty();
 
     private String userName;
@@ -22,9 +22,10 @@ public class JpaUserBuilder implements UserBuilder<JpaUser> {
 
     private String phoneNumber;
 
-    private Collection<JpaRole> roles;
+    private Set<JpaRole> roles;
 
-    public JpaUserBuilder() {}
+    public JpaUserBuilder() {
+    }
 
     public JpaUserBuilder(JpaUser originalUser) {
         this.originalUser = Optional.ofNullable(originalUser);
@@ -100,7 +101,7 @@ public class JpaUserBuilder implements UserBuilder<JpaUser> {
 
     @Override
     public <R extends Role> JpaUserBuilder roles(Collection<R> roles) {
-        this.roles = (List<JpaRole>) roles;
+        this.roles = (Set<JpaRole>) roles;
 
         return this;
     }

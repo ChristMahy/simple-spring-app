@@ -14,9 +14,14 @@ public class JpaIngredient implements Ingredient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id")
     protected UUID id;
+
+    @Column(name = "name")
     protected String name;
+
     @Enumerated(EnumType.STRING)
+    @Column(name = "type")
     protected IngredientType type;
 
     @Override

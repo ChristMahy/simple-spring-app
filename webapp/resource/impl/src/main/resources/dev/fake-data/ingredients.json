@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Flour Tortilla",
+    "type": "WRAP"
+  },
+  {
+    "name": "Corn Tortilla",
+    "type": "WRAP"
+  },
+  {
+    "name": "Ground Beef",
+    "type": "PROTEIN"
+  },
+  {
+    "name": "Carnitas",
+    "type": "PROTEIN"
+  },
+  {
+    "name": "Diced Tomatoes",
+    "type": "VEGGIES"
+  },
+  {
+    "name": "Lettuce",
+    "type": "VEGGIES"
+  },
+  {
+    "name": "Cheddar",
+    "type": "CHEESE"
+  },
+  {
+    "name": "Monterrey Jack",
+    "type": "CHEESE"
+  },
+  {
+    "name": "Salsa",
+    "type": "SAUCE"
+  },
+  {
+    "name": "Sour Cream",
+    "type": "SAUCE"
+  }
+]

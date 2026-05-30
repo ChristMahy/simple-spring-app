@@ -10,4 +10,7 @@ public interface UserRepository<U extends User> {
     Optional<U> findById(UserId id);
 
     Optional<U> findByUserName(String username);
+
+    U save(U user);
+
 }

@@ -6,8 +6,7 @@ import cmahy.simple.spring.webapp.user.kernel.domain.AuthProvider;
 import cmahy.simple.spring.webapp.user.kernel.domain.Role;
 import cmahy.simple.spring.webapp.user.kernel.domain.builder.UserSecurityBuilder;
 
-import java.util.Collection;
-import java.util.Optional;
+import java.util.*;
 
 public class JpaUserSecurityBuilder implements UserSecurityBuilder<JpaUserSecurity> {
     
@@ -24,7 +23,7 @@ public class JpaUserSecurityBuilder implements UserSecurityBuilder<JpaUserSecuri
 
     private String phoneNumber;
 
-    private Collection<JpaRole> roles;
+    private Set<JpaRole> roles;
 
     private AuthProvider authProvider;
 
@@ -114,7 +113,7 @@ public class JpaUserSecurityBuilder implements UserSecurityBuilder<JpaUserSecuri
 
     @Override
     public <R extends Role> JpaUserSecurityBuilder roles(Collection<R> roles) {
-        this.roles = (Collection<JpaRole>) roles;
+        this.roles = (Set<JpaRole>) roles;
 
         return this;
     }

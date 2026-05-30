@@ -14,7 +14,10 @@ public class JpaRight implements Right {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id")
     protected UUID id;
+
+    @Column(name = "name")
     protected String name;
 
     @ManyToMany(mappedBy = "rights")

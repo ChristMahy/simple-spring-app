@@ -32,6 +32,33 @@
     <dependencies>
 
         <dependency>
+            <groupId>cmahy.simple.spring.webapp</groupId>
+            <artifactId>resource.integration.test.persistence.api</artifactId>
+            <type>test-jar</type>
+            <version>DEV-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy.simple.spring.webapp.user</groupId>
+            <artifactId>adapter.repository.jpa</artifactId>
+            <version>DEV-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy.simple.spring.webapp</groupId>
+            <artifactId>taco.shop.adapter.repository.jpa</artifactId>
+            <version>DEV-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <scope>provided</scope>

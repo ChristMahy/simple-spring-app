@@ -25,12 +25,12 @@
     <parent>
         <groupId>cmahy.simple.spring</groupId>
         <artifactId>bom</artifactId>
-        <version>1.1.1</version>
+        <version>DEV-SNAPSHOT</version>
         <relativePath/>
     </parent>
 
     <properties>
-        <cmahy.simple.spring.common.version>1.1.1</cmahy.simple.spring.common.version>
+        <cmahy.simple.spring.common.version>DEV-SNAPSHOT</cmahy.simple.spring.common.version>
 
         <cmahy.simple.spring.security.common.version>1.1.1</cmahy.simple.spring.security.common.version>
 
@@ -49,7 +49,6 @@
 
         <cmahy.simple.spring.webapp.taco.shop.version>1.1.1</cmahy.simple.spring.webapp.taco.shop.version>
 
-        <cmahy.simple.spring.webapp.resource.cassandra-starter.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.resource.cassandra-starter.version>
         <cmahy.simple.spring.webapp.taco.shop.adapter.repository.webclient.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.adapter.repository.webclient.version>
         <cmahy.simple.spring.webapp.taco.shop.kernel.domain.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.kernel.domain.version>
         <cmahy.simple.spring.webapp.taco.shop.kernel.vo.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.kernel.vo.version>
@@ -59,7 +58,7 @@
 
         <cmahy.simple.spring.webapp.user.kernel.domain.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.kernel.domain.version>
         <cmahy.simple.spring.webapp.user.kernel.vo.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.kernel.vo.version>
-        <cmahy.simple.spring.webapp.user.kernel.application.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.kernel.application.version>
+        <cmahy.simple.spring.webapp.user.kernel.application.version>DEV-SNAPSHOT</cmahy.simple.spring.webapp.user.kernel.application.version>
 
         <packaging.artifact-id>resource.impl</packaging.artifact-id>
 
@@ -101,6 +100,20 @@
                 <dependency>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-h2console</artifactId>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-properties-migrator</artifactId>
+                    <scope>runtime</scope>
+                </dependency>
+
+                <dependency>
+                    <groupId>cmahy.simple.spring.webapp</groupId>
+                    <artifactId>resource.integration.test.persistence.api</artifactId>
+                    <version>DEV-SNAPSHOT</version>
+                    <type>test-jar</type>
+                    <scope>test</scope>
                 </dependency>
 
                 <dependency>
@@ -154,8 +167,8 @@
 
             <properties>
 
-                <cmahy.simple.spring.webapp.taco.shop.adapter.repository.jpa.version>1.1.2</cmahy.simple.spring.webapp.taco.shop.adapter.repository.jpa.version>
-                <cmahy.simple.spring.webapp.user.adapter.jpa.version>1.1.2</cmahy.simple.spring.webapp.user.adapter.jpa.version>
+                <cmahy.simple.spring.webapp.taco.shop.adapter.repository.jpa.version>DEV-SNAPSHOT</cmahy.simple.spring.webapp.taco.shop.adapter.repository.jpa.version>
+                <cmahy.simple.spring.webapp.user.adapter.jpa.version>DEV-SNAPSHOT</cmahy.simple.spring.webapp.user.adapter.jpa.version>
 
             </properties>
 
@@ -196,6 +209,8 @@
             <id>cassandra</id>
 
             <properties>
+                <cmahy.simple.spring.webapp.resource.cassandra-starter.version>DEV-SNAPSHOT</cmahy.simple.spring.webapp.resource.cassandra-starter.version>
+
                 <cmahy.simple.spring.webapp.taco.shop.it.cassandra.version>DEV-SNAPSHOT</cmahy.simple.spring.webapp.taco.shop.it.cassandra.version>
 
                 <maven-failsafe-plugin.aditional.arg-line>-Dspring.profiles.active=cassandra,webclient</maven-failsafe-plugin.aditional.arg-line>
@@ -214,6 +229,14 @@
                             <artifactId>resource.integration.test.persistence.cassandra</artifactId>
                         </exclusion>
                     </exclusions>
+                </dependency>
+
+                <dependency>
+                    <groupId>cmahy.simple.spring.webapp</groupId>
+                    <artifactId>resource.integration.test.persistence.api</artifactId>
+                    <version>DEV-SNAPSHOT</version>
+                    <type>test-jar</type>
+                    <scope>test</scope>
                 </dependency>
 
                 <dependency>
@@ -351,7 +374,7 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-webmvc</artifactId>
         </dependency>
 
         <dependency>
@@ -361,7 +384,7 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-client</artifactId>
+            <artifactId>spring-boot-starter-security-oauth2-client</artifactId>
         </dependency>
 
         <dependency>
@@ -415,12 +438,6 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webmvc-test</artifactId>
             <scope>test</scope>
         </dependency>
@@ -436,11 +453,7 @@
             <artifactId>slf4j-simple</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP</artifactId>
-            <scope>test</scope>
-        </dependency>
+
     </dependencies>
 
     <build>

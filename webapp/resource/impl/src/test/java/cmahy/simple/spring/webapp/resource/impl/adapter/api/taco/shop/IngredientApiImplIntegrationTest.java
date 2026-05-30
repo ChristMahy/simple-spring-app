@@ -4,6 +4,10 @@ import cmahy.simple.spring.common.helper.Generator;
 import cmahy.simple.spring.webapp.resource.api.taco.shop.IngredientApi;
 import cmahy.simple.spring.webapp.resource.impl.adapter.security.local.vo.input.TacoResourceUserDetailsInputVo;
 import cmahy.simple.spring.webapp.resource.impl.helper.security.user.SecurityUserGenerator;
+import cmahy.simple.spring.webapp.resource.integration.test.persistence.api.annotation.CleanupPersistence;
+import cmahy.simple.spring.webapp.resource.integration.test.persistence.api.command.GenerateRandomIngredientCommand;
+import cmahy.simple.spring.webapp.resource.integration.test.persistence.api.command.GenerateRandomUserSecurityWithRoleAndRightCommand;
+import cmahy.simple.spring.webapp.resource.integration.test.persistence.api.exception.UnableToGenerateItemException;
 import cmahy.simple.spring.webapp.taco.shop.kernel.application.repository.IngredientRepository;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.Ingredient;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.IngredientType;
@@ -14,11 +18,9 @@ import cmahy.simple.spring.webapp.taco.shop.kernel.vo.input.IngredientUpdateInpu
 import cmahy.simple.spring.webapp.taco.shop.kernel.vo.output.IngredientOutputVo;
 import cmahy.simple.spring.webapp.taco.shop.kernel.vo.output.IngredientPageOutputVo;
 import cmahy.simple.spring.webapp.user.kernel.application.repository.UserSecurityRepository;
-import cmahy.simple.spring.webapp.user.kernel.domain.AuthProvider;
 import cmahy.simple.spring.webapp.user.kernel.domain.UserSecurity;
 import cmahy.simple.spring.webapp.user.kernel.domain.id.*;
 import cmahy.simple.spring.webapp.user.kernel.vo.output.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.recursive.comparison.RecursiveComparisonConfiguration;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +31,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
+import tools.jackson.databind.ObjectMapper;
 
+import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -56,7 +60,14 @@ class IngredientApiImplIntegrationTest {
     @Autowired
     private IngredientBuilderFactory ingredientBuilderFactory;
 
+    @Autowired
+    private GenerateRandomUserSecurityWithRoleAndRightCommand generateRandomUser;
+
+    @Autowired
+    private GenerateRandomIngredientCommand generateRandomIngredient;
+
     @Test
+    @CleanupPersistence
     void create() {
         assertDoesNotThrow(() -> {
 
@@ -104,6 +115,7 @@ class IngredientApiImplIntegrationTest {
     }
 
     @Test
+    @CleanupPersistence
     void update() {
         assertDoesNotThrow(() -> {
 
@@ -160,6 +172,7 @@ class IngredientApiImplIntegrationTest {
     }
 
     @Test
+    @CleanupPersistence
     void delete() {
         assertDoesNotThrow(() -> {
 
@@ -186,8 +199,11 @@ class IngredientApiImplIntegrationTest {
     }
 
     @Test
+    @CleanupPersistence
     void getAll() {
         assertDoesNotThrow(() -> {
+
+            Collection<Ingredient> ingredients = generateRandomIngredient.execute(30);
 
             MvcResult postCreateResult = mockMvc.perform(
                     MockMvcRequestBuilders.get(IngredientApi.BASE_URL)
@@ -203,34 +219,33 @@ class IngredientApiImplIntegrationTest {
                 .readValue(postCreateResult.getResponse().getContentAsString(), IngredientPageOutputVo.class);
 
             assertThat(actual).isNotNull();
-            assertThat(actual.content()).hasSize(10);
-            assertThat(actual.totalElements()).isEqualTo(10);
+            assertThat(actual.content()).hasSize(ingredients.size());
+            assertThat(actual.totalElements()).isEqualTo(ingredients.size());
 
         });
     }
 
-    private RequestPostProcessor getUser() {
-        UserSecurity machine2machine = ((Optional<UserSecurity>) userSecurityRepository
-            .findByUserNameAndAuthProvider("machine2machine", AuthProvider.LOCAL))
-            .orElseThrow();
+    private RequestPostProcessor getUser() throws UnableToGenerateItemException {
+
+        UserSecurity randomUser = generateRandomUser.execute();
 
         return SecurityUserGenerator.generateWithSpecificUser(new TacoResourceUserDetailsInputVo(
             new UserSecurityOutputAppVo(
-                new UserId(machine2machine.getId()),
-                machine2machine.getUserName(),
-                machine2machine.getPassword(),
-                machine2machine.getFullName(),
-                machine2machine.getStreet(),
-                machine2machine.getCity(),
-                machine2machine.getState(),
-                machine2machine.getZip(),
-                machine2machine.getPhoneNumber(),
-                machine2machine.getAuthProvider(),
-                machine2machine.getExpired(),
-                machine2machine.getLocked(),
-                machine2machine.getEnabled(),
-                machine2machine.getCredentialsExpired(),
-                machine2machine.getRoles().stream()
+                new UserId(randomUser.getId()),
+                randomUser.getUserName(),
+                randomUser.getPassword(),
+                randomUser.getFullName(),
+                randomUser.getStreet(),
+                randomUser.getCity(),
+                randomUser.getState(),
+                randomUser.getZip(),
+                randomUser.getPhoneNumber(),
+                randomUser.getAuthProvider(),
+                randomUser.getExpired(),
+                randomUser.getLocked(),
+                randomUser.getEnabled(),
+                randomUser.getCredentialsExpired(),
+                randomUser.getRoles().stream()
                     .map(r -> new RoleOutputAppVo(
                         new RoleId(r.getId()),
                         r.getName(),
@@ -244,5 +259,6 @@ class IngredientApiImplIntegrationTest {
                     .collect(Collectors.toSet()))
             )
         );
+
     }
 }

@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @Primary
 @Repository
-public interface ClientOrderRepositoryImpl extends
+public interface ClientOrderRepositoryJpa extends
     ClientOrderRepository<JpaClientOrder>,
     ClientOrderPagingRepository<JpaClientOrder>,
     JpaRepository<JpaClientOrder, UUID> {
@@ -25,7 +25,7 @@ public interface ClientOrderRepositoryImpl extends
 
     @Override
     default ClientOrderPage<JpaClientOrder> getByUser(User user, EntityPageable pageable) {
-        Page<JpaClientOrder> all = ClientOrderRepositoryImpl.this.findByUser((JpaUser) user, PageRequest.of(pageable.pageNumber(), pageable.pageSize()));
+        Page<JpaClientOrder> all = ClientOrderRepositoryJpa.this.findByUser((JpaUser) user, PageRequest.of(pageable.pageNumber(), pageable.pageSize()));
 
         return new ClientOrderPage<>(
             all.getContent(),

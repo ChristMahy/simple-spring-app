@@ -1,6 +1,6 @@
 package cmahy.simple.spring.webapp.resource.integration.test.persistence.h2.spring.listener;
 
-import cmahy.simple.spring.webapp.resource.integration.test.persistence.h2.H2ITDatasourceSnapshot;
+//import cmahy.simple.spring.webapp.resource.integration.test.persistence.h2.H2ITDatasourceSnapshot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
@@ -19,11 +19,11 @@ public class H2ITApplicationStartedEventListener implements ApplicationListener<
 
         ApplicationContext context = event.getApplicationContext();
 
-        H2ITDatasourceSnapshot datasourceSnapshot = context.getBean(H2ITDatasourceSnapshot.class);
+//        H2ITDatasourceSnapshot datasourceSnapshot = context.getBean(H2ITDatasourceSnapshot.class);
 
-        LOG.info("Starting datasource snapshot with <{}>", datasourceSnapshot);
+//        LOG.info("Starting datasource snapshot with <{}>", datasourceSnapshot);
 
-        datasourceSnapshot.create();
+//        datasourceSnapshot.create();
 
     }
 

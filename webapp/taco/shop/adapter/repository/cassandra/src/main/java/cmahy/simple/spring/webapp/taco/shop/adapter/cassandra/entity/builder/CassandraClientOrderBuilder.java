@@ -6,7 +6,6 @@ import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.Cassa
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.factory.CassandraClientOrderProxyFactory;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.Taco;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.builder.ClientOrderBuilder;
-import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.CassandraUserProxy;
 import cmahy.simple.spring.webapp.user.kernel.domain.User;
 
 import java.util.*;
@@ -16,7 +15,7 @@ public class CassandraClientOrderBuilder implements ClientOrderBuilder<Cassandra
     private final CassandraClientOrderProxyFactory clientOrderProxyFactory;
     private Optional<CassandraClientOrderProxy> originalClientOrder = Optional.empty();
 
-    private CassandraUserProxy user;
+    private User user;
 
     private String deliveryName;
     private String deliveryStreet;
@@ -58,7 +57,7 @@ public class CassandraClientOrderBuilder implements ClientOrderBuilder<Cassandra
 
     @Override
     public CassandraClientOrderBuilder user(User user) {
-        this.user = (CassandraUserProxy) user;
+        this.user = user;
 
         return this;
     }

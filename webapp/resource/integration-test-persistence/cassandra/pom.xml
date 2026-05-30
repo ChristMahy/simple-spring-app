@@ -25,11 +25,32 @@
     <parent>
         <groupId>cmahy.simple.spring</groupId>
         <artifactId>bom</artifactId>
-        <version>1.1.1</version>
+        <version>DEV-SNAPSHOT</version>
         <relativePath/>
     </parent>
 
     <dependencies>
+
+        <dependency>
+            <groupId>cmahy.simple.spring.webapp</groupId>
+            <artifactId>resource.integration.test.persistence.api</artifactId>
+            <type>test-jar</type>
+            <version>DEV-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy.simple.spring.webapp.user</groupId>
+            <artifactId>adapter.repository.cassandra</artifactId>
+            <version>DEV-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>cmahy.simple.spring.webapp</groupId>
+            <artifactId>taco.shop.adapter.repository.cassandra</artifactId>
+            <version>DEV-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.testcontainers</groupId>

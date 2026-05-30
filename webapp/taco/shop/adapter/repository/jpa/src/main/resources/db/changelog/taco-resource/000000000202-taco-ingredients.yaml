@@ -15,19 +15,20 @@ databaseChangeLog:
                     nullable: false
 
               - column:
-                  name: jpa_taco_id
+                  name: taco_id
                   type: BINARY(16)
                   constraints:
                     nullable: false
 
         - addUniqueConstraint:
+            constraintName: u_taco_ingredients
             tableName: taco_ingredients
-            columnNames: ingredients_id, jpa_taco_id
+            columnNames: ingredients_id, taco_id
 
         - addForeignKeyConstraint:
             constraintName: fk_taco_ingredients_taco
             baseTableName: taco_ingredients
-            baseColumnNames: jpa_taco_id
+            baseColumnNames: taco_id
             referencedTableName: taco
             referencedColumnNames: id
 

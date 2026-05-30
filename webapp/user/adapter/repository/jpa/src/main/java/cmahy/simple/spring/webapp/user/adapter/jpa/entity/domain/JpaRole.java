@@ -14,7 +14,10 @@ public class JpaRole implements Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id")
     protected UUID id;
+
+    @Column(name = "name")
     protected String name;
 
     @ManyToMany

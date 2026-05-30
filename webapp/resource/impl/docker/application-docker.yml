@@ -5,10 +5,6 @@ application:
       response-timeout: 5s
       read-timeout: 5s
       write-timeout: 5s
-  start-up:
-    order:
-      generate: true
-      initial-size: 1
   taco:
     orders:
       page-size: 20

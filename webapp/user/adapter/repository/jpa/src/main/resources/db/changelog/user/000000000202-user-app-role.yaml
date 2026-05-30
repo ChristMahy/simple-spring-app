@@ -20,6 +20,7 @@ databaseChangeLog:
                     nullable: false
 
         - addUniqueConstraint:
+            constraintName: u_user_app_role
             tableName: user_app_role
             columnNames: user_app_id, role_id
 

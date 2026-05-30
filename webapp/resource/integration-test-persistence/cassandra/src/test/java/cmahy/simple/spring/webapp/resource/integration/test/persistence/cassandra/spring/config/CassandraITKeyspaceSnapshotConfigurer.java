@@ -1,10 +1,16 @@
 package cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.spring.config;
 
-import cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.spring.service.CassandraITKeyspaceSnapshot;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.cassandra.repository.config.EnableCassandraRepositories;
 
 @AutoConfiguration
-@Import(CassandraITKeyspaceSnapshot.class)
+@ComponentScan(basePackages = {
+    "cmahy.simple.spring.webapp.resource.integration.test.persistence.api.command",
+    "cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.repository.impl"
+})
+@EnableCassandraRepositories(basePackages = {
+    "cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.repository.cassandra"
+})
 public class CassandraITKeyspaceSnapshotConfigurer {
 }

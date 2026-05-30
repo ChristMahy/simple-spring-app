@@ -1,41 +1,60 @@
 package cmahy.simple.spring.webapp.resource.impl.adapter.startup.generator.user;
 
+import cmahy.simple.spring.webapp.resource.impl.adapter.config.properties.ApplicationProperties;
+import cmahy.simple.spring.webapp.resource.impl.adapter.config.properties.start.OnStartProperties;
+import cmahy.simple.spring.webapp.resource.impl.adapter.config.properties.start.ResourcesProperties;
 import cmahy.simple.spring.webapp.resource.impl.adapter.startup.generator.GeneratorConstants;
+import cmahy.simple.spring.webapp.resource.impl.adapter.startup.generator.user.vo.input.RoleGeneratorInputVo;
+import cmahy.simple.spring.webapp.resource.impl.adapter.startup.generator.user.vo.input.UserGeneratorInputVo;
 import cmahy.simple.spring.webapp.user.kernel.application.repository.RoleRepository;
-import cmahy.simple.spring.webapp.user.kernel.application.repository.UserSecurityRepository;
-import cmahy.simple.spring.webapp.user.kernel.domain.*;
-import cmahy.simple.spring.webapp.user.kernel.domain.builder.UserSecurityBuilder;
-import cmahy.simple.spring.webapp.user.kernel.domain.builder.factory.UserSecurityBuilderFactory;
+import cmahy.simple.spring.webapp.user.kernel.application.repository.UserRepository;
+import cmahy.simple.spring.webapp.user.kernel.domain.Role;
+import cmahy.simple.spring.webapp.user.kernel.domain.User;
+import cmahy.simple.spring.webapp.user.kernel.domain.builder.factory.UserBuilderFactory;
 import cmahy.simple.spring.webapp.user.kernel.exception.RoleNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.io.Resource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.ObjectMapper;
 
-import java.util.HashSet;
-import java.util.Optional;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 @Component
 @Order(GeneratorConstants.UserGeneratorExecutionOrder.USER)
 public class UserGenerator implements ApplicationListener<ApplicationStartedEvent> {
 
-    private final UserSecurityRepository<UserSecurity> userSecurityRepository;
+    private static final Logger LOG = LoggerFactory.getLogger(UserGenerator.class);
+
+    private final UserRepository<User> userRepository;
     private final RoleRepository<Role> roleRepository;
-    private final UserSecurityBuilderFactory<UserSecurity> userSecurityBuilderFactory;
+    private final UserBuilderFactory<User> userBuilderFactory;
     private final PasswordEncoder passwordEncoder;
+    private final ApplicationProperties applicationProperties;
+    private final ObjectMapper objectMapper;
 
     public UserGenerator(
-        UserSecurityRepository userSecurityRepository,
+        UserRepository userRepository,
         RoleRepository roleRepository,
-        UserSecurityBuilderFactory userSecurityBuilderFactory,
-        PasswordEncoder passwordEncoder
+        UserBuilderFactory userBuilderFactory,
+        PasswordEncoder passwordEncoder,
+        ApplicationProperties applicationProperties,
+        ObjectMapper objectMapper
     ) {
-        this.userSecurityRepository = userSecurityRepository;
+        this.userRepository = userRepository;
         this.roleRepository = roleRepository;
-        this.userSecurityBuilderFactory = userSecurityBuilderFactory;
+        this.userBuilderFactory = userBuilderFactory;
         this.passwordEncoder = passwordEncoder;
+        this.applicationProperties = applicationProperties;
+        this.objectMapper = objectMapper;
     }
 
     @Override
@@ -43,63 +62,69 @@ public class UserGenerator implements ApplicationListener<ApplicationStartedEven
     public void onApplicationEvent(ApplicationStartedEvent event) {
 
         try {
-            Role guestRole = roleRepository.findByName("Guest")
-                .orElseThrow(() -> new RoleNotFoundException("Guest"));
 
-            Role adminRole = roleRepository.findByName("Admin")
-                .orElseThrow(() -> new RoleNotFoundException("Admin"));
+            Optional<Resource> usersResource = Optional.ofNullable(applicationProperties.onStart())
+                .map(OnStartProperties::resources)
+                .map(ResourcesProperties::users);
 
-            Optional<UserSecurity> machine2machine = userSecurityRepository.findByUserNameAndAuthProvider("machine2machine", AuthProvider.LOCAL);
+            if (usersResource.map(Resource::exists).orElse(Boolean.FALSE)) {
 
-            if (machine2machine.isEmpty()) {
-                UserSecurityBuilder<UserSecurity> machine2machineBuilder = userSecurityBuilderFactory.create()
-                    .userName("machine2machine")
-                    .fullName("machine2machine")
-                    .street("Local")
-                    .state("Local_Machine")
-                    .city("Machine")
-                    .zip("1234")
-                    .phoneNumber("Call_Me_Maybe")
-                    .password(passwordEncoder.encode("machine2machine").getBytes())
-                    .roles(new HashSet<>(2) {{
-                        add(guestRole);
-                        add(adminRole);
-                    }})
-                    .authProvider(AuthProvider.LOCAL)
-                    .enabled(true)
-                    .expired(false)
-                    .credentialsExpired(false)
-                    .locked(false);
+                try (InputStream usersStream = usersResource.get().getInputStream()) {
 
-                userSecurityRepository.save(machine2machineBuilder.build());
+                    List<UserGeneratorInputVo> users = objectMapper.readValue(usersStream, new TypeReference<>() {
+                    });
+
+                    for (UserGeneratorInputVo userInput : users) {
+
+                        Optional<User> userIsFound = userRepository.findByUserName(userInput.userName());
+
+                        if (userIsFound.isEmpty()) {
+
+                            Set<Role> roles = new HashSet<>();
+
+                            for (RoleGeneratorInputVo r : userInput.roles()) {
+
+                                roles.add(
+                                    roleRepository.findByName(r.name())
+                                        .orElseThrow(() -> new RoleNotFoundException(r.name()))
+                                );
+
+                            }
+
+                            User user = userBuilderFactory.create()
+                                .userName(userInput.userName())
+                                .password(
+                                    Optional
+                                        .ofNullable(
+                                            passwordEncoder.encode(userInput.userName())
+                                        )
+                                        .orElseGet(() -> UUID.randomUUID().toString())
+                                        .getBytes(StandardCharsets.UTF_8)
+                                )
+                                .fullName(userInput.fullName())
+                                .street(userInput.street())
+                                .city(userInput.city())
+                                .state(userInput.state())
+                                .zip(userInput.zip())
+                                .phoneNumber(userInput.phoneNumber())
+                                .roles(roles)
+                                .build();
+
+                            user = userRepository.save(user);
+
+                            LOG.info("<{}> saved <{}>", user.getClass().getSimpleName(), user);
+
+                        }
+                    }
+
+                }
+
             }
 
-            Optional<UserSecurity> testUser = userSecurityRepository.findByUserNameAndAuthProvider("test", AuthProvider.LOCAL);
-
-            if (testUser.isEmpty()) {
-                UserSecurityBuilder<UserSecurity> testUserBuilder = userSecurityBuilderFactory.create()
-                    .userName("test")
-                    .fullName("test")
-                    .street("Local")
-                    .state("Local_Test")
-                    .city("Test")
-                    .zip("1234")
-                    .phoneNumber("Call_Me_Maybe")
-                    .password(passwordEncoder.encode("test").getBytes())
-                    .roles(new HashSet<>(1) {{
-                        add(guestRole);
-                    }})
-                    .authProvider(AuthProvider.LOCAL)
-                    .enabled(true)
-                    .expired(false)
-                    .credentialsExpired(false)
-                    .locked(false);
-
-                userSecurityRepository.save(testUserBuilder.build());
-            }
         } catch (Exception any) {
             throw new RuntimeException(any);
         }
 
     }
+
 }

@@ -17,14 +17,14 @@ import java.util.UUID;
 
 @Primary
 @Repository
-public interface IngredientRepositoryImpl extends
+public interface IngredientRepositoryJpa extends
     IngredientRepository<JpaIngredient>,
     IngredientPagingRepository<JpaIngredient>,
     JpaRepository<JpaIngredient, UUID> {
 
     @Override
     default IngredientPage<JpaIngredient> findAll(EntityPageable pageable) {
-        Page<JpaIngredient> all = IngredientRepositoryImpl.this.findAll(PageRequest.of(pageable.pageNumber(), pageable.pageSize()));
+        Page<JpaIngredient> all = IngredientRepositoryJpa.this.findAll(PageRequest.of(pageable.pageNumber(), pageable.pageSize()));
 
         return new IngredientPage<>(
             all.getContent(),

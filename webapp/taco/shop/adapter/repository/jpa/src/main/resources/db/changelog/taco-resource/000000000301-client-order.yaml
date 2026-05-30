@@ -42,6 +42,18 @@ databaseChangeLog:
                   name: delivery_zip
                   type: VARCHAR(255)
 
+              - column:
+                  name: cc_number
+                  type: VARCHAR(255)
+
+              - column:
+                  name: cc_expiration
+                  type: VARCHAR(255)
+
+              - column:
+                  name: cc_cvv
+                  type: VARCHAR(255)
+
         - addForeignKeyConstraint:
             constraintName: fk_client_order_user
             baseTableName: client_order

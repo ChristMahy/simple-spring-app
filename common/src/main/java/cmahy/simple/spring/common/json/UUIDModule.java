@@ -1,9 +1,9 @@
 package cmahy.simple.spring.common.json;
 
-import com.fasterxml.jackson.core.Version;
-import com.fasterxml.jackson.databind.deser.std.UUIDDeserializer;
-import com.fasterxml.jackson.databind.module.*;
-import com.fasterxml.jackson.databind.ser.std.UUIDSerializer;
+import tools.jackson.core.Version;
+import tools.jackson.databind.deser.jdk.UUIDDeserializer;
+import tools.jackson.databind.module.*;
+import tools.jackson.databind.ser.jdk.UUIDSerializer;
 
 import java.io.Serial;
 import java.util.UUID;

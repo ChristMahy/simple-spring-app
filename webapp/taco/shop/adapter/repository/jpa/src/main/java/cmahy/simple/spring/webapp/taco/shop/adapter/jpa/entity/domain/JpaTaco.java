@@ -14,13 +14,25 @@ public class JpaTaco implements Taco {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id")
     protected UUID id;
 
+    @Column(name = "created_at")
     protected Date createdAt;
 
+    @Column(name = "name")
     protected String name;
 
     @ManyToMany
+    @JoinTable(
+        name = "taco_ingredients",
+        joinColumns = @JoinColumn(name = "taco_id"),
+        inverseJoinColumns = @JoinColumn(name = "ingredients_id"),
+        uniqueConstraints = @UniqueConstraint(
+            name = "u_taco_ingredients",
+            columnNames = { "ingredients_id", "taco_id" }
+        )
+    )
     protected Collection<JpaIngredient> ingredients = new ArrayList<>();
 
     @Override

@@ -10,7 +10,6 @@ import cmahy.simple.spring.webapp.taco.shop.kernel.domain.ClientOrder;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.Taco;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.id.TacoId;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.domain.CassandraUserImpl;
-import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.CassandraUserProxy;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.CassandraUserProxyFactory;
 import cmahy.simple.spring.webapp.user.kernel.domain.User;
 import cmahy.simple.spring.webapp.user.kernel.domain.id.UserId;
@@ -22,7 +21,7 @@ public class CassandraClientOrderProxy implements ClientOrder {
 
     private final CassandraClientOrder clientOrder;
 
-    private CassandraUserProxy user;
+    private User user;
     private List<CassandraTacoProxy> tacos;
 
     private final TacoLoaderProvider tacoLoaderProvider;
@@ -153,12 +152,12 @@ public class CassandraClientOrderProxy implements ClientOrder {
         return user;
     }
 
-    public CassandraClientOrderProxy setUser(CassandraUserProxy user) {
+    public CassandraClientOrderProxy setUser(User user) {
         this.user = user;
 
         clientOrder.setUserId(
             Optional.ofNullable(user)
-                .map(CassandraUserProxy::getId)
+                .map(User::getId)
                 .map(UserId::new)
                 .orElse(null)
         );

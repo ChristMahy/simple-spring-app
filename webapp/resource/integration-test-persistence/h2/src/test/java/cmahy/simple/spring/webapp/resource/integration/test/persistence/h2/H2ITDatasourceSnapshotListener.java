@@ -1,58 +1,166 @@
 package cmahy.simple.spring.webapp.resource.integration.test.persistence.h2;
 
-import com.zaxxer.hikari.HikariDataSource;
-import jakarta.persistence.EntityManagerFactory;
+import cmahy.simple.spring.webapp.resource.integration.test.persistence.api.annotation.CleanupPersistence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.TestContext;
 import org.springframework.test.context.support.AbstractTestExecutionListener;
 
-import java.util.Objects;
-import java.util.Optional;
+import javax.sql.DataSource;
+import java.lang.annotation.Annotation;
+import java.sql.*;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class H2ITDatasourceSnapshotListener extends AbstractTestExecutionListener {
 
     private static final Logger LOG = LoggerFactory.getLogger(H2ITDatasourceSnapshotListener.class);
 
     @Override
-    public void afterTestMethod(TestContext testContext) {
+    public void beforeTestMethod(TestContext testContext) throws Exception {
 
-        ApplicationContext applicationContext = testContext.getApplicationContext();
+    }
 
-        if (Objects.nonNull(applicationContext)) {
+    @Override
+    public void afterTestExecution(TestContext testContext) throws Exception {
 
-            EntityManagerFactory entityManagerFactory = applicationContext.getBean(EntityManagerFactory.class);
+        List<Annotation> annotations = Arrays.stream(testContext.getTestMethod().getAnnotations())
+            .filter(annotation -> annotation instanceof CleanupPersistence)
+            .toList();
 
-            Optional.ofNullable(entityManagerFactory)
-                .map(EntityManagerFactory::getCache)
-                .ifPresent(cache -> {
-                    LOG.info("Clearing entity manager caches");
+        if (annotations.size() == 1) {
 
-                    cache.evictAll();
-                });
+            CleanupPersistence cleanupInstruction = (CleanupPersistence) annotations.getFirst();
 
-            try {
+            if (cleanupInstruction.required()) {
 
-                HikariDataSource dataSource = applicationContext.getBean(HikariDataSource.class);
+                ApplicationContext applicationContext = testContext.getApplicationContext();
 
-                LOG.info(
-                    "Evicting all connections in HikariCP pool, active <{}>, idle <{}>, total <{}>",
-                    dataSource.getHikariPoolMXBean().getActiveConnections(),
-                    dataSource.getHikariPoolMXBean().getIdleConnections(),
-                    dataSource.getHikariPoolMXBean().getTotalConnections()
-                );
+                if (Objects.nonNull(applicationContext)) {
 
-                dataSource.getHikariPoolMXBean().softEvictConnections();
+//                    EntityManagerFactory entityManagerFactory = applicationContext.getBean(EntityManagerFactory.class);
+//
+//                    Optional.ofNullable(entityManagerFactory)
+//                        .map(EntityManagerFactory::getCache)
+//                        .ifPresent(cache -> {
+//                            LOG.info("Clearing entity manager caches");
+//
+//                            cache.evictAll();
+//                        });
 
-            } catch (BeansException ignored) {}
+                    DataSource dataSource = applicationContext.getBean(DataSource.class);
 
-            H2ITDatasourceSnapshot datasourceSnapshot = applicationContext.getBean(H2ITDatasourceSnapshot.class);
+//                    if (dataSource instanceof HikariDataSource hikariDataSource) {
+//
+//                        LOG.info(
+//                            "Evicting all connections in HikariCP pool, active <{}>, idle <{}>, total <{}>",
+//                            hikariDataSource.getHikariPoolMXBean().getActiveConnections(),
+//                            hikariDataSource.getHikariPoolMXBean().getIdleConnections(),
+//                            hikariDataSource.getHikariPoolMXBean().getTotalConnections()
+//                        );
+//
+//                        hikariDataSource.getHikariPoolMXBean().softEvictConnections();
+//
+//                    }
 
-            datasourceSnapshot.restore();
+                    try (Connection connection = dataSource.getConnection()) {
+
+                        try (Statement statement = connection.createStatement()) {
+
+                            statement.executeUpdate("SET REFERENTIAL_INTEGRITY FALSE");
+
+                        }
+
+                        try (Statement statement = connection.createStatement()) {
+
+                            ResultSet resultSet = statement.executeQuery(
+                                "SELECT TABLE_NAME, TABLE_TYPE, TABLE_SCHEMA, TABLE_CATALOG " +
+                                    "FROM INFORMATION_SCHEMA.TABLES " +
+                                    "WHERE TABLE_CATALOG = DATABASE() " +
+                                    "AND TABLE_SCHEMA = SCHEMA() " +
+                                    "AND TABLE_TYPE = 'BASE TABLE';"
+                            );
+
+                            Set<String> ignoredTables = Stream.concat(
+                                Arrays.stream(cleanupInstruction.ignoreTables()),
+                                Stream.of("DATABASECHANGELOG", "DATABASECHANGELOGLOCK")
+                            )
+                                .collect(Collectors.toSet());
+
+                            while (resultSet.next()) {
+
+                                String tableName = resultSet.getString("TABLE_NAME");
+
+                                if (ignoredTables.contains(tableName)) {
+
+                                    continue;
+
+                                }
+
+                                try (Statement deleteStatement = connection.createStatement()) {
+
+                                    deleteStatement.execute("DELETE FROM " + tableName + " WHERE TRUE");
+
+                                }
+
+                            }
+
+                        }
+
+                        try (Statement statement = connection.createStatement()) {
+
+                            statement.executeUpdate("SET REFERENTIAL_INTEGRITY TRUE");
+
+                        }
+
+                    } catch (Exception any) {
+
+                        throw new RuntimeException(any);
+
+                    }
+
+                }
+
+            }
 
         }
+
+//        ApplicationContext applicationContext = testContext.getApplicationContext();
+//
+//        if (Objects.nonNull(applicationContext)) {
+//
+//            EntityManagerFactory entityManagerFactory = applicationContext.getBean(EntityManagerFactory.class);
+//
+//            Optional.ofNullable(entityManagerFactory)
+//                .map(EntityManagerFactory::getCache)
+//                .ifPresent(cache -> {
+//                    LOG.info("Clearing entity manager caches");
+//
+//                    cache.evictAll();
+//                });
+//
+//            try {
+//
+//                HikariDataSource dataSource = applicationContext.getBean(HikariDataSource.class);
+//
+//                LOG.info(
+//                    "Evicting all connections in HikariCP pool, active <{}>, idle <{}>, total <{}>",
+//                    dataSource.getHikariPoolMXBean().getActiveConnections(),
+//                    dataSource.getHikariPoolMXBean().getIdleConnections(),
+//                    dataSource.getHikariPoolMXBean().getTotalConnections()
+//                );
+//
+//                dataSource.getHikariPoolMXBean().softEvictConnections();
+//
+//            } catch (BeansException ignored) {}
+//
+//            H2ITDatasourceSnapshot datasourceSnapshot = applicationContext.getBean(H2ITDatasourceSnapshot.class);
+//
+//            datasourceSnapshot.restore();
+//
+//        }
 
     }
 

@@ -10,11 +10,11 @@ import cmahy.simple.spring.webapp.user.kernel.domain.id.UserId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -107,4 +107,62 @@ class UserRepositoryImplTest {
             verifyNoInteractions(cassandraUserProxyFactory);
         });
     }
+    
+    @Test
+    void save() {
+        assertDoesNotThrow(() -> {
+            UUID userId = Generator.randomUUID();
+
+            CassandraUserImpl inUser = mock(CassandraUserImpl.class);
+            when(inUser.getId()).thenReturn(userId);
+
+            CassandraUserProxy inUserProxy = mock(CassandraUserProxy.class);
+            when(inUserProxy.unwrap()).thenReturn(inUser);
+
+            CassandraUserImpl outUser = mock(CassandraUserImpl.class);
+            CassandraUserProxy outProxy = mock(CassandraUserProxy.class);
+
+            when(cassandraUserRepository.save(inUser)).thenReturn(outUser);
+            when(cassandraUserProxyFactory.create(outUser)).thenReturn(outProxy);
+
+            CassandraUserProxy actual = userRepositoryImpl.save(inUserProxy);
+
+            assertThat(actual)
+                .isNotNull()
+                .isSameAs(outProxy);
+
+            verify(inUser, never()).setId(any(UUID.class));
+        });
+    }
+
+    @Test
+    void save_whenMissingId_thenGenerateNewOne() {
+        assertDoesNotThrow(() -> {
+            try (MockedStatic<UUID> uuidMock = Mockito.mockStatic(UUID.class)) {
+                UUID userId = mock(UUID.class);
+
+                uuidMock.when(UUID::randomUUID).thenReturn(userId);
+
+                CassandraUserImpl inUser = mock(CassandraUserImpl.class, RETURNS_SELF);
+
+                CassandraUserProxy inUserProxy = mock(CassandraUserProxy.class);
+                when(inUserProxy.unwrap()).thenReturn(inUser);
+
+                CassandraUserImpl outUser = mock(CassandraUserImpl.class);
+                CassandraUserProxy outProxy = mock(CassandraUserProxy.class);
+
+                when(cassandraUserRepository.save(inUser)).thenReturn(outUser);
+                when(cassandraUserProxyFactory.create(outUser)).thenReturn(outProxy);
+
+                CassandraUserProxy actual = userRepositoryImpl.save(inUserProxy);
+
+                assertThat(actual)
+                    .isNotNull()
+                    .isSameAs(outProxy);
+
+                verify(inUser).setId(any(UUID.class));
+            }
+        });
+    }
+    
 }

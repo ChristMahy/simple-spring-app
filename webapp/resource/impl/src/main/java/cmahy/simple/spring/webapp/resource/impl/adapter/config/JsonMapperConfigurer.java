@@ -1,15 +1,22 @@
 package cmahy.simple.spring.webapp.resource.impl.adapter.config;
 
-import cmahy.simple.spring.common.json.JsonMapperFactory;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.context.annotation.*;
+import org.springframework.boot.jackson.autoconfigure.JsonMapperBuilderCustomizer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import static tools.jackson.core.StreamWriteFeature.WRITE_BIGDECIMAL_AS_PLAIN;
+import static tools.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
+import static tools.jackson.databind.cfg.DateTimeFeature.WRITE_DATES_AS_TIMESTAMPS;
 
 @Configuration
 public class JsonMapperConfigurer {
 
     @Bean
-    @Primary
-    public ObjectMapper objectMapper() {
-        return JsonMapperFactory.create();
+    public JsonMapperBuilderCustomizer jsonCustomizer() {
+        return builder -> builder
+            .disable(WRITE_DATES_AS_TIMESTAMPS)
+            .disable(FAIL_ON_UNKNOWN_PROPERTIES)
+            .enable(WRITE_BIGDECIMAL_AS_PLAIN);
     }
+
 }

@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface RoleRepositoryImpl extends RoleRepository<JpaRole>, JpaRepository<JpaRole, UUID> {
+public interface RoleRepositoryJpa extends RoleRepository<JpaRole>, JpaRepository<JpaRole, UUID> {
 }

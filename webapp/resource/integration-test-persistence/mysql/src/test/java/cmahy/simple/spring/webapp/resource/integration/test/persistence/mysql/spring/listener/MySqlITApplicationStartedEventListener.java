@@ -1,10 +1,10 @@
 package cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql.spring.listener;
 
-import cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql.spring.service.MySqlITDatasourceSnapshot;
+//import cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql.spring.service.MySqlITDatasourceSnapshot;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -17,21 +17,21 @@ public class MySqlITApplicationStartedEventListener implements ApplicationListen
     @Override
     public void onApplicationEvent(ApplicationStartedEvent event) {
 
-        try {
-
-            ApplicationContext context = event.getApplicationContext();
-
-            MySqlITDatasourceSnapshot snapshot = context.getBean(MySqlITDatasourceSnapshot.class);
-
-            LOG.info("Starting datasource snapshot with <{}>", snapshot);
-
-            snapshot.create();
-
-        } catch (Exception any) {
-
-            throw new RuntimeException(any);
-
-        }
+//        try {
+//
+//            ApplicationContext context = event.getApplicationContext();
+//
+//            MySqlITDatasourceSnapshot snapshot = context.getBean(MySqlITDatasourceSnapshot.class);
+//
+//            LOG.info("Starting datasource snapshot with <{}>", snapshot);
+//
+//            snapshot.create();
+//
+//        } catch (Exception any) {
+//
+//            throw new RuntimeException(any);
+//
+//        }
 
     }
 

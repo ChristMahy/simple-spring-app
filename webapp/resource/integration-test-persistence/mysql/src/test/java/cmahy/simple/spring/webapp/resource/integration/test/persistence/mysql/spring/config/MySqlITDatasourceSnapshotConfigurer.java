@@ -1,11 +1,17 @@
 package cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql.spring.config;
 
-import cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql.spring.service.MySqlITDatasourceSnapshot;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @AutoConfiguration
-@Import(MySqlITDatasourceSnapshot.class)
+//@Import(MySqlITDatasourceSnapshot.class)
+@ComponentScan(basePackages = {
+    "cmahy.simple.spring.webapp.resource.integration.test.persistence.api.command"
+})
+@EnableJpaRepositories(basePackages = {
+    "cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql.repository"
+})
 public class MySqlITDatasourceSnapshotConfigurer {
 
 }

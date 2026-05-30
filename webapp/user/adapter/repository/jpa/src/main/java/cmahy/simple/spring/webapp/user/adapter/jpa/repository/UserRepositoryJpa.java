@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface UserRepositoryImpl extends UserRepository<JpaUser>, JpaRepository<JpaUser, UUID> {
+public interface UserRepositoryJpa extends UserRepository<JpaUser>, JpaRepository<JpaUser, UUID> {
 
     @Override
     default Optional<JpaUser> findById(UserId id) {

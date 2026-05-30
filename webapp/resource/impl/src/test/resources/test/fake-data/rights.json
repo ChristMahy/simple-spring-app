@@ -1,0 +1,5 @@
+[
+  "ingredient:read",
+  "ingredient:write",
+  "ingredient:delete"
+]

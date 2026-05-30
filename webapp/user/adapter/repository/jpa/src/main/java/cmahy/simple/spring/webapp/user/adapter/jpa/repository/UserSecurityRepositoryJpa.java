@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface UserSecurityRepositoryImpl extends UserSecurityRepository<JpaUserSecurity>, JpaRepository<JpaUserSecurity, UUID> {
+public interface UserSecurityRepositoryJpa extends UserSecurityRepository<JpaUserSecurity>, JpaRepository<JpaUserSecurity, UUID> {
 }

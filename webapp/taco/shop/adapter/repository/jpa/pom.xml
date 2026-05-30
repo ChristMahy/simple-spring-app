@@ -40,7 +40,7 @@
         <cmahy.simple.spring.webapp.user.version>1.1.1</cmahy.simple.spring.webapp.user.version>
 
         <cmahy.simple.spring.webapp.user.domain.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.domain.version>
-        <cmahy.simple.spring.webapp.user.adapter.jpa.version>1.1.2</cmahy.simple.spring.webapp.user.adapter.jpa.version>
+        <cmahy.simple.spring.webapp.user.adapter.jpa.version>DEV-SNAPSHOT</cmahy.simple.spring.webapp.user.adapter.jpa.version>
     </properties>
 
     <dependencies>
@@ -75,6 +75,13 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -83,13 +90,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>jakarta.inject</groupId>
             <artifactId>jakarta.inject-api</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>

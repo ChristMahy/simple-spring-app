@@ -1,0 +1,16 @@
+[
+  {
+    "city": "Basic_User",
+    "fullName": "basic_user",
+    "phoneNumber": "Call_Me_Maybe",
+    "roles": [
+      {
+        "name": "Guest"
+      }
+    ],
+    "state": "Basic_User",
+    "street": "basic",
+    "userName": "basic_user",
+    "zip": "5678"
+  }
+]

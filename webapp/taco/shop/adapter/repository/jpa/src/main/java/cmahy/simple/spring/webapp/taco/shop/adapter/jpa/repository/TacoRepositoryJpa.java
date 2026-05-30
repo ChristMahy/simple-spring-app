@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Primary
 @Repository
-public interface TacoRepositoryImpl extends TacoRepository<JpaTaco>, JpaRepository<JpaTaco, UUID> {
+public interface TacoRepositoryJpa extends TacoRepository<JpaTaco>, JpaRepository<JpaTaco, UUID> {
 
     @Override
     @Query("select t from JpaTaco t join t.ingredients i on i.id = :#{#ingredientId.value()} ")

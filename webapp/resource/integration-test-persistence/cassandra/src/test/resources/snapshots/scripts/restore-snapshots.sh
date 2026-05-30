@@ -1,22 +1,34 @@
 #!/bin/bash
 
 KEYSPACE="$1"
+CASSANDRA_DATA_DIR="/var/lib/cassandra/data/$KEYSPACE"
+SNAPSHOT_NAME="test_seed"
 
-IMPORT_DIR="/tmp/cassandra_seed/$KEYSPACE"
+TRUNCATE_COMMANDS=""
+TABLE_DIRS=()
 
-find "$IMPORT_DIR" -type f -name "*.csv" -print0 | \
-while IFS= read -r -d '' file; do
+for dir in "${CASSANDRA_DATA_DIR}"/*; do
 
-  filename=$(basename "$file")
-  table="${filename%.csv}"
+  table_dir=$(basename "$dir")
+  table_name="${table_dir%%-*}"
 
-  echo "TRUNCATE $KEYSPACE.$table;"
+  echo "Preparing truncate for $table_name"
 
-  if [ "$(wc -l < "$file")" -gt 1 ]; then
+#  TRUNCATE_COMMANDS+="TRUNCATE $KEYSPACE.$table_name;"
+  TABLE_DIRS+=("$dir")
 
-    echo "COPY $KEYSPACE.$table FROM '$file' WITH HEADER=true;"
+done
 
-  fi
+#echo "Executing truncates..."
+#echo "$TRUNCATE_COMMANDS" | cqlsh
 
-done | \
-cqlsh
+for dir in "${TABLE_DIRS[@]}"; do
+
+  echo "Restoring $(basename "$dir")"
+  table_name="${table_dir%%-*}"
+
+  nodetool import -- "$KEYSPACE" "$table_name" "${dir}/snapshots/test_seed/"
+
+done
+
+echo "Snapshot restored from backup"

@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: client-order-tacos
+      author: cm
+
+      changes:
+        - createTable:
+            tableName: client_order_tacos
+            columns:
+
+              - column:
+                  name: client_order_id
+                  type: BINARY(16)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: taco_id
+                  type: BINARY(16)
+                  constraints:
+                    nullable: false
+
+        - addUniqueConstraint:
+            constraintName: u_client_order_tacos
+            tableName: client_order_tacos
+            columnNames: client_order_id, taco_id
+
+        - addForeignKeyConstraint:
+            constraintName: fk_client_order_tacos_client_order
+            baseTableName: client_order_tacos
+            baseColumnNames: client_order_id
+            referencedTableName: client_order
+            referencedColumnNames: id
+
+        - addForeignKeyConstraint:
+            constraintName: fk_client_order_tacos_taco
+            baseTableName: client_order_tacos
+            baseColumnNames: taco_id
+            referencedTableName: taco
+            referencedColumnNames: id

@@ -10,23 +10,23 @@ import java.util.Collection;
 import java.util.UUID;
 
 @Entity
-// TODO: Fix it later, Entity 'cmahy.simple.spring.webapp.user.adapter.jpa.entity.domain.JpaUserSecurity' is a subclass in a 'SINGLE_TABLE' hierarchy and may not be annotated '@Table' (the root class declares the table mapping for the hierarchy)
-//@Table(
-//    name = "user_app",
-//    uniqueConstraints = @UniqueConstraint(
-//        name = "u_us_username_provider",
-//        columnNames = {"userName", "authProvider"}
-//    )
-//)
 @DiscriminatorValue("USER_SECU")
 public class JpaUserSecurity extends JpaUser implements UserSecurity {
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "auth_provider")
     private AuthProvider authProvider;
 
+    @Column(name = "is_expired")
     private Boolean isExpired;
+
+    @Column(name = "is_locked")
     private Boolean isLocked;
+
+    @Column(name = "is_enabled")
     private Boolean isEnabled;
+
+    @Column(name = "is_credentials_expired")
     private Boolean isCredentialsExpired;
 
     @Override
@@ -134,13 +134,7 @@ public class JpaUserSecurity extends JpaUser implements UserSecurity {
         var builder = new ToStringBuilder(this, ToStringStyle.JSON_STYLE);
 
         return builder
-            .append("userName", getUserName())
-            .append("fullName", getFullName())
-            .append("street", getStreet())
-            .append("city", getCity())
-            .append("state", getState())
-            .append("zip", getZip())
-            .append("phoneNumber", getPhoneNumber())
+            .appendSuper(super.toString())
             .append("authProvider", getAuthProvider())
             .append("isExpired", getExpired())
             .append("isEnabled", getEnabled())

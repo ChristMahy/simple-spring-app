@@ -2,14 +2,14 @@ package cmahy.simple.spring.webapp.user.adapter.cassandra.repository.impl;
 
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.domain.CassandraUserImpl;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.CassandraUserProxy;
-import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.provider.CassandraUserProxyFactoryProvider;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.CassandraUserProxyFactory;
+import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.factory.provider.CassandraUserProxyFactoryProvider;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.repository.cassandra.CassandraUserRepositoryImpl;
 import cmahy.simple.spring.webapp.user.kernel.application.repository.UserRepository;
 import cmahy.simple.spring.webapp.user.kernel.domain.id.UserId;
 import jakarta.inject.Named;
 
-import java.util.Optional;
+import java.util.*;
 
 @Named
 public class UserRepositoryImpl implements UserRepository<CassandraUserProxy> {
@@ -35,6 +35,19 @@ public class UserRepositoryImpl implements UserRepository<CassandraUserProxy> {
     public Optional<CassandraUserProxy> findByUserName(String username) {
         return cassandraUserRepository.findByUserName(username)
             .map(resolveFactory()::create);
+    }
+
+    @Override
+    public CassandraUserProxy save(CassandraUserProxy user) {
+        CassandraUserImpl userUnwrapped = user.unwrap();
+
+        if (Objects.isNull(userUnwrapped.getId())) {
+            userUnwrapped = userUnwrapped.setId(UUID.randomUUID());
+        }
+
+        return resolveFactory().create(
+            cassandraUserRepository.save(userUnwrapped)
+        );
     }
 
     private CassandraUserProxyFactory resolveFactory() {

@@ -5,26 +5,42 @@ import jakarta.persistence.*;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.util.Collection;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "user_app")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "discriminator", length = 15, columnDefinition = "varchar(15)")
+@DiscriminatorColumn(name = "discriminator")
 @DiscriminatorValue("USER")
 public class JpaUser implements User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id")
     private UUID id;
+
+    @Column(name = "user_name")
     private String userName;
+
+    @Column(name = "password")
     private byte[] password;
+
+    @Column(name = "full_name")
     private String fullName;
+
+    @Column(name = "street")
     private String street;
+
+    @Column(name = "city")
     private String city;
+
+    @Column(name = "state")
     private String state;
+
+    @Column(name = "zip")
     private String zip;
+
+    @Column(name = "phone_number")
     private String phoneNumber;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -37,7 +53,7 @@ public class JpaUser implements User {
             columnNames = {"user_app_id", "role_id"}
         )
     )
-    private Collection<JpaRole> roles;
+    private Set<JpaRole> roles;
 
     @Override
     public UUID getId() {
@@ -144,7 +160,7 @@ public class JpaUser implements User {
     }
 
     public JpaUser setRoles(Collection<JpaRole> roles) {
-        this.roles = roles;
+        this.roles = (Set<JpaRole>) roles;
 
         return this;
     }

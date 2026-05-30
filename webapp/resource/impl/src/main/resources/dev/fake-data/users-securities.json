@@ -1,0 +1,43 @@
+[
+  {
+    "authProvider": "LOCAL",
+    "city": "Machine",
+    "credentialsExpired": false,
+    "enabled": true,
+    "expired": false,
+    "fullName": "machine2machine",
+    "locked": false,
+    "phoneNumber": "Call_Me_Maybe",
+    "roles": [
+      {
+        "name": "Guest"
+      },
+      {
+        "name": "Admin"
+      }
+    ],
+    "state": "Local_Machine",
+    "street": "Local",
+    "userName": "machine2machine",
+    "zip": "1234"
+  },
+  {
+    "authProvider": "LOCAL",
+    "city": "Test",
+    "credentialsExpired": false,
+    "enabled": true,
+    "expired": false,
+    "fullName": "test",
+    "locked": false,
+    "phoneNumber": "Call_Me_Maybe",
+    "roles": [
+      {
+        "name": "Guest"
+      }
+    ],
+    "state": "Local_Test",
+    "street": "Local",
+    "userName": "test",
+    "zip": "1234"
+  }
+]
