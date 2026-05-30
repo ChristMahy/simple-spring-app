@@ -20,16 +20,16 @@
     <parent>
         <groupId>cmahy.simple.spring</groupId>
         <artifactId>bom</artifactId>
-        <version>1.1.1</version>
+        <version>26.05.1</version>
         <relativePath/>
     </parent>
 
     <packaging>jar</packaging>
 
     <properties>
-        <cmahy.simple.spring.common.version>1.1.1</cmahy.simple.spring.common.version>
+        <cmahy.simple.spring.common.version>26.05.1</cmahy.simple.spring.common.version>
 
-        <cmahy.simple.spring.security.common.version>1.1.1</cmahy.simple.spring.security.common.version>
+        <cmahy.simple.spring.security.common.version>26.05.1</cmahy.simple.spring.security.common.version>
 
         <cmahy.simple.spring.security.common.api.version>${cmahy.simple.spring.security.common.version}</cmahy.simple.spring.security.common.api.version>
         <cmahy.simple.spring.security.common.impl.version>${cmahy.simple.spring.security.common.version}</cmahy.simple.spring.security.common.impl.version>
@@ -104,7 +104,7 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-webmvc</artifactId>
         </dependency>
 
         <dependency>
@@ -119,7 +119,7 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-authorization-server</artifactId>
+            <artifactId>spring-boot-starter-security-oauth2-authorization-server</artifactId>
         </dependency>
 
         <dependency>
