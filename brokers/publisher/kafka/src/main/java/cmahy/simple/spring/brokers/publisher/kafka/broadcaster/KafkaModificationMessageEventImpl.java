@@ -3,12 +3,11 @@ package cmahy.simple.spring.brokers.publisher.kafka.broadcaster;
 import cmahy.simple.spring.brokers.publisher.event.message.ModificationMessageEvent;
 import cmahy.simple.spring.brokers.publisher.event.vo.output.MessageOutputEventVo;
 import cmahy.simple.spring.brokers.publisher.kafka.config.KafkaTopic;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+import tools.jackson.databind.ObjectMapper;
 
 import java.util.UUID;
 
@@ -27,14 +26,10 @@ public class KafkaModificationMessageEventImpl implements ModificationMessageEve
 
     @Override
     public void execute(MessageOutputEventVo output) {
-        try {
-            kafkaTemplate.send(
-                KafkaTopic.Message.MODIFY,
-                UUID.randomUUID().toString(),
-                jsonMapper.writeValueAsBytes(output)
-            );
-        } catch (JsonProcessingException e) {
-            LOG.error(e.getMessage(), e);
-        }
+        kafkaTemplate.send(
+            KafkaTopic.Message.MODIFY,
+            UUID.randomUUID().toString(),
+            jsonMapper.writeValueAsBytes(output)
+        );
     }
 }

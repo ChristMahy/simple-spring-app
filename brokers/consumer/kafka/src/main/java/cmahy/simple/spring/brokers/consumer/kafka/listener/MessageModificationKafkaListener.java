@@ -2,12 +2,12 @@ package cmahy.simple.spring.brokers.consumer.kafka.listener;
 
 import cmahy.simple.spring.brokers.consumer.message.event.ModificationMessageListener;
 import cmahy.simple.spring.brokers.consumer.message.event.vo.input.MessageInputEventVo;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
+import tools.jackson.databind.ObjectMapper;
 
 @Service
 public class MessageModificationKafkaListener {

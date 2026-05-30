@@ -2,13 +2,13 @@ package cmahy.simple.spring.brokers.consumer.kafka.listener;
 
 import cmahy.simple.spring.brokers.consumer.message.event.ModificationMessageListener;
 import cmahy.simple.spring.brokers.consumer.message.event.vo.input.MessageInputEventVo;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import tools.jackson.databind.ObjectMapper;
 
 import static cmahy.simple.spring.common.helper.Generator.*;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;

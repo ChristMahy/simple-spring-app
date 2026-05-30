@@ -3,19 +3,14 @@ package cmahy.simple.spring.brokers.publisher.kafka.broadcaster;
 import cmahy.simple.spring.brokers.publisher.event.message.DeleteMessageEvent;
 import cmahy.simple.spring.brokers.publisher.event.vo.id.MessageEventId;
 import cmahy.simple.spring.brokers.publisher.kafka.config.KafkaTopic;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+import tools.jackson.databind.ObjectMapper;
 
 import java.util.UUID;
 
 @Service
 public class KafkaDeleteMessageEventImpl implements DeleteMessageEvent {
-
-    private static final Logger LOG = LoggerFactory.getLogger(KafkaDeleteMessageEventImpl.class);
 
     private final KafkaTemplate<String, byte[]> kafkaTemplate;
     private final ObjectMapper jsonMapper;
@@ -27,14 +22,10 @@ public class KafkaDeleteMessageEventImpl implements DeleteMessageEvent {
 
     @Override
     public void execute(MessageEventId id) {
-        try {
-            kafkaTemplate.send(
-                KafkaTopic.Message.DELETE,
-                UUID.randomUUID().toString(),
-                jsonMapper.writeValueAsBytes(id)
-            );
-        } catch (JsonProcessingException e) {
-            LOG.error(e.getMessage(), e);
-        }
+        kafkaTemplate.send(
+            KafkaTopic.Message.DELETE,
+            UUID.randomUUID().toString(),
+            jsonMapper.writeValueAsBytes(id)
+        );
     }
 }
