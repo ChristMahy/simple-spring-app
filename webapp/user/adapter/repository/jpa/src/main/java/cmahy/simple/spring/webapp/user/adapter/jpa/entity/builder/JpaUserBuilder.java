@@ -101,9 +101,24 @@ public class JpaUserBuilder implements UserBuilder<JpaUser> {
 
     @Override
     public <R extends Role> JpaUserBuilder roles(Collection<R> roles) {
-        this.roles = (Set<JpaRole>) roles;
+
+        if (roles == null) {
+            this.roles = null;
+            return this;
+        }
+
+        Set<JpaRole> set = new HashSet<>();
+
+        for (Role r : roles) {
+            if (r instanceof JpaRole jpaRole) {
+                set.add(jpaRole);
+            }
+        }
+
+        this.roles = set;
 
         return this;
+
     }
 
     @Override

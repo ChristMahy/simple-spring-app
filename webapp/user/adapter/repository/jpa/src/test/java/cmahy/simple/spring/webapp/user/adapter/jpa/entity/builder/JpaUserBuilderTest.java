@@ -3,10 +3,13 @@ package cmahy.simple.spring.webapp.user.adapter.jpa.entity.builder;
 import cmahy.simple.spring.common.helper.Generator;
 import cmahy.simple.spring.webapp.user.adapter.jpa.entity.domain.JpaRole;
 import cmahy.simple.spring.webapp.user.adapter.jpa.entity.domain.JpaUser;
+import cmahy.simple.spring.webapp.user.kernel.domain.Role;
 import cmahy.simple.spring.webapp.user.kernel.domain.User;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -61,7 +64,50 @@ class JpaUserBuilderTest {
             assertThat(actual.getZip()).isEqualTo(zip);
             assertThat(actual.getPhoneNumber()).isEqualTo(phoneNumber);
 
-            assertThat(actual.getRoles()).isEqualTo(roles);
+            assertThat(actual.getRoles()).containsExactlyInAnyOrderElementsOf(roles);
+        });
+    }
+
+    @Test
+    void build_withNullValues_thenValuesShouldBeNull() {
+        assertDoesNotThrow(() -> {
+
+            User actual = new JpaUserBuilder()
+                .userName(null)
+                .password(null)
+                .fullName(null)
+                .street(null)
+                .city(null)
+                .state(null)
+                .zip(null)
+                .phoneNumber(null)
+                .roles(null)
+                .build();
+
+
+            assertThat(actual)
+                .isNotNull()
+                .isInstanceOf(JpaUser.class)
+                .hasAllNullFieldsOrProperties();
+
+        });
+    }
+
+    @Test
+    void build_whenRoleIsNotAnInstanceOf_thenShouldNotBePushed() {
+        assertDoesNotThrow(() -> {
+
+            User actual = new JpaUserBuilder()
+                .roles(List.of(mock(Role.class)))
+                .build();
+
+
+            assertThat(actual)
+                .isNotNull()
+                .isInstanceOf(JpaUser.class);
+
+            assertThat(actual.getRoles()).isEmpty();
+
         });
     }
 
@@ -97,7 +143,7 @@ class JpaUserBuilderTest {
                     Stream
                         .generate(() -> mock(JpaRole.class))
                         .limit(Generator.randomInt(10, 20))
-                        .toList()
+                        .collect(Collectors.toSet())
                 );
 
             User actual = new JpaUserBuilder(original)
@@ -128,7 +174,7 @@ class JpaUserBuilderTest {
             assertThat(actual.getZip()).isEqualTo(newZip);
             assertThat(actual.getPhoneNumber()).isEqualTo(newPhoneNumber);
 
-            assertThat(actual.getRoles()).isEqualTo(newRoles);
+            assertThat(actual.getRoles()).containsExactlyInAnyOrderElementsOf(newRoles);
         });
     }
 
@@ -150,7 +196,7 @@ class JpaUserBuilderTest {
                     Stream
                         .generate(() -> mock(JpaRole.class))
                         .limit(Generator.randomInt(10, 20))
-                        .toList()
+                        .collect(Collectors.toSet())
                 );
 
             User actual = new JpaUserBuilder(original).build();
@@ -171,7 +217,7 @@ class JpaUserBuilderTest {
             assertThat(actual.getZip()).isEqualTo(original.getZip());
             assertThat(actual.getPhoneNumber()).isEqualTo(original.getPhoneNumber());
 
-            assertThat(actual.getRoles()).isEqualTo(original.getRoles());
+            assertThat(actual.getRoles()).containsExactlyInAnyOrderElementsOf(original.getRoles());
         });
     }
 
@@ -221,7 +267,7 @@ class JpaUserBuilderTest {
             assertThat(actual.getZip()).isEqualTo(zip);
             assertThat(actual.getPhoneNumber()).isEqualTo(phoneNumber);
 
-            assertThat(actual.getRoles()).isEqualTo(roles);
+            assertThat(actual.getRoles()).containsExactlyInAnyOrderElementsOf(roles);
         });
     }
 }

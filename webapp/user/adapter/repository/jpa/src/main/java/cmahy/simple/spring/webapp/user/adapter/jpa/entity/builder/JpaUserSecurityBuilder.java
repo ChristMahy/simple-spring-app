@@ -113,9 +113,24 @@ public class JpaUserSecurityBuilder implements UserSecurityBuilder<JpaUserSecuri
 
     @Override
     public <R extends Role> JpaUserSecurityBuilder roles(Collection<R> roles) {
-        this.roles = (Set<JpaRole>) roles;
+
+        if (roles == null) {
+            this.roles = null;
+            return this;
+        }
+
+        Set<JpaRole> set = new HashSet<>();
+
+        for (Role r : roles) {
+            if (r instanceof JpaRole jpaRole) {
+                set.add(jpaRole);
+            }
+        }
+
+        this.roles = set;
 
         return this;
+
     }
 
     @Override
