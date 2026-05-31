@@ -25,42 +25,42 @@
     <parent>
         <groupId>cmahy.simple.spring</groupId>
         <artifactId>bom</artifactId>
-        <version>1.1.1</version>
+        <version>26.05.2</version>
         <relativePath/>
     </parent>
 
     <properties>
         <application.title>ShellClient</application.title>
 
-        <cmahy.simple.spring.common.version>1.1.1</cmahy.simple.spring.common.version>
+        <cmahy.simple.spring.common.version>26.05.1</cmahy.simple.spring.common.version>
 
-        <cmahy.simple.spring.webapp.shell-client.api.version>1.1.1</cmahy.simple.spring.webapp.shell-client.api.version>
+        <cmahy.simple.spring.webapp.shell-client.api.version>26.05.1</cmahy.simple.spring.webapp.shell-client.api.version>
 
-        <cmahy.simple.spring.webapp.taco.shop.version>1.1.1</cmahy.simple.spring.webapp.taco.shop.version>
+        <cmahy.simple.spring.webapp.taco.shop.version>26.05.1</cmahy.simple.spring.webapp.taco.shop.version>
 
         <cmahy.simple.spring.webapp.taco.shop.kernel.domain.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.kernel.domain.version>
         <cmahy.simple.spring.webapp.taco.shop.kernel.vo.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.kernel.vo.version>
         <cmahy.simple.spring.webapp.taco.shop.kernel.application.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.kernel.application.version>
         <cmahy.simple.spring.webapp.taco.shop.adapter.webclient.version>${cmahy.simple.spring.webapp.taco.shop.version}</cmahy.simple.spring.webapp.taco.shop.adapter.webclient.version>
 
-        <cmahy.simple.spring.webapp.user.version>1.1.1</cmahy.simple.spring.webapp.user.version>
+        <cmahy.simple.spring.webapp.user.version>26.05.1</cmahy.simple.spring.webapp.user.version>
 
         <cmahy.simple.spring.webapp.user.kernel.domain.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.kernel.domain.version>
         <cmahy.simple.spring.webapp.user.kernel.vo.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.kernel.vo.version>
         <cmahy.simple.spring.webapp.user.kernel.application.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.kernel.application.version>
         <cmahy.simple.spring.webapp.user.adapter.webclient.version>${cmahy.simple.spring.webapp.user.version}</cmahy.simple.spring.webapp.user.adapter.webclient.version>
 
-        <cmahy.simple.spring.security.common.version>1.1.1</cmahy.simple.spring.security.common.version>
+        <cmahy.simple.spring.security.common.version>26.05.1</cmahy.simple.spring.security.common.version>
 
         <cmahy.simple.spring.security.common.api.version>${cmahy.simple.spring.security.common.version}</cmahy.simple.spring.security.common.api.version>
         <cmahy.simple.spring.security.common.impl.version>${cmahy.simple.spring.security.common.version}</cmahy.simple.spring.security.common.impl.version>
 
-        <cmahy.simple.spring.security.spring-client.version>1.1.1</cmahy.simple.spring.security.spring-client.version>
+        <cmahy.simple.spring.security.spring-client.version>26.05.1</cmahy.simple.spring.security.spring-client.version>
 
         <cmahy.simple.spring.security.spring-client.api.version>${cmahy.simple.spring.security.spring-client.version}</cmahy.simple.spring.security.spring-client.api.version>
         <cmahy.simple.spring.security.spring-client.impl.version>${cmahy.simple.spring.security.spring-client.version}</cmahy.simple.spring.security.spring-client.impl.version>
 
-        <picocli.version>4.7.6</picocli.version>
+        <picocli.version>4.7.7</picocli.version>
 
         <maven-failsafe-plugin.aditional.arg-line>-Dspring.profiles.active=test</maven-failsafe-plugin.aditional.arg-line>
 
