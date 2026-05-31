@@ -9,7 +9,6 @@ import cmahy.simple.spring.webapp.taco.shop.adapter.webclient.util.integration.t
 import cmahy.simple.spring.webapp.taco.shop.adapter.webclient.util.integration.test.TestWebClientApplicationStub;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.IngredientType;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.page.IngredientPage;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.mockwebserver.MockResponse;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.*;
 import org.springframework.http.MediaType;
+import tools.jackson.databind.ObjectMapper;
 
 import java.util.Arrays;
 import java.util.List;
