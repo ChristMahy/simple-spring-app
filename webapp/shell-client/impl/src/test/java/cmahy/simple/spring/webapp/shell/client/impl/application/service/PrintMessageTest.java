@@ -1,18 +1,21 @@
 package cmahy.simple.spring.webapp.shell.client.impl.application.service;
 
 import cmahy.simple.spring.common.helper.Generator;
+import cmahy.simple.spring.webapp.shell.client.impl.application.service.io.PrintStream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.io.*;
-
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class PrintMessageTest {
+
+    @Mock
+    private PrintStream printStream;
 
     @InjectMocks
     private PrintMessage printMessage;
@@ -20,42 +23,28 @@ class PrintMessageTest {
     @Test
     void execute() {
         assertDoesNotThrow(() -> {
-            try (
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                PrintStream printStream = new PrintStream(byteArrayOutputStream)
-            ) {
-                String messageToPrint = Generator.generateAString(1000);
 
-                PrintStream oldOut = System.out;
+            String messageToPrint = Generator.generateAString(1000);
 
-                System.setOut(printStream);
 
-                printMessage.execute(messageToPrint);
+            printMessage.execute(messageToPrint);
 
-                assertThat(byteArrayOutputStream.toString()).isEqualTo(messageToPrint + System.lineSeparator());
 
-                System.setOut(oldOut);
-            }
+            verify(printStream).write(messageToPrint);
+
         });
     }
 
     @Test
     void execute_onEmptyString_thenPrintWarningMessage() {
         assertDoesNotThrow(() -> {
-            try (
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                PrintStream printStream = new PrintStream(byteArrayOutputStream)
-            ) {
-                PrintStream oldOut = System.out;
 
-                System.setOut(printStream);
 
-                printMessage.execute(null);
+            printMessage.execute(null);
 
-                assertThat(byteArrayOutputStream.toString()).isEqualTo(PrintMessage.WARNING_MESSAGE + System.lineSeparator());
 
-                System.setOut(oldOut);
-            }
+            verify(printStream).write(PrintMessage.WARNING_MESSAGE);
+
         });
     }
 }
