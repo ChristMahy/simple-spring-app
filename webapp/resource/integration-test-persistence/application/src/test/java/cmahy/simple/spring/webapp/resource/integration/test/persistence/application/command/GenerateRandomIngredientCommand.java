@@ -1,8 +1,8 @@
-package cmahy.simple.spring.webapp.resource.integration.test.persistence.api.command;
+package cmahy.simple.spring.webapp.resource.integration.test.persistence.application.command;
 
 import cmahy.simple.spring.common.helper.Generator;
-import cmahy.simple.spring.webapp.resource.integration.test.persistence.api.exception.UnableToGenerateItemException;
-import cmahy.simple.spring.webapp.resource.integration.test.persistence.api.repository.IngredientTestRepository;
+import cmahy.simple.spring.webapp.resource.integration.test.persistence.application.exception.UnableToGenerateItemException;
+import cmahy.simple.spring.webapp.resource.integration.test.persistence.application.repository.IngredientTestRepository;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.Ingredient;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.IngredientType;
 import cmahy.simple.spring.webapp.taco.shop.kernel.domain.builder.IngredientBuilder;

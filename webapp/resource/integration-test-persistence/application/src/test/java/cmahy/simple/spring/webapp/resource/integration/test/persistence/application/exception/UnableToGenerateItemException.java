@@ -1,4 +1,4 @@
-package cmahy.simple.spring.webapp.resource.integration.test.persistence.api.exception;
+package cmahy.simple.spring.webapp.resource.integration.test.persistence.application.exception;
 
 public class UnableToGenerateItemException extends Exception {
 

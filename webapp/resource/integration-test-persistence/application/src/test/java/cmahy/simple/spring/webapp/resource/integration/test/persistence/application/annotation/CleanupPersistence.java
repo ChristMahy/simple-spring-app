@@ -1,4 +1,4 @@
-package cmahy.simple.spring.webapp.resource.integration.test.persistence.api.annotation;
+package cmahy.simple.spring.webapp.resource.integration.test.persistence.application.annotation;
 
 import java.lang.annotation.*;
 

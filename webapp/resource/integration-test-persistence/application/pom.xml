@@ -14,7 +14,7 @@
     </licenses>
 
     <groupId>cmahy.simple.spring.webapp</groupId>
-    <artifactId>resource.integration.test.persistence.api</artifactId>
+    <artifactId>resource.integration.test.persistence.application</artifactId>
     <version>DEV-SNAPSHOT</version>
 
     <name>spring-taco-resource-it-helper-api</name>
@@ -25,22 +25,28 @@
     <parent>
         <groupId>cmahy.simple.spring</groupId>
         <artifactId>bom</artifactId>
-        <version>1.1.1</version>
+        <version>26.05.2</version>
         <relativePath/>
     </parent>
+
+    <properties>
+        <common.version>26.05.1</common.version>
+        <taco.shop.version>26.05.1</taco.shop.version>
+        <user.version>26.05.1</user.version>
+    </properties>
 
     <dependencies>
 
         <dependency>
             <groupId>cmahy.simple.spring.webapp</groupId>
             <artifactId>taco.shop.kernel.domain</artifactId>
-            <version>1.1.1</version>
+            <version>${taco.shop.version}</version>
         </dependency>
 
         <dependency>
             <groupId>cmahy.simple.spring.webapp</groupId>
             <artifactId>user.kernel.domain</artifactId>
-            <version>1.1.1</version>
+            <version>${user.version}</version>
         </dependency>
 
         <dependency>
@@ -52,7 +58,7 @@
         <dependency>
             <groupId>cmahy.simple.spring</groupId>
             <artifactId>common</artifactId>
-            <version>DEV-SNAPSHOT</version>
+            <version>${common.version}</version>
             <type>test-jar</type>
         </dependency>
 
