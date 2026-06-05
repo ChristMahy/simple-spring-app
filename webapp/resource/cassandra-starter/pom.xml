@@ -25,16 +25,16 @@
     <parent>
         <groupId>cmahy.simple.spring</groupId>
         <artifactId>bom</artifactId>
-        <version>1.1.1</version>
+        <version>26.05.2</version>
         <relativePath/>
     </parent>
 
     <properties>
-        <cassandra.adapter.version>DEV-SNAPSHOT</cassandra.adapter.version>
+        <cassandra.adapter.version>26.05.1</cassandra.adapter.version>
 
         <cmahy.simple.spring.webapp.taco.shop.adapter.repository.cassandra.version>${cassandra.adapter.version}</cmahy.simple.spring.webapp.taco.shop.adapter.repository.cassandra.version>
         <cmahy.simple.spring.webapp.user.adapter.cassandra.version>${cassandra.adapter.version}</cmahy.simple.spring.webapp.user.adapter.cassandra.version>
-        <cmahy.simple.spring.webapp.taco.shop.it.cassandra.version>1.1.1</cmahy.simple.spring.webapp.taco.shop.it.cassandra.version>
+        <cmahy.simple.spring.webapp.taco.shop.it.cassandra.version>26.05.1</cmahy.simple.spring.webapp.taco.shop.it.cassandra.version>
     </properties>
 
     <dependencies>
