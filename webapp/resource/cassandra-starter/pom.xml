@@ -30,11 +30,12 @@
     </parent>
 
     <properties>
+
         <cassandra.adapter.version>26.05.1</cassandra.adapter.version>
 
         <cmahy.simple.spring.webapp.taco.shop.adapter.repository.cassandra.version>${cassandra.adapter.version}</cmahy.simple.spring.webapp.taco.shop.adapter.repository.cassandra.version>
         <cmahy.simple.spring.webapp.user.adapter.cassandra.version>${cassandra.adapter.version}</cmahy.simple.spring.webapp.user.adapter.cassandra.version>
-        <cmahy.simple.spring.webapp.taco.shop.it.cassandra.version>26.05.1</cmahy.simple.spring.webapp.taco.shop.it.cassandra.version>
+
     </properties>
 
     <dependencies>
@@ -55,13 +56,6 @@
             <artifactId>spring-boot-starter-data-cassandra</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>cmahy.simple.spring.webapp</groupId>
-            <artifactId>resource.integration.test.persistence.cassandra</artifactId>
-            <version>${cmahy.simple.spring.webapp.taco.shop.it.cassandra.version}</version>
-            <type>test-jar</type>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <build>

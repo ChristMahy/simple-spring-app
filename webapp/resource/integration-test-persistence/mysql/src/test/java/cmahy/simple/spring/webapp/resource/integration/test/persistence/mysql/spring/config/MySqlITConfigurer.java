@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @AutoConfiguration
 @ComponentScan(basePackages = {
-    "cmahy.simple.spring.webapp.resource.integration.test.persistence.api.command"
+    "cmahy.simple.spring.webapp.resource.integration.test.persistence.application.command"
 })
 @EnableJpaRepositories(basePackages = {
     "cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql.repository"

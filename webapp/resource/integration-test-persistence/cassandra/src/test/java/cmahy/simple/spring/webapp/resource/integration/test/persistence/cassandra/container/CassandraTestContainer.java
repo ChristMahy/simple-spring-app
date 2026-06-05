@@ -24,10 +24,6 @@ class CassandraTestContainer extends CassandraContainer {
                 MountableFile.forClasspathResource("cassandra/db/migration", MountableFile.DEFAULT_DIR_MODE),
                 "/tmp/taco_cloud_init_scripts"
             )
-            .withCopyToContainer(
-                MountableFile.forClasspathResource("snapshots/scripts", MountableFile.DEFAULT_DIR_MODE),
-                "/tmp/snapshots/scripts"
-            )
             .withEnv("CASSANDRA_KEYSPACE", "test_" + defaultKeyspaceSuffixName)
             .withReuse(false);
     }
