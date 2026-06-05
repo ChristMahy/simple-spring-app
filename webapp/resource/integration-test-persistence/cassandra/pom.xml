@@ -25,30 +25,37 @@
     <parent>
         <groupId>cmahy.simple.spring</groupId>
         <artifactId>bom</artifactId>
-        <version>DEV-SNAPSHOT</version>
+        <version>26.05.2</version>
         <relativePath/>
     </parent>
+
+    <properties>
+        <user.version>26.05.1</user.version>
+        <taco.shop.version>26.05.1</taco.shop.version>
+
+        <it.version>26.05.1</it.version>
+    </properties>
 
     <dependencies>
 
         <dependency>
             <groupId>cmahy.simple.spring.webapp</groupId>
-            <artifactId>resource.integration.test.persistence.api</artifactId>
+            <artifactId>resource.integration.test.persistence.application</artifactId>
             <type>test-jar</type>
-            <version>DEV-SNAPSHOT</version>
+            <version>${it.version}</version>
         </dependency>
 
         <dependency>
             <groupId>cmahy.simple.spring.webapp.user</groupId>
             <artifactId>adapter.repository.cassandra</artifactId>
-            <version>DEV-SNAPSHOT</version>
+            <version>${user.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>cmahy.simple.spring.webapp</groupId>
             <artifactId>taco.shop.adapter.repository.cassandra</artifactId>
-            <version>DEV-SNAPSHOT</version>
+            <version>${taco.shop.version}</version>
             <scope>provided</scope>
         </dependency>
 
