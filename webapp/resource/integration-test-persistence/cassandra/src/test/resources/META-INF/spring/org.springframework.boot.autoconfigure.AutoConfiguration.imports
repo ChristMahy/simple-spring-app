@@ -1,1 +1,1 @@
-cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.spring.config.CassandraITKeyspaceSnapshotConfigurer
+cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.spring.config.CassandraITConfigurer

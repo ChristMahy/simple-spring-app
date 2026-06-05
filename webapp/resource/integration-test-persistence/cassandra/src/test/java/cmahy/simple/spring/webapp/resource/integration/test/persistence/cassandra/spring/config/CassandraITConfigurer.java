@@ -6,11 +6,11 @@ import org.springframework.data.cassandra.repository.config.EnableCassandraRepos
 
 @AutoConfiguration
 @ComponentScan(basePackages = {
-    "cmahy.simple.spring.webapp.resource.integration.test.persistence.api.command",
+    "cmahy.simple.spring.webapp.resource.integration.test.persistence.application.command",
     "cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.repository.impl"
 })
 @EnableCassandraRepositories(basePackages = {
     "cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.repository.cassandra"
 })
-public class CassandraITKeyspaceSnapshotConfigurer {
+public class CassandraITConfigurer {
 }

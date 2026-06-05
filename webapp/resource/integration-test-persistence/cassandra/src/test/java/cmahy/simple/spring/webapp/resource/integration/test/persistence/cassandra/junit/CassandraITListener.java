@@ -1,8 +1,6 @@
 package cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.junit;
 
-//import cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.spring.service.CassandraITKeyspaceSnapshot;
-
-import cmahy.simple.spring.webapp.resource.integration.test.persistence.api.annotation.CleanupPersistence;
+import cmahy.simple.spring.webapp.resource.integration.test.persistence.application.annotation.CleanupPersistence;
 import com.datastax.oss.driver.api.core.CqlIdentifier;
 import com.datastax.oss.driver.api.core.CqlSession;
 import com.datastax.oss.driver.api.core.cql.ResultSet;
@@ -17,9 +15,9 @@ import org.springframework.test.context.support.AbstractTestExecutionListener;
 import java.lang.annotation.Annotation;
 import java.util.*;
 
-public class CassandraSnapshotListener extends AbstractTestExecutionListener {
+public class CassandraITListener extends AbstractTestExecutionListener {
 
-    private static final Logger LOG = LoggerFactory.getLogger(CassandraSnapshotListener.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CassandraITListener.class);
 
     @Override
     public void afterTestMethod(TestContext testContext) throws Exception {
@@ -46,8 +44,8 @@ public class CassandraSnapshotListener extends AbstractTestExecutionListener {
         }
 
         try {
-            // obtain CqlSession from context
             CqlSession session = null;
+
             try {
                 session = applicationContext.getBean(CqlSession.class);
             } catch (Exception ignore) {
@@ -59,7 +57,6 @@ public class CassandraSnapshotListener extends AbstractTestExecutionListener {
                 return;
             }
 
-            // determine keyspace: prefer session's current keyspace, fallback to property
             String keyspace = session.getKeyspace().map(CqlIdentifier::asInternal).orElse(null);
             if (keyspace == null || keyspace.isBlank()) {
                 Environment env = applicationContext.getEnvironment();
@@ -71,7 +68,6 @@ public class CassandraSnapshotListener extends AbstractTestExecutionListener {
                 return;
             }
 
-            // list user tables for the keyspace and truncate each
             String listTablesCql = "SELECT table_name FROM system_schema.tables WHERE keyspace_name = '" + keyspace + "'";
             ResultSet rs = session.execute(listTablesCql);
             List<String> tables = new ArrayList<>();

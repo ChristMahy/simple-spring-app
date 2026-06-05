@@ -1,6 +1,6 @@
 package cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.repository.impl;
 
-import cmahy.simple.spring.webapp.resource.integration.test.persistence.api.repository.IngredientTestRepository;
+import cmahy.simple.spring.webapp.resource.integration.test.persistence.application.repository.IngredientTestRepository;
 import cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.repository.cassandra.CassandraIngredientTestRepository;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.domain.CassandraIngredient;
 import cmahy.simple.spring.webapp.taco.shop.adapter.cassandra.entity.proxy.CassandraIngredientProxy;

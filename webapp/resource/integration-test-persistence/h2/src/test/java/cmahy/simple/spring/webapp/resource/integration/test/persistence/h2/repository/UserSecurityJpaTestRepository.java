@@ -1,6 +1,6 @@
 package cmahy.simple.spring.webapp.resource.integration.test.persistence.h2.repository;
 
-import cmahy.simple.spring.webapp.resource.integration.test.persistence.api.repository.UserSecurityTestRepository;
+import cmahy.simple.spring.webapp.resource.integration.test.persistence.application.repository.UserSecurityTestRepository;
 import cmahy.simple.spring.webapp.user.adapter.jpa.entity.domain.JpaUserSecurity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,6 +1,6 @@
 package cmahy.simple.spring.webapp.resource.integration.test.persistence.h2;
 
-import cmahy.simple.spring.webapp.resource.integration.test.persistence.api.annotation.CleanupPersistence;
+import cmahy.simple.spring.webapp.resource.integration.test.persistence.application.annotation.CleanupPersistence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -14,14 +14,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class H2ITDatasourceSnapshotListener extends AbstractTestExecutionListener {
+public class H2ITListener extends AbstractTestExecutionListener {
 
-    private static final Logger LOG = LoggerFactory.getLogger(H2ITDatasourceSnapshotListener.class);
-
-    @Override
-    public void beforeTestMethod(TestContext testContext) throws Exception {
-
-    }
+    private static final Logger LOG = LoggerFactory.getLogger(H2ITListener.class);
 
     @Override
     public void afterTestExecution(TestContext testContext) throws Exception {
@@ -40,30 +35,7 @@ public class H2ITDatasourceSnapshotListener extends AbstractTestExecutionListene
 
                 if (Objects.nonNull(applicationContext)) {
 
-//                    EntityManagerFactory entityManagerFactory = applicationContext.getBean(EntityManagerFactory.class);
-//
-//                    Optional.ofNullable(entityManagerFactory)
-//                        .map(EntityManagerFactory::getCache)
-//                        .ifPresent(cache -> {
-//                            LOG.info("Clearing entity manager caches");
-//
-//                            cache.evictAll();
-//                        });
-
                     DataSource dataSource = applicationContext.getBean(DataSource.class);
-
-//                    if (dataSource instanceof HikariDataSource hikariDataSource) {
-//
-//                        LOG.info(
-//                            "Evicting all connections in HikariCP pool, active <{}>, idle <{}>, total <{}>",
-//                            hikariDataSource.getHikariPoolMXBean().getActiveConnections(),
-//                            hikariDataSource.getHikariPoolMXBean().getIdleConnections(),
-//                            hikariDataSource.getHikariPoolMXBean().getTotalConnections()
-//                        );
-//
-//                        hikariDataSource.getHikariPoolMXBean().softEvictConnections();
-//
-//                    }
 
                     try (Connection connection = dataSource.getConnection()) {
 
@@ -84,9 +56,9 @@ public class H2ITDatasourceSnapshotListener extends AbstractTestExecutionListene
                             );
 
                             Set<String> ignoredTables = Stream.concat(
-                                Arrays.stream(cleanupInstruction.ignoreTables()),
-                                Stream.of("DATABASECHANGELOG", "DATABASECHANGELOGLOCK")
-                            )
+                                    Arrays.stream(cleanupInstruction.ignoreTables()),
+                                    Stream.of("DATABASECHANGELOG", "DATABASECHANGELOGLOCK")
+                                )
                                 .collect(Collectors.toSet());
 
                             while (resultSet.next()) {
@@ -126,41 +98,6 @@ public class H2ITDatasourceSnapshotListener extends AbstractTestExecutionListene
             }
 
         }
-
-//        ApplicationContext applicationContext = testContext.getApplicationContext();
-//
-//        if (Objects.nonNull(applicationContext)) {
-//
-//            EntityManagerFactory entityManagerFactory = applicationContext.getBean(EntityManagerFactory.class);
-//
-//            Optional.ofNullable(entityManagerFactory)
-//                .map(EntityManagerFactory::getCache)
-//                .ifPresent(cache -> {
-//                    LOG.info("Clearing entity manager caches");
-//
-//                    cache.evictAll();
-//                });
-//
-//            try {
-//
-//                HikariDataSource dataSource = applicationContext.getBean(HikariDataSource.class);
-//
-//                LOG.info(
-//                    "Evicting all connections in HikariCP pool, active <{}>, idle <{}>, total <{}>",
-//                    dataSource.getHikariPoolMXBean().getActiveConnections(),
-//                    dataSource.getHikariPoolMXBean().getIdleConnections(),
-//                    dataSource.getHikariPoolMXBean().getTotalConnections()
-//                );
-//
-//                dataSource.getHikariPoolMXBean().softEvictConnections();
-//
-//            } catch (BeansException ignored) {}
-//
-//            H2ITDatasourceSnapshot datasourceSnapshot = applicationContext.getBean(H2ITDatasourceSnapshot.class);
-//
-//            datasourceSnapshot.restore();
-//
-//        }
 
     }
 

@@ -1,6 +1,6 @@
 package cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.repository.impl;
 
-import cmahy.simple.spring.webapp.resource.integration.test.persistence.api.repository.UserSecurityTestRepository;
+import cmahy.simple.spring.webapp.resource.integration.test.persistence.application.repository.UserSecurityTestRepository;
 import cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.repository.cassandra.CassandraUserSecurityTestRepository;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.domain.CassandraUserSecurityImpl;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.CassandraUserSecurityProxy;

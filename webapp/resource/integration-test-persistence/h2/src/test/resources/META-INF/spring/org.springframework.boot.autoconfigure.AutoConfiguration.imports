@@ -1,1 +1,1 @@
-cmahy.simple.spring.webapp.resource.integration.test.persistence.h2.spring.config.H2ITDatasourceSnapshotConfigurer
+cmahy.simple.spring.webapp.resource.integration.test.persistence.h2.spring.config.H2ITConfigurer

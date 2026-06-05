@@ -1,6 +1,6 @@
 package cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.repository.impl;
 
-import cmahy.simple.spring.webapp.resource.integration.test.persistence.api.repository.RoleTestRepository;
+import cmahy.simple.spring.webapp.resource.integration.test.persistence.application.repository.RoleTestRepository;
 import cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.repository.cassandra.CassandraRoleTestRepository;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.domain.CassandraRole;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.CassandraRoleProxy;

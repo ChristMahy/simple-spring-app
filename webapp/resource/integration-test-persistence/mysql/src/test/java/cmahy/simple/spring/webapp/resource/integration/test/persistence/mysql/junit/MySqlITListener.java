@@ -1,8 +1,6 @@
 package cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql.junit;
 
-//import cmahy.simple.spring.webapp.resource.integration.test.persistence.mysql.spring.service.MySqlITDatasourceSnapshot;
-
-import cmahy.simple.spring.webapp.resource.integration.test.persistence.api.annotation.CleanupPersistence;
+import cmahy.simple.spring.webapp.resource.integration.test.persistence.application.annotation.CleanupPersistence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -16,9 +14,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class MySqlITDatasourceSnapshotListener extends AbstractTestExecutionListener {
+public class MySqlITListener extends AbstractTestExecutionListener {
 
-    private static final Logger LOG = LoggerFactory.getLogger(MySqlITDatasourceSnapshotListener.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MySqlITListener.class);
 
     @Override
     public void afterTestExecution(TestContext testContext) throws Exception {
@@ -40,31 +38,6 @@ public class MySqlITDatasourceSnapshotListener extends AbstractTestExecutionList
         ApplicationContext applicationContext = testContext.getApplicationContext();
 
         if (Objects.nonNull(applicationContext)) {
-
-//            EntityManagerFactory entityManagerFactory = applicationContext.getBean(EntityManagerFactory.class);
-//
-//            Optional.ofNullable(entityManagerFactory)
-//                .map(EntityManagerFactory::getCache)
-//                .ifPresent(cache -> {
-//                    LOG.info("Clearing entity manager caches");
-//
-//                    cache.evictAll();
-//                });
-//
-//            try {
-//
-//                HikariDataSource dataSource = applicationContext.getBean(HikariDataSource.class);
-//
-//                LOG.info(
-//                    "Evicting all connections in HikariCP pool, active <{}>, idle <{}>, total <{}>",
-//                    dataSource.getHikariPoolMXBean().getActiveConnections(),
-//                    dataSource.getHikariPoolMXBean().getIdleConnections(),
-//                    dataSource.getHikariPoolMXBean().getTotalConnections()
-//                );
-//
-//                dataSource.getHikariPoolMXBean().softEvictConnections();
-//
-//            } catch (BeansException ignored) {}
 
             DataSource dataSource = applicationContext.getBean(DataSource.class);
 
@@ -124,10 +97,6 @@ public class MySqlITDatasourceSnapshotListener extends AbstractTestExecutionList
             }
 
         }
-//
-//        MySqlITDatasourceSnapshot datasourceSnapshot = applicationContext.getBean(MySqlITDatasourceSnapshot.class);
-//
-//        datasourceSnapshot.restore();
 
     }
 }

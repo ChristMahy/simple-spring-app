@@ -1,6 +1,6 @@
 package cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.repository.impl;
 
-import cmahy.simple.spring.webapp.resource.integration.test.persistence.api.repository.RightTestRepository;
+import cmahy.simple.spring.webapp.resource.integration.test.persistence.application.repository.RightTestRepository;
 import cmahy.simple.spring.webapp.resource.integration.test.persistence.cassandra.repository.cassandra.CassandraRightTestRepository;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.domain.CassandraRight;
 import cmahy.simple.spring.webapp.user.adapter.cassandra.entity.proxy.CassandraRightProxy;
