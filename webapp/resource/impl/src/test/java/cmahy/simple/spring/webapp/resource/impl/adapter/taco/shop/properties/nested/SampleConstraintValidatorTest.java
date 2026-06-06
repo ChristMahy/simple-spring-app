@@ -1,11 +1,11 @@
 package cmahy.simple.spring.webapp.resource.impl.adapter.taco.shop.properties.nested;
 
 import jakarta.validation.ConstraintValidatorContext;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.MockedStatic;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static cmahy.simple.spring.common.helper.Generator.generateAString;
@@ -13,10 +13,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class SampleConstraintValidatorTest {
+
+    @Mock
+    private Strings ciStrings;
 
     @InjectMocks
     private SampleConstraintValidator sampleConstraintValidator;
@@ -24,32 +27,40 @@ class SampleConstraintValidatorTest {
     @Test
     void isValid() {
         assertDoesNotThrow(() -> {
+
+            when(ciStrings.equals(anyString(), anyString())).thenReturn(true);
+
             assertThat(
                 sampleConstraintValidator.isValid("exact-match", mock(ConstraintValidatorContext.class))
             ).isTrue();
+
         });
     }
 
     @Test
     void isValid_whenNotEquals_thenReturnFalse() {
         assertDoesNotThrow(() -> {
+
+            when(ciStrings.equals(anyString(), anyString())).thenReturn(false);
+
             assertThat(
                 sampleConstraintValidator.isValid(generateAString(), mock(ConstraintValidatorContext.class))
             ).isFalse();
+
         });
     }
 
     @Test
     void isValid_onAnyException_thenReturnFalse() {
         assertDoesNotThrow(() -> {
-            try (MockedStatic<StringUtils> stringUtilsMocked = mockStatic(StringUtils.class)) {
-                stringUtilsMocked.when(() -> StringUtils.equalsIgnoreCase(anyString(), anyString()))
-                    .thenAnswer(invocationOnMock -> new Throwable(generateAString()));
 
-                assertThat(
-                    sampleConstraintValidator.isValid(generateAString(), mock(ConstraintValidatorContext.class))
-                ).isFalse();
-            }
+            when(ciStrings.equals(anyString(), anyString()))
+                .thenAnswer(invocationOnMock -> new Throwable(generateAString()));
+
+            assertThat(
+                sampleConstraintValidator.isValid(generateAString(), mock(ConstraintValidatorContext.class))
+            ).isFalse();
+
         });
     }
 }

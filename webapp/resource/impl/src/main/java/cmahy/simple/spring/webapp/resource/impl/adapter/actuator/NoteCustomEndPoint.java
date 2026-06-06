@@ -5,7 +5,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.boot.actuate.endpoint.annotation.*;
@@ -19,6 +19,12 @@ import java.util.*;
 public class NoteCustomEndPoint {
 
     private final Set<Note> notes = new HashSet<>();
+    private final Strings csStrings;
+
+    public NoteCustomEndPoint(Strings csStrings) {
+        this.csStrings = csStrings;
+    }
+
 
     @PostConstruct
     public void addSomeNotes() {
@@ -61,7 +67,7 @@ public class NoteCustomEndPoint {
     public Collection<NoteOutputVo> notes() {
 
         return notes.stream()
-            .sorted((n1, n2) -> StringUtils.compare(n1.id.toString(), n2.id.toString()))
+            .sorted((n1, n2) -> csStrings.compare(n1.id.toString(), n2.id.toString()))
             .map(note -> new NoteOutputVo(
                 new NoteId(note.id()),
                 note.title(),
